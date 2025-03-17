@@ -9,12 +9,6 @@ public enum CubeAxisType
     Y,
     Z
 }
-public enum RotateType
-{
-    Normal,
-    Confirmed,
-    Zero
-}
 public class Cube : MonoBehaviour
 {
     [SerializeField] CubeUIController cubeUIController;
@@ -32,23 +26,12 @@ public class Cube : MonoBehaviour
         cubeUIController.SetRotateCubeUpdate(RotateCube);
     }
 
-    private void RotateCube(Cubie selectedCubie, CubeAxisType axis, float rotationAmount, RotateType rotateType)
+    private void RotateCube(Cubie selectedCubie, CubeAxisType axis, int rotationAmount)
     {
         if (cubeRotater.IsRotating) return;
         int layer = cubeGridHandler.FindLayer(selectedCubie, axis);
         List<Cubie> cubies = cubeGridHandler.GetCubiesInLayer(layer, axis);
-        switch(rotateType)
-        {
-            case RotateType.Normal:
-                cubeRotater.RotateCubesUpdate(cubies, axis, rotationAmount);
-                break;
-            case RotateType.Confirmed:
-                StartCoroutine(cubeRotater.RotateCubesSmooth(cubies, axis,rotationAmount));
-                cubeGridHandler.RotateLayer(layer, rotationAmount > 0, axis);
-                break;
-           case RotateType.Zero:
-                StartCoroutine(cubeRotater.RotateCubesSmooth(cubies, axis, rotationAmount));
-                break;
-        }
+        StartCoroutine(cubeRotater.RotateCubesSmooth(cubies, axis, rotationAmount));
+        cubeGridHandler.RotateLayer(layer, rotationAmount > 0, axis);
     }
 }

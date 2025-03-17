@@ -8,7 +8,6 @@ public class CubeUIController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 {
     public float dragThreshold = 30f;
 
-    private const float maxRotation = 90f;
     private Vector2 initialMousePosition;
     private bool isAxisConfirmed = false;
     private bool isAxisLocked = false;
@@ -17,9 +16,9 @@ public class CubeUIController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     private CubeAxisType selectedAxis;
     private float accumulatedRotation = 0f;
 
-    private Action<Cubie, CubeAxisType, float, RotateType> rotateCube;
+    private Action<Cubie, CubeAxisType, int> rotateCube;
 
-    public void SetRotateCubeUpdate(Action<Cubie, CubeAxisType, float, RotateType> rotateCube)
+    public void SetRotateCubeUpdate(Action<Cubie, CubeAxisType, int> rotateCube)
     {
         this.rotateCube = rotateCube;
     }
@@ -39,22 +38,14 @@ public class CubeUIController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     {
         if (selectedCubie == null) return;
 
-        bool isRotateConfirmed = Mathf.Abs(accumulatedRotation) >= 45f;
+        bool isRotateConfirmed = Mathf.Abs(accumulatedRotation) >= dragThreshold;
         int finalRotation;
-        RotateType rotateType;
 
         if (isRotateConfirmed)
         {
-            finalRotation = (int)(Mathf.Sign(accumulatedRotation) * (90 - Mathf.Abs(accumulatedRotation)));
-            rotateType = RotateType.Confirmed;
+            finalRotation = (int)(Mathf.Sign(accumulatedRotation) * 90);
+            rotateCube?.Invoke(selectedCubie, selectedAxis, finalRotation);
         }
-        else
-        {
-            finalRotation = (int)(-accumulatedRotation);
-            rotateType = RotateType.Zero;
-        }
-
-        rotateCube?.Invoke(selectedCubie, selectedAxis, finalRotation, rotateType);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -79,19 +70,18 @@ public class CubeUIController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 
         if (absX > absY)
         {
-            selectedAxis = CubeAxisType.Y; // 가로 움직임이 크면 Y축 회전
+            selectedAxis = CubeAxisType.Y; 
         }
         else
         {
-            selectedAxis = CubeAxisType.X; // 세로 움직임이 크면 X축 회전
+            selectedAxis = CubeAxisType.X; 
         }
     }
 
     private void DetectRotation(Vector2 dragVector)
     {
         float rotationAmount = (selectedAxis == CubeAxisType.Y) ? -dragVector.x : dragVector.y;
-        accumulatedRotation += Mathf.Clamp(rotationAmount * Time.deltaTime, -maxRotation, maxRotation);
-        rotateCube?.Invoke(selectedCubie, selectedAxis, rotationAmount * Time.deltaTime, RotateType.Normal);
+        accumulatedRotation += rotationAmount * Time.deltaTime;
     }
 
     private void DetectSelectedCubie(PointerEventData eventData)

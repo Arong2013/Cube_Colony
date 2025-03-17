@@ -7,15 +7,7 @@ public class CubeRotater
 {
     private bool isRotating;
     public bool IsRotating => isRotating;
-    public void RotateCubesUpdate(List<Cubie> cubes, CubeAxisType axis, float rotationAmount)
-    {
-        if (isRotating) return;
-
-        Vector3 rotationAxis = GetRotationAxis(axis);
-        cubes.ForEach(cube => cube.transform.RotateAround(Vector3.zero, rotationAxis, rotationAmount));
-    }
-
-    public IEnumerator RotateCubesSmooth(List<Cubie> cubes, CubeAxisType axis, float rotationAmount)
+    public IEnumerator RotateCubesSmooth(List<Cubie> cubes, CubeAxisType axis, int rotationAmount)
     {
         if (isRotating) yield break;
         isRotating = true;
@@ -23,7 +15,7 @@ public class CubeRotater
         Vector3 rotationAxis = GetRotationAxis(axis);
         float duration = 0.5f;
         float elapsed = 0f;
-        float angle = rotationAmount;
+        int angle = rotationAmount;
 
         while (elapsed < duration)
         {
