@@ -1,28 +1,54 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Collections;
+using UnityEngine.Rendering;
 
+public enum CubeAxisType
+{
+    X,
+    Y,
+    Z
+}
+public enum RotateType
+{
+    Normal,
+    Confirmed,
+    Zero
+}
 public class Cube : MonoBehaviour
 {
-    CubeRotater cubeRotater;
-    PiceGridHandler piceGridHandler;
+    [SerializeField] CubeUIController cubeUIController;
     [SerializeField] int size;
-    public int Size => size;
+    [SerializeField] Cubie cubie;
 
-
-    public GameObject Pice;
+    CubeRotater cubeRotater;
+    CubeGridHandler cubeGridHandler;
 
     private void Start()
     {
-        piceGridHandler = new PiceGridHandler(this);
-        cubeRotater = new CubeRotater(this);
-        Init(); 
-    }
-    public void Init()
-    {
-        cubeRotater.GenerateCube();
+        cubeRotater = new CubeRotater();
+        cubeGridHandler = new CubeGridHandler(size, cubie);
+
+        cubeUIController.SetRotateCubeUpdate(RotateCube);
     }
 
-    void Update()
+    private void RotateCube(Cubie selectedCubie, CubeAxisType axis, float rotationAmount, RotateType rotateType)
     {
- 
+        if (cubeRotater.IsRotating) return;
+        int layer = cubeGridHandler.FindLayer(selectedCubie, axis);
+        List<Cubie> cubies = cubeGridHandler.GetCubiesInLayer(layer, axis);
+        switch(rotateType)
+        {
+            case RotateType.Normal:
+                cubeRotater.RotateCubesUpdate(cubies, axis, rotationAmount);
+                break;
+            case RotateType.Confirmed:
+                StartCoroutine(cubeRotater.RotateCubesSmooth(cubies, axis,rotationAmount));
+                cubeGridHandler.RotateLayer(layer, rotationAmount > 0, axis);
+                break;
+           case RotateType.Zero:
+                StartCoroutine(cubeRotater.RotateCubesSmooth(cubies, axis, rotationAmount));
+                break;
+        }
     }
 }
