@@ -48,6 +48,23 @@ public class CubeGridHandler
                     }
         return -1;
     }
+    public List<Cubie> GetAllCubies()
+    {
+        List<Cubie> allCubies = new List<Cubie>();
+
+        for (int x = 0; x < size; x++)
+        {
+            for (int y = 0; y < size; y++)
+            {
+                for (int z = 0; z < size; z++)
+                {
+                    allCubies.Add(cubieGrid[x, y, z]);
+                }
+            }
+        }
+
+        return allCubies;
+    }
 
     public List<Cubie> GetCubiesInLayer(int layer, CubeAxisType axis)
     {
@@ -178,7 +195,12 @@ public class CubeGridHandler
         return rotated;
     }
 
-
+    public void RotateEntireCube(bool isClockwise, CubeAxisType axis)
+    {
+        RotateLayer(0, isClockwise, axis);
+        RotateLayer(1, isClockwise, axis);
+        RotateLayer(2, isClockwise, axis);
+    }
     private void UpdateCubieNames()
     {
         for (int x = 0; x < size; x++)

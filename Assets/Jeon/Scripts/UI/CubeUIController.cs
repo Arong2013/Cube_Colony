@@ -2,18 +2,10 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum DualAxisType
-{
-    XY,      // X, Y축 회전 가능
-    XZ,      // X, Z축 회전 가능
-    YZ       // Y, Z축 회전 가능
-}
-
-
 [System.Serializable]
 public class CubeUIController : IPointerUpHandler, IDragHandler
 {
-    public float dragThreshold = 30f;
+    public float dragThreshold;
 
     private Vector2 initialMousePosition;
     private bool isAxisConfirmed = false;
@@ -21,7 +13,6 @@ public class CubeUIController : IPointerUpHandler, IDragHandler
 
     private CubieFace selectedCubie;
     private CubeAxisType singleAxis;
-    private DualAxisType dualAxis;  
     private float accumulatedRotation = 0f;
 
     private Action<Cubie, CubeAxisType, int> rotateCube;
@@ -77,12 +68,13 @@ public class CubeUIController : IPointerUpHandler, IDragHandler
         if (selectedCubie == null) return;
 
         // 선택된 면에서 가능한 회전 축을 가져옴
-        DualAxisType allowedAxis = selectedCubie.GetAllowedRotationAxis();
-        Debug.Log(allowedAxis + selectedCubie.face.ToString());
+        CubeAxisType CantAxis = selectedCubie.GetNotRotationAxis();
+        
 
         // 회전 가능한 축에 맞게 축을 결정
-        if (allowedAxis == DualAxisType.XY)
+        if (CantAxis == CubeAxisType.Z)
         {
+
             // XY축 회전만 가능
             if (Mathf.Abs(dragVector.x) < Mathf.Abs(dragVector.y))
             {
@@ -93,19 +85,29 @@ public class CubeUIController : IPointerUpHandler, IDragHandler
                 singleAxis = CubeAxisType.Y;  // Y축 기준 회전
             }
         }
-        else if (allowedAxis == DualAxisType.XZ)
+        else if (CantAxis == CubeAxisType.Y)
         {
-            // XZ축 회전만 가능
-            if (Mathf.Abs(dragVector.x) > Mathf.Abs(dragVector.y))
+            float angle = Mathf.Atan2(dragVector.y, dragVector.x) * Mathf.Rad2Deg;
+            if ((angle >= 0 && angle < 90) || (angle >= 180 && angle < 270))
             {
-                singleAxis = CubeAxisType.X;  // X축 기준 회전
+                singleAxis = CubeAxisType.Z; // 0-90, 180-270° → X축
             }
             else
             {
-                singleAxis = CubeAxisType.Z;  // Z축 기준 회전
+                singleAxis = CubeAxisType.X; // 90-180, 270-360° → Y축
             }
+            Debug.Log(angle);
+            //// XZ축 회전만 가능
+            //if (Mathf.Abs(dragVector.x) > Mathf.Abs(dragVector.y))
+            //{
+            //    singleAxis = CubeAxisType.X;  // X축 기준 회전
+            //}
+            //else
+            //{
+            //    singleAxis = CubeAxisType.Z;  // Z축 기준 회전
+            //}
         }
-        else if (allowedAxis == DualAxisType.YZ)
+        else if (CantAxis == CubeAxisType.X)
         {
             // YZ축 회전만 가능
             if (Mathf.Abs(dragVector.x) > Mathf.Abs(dragVector.y))
@@ -117,42 +119,59 @@ public class CubeUIController : IPointerUpHandler, IDragHandler
                 singleAxis = CubeAxisType.Z;  // Z축 기준 회전
             }
         }
+
+        Debug.Log(singleAxis + selectedCubie.face.ToString() + selectedCubie.cubie.name);
     }
 
 
     private void DetectRotation(Vector2 dragVector)
     {
-        if (dualAxis == DualAxisType.XY)
+        if (singleAxis == CubeAxisType.X)
         {
-            accumulatedRotation += dragVector.x * Time.deltaTime;  // X축
+            accumulatedRotation += dragVector.y* Time.deltaTime;  // X축
         }
-        else if (dualAxis == DualAxisType.XZ)
+        else if (singleAxis == CubeAxisType.Y)
         {
-            accumulatedRotation += -dragVector.y * Time.deltaTime;  // Z축
+            accumulatedRotation += -dragVector.x * Time.deltaTime;  // Z축
         }
-        else if (dualAxis == DualAxisType.YZ)
+        else if (singleAxis == CubeAxisType.Z)
         {
-            accumulatedRotation += -dragVector.x * Time.deltaTime;  // Y축
+            accumulatedRotation += -dragVector.y * Time.deltaTime;  // Y축
         }
     }
 
-
-
-    public void DetectSelectedCubie(PointerEventData eventData)
+    private void DetectSelectedCubie(PointerEventData eventData)
     {
-        if (Camera.main == null) return; // Camera.main이 없을 경우 예외 방지
+        if (Camera.main == null) return;
 
         Ray ray = Camera.main.ScreenPointToRay(eventData.position);
-        RaycastHit[] hits = Physics.RaycastAll(ray);
+        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f);
+
+        // 2️⃣ RaycastAll을 사용하여 모든 충돌 감지
+        RaycastHit[] hits = Physics.RaycastAll(ray, 100f);
+
+        if (hits.Length == 0) return; // 아무것도 감지되지 않으면 종료
+
+        // 3️⃣ 가장 가까운 CubieFace 찾기
+        RaycastHit closestHit = hits[0];
+        float minDistance = Vector3.Distance(ray.origin, closestHit.point);
 
         foreach (var hit in hits)
         {
-            CubieFace cubie = hit.collider.GetComponent<CubieFace>();
-            if (cubie != null)
+            float hitDistance = Vector3.Distance(ray.origin, hit.point);
+            if (hitDistance < minDistance)
             {
-                selectedCubie = cubie;
-                break;
+                closestHit = hit;
+                minDistance = hitDistance;
             }
+        }
+
+        // 4️⃣ CubieFace를 감지하여 선택
+        CubieFace cubie = closestHit.collider.GetComponent<CubieFace>();
+        if (cubie != null)
+        {
+            selectedCubie = cubie;
+            Debug.Log($"[DetectSelectedCubie] Selected Cubie: {selectedCubie.cubie.name}, Face: {selectedCubie.face}");
         }
     }
 }

@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 053abc0d598a53f4b94f4166c2e62aee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickHoldTime: 1
+  clickHoldTime: 0.15
   currrentClickHold: 0
   cubeUIController:
     dragThreshold: 5

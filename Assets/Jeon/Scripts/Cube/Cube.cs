@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.Rendering;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public enum CubeAxisType
 {
@@ -26,7 +27,16 @@ public class Cube : MonoBehaviour
 
         cubeUIController.SetRotateCubeUpdate(RotateCube);
     }
-
+    private void Update()
+    {
+        // 스페이스 키를 누르면 전체 큐브를 회전
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (cubeRotater.IsRotating) return;
+            StartCoroutine(cubeRotater.RotateCubesSmooth(cubeGridHandler.GetAllCubies(),CubeAxisType.Y, 90)); // Y축 기준으로 시계방향 회전
+            cubeGridHandler.RotateEntireCube(true,CubeAxisType.Y);   
+        }
+    }
     private void RotateCube(Cubie selectedCubie, CubeAxisType axis, int rotationAmount)
     {
         if (cubeRotater.IsRotating) return;

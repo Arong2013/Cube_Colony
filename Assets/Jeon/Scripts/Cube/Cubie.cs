@@ -18,7 +18,7 @@ public class Cubie : MonoBehaviour
     {
         for (int i = 0; i < faces.Length; i++)
         {
-            faces[i].SetFace((CubieFaceIndex)i,this);   
+            faces[i].Init((CubieFaceIndex)i,this);   
         }
     }
 
@@ -72,7 +72,7 @@ public class Cubie : MonoBehaviour
 
         for (int i = 0; i < indices.Length; i++)
         {
-            faces[indices[i]].SetFace((CubieFaceIndex)indices[i], this);
+            faces[indices[i]].SetFace((CubieFaceIndex)indices[i]);
         }
     }
 }
