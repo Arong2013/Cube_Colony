@@ -22,14 +22,13 @@ public class Cube : MonoBehaviour
 
     private void Start()
     {
-        cubeRotater = new CubeRotater();
-        cubeGridHandler = new CubeGridHandler(size, cubie);
+        cubeRotater = new CubeRotater(this.transform);
+        cubeGridHandler = new CubeGridHandler(size, cubie,this.transform);
 
         cubeUIController.SetRotateCubeUpdate(RotateCube);
     }
     private void Update()
     {
-        // 스페이스 키를 누르면 전체 큐브를 회전
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (cubeRotater.IsRotating) return;

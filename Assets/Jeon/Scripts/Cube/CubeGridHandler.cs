@@ -8,7 +8,7 @@ public class CubeGridHandler
     public readonly int size;
     private Cubie[,,] cubieGrid;
 
-    public CubeGridHandler(int _size,Cubie cubie)
+    public CubeGridHandler(int _size, Cubie cubie,Transform parent)
     {
         size = _size;
         cubieGrid = new Cubie[size, size, size];
@@ -18,7 +18,7 @@ public class CubeGridHandler
                 for (int z = 0; z < size; z++)
                 {
                     Vector3 position = new Vector3(x - 1, y - 1, z - 1);
-                    cubieGrid[x, y, z] =  UnityEngine.Object.Instantiate(cubie, position, Quaternion.identity);
+                    cubieGrid[x, y, z] = UnityEngine.Object.Instantiate(cubie, position, Quaternion.identity, parent);
                     cubieGrid[x, y, z].name = $"Cubie_{x}_{y}_{z}";
                 }
     }
@@ -27,17 +27,16 @@ public class CubeGridHandler
     {
         Cubie[,] face = ExtractLayer(layer, axis);
         RotateCubies(face, isClockwise, axis);
-        Cubie[,] rotatedFace = RotateMatrix(face, isClockwise,axis);
-        InsertLayer(layer, rotatedFace, axis);
+        InsertLayer(layer, RotateMatrix(face, isClockwise, axis), axis);
         UpdateCubieNames();
     }
+
     public int FindLayer(Cubie cubie, CubeAxisType axis)
     {
         for (int x = 0; x < size; x++)
             for (int y = 0; y < size; y++)
                 for (int z = 0; z < size; z++)
                     if (cubieGrid[x, y, z] == cubie)
-                    {
                         return axis switch
                         {
                             CubeAxisType.X => x,
@@ -45,100 +44,54 @@ public class CubeGridHandler
                             CubeAxisType.Z => z,
                             _ => -1
                         };
-                    }
         return -1;
     }
+
     public List<Cubie> GetAllCubies()
     {
         List<Cubie> allCubies = new List<Cubie>();
-
-        for (int x = 0; x < size; x++)
-        {
-            for (int y = 0; y < size; y++)
-            {
-                for (int z = 0; z < size; z++)
-                {
-                    allCubies.Add(cubieGrid[x, y, z]);
-                }
-            }
-        }
-
+        foreach (var cubie in cubieGrid) allCubies.Add(cubie);
         return allCubies;
     }
 
     public List<Cubie> GetCubiesInLayer(int layer, CubeAxisType axis)
     {
         List<Cubie> cubies = new List<Cubie>();
-
         for (int i = 0; i < size; i++)
-        {
             for (int j = 0; j < size; j++)
-            {
-                if (axis == CubeAxisType.X)
+                cubies.Add(axis switch
                 {
-                    cubies.Add(cubieGrid[layer, i, j]);
-                }
-                else if (axis == CubeAxisType.Y)
-                {
-                    cubies.Add(cubieGrid[i, layer, j]);
-                }
-                else if (axis == CubeAxisType.Z)
-                {
-                    cubies.Add(cubieGrid[i, j, layer]);
-                }
-            }
-        }
+                    CubeAxisType.X => cubieGrid[layer, i, j],
+                    CubeAxisType.Y => cubieGrid[i, layer, j],
+                    CubeAxisType.Z => cubieGrid[i, j, layer],
+                    _ => null
+                });
         return cubies;
     }
 
     private Cubie[,] ExtractLayer(int layer, CubeAxisType axis)
     {
         var face = new Cubie[size, size];
-
-        Enumerable.Range(0, size).ToList().ForEach(i =>
-            Enumerable.Range(0, size).ToList().ForEach(j =>
-            {
-                if (axis == CubeAxisType.X)
+        for (int i = 0; i < size; i++)
+            for (int j = 0; j < size; j++)
+                face[i, j] = axis switch
                 {
-                    face[i, j] = cubieGrid[layer, i, j];
-                }
-                else if (axis == CubeAxisType.Y)
-                {
-                    face[i, j] = cubieGrid[i, layer, j];
-                }
-                else
-                {
-                    face[i, j] = cubieGrid[i, j, layer];
-                }
-            })
-        );
-
+                    CubeAxisType.X => cubieGrid[layer, i, j],
+                    CubeAxisType.Y => cubieGrid[i, layer, j],
+                    CubeAxisType.Z => cubieGrid[i, j, layer],
+                    _ => null
+                };
         return face;
     }
 
     private void InsertLayer(int layer, Cubie[,] face, CubeAxisType axis)
     {
         for (int i = 0; i < size; i++)
-        {
             for (int j = 0; j < size; j++)
-            {
-                if (axis == CubeAxisType.X)
-                {
-                    cubieGrid[layer, i, j] = face[i, j];
-                }
-                else if (axis == CubeAxisType.Y)
-                {
-                    cubieGrid[i, layer, j] = face[i, j];
-                }
-                else if (axis == CubeAxisType.Z)
-                {
-                    cubieGrid[i, j, layer] = face[i, j];
-
-                }
-            }
-        }
+                if (axis == CubeAxisType.X) cubieGrid[layer, i, j] = face[i, j];
+                else if (axis == CubeAxisType.Y) cubieGrid[i, layer, j] = face[i, j];
+                else cubieGrid[i, j, layer] = face[i, j];
     }
-
     private Cubie[,] RotateMatrix(Cubie[,] matrix, bool isClockwise, CubeAxisType axis)
     {
         var rotated = new Cubie[size, size];
@@ -194,32 +147,24 @@ public class CubeGridHandler
 
         return rotated;
     }
-
     public void RotateEntireCube(bool isClockwise, CubeAxisType axis)
     {
-        RotateLayer(0, isClockwise, axis);
-        RotateLayer(1, isClockwise, axis);
-        RotateLayer(2, isClockwise, axis);
+        for (int layer = 0; layer < size; layer++)
+            RotateLayer(layer, isClockwise, axis);
     }
+
     private void UpdateCubieNames()
     {
         for (int x = 0; x < size; x++)
-        {
             for (int y = 0; y < size; y++)
-            {
                 for (int z = 0; z < size; z++)
-                {
                     if (cubieGrid[x, y, z] != null)
-                    {
                         cubieGrid[x, y, z].name = $"Cubie_{x}_{y}_{z}";
-                    }
-                }
-            }
-        }
     }
 
     private void RotateCubies(Cubie[,] cubies, bool isClockwise, CubeAxisType axis)
     {
-        cubies.Cast<Cubie>().ToList().ForEach(cubie => cubie.RotateCubie(axis, isClockwise));
+        foreach (var cubie in cubies)
+            cubie.RotateCubie(axis, isClockwise);
     }
 }

@@ -23,10 +23,10 @@ public class CubieFace : MonoBehaviour
     {
         return face switch
         {
-            CubieFaceIndex.Front or CubieFaceIndex.Back => CubeAxisType.Z,  // 아이소메트릭에서 X 대신 Z
-            CubieFaceIndex.Left or CubieFaceIndex.Right => CubeAxisType.X,  // 아이소메트릭에서 Z 대신 X
-            CubieFaceIndex.Top or CubieFaceIndex.Bottom => CubeAxisType.Y,  // Y축은 동일
-            _ => CubeAxisType.Y // 기본값 (예외 방지)
+            CubieFaceIndex.Front or CubieFaceIndex.Back => CubeAxisType.Z,  
+            CubieFaceIndex.Left or CubieFaceIndex.Right => CubeAxisType.X,  
+            CubieFaceIndex.Top or CubieFaceIndex.Bottom => CubeAxisType.Y, 
+            _ => CubeAxisType.Y 
         };
     }
 }
