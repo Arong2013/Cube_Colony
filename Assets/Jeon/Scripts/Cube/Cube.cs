@@ -5,13 +5,14 @@ using UnityEngine.Rendering;
 
 public enum CubeAxisType
 {
-    X,
-    Y,
-    Z
+    X,       // X축 회전만 가능
+    Y,       // Y축 회전만 가능
+    Z        // Z축 회전만 가능
 }
+
 public class Cube : MonoBehaviour
 {
-    [SerializeField] CubeUIController cubeUIController;
+    [SerializeField] PlayerUIController cubeUIController;
     [SerializeField] int size;
     [SerializeField] Cubie cubie;
 

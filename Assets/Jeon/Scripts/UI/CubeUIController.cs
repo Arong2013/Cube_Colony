@@ -1,10 +1,17 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CubeUIController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
+public enum DualAxisType
+{
+    XY,      // X, Y축 회전 가능
+    XZ,      // X, Z축 회전 가능
+    YZ       // Y, Z축 회전 가능
+}
+
+
+[System.Serializable]
+public class CubeUIController : IPointerUpHandler, IDragHandler
 {
     public float dragThreshold = 30f;
 
@@ -12,8 +19,9 @@ public class CubeUIController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     private bool isAxisConfirmed = false;
     private bool isAxisLocked = false;
 
-    private Cubie selectedCubie;
-    private CubeAxisType selectedAxis;
+    private CubieFace selectedCubie;
+    private CubeAxisType singleAxis;
+    private DualAxisType dualAxis;  
     private float accumulatedRotation = 0f;
 
     private Action<Cubie, CubeAxisType, int> rotateCube;
@@ -30,7 +38,6 @@ public class CubeUIController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
         isAxisConfirmed = false;
         isAxisLocked = false;
         accumulatedRotation = 0f;
-
         DetectSelectedCubie(eventData);
     }
 
@@ -44,7 +51,7 @@ public class CubeUIController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
         if (isRotateConfirmed)
         {
             finalRotation = (int)(Mathf.Sign(accumulatedRotation) * 90);
-            rotateCube?.Invoke(selectedCubie, selectedAxis, finalRotation);
+            rotateCube?.Invoke(selectedCubie.cubie, singleAxis, finalRotation);
         }
     }
 
@@ -61,30 +68,77 @@ public class CubeUIController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
         }
 
         DetectRotation(dragVector);
+
+        
     }
 
     private void DetectAxis(Vector2 dragVector)
     {
-        float absX = Mathf.Abs(dragVector.x);
-        float absY = Mathf.Abs(dragVector.y);
+        if (selectedCubie == null) return;
 
-        if (absX > absY)
+        // 선택된 면에서 가능한 회전 축을 가져옴
+        DualAxisType allowedAxis = selectedCubie.GetAllowedRotationAxis();
+        Debug.Log(allowedAxis + selectedCubie.face.ToString());
+
+        // 회전 가능한 축에 맞게 축을 결정
+        if (allowedAxis == DualAxisType.XY)
         {
-            selectedAxis = CubeAxisType.Y; 
+            // XY축 회전만 가능
+            if (Mathf.Abs(dragVector.x) < Mathf.Abs(dragVector.y))
+            {
+                singleAxis = CubeAxisType.X;  // X축 기준 회전
+            }
+            else
+            {
+                singleAxis = CubeAxisType.Y;  // Y축 기준 회전
+            }
         }
-        else
+        else if (allowedAxis == DualAxisType.XZ)
         {
-            selectedAxis = CubeAxisType.X; 
+            // XZ축 회전만 가능
+            if (Mathf.Abs(dragVector.x) > Mathf.Abs(dragVector.y))
+            {
+                singleAxis = CubeAxisType.X;  // X축 기준 회전
+            }
+            else
+            {
+                singleAxis = CubeAxisType.Z;  // Z축 기준 회전
+            }
+        }
+        else if (allowedAxis == DualAxisType.YZ)
+        {
+            // YZ축 회전만 가능
+            if (Mathf.Abs(dragVector.x) > Mathf.Abs(dragVector.y))
+            {
+                singleAxis = CubeAxisType.Y;  // Y축 기준 회전
+            }
+            else
+            {
+                singleAxis = CubeAxisType.Z;  // Z축 기준 회전
+            }
         }
     }
+
 
     private void DetectRotation(Vector2 dragVector)
     {
-        float rotationAmount = (selectedAxis == CubeAxisType.Y) ? -dragVector.x : dragVector.y;
-        accumulatedRotation += rotationAmount * Time.deltaTime;
+        if (dualAxis == DualAxisType.XY)
+        {
+            accumulatedRotation += dragVector.x * Time.deltaTime;  // X축
+        }
+        else if (dualAxis == DualAxisType.XZ)
+        {
+            accumulatedRotation += -dragVector.y * Time.deltaTime;  // Z축
+        }
+        else if (dualAxis == DualAxisType.YZ)
+        {
+            accumulatedRotation += -dragVector.x * Time.deltaTime;  // Y축
+        }
     }
 
-    private void DetectSelectedCubie(PointerEventData eventData)
+
+
+    public void DetectSelectedCubie(PointerEventData eventData)
     {
         if (Camera.main == null) return; // Camera.main이 없을 경우 예외 방지
 
@@ -93,7 +147,7 @@ public class CubeUIController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 
         foreach (var hit in hits)
         {
-            Cubie cubie = hit.collider.GetComponent<Cubie>();
+            CubieFace cubie = hit.collider.GetComponent<CubieFace>();
             if (cubie != null)
             {
                 selectedCubie = cubie;

@@ -12,13 +12,13 @@ public enum CubieFaceIndex
 }
 public class Cubie : MonoBehaviour
 {
-    private CubieFace[] faces = new CubieFace[6];
+    [SerializeField] private CubieFace[] faces = new CubieFace[6];
 
-    public Cubie()
+    private void Awake()
     {
         for (int i = 0; i < faces.Length; i++)
         {
-            faces[i] = new CubieFace();
+            faces[i].SetFace((CubieFaceIndex)i,this);   
         }
     }
 
@@ -69,5 +69,10 @@ public class Cubie : MonoBehaviour
         faces[indices[1]] = faces[indices[2]];
         faces[indices[2]] = faces[indices[3]];
         faces[indices[3]] = temp;
+
+        for (int i = 0; i < indices.Length; i++)
+        {
+            faces[indices[i]].SetFace((CubieFaceIndex)indices[i], this);
+        }
     }
 }
