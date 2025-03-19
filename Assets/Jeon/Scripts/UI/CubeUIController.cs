@@ -45,12 +45,7 @@ public class CubeUIController
 
         Vector2 dragVector = eventData.position - initialMousePosition;
 
-        if (!isAxisLocked)
-        {
-            DetectAxis(dragVector);
-            isAxisLocked = true;
-        }
-
+        DetectAxis(dragVector);
         DetectRotation(dragVector);
     }
 
@@ -80,14 +75,12 @@ public class CubeUIController
 
     private void DetectRotation(Vector2 dragVector)
     {
-        // 부모 오브젝트의 회전값을 가져옵니다.
         Quaternion parentRotation = parent.transform.parent.rotation;
 
         float rotationDirectionX = Mathf.Sign(parentRotation.eulerAngles.x);
         float rotationDirectionY = Mathf.Sign(parentRotation.eulerAngles.y);
         float rotationDirectionZ = Mathf.Sign(parentRotation.eulerAngles.z);
 
-        // 회전값을 업데이트합니다. 부모의 회전 방향에 맞게 부호를 반전시킵니다.
         accumulatedRotation += singleAxis switch
         {
             CubeAxisType.X => dragVector.y * rotationDirectionX * Time.deltaTime,

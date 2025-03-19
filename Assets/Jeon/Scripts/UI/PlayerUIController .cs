@@ -23,7 +23,7 @@ public class PlayerUIController : MonoBehaviour, IPointerDownHandler, IPointerUp
             EnableSelectUI();
     }
 
-    //public void SetRotateCubeUpdate(Action<Cubie, CubeAxisType, int> rotateCube) => cubeUIController.SetRotateCubeUpdate(rotateCube);
+    public void SetRotateCubeUpdate(Action<Cubie, CubeAxisType, int> rotateCube) => selectUI.SetRotateCubeUpdate(rotateCube);
 
     public void Init()
     {
