@@ -210,6 +210,7 @@ MonoBehaviour:
   clickHoldTime: 0.15
   cubeUIController:
     dragThreshold: 5
+    parent: {fileID: 1815109173}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0

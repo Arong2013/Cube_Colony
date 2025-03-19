@@ -14,6 +14,8 @@ public class CubeUIController
     private float accumulatedRotation = 0f;
     private Action<Cubie, CubeAxisType, int> rotateCube;
 
+    [SerializeField] Transform parent;
+
     public void SetRotateCubeUpdate(Action<Cubie, CubeAxisType, int> rotateCube)
     {
         this.rotateCube = rotateCube;
@@ -80,15 +82,22 @@ public class CubeUIController
 
     private void DetectRotation(Vector2 dragVector)
     {
+        // 부모 오브젝트의 회전값을 가져옵니다.
+        Quaternion parentRotation = parent.transform.parent.rotation;
+
+        float rotationDirectionX = Mathf.Sign(parentRotation.eulerAngles.x);
+        float rotationDirectionY = Mathf.Sign(parentRotation.eulerAngles.y);
+        float rotationDirectionZ = Mathf.Sign(parentRotation.eulerAngles.z);
+
+        // 회전값을 업데이트합니다. 부모의 회전 방향에 맞게 부호를 반전시킵니다.
         accumulatedRotation += singleAxis switch
         {
-            CubeAxisType.X => -dragVector.y * Time.deltaTime,
-            CubeAxisType.Y => -dragVector.x * Time.deltaTime,
-            CubeAxisType.Z => -dragVector.y * Time.deltaTime,
+            CubeAxisType.X => dragVector.y * rotationDirectionX * Time.deltaTime,
+            CubeAxisType.Y => -dragVector.x * rotationDirectionY * Time.deltaTime,
+            CubeAxisType.Z => -dragVector.y * rotationDirectionZ * Time.deltaTime,
             _ => 0
         };
     }
-
     private void DetectSelectedCubie(PointerEventData eventData)
     {
         if (Camera.main == null) return;
