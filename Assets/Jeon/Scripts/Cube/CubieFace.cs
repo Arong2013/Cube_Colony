@@ -3,7 +3,7 @@
 public class CubieFace : MonoBehaviour
 {
     [SerializeField] GameObject tower;
-    public Cubie cubie;
+    public Cubie cubie { get; private set; }
     public CubieFaceIndex face { get; private set; }
     public void Init(CubieFaceIndex face, Cubie cubie)
     {

@@ -13,4 +13,9 @@ public class TowerSpawnControllerUI
     {
         selectedFace.SpawnObject(); 
     }
+
+    public void EnableUI(CubieFace selectedFace)
+    {
+
+    }
 }

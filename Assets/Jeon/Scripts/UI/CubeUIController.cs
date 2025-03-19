@@ -7,7 +7,6 @@ public class CubeUIController
 {
     public float dragThreshold;
     private Vector2 initialMousePosition;
-    private bool isAxisConfirmed = false;
     private bool isAxisLocked = false;
     private CubieFace selectedCubie;
     private CubeAxisType singleAxis;
@@ -21,14 +20,13 @@ public class CubeUIController
         this.rotateCube = rotateCube;
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData,CubieFace cubieFace)
     {
         selectedCubie = null;
         initialMousePosition = eventData.position;
-        isAxisConfirmed = false;
         isAxisLocked = false;
         accumulatedRotation = 0f;
-        DetectSelectedCubie(eventData);
+        selectedCubie = cubieFace;
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -97,36 +95,5 @@ public class CubeUIController
             CubeAxisType.Z => -dragVector.y * rotationDirectionZ * Time.deltaTime,
             _ => 0
         };
-    }
-    private void DetectSelectedCubie(PointerEventData eventData)
-    {
-        if (Camera.main == null) return;
-
-        Ray ray = Camera.main.ScreenPointToRay(eventData.position);
-        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f);
-
-        RaycastHit[] hits = Physics.RaycastAll(ray, 100f);
-        if (hits.Length == 0) return;
-
-        CubieFace closestCubieFace = null;
-        float minDistance = float.MaxValue;
-
-        foreach (var hit in hits)
-        {
-            if (hit.collider.TryGetComponent(out CubieFace cubieFace))
-            {
-                float hitDistance = Vector3.Distance(ray.origin, hit.point);
-                if (hitDistance < minDistance)
-                {
-                    closestCubieFace = cubieFace;
-                    minDistance = hitDistance;
-                }
-            }
-        }
-
-        if (closestCubieFace != null)
-        {
-            selectedCubie = closestCubieFace;
-        }
     }
 }

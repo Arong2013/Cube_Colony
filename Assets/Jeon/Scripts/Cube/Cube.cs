@@ -25,7 +25,7 @@ public class Cube : MonoBehaviour
         cubeRotater = new CubeRotater(this.transform);
         cubeGridHandler = new CubeGridHandler(size, cubie,this.transform);
 
-        cubeUIController.SetRotateCubeUpdate(RotateCube);
+        //cubeUIController.SetRotateCubeUpdate(RotateCube);
     }
     private void Update()
     {
