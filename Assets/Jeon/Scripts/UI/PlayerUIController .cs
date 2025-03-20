@@ -1,64 +1,88 @@
-﻿using UnityEngine.EventSystems;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System;
 
-public class PlayerUIController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class PlayerUIController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,IDragHandler
 {
-    [SerializeField] float clickHoldTime = 1f;
+    [SerializeField] private float clickHoldTime = 1f;
 
-    private float currrentClickHold;
+    private CubieFace currentSelectedCubieFace;
+    private float currentClickHold;
     private bool isClickHold;
+    private bool isHoldClass;
 
-    [SerializeField] TowerSpawnControllerUI towerSpawnControllerUI = new TowerSpawnControllerUI();
-    [SerializeField] RotaterSelectUI selectUI;
+    private Vector2 initialMousePosition;
 
-    private CubieFace curselectedCubieFace;
-    public bool IsEnableSelectUI => curselectedCubieFace && currrentClickHold > clickHoldTime && isClickHold;
-    public bool IsEnableTowerSpawnUI => curselectedCubieFace && currrentClickHold < clickHoldTime && !isClickHold;
+
+    [SerializeField] CubeRotaterUI cubeRotaterUI = new CubeRotaterUI();
+    [SerializeField] TowerSpawnControllerUI towerSpawnControllerUI;
+
+    private Action<Cubie, CubeAxisType, int> rotateAction;
+    
 
     public void Update()
     {
-        ClickEvent();
-        if(IsEnableSelectUI)
-            EnableSelectUI();
+        if (isClickHold)
+        {
+            currentClickHold += Time.deltaTime;
+            if (currentClickHold > clickHoldTime && currentSelectedCubieFace)
+            {
+                isHoldClass = true;
+                cubeRotaterUI.SetUp(RotateCubeEvent, currentSelectedCubieFace, initialMousePosition);
+            }
+                
+        }
+        else
+        {
+            if(currentClickHold > 0.1f && currentSelectedCubieFace)
+            {
+                isHoldClass = false;
+            }
+        }
     }
-
-    public void SetRotateCubeUpdate(Action<Cubie, CubeAxisType, int> rotateCube) => selectUI.SetRotateCubeUpdate(rotateCube);
-
+    public void SetRotateAction(Action<Cubie, CubeAxisType, int> rotateCube)
+    {
+        rotateAction = rotateCube;
+    }
+    public void RotateCubeEvent(CubeAxisType cubeAxisType, int isClock)
+    {
+        rotateAction?.Invoke(currentSelectedCubieFace.cubie, cubeAxisType, isClock);
+    }
     public void Init()
     {
-        curselectedCubieFace = null;
-        currrentClickHold = 0;
-        isClickHold = true;
+        currentClickHold = 0;
+        isClickHold = true; 
+        currentSelectedCubieFace = null;
+        isHoldClass = false;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         Init();
-        RayCubieFace(eventData);
+        DetectSelectedCubieFace(eventData);
+        initialMousePosition = eventData.position;  
+    }
+     public void OnDrag(PointerEventData eventData)
+    {
+        if(isHoldClass)
+        {
+            cubeRotaterUI.OndDrag(eventData);
+        }
     }
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (IsEnableTowerSpawnUI)
-            EnableTowerSpawnUI();
-    }
-
-    private void RayCubieFace(PointerEventData eventData)
-    {
-        var selectedCubieFace = Utils.DetectSelectedObject<CubieFace>(eventData);
-        curselectedCubieFace = selectedCubieFace;
-    }
-    private void EnableSelectUI()
-    {
         isClickHold = false;
-        selectUI.EnableUI(curselectedCubieFace);
+        if (isHoldClass)
+        {
+            cubeRotaterUI.OnPointerUP();
+            isHoldClass = false;
+        }
+           
     }
-
-    private void EnableTowerSpawnUI()
+    private void DetectSelectedCubieFace(PointerEventData eventData)
     {
-        isClickHold = false;
-        towerSpawnControllerUI.EnableUI(curselectedCubieFace);
+        currentSelectedCubieFace = Utils.DetectSelectedObject<CubieFace>(eventData);
     }
 
-    public void ClickEvent() { if (isClickHold) currrentClickHold += Time.deltaTime; }
+
 }

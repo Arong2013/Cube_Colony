@@ -8,7 +8,7 @@ public class CubeRotater
     private bool isRotating;
     public bool IsRotating => isRotating;
 
-     Transform cubeParent; // 부모 Transform을 참조로 갖고 있어야 합니다.
+    Transform cubeParent; // 부모 Transform을 참조로 갖고 있어야 합니다.
 
     public CubeRotater(Transform parent)
     {
@@ -21,7 +21,8 @@ public class CubeRotater
         isRotating = true;
 
         Vector3 rotationAxis = GetRotationAxis(axis);
-        Vector3 rotationCenter = cubeParent.position; // 부모의 위치를 중심으로 사용
+
+        Vector3 center = GetCubesCenter(cubes);
 
         float duration = 0.5f;
         float elapsed = 0f;
@@ -30,13 +31,13 @@ public class CubeRotater
         while (elapsed < duration)
         {
             float step = (angle / duration) * Time.deltaTime;
-            cubes.ForEach(cube => cube.transform.RotateAround(rotationCenter, rotationAxis, step));
+            cubes.ForEach(cube => cube.transform.RotateAround(center, rotationAxis, step));
             elapsed += Time.deltaTime;
             yield return null;
         }
 
         float correction = angle - (elapsed * (angle / duration));
-        cubes.ForEach(cube => cube.transform.RotateAround(rotationCenter, rotationAxis, correction));
+        cubes.ForEach(cube => cube.transform.RotateAround(center, rotationAxis, correction));
 
         isRotating = false;
     }
@@ -51,5 +52,16 @@ public class CubeRotater
             CubeAxisType.Z => cubeParent.forward,
             _ => throw new ArgumentOutOfRangeException(nameof(axis), $"Unexpected axis value: {axis}")
         };
+    }
+
+    // 큐브 그룹의 중심 계산 함수
+    private Vector3 GetCubesCenter(List<Cubie> cubes)
+    {
+        Vector3 sum = Vector3.zero;
+        foreach (var cube in cubes)
+        {
+            sum += cube.transform.position;
+        }
+        return sum / cubes.Count; // 평균 위치가 중심이 됨
     }
 }
