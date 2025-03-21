@@ -28,9 +28,7 @@ public class CubeRotaterUI
         float dragMagnitude = Mathf.Abs(dragVector.x) + Mathf.Abs(dragVector.y);
         if(dragMagnitude > threshold)
         {
-            //SetAxis(dragVector.x > 0&& dragVector.y > 0 || dragVector.x <0 && dragVector.y < 0);
             TestAxis(dragVector);
-            //SetClockwise(dragVector);
             DetectRotation(dragVector);
             rotaterSelectUI.EnableUI(cubieFace,compomAxis,isClockwise);    
             canAction = true;   
@@ -82,60 +80,4 @@ public class CubeRotaterUI
         }
 
     }
-    private void SetAxis(bool plus)
-    {
-        switch (cantAxis)
-        {
-            case CubeAxisType.Z:
-                compomAxis = plus == true ? CubeAxisType.Y : CubeAxisType.X;
-                break;
-            case CubeAxisType.Y:
-                compomAxis = plus == true ? CubeAxisType.Z : CubeAxisType.X;
-                break;
-            case CubeAxisType.X:
-                compomAxis = plus == true  ? CubeAxisType.Z : CubeAxisType.Y;
-                break;
-        }
-    }
-    private void SetClockwise(Vector2 dragVector)
-    {
-        if (compomAxis == CubeAxisType.X)
-        {
-            // X 축일 때, dragVector의 x, y 값이 모두 양수 혹은 모두 음수일 때
-            if (dragVector.x > 0 && dragVector.y > 0 || dragVector.x > 0 && dragVector.y < 0)
-            {
-                isClockwise = false;  // 시계방향
-            }
-            else
-            {
-                isClockwise = true; // 반시계방향
-            }
-        }
-        else if (compomAxis == CubeAxisType.Y)
-        {
-            // Y 축일 때, dragVector의 x, y 값이 모두 양수 혹은 모두 음수일 때
-            if (dragVector.x > 0 && dragVector.y > 0 || dragVector.x > 0 && dragVector.y < 0)
-            {
-                isClockwise = false;  // 시계방향
-            }
-            else
-            {
-                isClockwise = true; // 반시계방향
-            }
-        }
-        else if (compomAxis == CubeAxisType.Z)
-        {
-            // Z 축일 때, dragVector의 x, y 값이 모두 양수 혹은 모두 음수일 때
-            if (dragVector.x > 0 && dragVector.y > 0 || dragVector.x > 0 && dragVector.y < 0)
-            {
-                isClockwise = false;  // 시계방향
-            }
-            else
-            {
-                isClockwise = true; // 반시계방향
-            }
-        }
-    }
-
-
 }

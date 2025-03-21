@@ -12,8 +12,6 @@ public class PlayerUIController : MonoBehaviour, IPointerDownHandler, IPointerUp
     private bool isHoldClass;
 
     private Vector2 initialMousePosition;
-
-
     [SerializeField] CubeRotaterUI cubeRotaterUI = new CubeRotaterUI();
     [SerializeField] TowerSpawnControllerUI towerSpawnControllerUI;
 
