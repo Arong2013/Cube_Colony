@@ -10,17 +10,17 @@ public class RotaterSelectUI
     [SerializeField] List<GameObject> rotaterSelectButtons;
     public void EnableUI(CubieFace cubieFace, CubeAxisType cubeAxisType, bool isClocked)
     {
-        if(cubieFace.face == CubieFaceIndex.Front || cubieFace.face == CubieFaceIndex.Back)
+        if(cubieFace.face == CubeFaceType.Front || cubieFace.face == CubeFaceType.Back)
         {
             rectTransform.position = cubieFace.transform.position + new Vector3(0, 0.5f, 0);
             rectTransform.rotation = Quaternion.Euler(0, 0, 0);
         }
-        if (cubieFace.face == CubieFaceIndex.Left || cubieFace.face == CubieFaceIndex.Right)
+        if (cubieFace.face == CubeFaceType.Left || cubieFace.face == CubeFaceType.Right)
         {
             rectTransform.position = cubieFace.transform.position + new Vector3(0,0.5f,0);
             rectTransform.rotation = Quaternion.Euler(0, 90, 0);
         }
-        if (cubieFace.face == CubieFaceIndex.Top || cubieFace.face == CubieFaceIndex.Back)
+        if (cubieFace.face == CubeFaceType.Top || cubieFace.face == CubeFaceType.Back)
         {
             rectTransform.position = cubieFace.transform.position  + new Vector3(0.5f,0,0f);
             rectTransform.rotation = Quaternion.Euler(90, 0, -90);

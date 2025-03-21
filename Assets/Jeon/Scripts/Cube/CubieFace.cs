@@ -4,13 +4,13 @@ public class CubieFace : MonoBehaviour
 {
     [SerializeField] GameObject tower;
     public Cubie cubie { get; private set; }
-    public CubieFaceIndex face { get; private set; }
-    public void Init(CubieFaceIndex face, Cubie cubie)
+    public CubeFaceType face { get; private set; }
+    public void Init(CubeFaceType face, Cubie cubie)
     {
         this.face = face;
         this.cubie = cubie;
     }
-    public void SetFace(CubieFaceIndex face)
+    public void SetFace(CubeFaceType face)
     {
         this.face = face;
     }
@@ -23,9 +23,9 @@ public class CubieFace : MonoBehaviour
     {
         return face switch
         {
-            CubieFaceIndex.Front or CubieFaceIndex.Back => CubeAxisType.Z,  
-            CubieFaceIndex.Left or CubieFaceIndex.Right => CubeAxisType.X,  
-            CubieFaceIndex.Top or CubieFaceIndex.Bottom => CubeAxisType.Y, 
+            CubeFaceType.Front or CubeFaceType.Back => CubeAxisType.Z,  
+            CubeFaceType.Left or CubeFaceType.Right => CubeAxisType.X,  
+            CubeFaceType.Top or CubeFaceType.Bottom => CubeAxisType.Y, 
             _ => CubeAxisType.Y 
         };
     }

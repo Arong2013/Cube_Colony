@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public enum CubieFaceIndex
+public enum CubeFaceType
 {
     Front,  // 정면
     Back,   // 후면
@@ -12,13 +12,14 @@ public enum CubieFaceIndex
 }
 public class Cubie : MonoBehaviour
 {
-    [SerializeField] private CubieFace[] faces = new CubieFace[6];
+    public bool isWalkable = true;
+    public  CubieFace[] faces = new CubieFace[6];
 
     private void Awake()
     {
         for (int i = 0; i < faces.Length; i++)
         {
-            faces[i].Init((CubieFaceIndex)i,this);   
+            faces[i].Init((CubeFaceType)i,this);   
         }
     }
 
@@ -41,24 +42,24 @@ public class Cubie : MonoBehaviour
     private void RotateX(bool clockwise)
     {
         int[] indices = clockwise ?
-            new[] { (int)CubieFaceIndex.Back, (int)CubieFaceIndex.Top, (int)CubieFaceIndex.Front, (int)CubieFaceIndex.Bottom }
-            : new[] { (int)CubieFaceIndex.Bottom, (int)CubieFaceIndex.Front, (int)CubieFaceIndex.Top, (int)CubieFaceIndex.Back };
+            new[] { (int)CubeFaceType.Back, (int)CubeFaceType.Top, (int)CubeFaceType.Front, (int)CubeFaceType.Bottom }
+            : new[] { (int)CubeFaceType.Bottom, (int)CubeFaceType.Front, (int)CubeFaceType.Top, (int)CubeFaceType.Back };
         RotateFaces(indices);
     }
 
     private void RotateY(bool clockwise)
     {
         int[] indices = clockwise ?
-            new[] { (int)CubieFaceIndex.Left, (int)CubieFaceIndex.Front, (int)CubieFaceIndex.Right, (int)CubieFaceIndex.Back }
-            : new[] { (int)CubieFaceIndex.Back, (int)CubieFaceIndex.Right, (int)CubieFaceIndex.Front, (int)CubieFaceIndex.Left };
+            new[] { (int)CubeFaceType.Left, (int)CubeFaceType.Front, (int)CubeFaceType.Right, (int)CubeFaceType.Back }
+            : new[] { (int)CubeFaceType.Back, (int)CubeFaceType.Right, (int)CubeFaceType.Front, (int)CubeFaceType.Left };
         RotateFaces(indices);
     }
 
     private void RotateZ(bool clockwise)
     {
         int[] indices = clockwise ?
-            new[] { (int)CubieFaceIndex.Left, (int)CubieFaceIndex.Top, (int)CubieFaceIndex.Right, (int)CubieFaceIndex.Bottom }
-            : new[] { (int)CubieFaceIndex.Bottom, (int)CubieFaceIndex.Right, (int)CubieFaceIndex.Top, (int)CubieFaceIndex.Left };
+            new[] { (int)CubeFaceType.Left, (int)CubeFaceType.Top, (int)CubeFaceType.Right, (int)CubeFaceType.Bottom }
+            : new[] { (int)CubeFaceType.Bottom, (int)CubeFaceType.Right, (int)CubeFaceType.Top, (int)CubeFaceType.Left };
         RotateFaces(indices);
     }
 
@@ -72,7 +73,7 @@ public class Cubie : MonoBehaviour
 
         for (int i = 0; i < indices.Length; i++)
         {
-            faces[indices[i]].SetFace((CubieFaceIndex)indices[i]);
+            faces[indices[i]].SetFace((CubeFaceType)indices[i]);
         }
     }
 }

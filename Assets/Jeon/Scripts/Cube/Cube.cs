@@ -18,7 +18,7 @@ public class Cube : MonoBehaviour
     [SerializeField] Cubie cubie;
 
     CubeRotater cubeRotater;
-    CubeGridHandler cubeGridHandler;
+   public CubeGridHandler cubeGridHandler;
 
     private void Start()
     {
@@ -29,13 +29,49 @@ public class Cube : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (cubeRotater.IsRotating) return;
+
+        if (Input.GetKeyDown(KeyCode.W))
         {
-            if (cubeRotater.IsRotating) return;
-            StartCoroutine(cubeRotater.RotateCubesSmooth(cubeGridHandler.GetAllCubies(),CubeAxisType.Y, 90)); // Y축 기준으로 시계방향 회전
-            cubeGridHandler.RotateEntireCube(true,CubeAxisType.Y);   
+            InputRotateCube(KeyCode.W);
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            InputRotateCube(KeyCode.S);
+        }
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            InputRotateCube(KeyCode.A);
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            InputRotateCube(KeyCode.D);
         }
     }
+
+    public void InputRotateCube(KeyCode keyCode)
+    {
+        switch(keyCode)
+        {
+            case KeyCode.W:
+                StartCoroutine(cubeRotater.RotateCubesSmooth(cubeGridHandler.GetAllCubies(), CubeAxisType.X, 90));
+                cubeGridHandler.RotateEntireCube(true, CubeAxisType.X);
+                break;
+            case KeyCode.S:
+                StartCoroutine(cubeRotater.RotateCubesSmooth(cubeGridHandler.GetAllCubies(), CubeAxisType.X, -90));
+                cubeGridHandler.RotateEntireCube(false, CubeAxisType.X);
+                break;
+            case KeyCode.A:
+                StartCoroutine(cubeRotater.RotateCubesSmooth(cubeGridHandler.GetAllCubies(), CubeAxisType.Y, 90));
+                cubeGridHandler.RotateEntireCube(true, CubeAxisType.Y);
+                break;
+            case KeyCode.D:
+                StartCoroutine(cubeRotater.RotateCubesSmooth(cubeGridHandler.GetAllCubies(), CubeAxisType.Y, -90));
+                cubeGridHandler.RotateEntireCube(false, CubeAxisType.Y);
+                break;
+        }
+    }
+
     private void RotateCube(Cubie selectedCubie, CubeAxisType axis, int rotationAmount)
     {
         if (cubeRotater.IsRotating) return;

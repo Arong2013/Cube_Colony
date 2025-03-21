@@ -44,7 +44,6 @@ public class CubeRotater
 
     private Vector3 GetRotationAxis(CubeAxisType axis)
     {
-        // 부모 오브젝트의 로컬 축을 기준으로 축 결정
         return axis switch
         {
             CubeAxisType.X => cubeParent.right,
@@ -53,8 +52,6 @@ public class CubeRotater
             _ => throw new ArgumentOutOfRangeException(nameof(axis), $"Unexpected axis value: {axis}")
         };
     }
-
-    // 큐브 그룹의 중심 계산 함수
     private Vector3 GetCubesCenter(List<Cubie> cubes)
     {
         Vector3 sum = Vector3.zero;
