@@ -43,9 +43,6 @@ public static class CubieMatrixHelper
                 }
             }
     }
-
-
-
     public static Cubie[,] RotateMatrix(Cubie[,] matrix, bool isClockwise, CubeAxisType axis)
     {
         int size = matrix.GetLength(0);

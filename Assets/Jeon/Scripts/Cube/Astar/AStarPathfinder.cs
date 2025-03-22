@@ -1,85 +1,144 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-public static class AStarPathfinder
+public class AStarPathfinding
 {
-    private class Node
-    {
-        public Vector2Int pos;
-        public Node parent;
-        public float gCost, hCost;
-        public float fCost => gCost + hCost;
+    private Dictionary<Vector2Int, CubieFace> v2CubieFaceMap;
+    private int size;
 
-        public Node(Vector2Int pos, Node parent, float g, float h)
-        {
-            this.pos = pos;
-            this.parent = parent;
-            this.gCost = g;
-            this.hCost = h;
-        }
+    public AStarPathfinding(Dictionary<Vector2Int, CubieFace> v2CubieFaceMap, int size)
+    {
+        this.v2CubieFaceMap = v2CubieFaceMap;
+        this.size = size;
     }
 
-    private static readonly Vector2Int[] directions = new Vector2Int[]
+    // CubieFace를 입력받아 해당하는 시작점과 목표점의 인덱스를 구해서 경로 탐색을 실행
+    public List<CubieFace> FindPath(CubieFace startFace, CubieFace goalFace)
     {
-        Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right
-    };
+        Vector2Int start = GetPositionFromCubieFace(startFace); // CubieFace에서 시작 위치 얻기
+        Vector2Int goal = GetPositionFromCubieFace(goalFace); // CubieFace에서 목표 위치 얻기
 
-    public static List<Vector2Int> FindPath(Cubie[,] map, Vector2Int start, Vector2Int goal)
-    {
-        int width = map.GetLength(0);
-        int height = map.GetLength(1);
-        var open = new List<Node>();
-        var closed = new HashSet<Vector2Int>();
+        // A* 알고리즘에 필요한 open list와 closed list
+        List<Vector2Int> openList = new List<Vector2Int>();
+        HashSet<Vector2Int> closedList = new HashSet<Vector2Int>();
 
-        Node startNode = new Node(start, null, 0, Vector2Int.Distance(start, goal));
-        open.Add(startNode);
+        // 각 노드의 g, h, f 값
+        Dictionary<Vector2Int, float> gScores = new Dictionary<Vector2Int, float>();
+        Dictionary<Vector2Int, float> fScores = new Dictionary<Vector2Int, float>();
+        Dictionary<Vector2Int, Vector2Int> cameFrom = new Dictionary<Vector2Int, Vector2Int>();
 
-        while (open.Count > 0)
+        // 시작점과 목표점의 초기 설정
+        openList.Add(start);
+        gScores[start] = 0;
+        fScores[start] = Heuristic(start, goal);
+
+        // A* 알고리즘 실행
+        while (openList.Count > 0)
         {
-            Node current = open.OrderBy(n => n.fCost).First();
-            open.Remove(current);
-            closed.Add(current.pos);
+            // open list에서 f 값이 가장 작은 노드를 선택
+            Vector2Int current = GetNodeWithLowestFScore(openList, fScores);
 
-            if (current.pos == goal)
+            // 목표에 도달하면 경로 반환
+            if (current == goal)
             {
-                List<Vector2Int> path = new();
-                while (current != null)
-                {
-                    path.Add(current.pos);
-                    current = current.parent;
-                }
-                path.Reverse();
+                List<CubieFace> path = ReconstructPath(cameFrom, current);
                 return path;
             }
 
-            foreach (var dir in directions)
+            openList.Remove(current);
+            closedList.Add(current);
+
+            // 이웃 노드들에 대해 확장
+            foreach (Vector2Int neighbor in GetNeighbors(current))
             {
-                Vector2Int neighborPos = current.pos + dir;
-                if (neighborPos.x < 0 || neighborPos.x >= width || neighborPos.y < 0 || neighborPos.y >= height)
+                if (closedList.Contains(neighbor)) continue;
+
+                float tentativeGScore = gScores[current] + 1;  // 이동 비용은 1로 설정 (상하좌우로 이동)
+
+                if (!openList.Contains(neighbor))
+                    openList.Add(neighbor);
+                else if (tentativeGScore >= gScores[neighbor])
                     continue;
 
-                Cubie cubie = map[neighborPos.x, neighborPos.y];
-                if (cubie == null || !cubie.isWalkable)
-                    continue;
-
-                if (closed.Contains(neighborPos)) continue;
-
-                float tentativeG = current.gCost + 1;
-                Node existing = open.FirstOrDefault(n => n.pos == neighborPos);
-
-                if (existing == null)
-                {
-                    open.Add(new Node(neighborPos, current, tentativeG, Vector2Int.Distance(neighborPos, goal)));
-                }
-                else if (tentativeG < existing.gCost)
-                {
-                    existing.parent = current;
-                    existing.gCost = tentativeG;
-                }
+                // 더 좋은 경로를 찾았으면 점수 업데이트
+                cameFrom[neighbor] = current;
+                gScores[neighbor] = tentativeGScore;
+                fScores[neighbor] = gScores[neighbor] + Heuristic(neighbor, goal);
             }
         }
 
-        return null; // 경로 없음
+        return null;  // 경로를 찾을 수 없는 경우 null 반환
+    }
+    private Vector2Int GetPositionFromCubieFace(CubieFace cubieFace)
+    {
+        // CubieFace 객체가 v2CubieFaceMap에 있을 때 해당하는 위치를 반환
+        foreach (var pair in v2CubieFaceMap)
+        {
+            if (pair.Value == cubieFace)
+            {
+                return pair.Key;  // 해당 CubieFace가 있는 위치 반환
+            }
+        }
+
+        // 만약 v2CubieFaceMap에 CubieFace가 없으면, 예외 처리 또는 디버그 메시지 출력
+        Debug.LogWarning("CubieFace not found in v2CubieFaceMap.");
+        return Vector2Int.zero;  // 찾을 수 없는 경우 (디폴트값 반환)
+    }
+
+
+    // 목표까지의 추정 비용 (맨해튼 거리)
+    private float Heuristic(Vector2Int a, Vector2Int b)
+    {
+        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y); // 맨해튼 거리
+    }
+
+    // f 값이 가장 작은 노드를 반환
+    private Vector2Int GetNodeWithLowestFScore(List<Vector2Int> openList, Dictionary<Vector2Int, float> fScores)
+    {
+        Vector2Int bestNode = openList[0];
+        foreach (var node in openList)
+        {
+            if (fScores.ContainsKey(node) && fScores[node] < fScores[bestNode])
+                bestNode = node;
+        }
+        return bestNode;
+    }
+
+    // 주어진 노드의 인접 노드를 반환
+    private List<Vector2Int> GetNeighbors(Vector2Int node)
+    {
+        List<Vector2Int> neighbors = new List<Vector2Int>();
+
+        // 상하좌우 방향으로 탐색
+        Vector2Int[] directions = {
+            new Vector2Int(0, 1),   // 위
+            new Vector2Int(0, -1),  // 아래
+            new Vector2Int(1, 0),   // 오른쪽
+            new Vector2Int(-1, 0)   // 왼쪽
+        };
+
+        foreach (var direction in directions)
+        {
+            Vector2Int neighbor = node + direction;
+            if (v2CubieFaceMap.ContainsKey(neighbor))  // 이동 가능한 타일인 경우
+            {
+                neighbors.Add(neighbor);
+            }
+        }
+
+        return neighbors;
+    }
+
+    // 경로 재구성
+    private List<CubieFace> ReconstructPath(Dictionary<Vector2Int, Vector2Int> cameFrom, Vector2Int current)
+    {
+        List<CubieFace> path = new List<CubieFace>();
+        path.Add(v2CubieFaceMap[current]);  // 시작 지점 추가
+        while (cameFrom.ContainsKey(current))
+        {
+            current = cameFrom[current];
+            path.Insert(0, v2CubieFaceMap[current]);  // 경로 순서를 올바르게 하여 삽입
+        }
+        return path;
     }
 }

@@ -75,9 +75,11 @@ public class Cube : MonoBehaviour
     private void RotateCube(Cubie selectedCubie, CubeAxisType axis, int rotationAmount)
     {
         if (cubeRotater.IsRotating) return;
-        int layer = cubeGridHandler.FindLayer(selectedCubie, axis);
-        List<Cubie> cubies = cubeGridHandler.GetCubiesInLayer(layer, axis);
+        List<Cubie> cubies = cubeGridHandler.GetCubiesInLayer(selectedCubie, axis);
         StartCoroutine(cubeRotater.RotateCubesSmooth(cubies, axis, rotationAmount));
-        cubeGridHandler.RotateLayer(layer, rotationAmount > 0, axis);
+        cubeGridHandler.RotateLayer(selectedCubie, axis, rotationAmount);
     }
+
+
+    public List<CubieFace> TestAstar(CubieFace start, CubieFace end) => cubeGridHandler.GetAstarFaceList(start, end);   
 }
