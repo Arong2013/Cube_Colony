@@ -22,27 +22,7 @@ public static class CubieMatrixHelper
 
         return face;
     }
-    public static void InsertLayer(Cubie[,,] grid, int layer, Cubie[,] face, CubeAxisType axis)
-    {
-        int size = grid.GetLength(0);
 
-        for (int i = 0; i < size; i++)
-            for (int j = 0; j < size; j++)
-            {
-                switch (axis)
-                {
-                    case CubeAxisType.X:
-                        grid[layer, i, j] = face[i, j];
-                        break;
-                    case CubeAxisType.Y:
-                        grid[i, layer, j] = face[i, j];
-                        break;
-                    case CubeAxisType.Z:
-                        grid[i, j, layer] = face[i, j];
-                        break;
-                }
-            }
-    }
     public static Cubie[,] RotateMatrix(Cubie[,] matrix, bool isClockwise, CubeAxisType axis)
     {
         int size = matrix.GetLength(0);

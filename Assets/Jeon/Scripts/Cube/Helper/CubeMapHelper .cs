@@ -1,59 +1,49 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.EventSystems.EventTrigger;
 
 public static class CubeMapHelper
 {
-    private static void AddFaceTiles(List<Vector2Int> positions, int size, int offsetX, int offsetY, bool IsPlusX , bool IsPlusY)
+    private static List<Vector2Int> GetFaceVector2List(int size, int offsetX, int offsetY)
     {
-        int xFactor = IsPlusX ? 1 : -1;
-        int yFactor = IsPlusY ? 1 : -1;
-
+        List<Vector2Int> positions = new List<Vector2Int>();
         for (int x = 0; x < size; x++)
         {
             for (int y = 0; y < size; y++)
             {
-                // 타일 위치 계산
-                int posX = xFactor * x + offsetX;
-                int posY = yFactor * y + offsetY;
-
+                int posX =  x + offsetX;
+                int posY = y + offsetY;
                 positions.Add(new Vector2Int(posX, posY));
             }
         }
-    }
-    //앞 뒤 좌 우 위 아래
-    public static List<Vector2Int> BuildEmptyMap(int size)
-    {
-        List<Vector2Int> positions = new List<Vector2Int>();
-        AddFaceTiles(positions, size, 0, 0, true, true);
-        AddFaceTiles(positions, size, size * 2, 0, true, true);
-        AddFaceTiles(positions, size, -size, 0, true, true);
-        AddFaceTiles(positions, size, size, 0, true, true);
-        AddFaceTiles(positions, size, 0, size, true, true);
-        AddFaceTiles(positions, size, 0, -size, true, true);
         return positions;   
     }
-
-    //앞 뒤 좌 우 위 아래 좌 위 아래
-    public static List<Vector2Int> BulidEmptyMapforAstar(int size)
+    //앞 뒤 좌 우 위 아래
+    private static List<Vector2Int> GetEmptyMap(int size)
     {
         List<Vector2Int> positions = new List<Vector2Int>();
-        AddFaceTiles(positions, size, 0, 0, true, true);
-        AddFaceTiles(positions, size, size * size - 1, 0, false, true);
-        AddFaceTiles(positions, size, -1, 0, false, true);
-        AddFaceTiles(positions, size, size, 0, true, true);
-        AddFaceTiles(positions, size, 0, size, true, true);
-        AddFaceTiles(positions, size, 0, -1, true, false);
-        AddFaceTiles(positions, size, -size - 1, 0, false, true);
-        AddFaceTiles(positions, size, 0, size*2, true, true);
-        AddFaceTiles(positions, size, 0, -size - 1, true, false);
-
+        positions.AddRange(GetFaceVector2List(size, 0, 0));         // 예: 앞면
+        positions.AddRange(GetFaceVector2List(size, size * 2, 0));    // 예: 뒷 면
+        positions.AddRange(GetFaceVector2List(size, -size, 0));       // 예: 왼쪽 면
+        positions.AddRange(GetFaceVector2List(size, size, 0));        // 예:  오른쪽 면
+        positions.AddRange(GetFaceVector2List(size, 0, size));        // 예: 윗면
+        positions.AddRange(GetFaceVector2List(size, 0, -size));       // 예: 아랫면
+        return positions;
+    }
+    private static List<Vector2Int> BulidEmptyMapforAstar(int size)
+    {
+        List<Vector2Int> positions = GetEmptyMap(size);
+        positions.AddRange(GetFaceVector2List(size, -size * 2, 0));
+        positions.AddRange(GetFaceVector2List(size, 0, size * 2).AsEnumerable().Reverse().ToList());
+        positions.AddRange(GetFaceVector2List(size, 0, -size * 2).AsEnumerable().Reverse().ToList());
         return positions;
     }
 
-    public static Dictionary<CubeFaceType, List<CubieFace>> FillCubieFaceMap(List<Cubie> allCubies,Cubie[,,] cubieGrid)
+    private static Dictionary<CubeFaceType, List<CubieFace>> SetCubieFaceMap(List<Cubie> allCubies,Cubie[,,] cubieGrid)
     {
         int size = cubieGrid.GetLength(0);  
 
@@ -68,12 +58,9 @@ public static class CubeMapHelper
     };
         foreach (var cubie in allCubies)
         {
-            // 큐브 위치 얻기
             int x = GridSearchHelper.FindLayer(cubie, CubeAxisType.X,cubieGrid);
             int y = GridSearchHelper.FindLayer(cubie, CubeAxisType.Y,cubieGrid);
             int z = GridSearchHelper.FindLayer(cubie, CubeAxisType.Z, cubieGrid);
-
-            // 큐브의 각 면에 맞는 위치에 배치
             foreach (var face in cubie.GetComponentsInChildren<CubieFace>())
             {
                 CubeFaceType faceType = face.face;
@@ -135,7 +122,7 @@ public static class CubeMapHelper
             return result;
         });
     }
-    public static void SortCubieFaceMap(Dictionary<CubeFaceType, List<CubieFace>> cubieFaceMap, Cubie[,,] cubieGrid)
+    private static void SortCubieFaceMap(Dictionary<CubeFaceType, List<CubieFace>> cubieFaceMap, Cubie[,,] cubieGrid)
     {
         foreach (var faceType in cubieFaceMap.Keys)
         {
@@ -174,69 +161,26 @@ public static class CubeMapHelper
         }
 
     }
-    public static List<CubeFaceType> GetFaceOrder(CubeFaceType centerFace)
-    {
-        List<CubeFaceType> faceOrder = new List<CubeFaceType>();
 
-        switch (centerFace)
+    private static List<CubeFaceType> GetFaceOderList(bool IsAstar)
+    {
+        List<CubeFaceType> faceOrderlist = new List<CubeFaceType>();
+
+        if(IsAstar)
         {
-            case CubeFaceType.Top:
-                faceOrder.AddRange(new[] { CubeFaceType.Top, CubeFaceType.Bottom, CubeFaceType.Left, CubeFaceType.Right, CubeFaceType.Back, CubeFaceType.Front });
-                break;
-            case CubeFaceType.Bottom:
-                faceOrder.AddRange(new[] { CubeFaceType.Bottom, CubeFaceType.Top, CubeFaceType.Left, CubeFaceType.Right, CubeFaceType.Front, CubeFaceType.Back });
-                break;
-            case CubeFaceType.Front:
-                faceOrder.AddRange(new[] { CubeFaceType.Front, CubeFaceType.Back, CubeFaceType.Left, CubeFaceType.Right, CubeFaceType.Top, CubeFaceType.Bottom });
-                break;
-            case CubeFaceType.Back:
-                faceOrder.AddRange(new[] { CubeFaceType.Back, CubeFaceType.Front, CubeFaceType.Right, CubeFaceType.Left, CubeFaceType.Top, CubeFaceType.Bottom });
-                break;
-            case CubeFaceType.Left:
-                faceOrder.AddRange(new[] { CubeFaceType.Left, CubeFaceType.Right, CubeFaceType.Back, CubeFaceType.Front, CubeFaceType.Top, CubeFaceType.Bottom });
-                break;
-            case CubeFaceType.Right:
-                faceOrder.AddRange(new[] { CubeFaceType.Right, CubeFaceType.Left, CubeFaceType.Front, CubeFaceType.Back, CubeFaceType.Top, CubeFaceType.Bottom });
-                break;
+            faceOrderlist.AddRange(new[] { CubeFaceType.Front, CubeFaceType.Back, CubeFaceType.Left, CubeFaceType.Right, CubeFaceType.Top, CubeFaceType.Bottom, CubeFaceType.Back, CubeFaceType.Back, CubeFaceType.Back });            
+        }
+        else
+        {
+            faceOrderlist.AddRange(new[] { CubeFaceType.Front, CubeFaceType.Back, CubeFaceType.Left, CubeFaceType.Right, CubeFaceType.Top, CubeFaceType.Bottom });
         }
 
-        return faceOrder;
+        return faceOrderlist;   
     }
-
-    public static List<CubeFaceType> GetFaceOrderforAstar(CubeFaceType centerFace)
-    {
-        List<CubeFaceType> faceOrder = new List<CubeFaceType>();
-
-        switch (centerFace)
-        {
-            case CubeFaceType.Top:
-                faceOrder.AddRange(new[] { CubeFaceType.Top, CubeFaceType.Bottom, CubeFaceType.Left, CubeFaceType.Right, CubeFaceType.Back, CubeFaceType.Front , CubeFaceType.Bottom , CubeFaceType.Bottom , CubeFaceType.Bottom });
-                break;
-            case CubeFaceType.Bottom:
-                faceOrder.AddRange(new[] { CubeFaceType.Bottom, CubeFaceType.Top, CubeFaceType.Left, CubeFaceType.Right, CubeFaceType.Front, CubeFaceType.Back, CubeFaceType.Top, CubeFaceType.Top, CubeFaceType.Top });
-                break;
-            case CubeFaceType.Front:
-                faceOrder.AddRange(new[] { CubeFaceType.Front, CubeFaceType.Back, CubeFaceType.Left, CubeFaceType.Right, CubeFaceType.Top, CubeFaceType.Bottom , CubeFaceType.Back , CubeFaceType.Back , CubeFaceType.Back });
-                break;
-            case CubeFaceType.Back:
-                faceOrder.AddRange(new[] { CubeFaceType.Back, CubeFaceType.Front, CubeFaceType.Right, CubeFaceType.Left, CubeFaceType.Top, CubeFaceType.Bottom , CubeFaceType.Front , CubeFaceType.Front , CubeFaceType.Front });
-                break;
-            case CubeFaceType.Left:
-                faceOrder.AddRange(new[] { CubeFaceType.Left, CubeFaceType.Right, CubeFaceType.Back, CubeFaceType.Front, CubeFaceType.Top, CubeFaceType.Bottom, CubeFaceType.Right, CubeFaceType.Right, CubeFaceType.Right });
-                break;
-            case CubeFaceType.Right:
-                faceOrder.AddRange(new[] { CubeFaceType.Right, CubeFaceType.Left, CubeFaceType.Front, CubeFaceType.Back, CubeFaceType.Top, CubeFaceType.Bottom, CubeFaceType.Left, CubeFaceType.Left, CubeFaceType.Left });
-                break;
-        }
-
-        return faceOrder;
-    }
-
-
-    public static Dictionary<Vector2Int, CubieFace> BuildCubieFaceMap(Dictionary<CubeFaceType, List<CubieFace>> cubieFaceMap, List<Vector2Int> positions, CubeFaceType centerFace)
+    private static Dictionary<Vector2Int, CubieFace> AddCubieFaceInEmptyMap(Dictionary<CubeFaceType, List<CubieFace>> cubieFaceMap, List<Vector2Int> positions)
     {
         Dictionary<Vector2Int, CubieFace> v2CubieFaceMap = new Dictionary<Vector2Int, CubieFace>();
-        List<CubeFaceType> faceOrder = GetFaceOrder(centerFace);
+        List<CubeFaceType> faceOrder = GetFaceOderList(false);
         int positionIndex = 0; 
 
         foreach (var faceType in faceOrder)
@@ -252,5 +196,13 @@ public static class CubeMapHelper
         }
         return v2CubieFaceMap;
     }
-
+    public static Dictionary<Vector2Int, CubieFace> GetFaceMap(Cubie[,,] cubieGrid)
+    {
+        int size = cubieGrid.GetLength(0);
+        List<Vector2Int> positions = GetEmptyMap(size);
+        var allCubies = GridSearchHelper.GetAllCubies(cubieGrid);
+        Dictionary<CubeFaceType, List<CubieFace>> cubieFaceMap = SetCubieFaceMap(allCubies, cubieGrid);
+        SortCubieFaceMap(cubieFaceMap, cubieGrid);
+        return AddCubieFaceInEmptyMap(cubieFaceMap,positions);
+    }
 }
