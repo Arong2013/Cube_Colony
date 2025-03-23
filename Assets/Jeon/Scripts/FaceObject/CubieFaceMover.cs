@@ -35,7 +35,7 @@ public class CubieFaceMover : MonoBehaviour
 
         isMoving = true;
 
-        path = cube.TestAstar(startFace, goalFace);  // A* 알고리즘을 사용하여 경로 찾기  
+        //path = cube.TestAstar(startFace, goalFace);  // A* 알고리즘을 사용하여 경로 찾기  
 
         if (path != null && path.Count > 0)
         {

@@ -2,129 +2,149 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
-[System.Serializable]
 
+[System.Serializable]
 public class CubeGridHandler
 {
-    public readonly int size;
+    public readonly int Size;
     private Cubie[,,] cubieGrid;
-    public Cubie[,,] CubieGrid => (Cubie[,,])cubieGrid.Clone();    
-    public CubeGridHandler(int _size, Cubie cubie, Transform parent)
-    {
-        size = _size;
-        cubieGrid = new Cubie[size, size, size];
 
-        for (int x = 0; x < size; x++)
-            for (int y = 0; y < size; y++)
-                for (int z = 0; z < size; z++)
+    public Cubie[,,] GridSnapshot => GetGridCopy();
+
+    // ✅ 생성자
+    public CubeGridHandler(int size, Cubie cubiePrefab, Transform parent)
+    {
+        Size = size;
+        cubieGrid = new Cubie[Size, Size, Size];
+
+        for (int x = 0; x < Size; x++)
+            for (int y = 0; y < Size; y++)
+                for (int z = 0; z < Size; z++)
                 {
                     Vector3 position = new Vector3(x - 1, y - 1, z - 1);
-                    cubieGrid[x, y, z] = UnityEngine.Object.Instantiate(cubie, position, Quaternion.identity, parent);
+                    cubieGrid[x, y, z] = UnityEngine.Object.Instantiate(cubiePrefab, position, Quaternion.identity, parent);
                     cubieGrid[x, y, z].name = $"Cubie_{x}_{y}_{z}";
                 }
     }
-    public void RotateLayer(Cubie selectedCubie, CubeAxisType axis, int rotationAmount)
+
+    // ✅ 외부 호출 메서드 - 회전
+    public void RotateSingleLayer(Cubie referenceCubie, CubeAxisType axis, int rotationAmount)
     {
-        int layer = GridSearchHelper.FindLayer(selectedCubie, axis, cubieGrid);
-        bool isClockwise = rotationAmount > 0;
-        RotateLayer(layer, isClockwise, axis);
-        UpdateCubieNames();
+        int layerIndex = GridSearchHelper.FindLayer(referenceCubie, axis, GetGridCopy());
+        bool clockwise = rotationAmount > 0;
+        ApplyLayerRotation(layerIndex, clockwise, axis);
+        RenameCubies();
     }
 
-    public List<CubieFace> GetAstarFaceList(CubieFace start,CubieFace target)
+    public void RotateWholeCube(bool clockwise, CubeAxisType axis)
     {
-        var faceType = start.face;  
-        HandleCubeRotation(faceType, false);
-        AStarPathfinding astar = new AStarPathfinding(CubeMapHelper.GetFaceMap(CubieGrid), size);
-        var list = astar.FindPath(start, target);
-        HandleCubeRotation(faceType, true);
-        return list;
+        for (int layer = 0; layer < Size; layer++)
+            ApplyLayerRotation(layer, clockwise, axis);
     }
-    private void HandleCubeRotation(CubeFaceType cubeFaceType, bool isRestore)
+
+    // ✅ 외부 호출 메서드 - 경로 탐색
+    public List<CubieFace> GetAstarPathFaces(CubieFace startFace, CubieFace targetFace)
     {
-        switch (cubeFaceType)
+        var referenceFace = startFace.face;
+        try
+        {
+            ApplyViewAlignment(referenceFace, false);
+            var pathfinder = new AStarPathfinding(CubeMapHelper.GetFinalFaceMap(GetGridCopy()), Size);
+            return pathfinder.FindPath(startFace, targetFace);
+        }
+        finally
+        {
+            ApplyViewAlignment(referenceFace, true);
+            RenameCubies();
+        }
+    }
+
+    // ✅ 외부 호출 메서드 - 조회
+    public List<Cubie> GetAllCubies() => GridSearchHelper.GetAllCubies(GetGridCopy());
+
+    public List<Cubie> GetCubiesOnSameLayer(Cubie referenceCubie, CubeAxisType axis)
+    {
+        int layer = GridSearchHelper.FindLayer(referenceCubie, axis, GetGridCopy());
+        return GridSearchHelper.GetCubiesInLayer(layer, axis, GetGridCopy());
+    }
+
+    // ✅ 내부 구현 - 레이어 회전 흐름
+    private void ApplyLayerRotation(int layer, bool isClockwise, CubeAxisType axis)
+    {
+        Cubie[,] layerSlice = CubieMatrixHelper.ExtractLayer(GetGridCopy(), layer, axis);
+        RotateCubies(layerSlice, isClockwise, axis);
+        Cubie[,] rotated = CubieMatrixHelper.RotateMatrix(layerSlice, isClockwise, axis);
+        InsertRotatedLayer(layer, rotated, axis);
+        RenameCubies();
+    }
+
+    // ✅ 내부 구현 - 큐비 단위 회전
+    public void RotateCubies(Cubie[,] cubies, bool isClockwise, CubeAxisType axis)
+    {
+        foreach (var cubie in cubies)
+        {
+            cubie.RotateCubie(axis, isClockwise);
+        }
+    }
+
+    // ✅ 내부 구현 - A* 뷰 회전 처리
+    private void ApplyViewAlignment(CubeFaceType face, bool restore)
+    {
+        switch (face)
         {
             case CubeFaceType.Top:
-                // Top 면은 X축 기준으로 회전 (반대 방향)
-                RotateEntireCube(isRestore ? false : true, CubeAxisType.X);
+                RotateWholeCube(restore ? false : true, CubeAxisType.X);
                 break;
             case CubeFaceType.Bottom:
-                // Bottom 면은 X축 기준으로 회전 (반대 방향)
-                RotateEntireCube(isRestore ? true : false, CubeAxisType.X);
+                RotateWholeCube(restore ? true : false, CubeAxisType.X);
                 break;
             case CubeFaceType.Back:
-                // Back 면은 Y축 기준으로 회전 (반대 방향)
-                RotateEntireCube(isRestore ? true : false, CubeAxisType.Y);
-                RotateEntireCube(isRestore ? true : false, CubeAxisType.Y);
+                RotateWholeCube(restore ? true : false, CubeAxisType.Y);
+                RotateWholeCube(restore ? true : false, CubeAxisType.Y);
                 break;
             case CubeFaceType.Left:
-                // Left 면은 Z축 기준으로 회전 (반대 방향)
-                RotateEntireCube(isRestore ? false : true, CubeAxisType.Z);
+                RotateWholeCube(restore ? false : true, CubeAxisType.Z);
                 break;
             case CubeFaceType.Right:
-                // Right 면은 Z축 기준으로 회전 (반대 방향)
-                RotateEntireCube(isRestore ? true : false, CubeAxisType.Z);
-                break;
-            default:
+                RotateWholeCube(restore ? true : false, CubeAxisType.Z);
                 break;
         }
     }
 
-    private void InsertLayer(int layer, Cubie[,] face, CubeAxisType axis)
+    // ✅ 내부 구현 - 레이어 데이터 적용
+    private void InsertRotatedLayer(int layer, Cubie[,] slice, CubeAxisType axis)
     {
-        for (int i = 0; i < size; i++)
-            for (int j = 0; j < size; j++)
+        for (int i = 0; i < Size; i++)
+            for (int j = 0; j < Size; j++)
             {
                 switch (axis)
                 {
                     case CubeAxisType.X:
-                        cubieGrid[layer, i, j] = face[i, j];
+                        cubieGrid[layer, i, j] = slice[i, j];
                         break;
                     case CubeAxisType.Y:
-                        cubieGrid[i, layer, j] = face[i, j];
+                        cubieGrid[i, layer, j] = slice[i, j];
                         break;
                     case CubeAxisType.Z:
-                        cubieGrid[i, j, layer] = face[i, j];
+                        cubieGrid[i, j, layer] = slice[i, j];
                         break;
                 }
             }
     }
 
-    private void RotateLayer(int layer, bool isClockwise, CubeAxisType axis)
+    // ✅ 내부 구현 - 이름 정리
+    private void RenameCubies()
     {
-        Cubie[,] face = CubieMatrixHelper.ExtractLayer(cubieGrid, layer, axis);
-        CubieManipulator.RotateCubies(face, isClockwise, axis);
-        var rotated = CubieMatrixHelper.RotateMatrix(face, isClockwise, axis);
-        InsertLayer(layer, rotated, axis);
-        UpdateCubieNames();
-    }
-    public void RotateEntireCube(bool isClockwise, CubeAxisType axis)
-    {
-        for (int layer = 0; layer < size; layer++)
-            RotateLayer(layer, isClockwise, axis);
+        for (int x = 0; x < Size; x++)
+            for (int y = 0; y < Size; y++)
+                for (int z = 0; z < Size; z++)
+                    if (cubieGrid[x, y, z] != null)
+                        cubieGrid[x, y, z].name = $"Cubie_{x}_{y}_{z}";
     }
 
-    public List<Cubie> GetAllCubies()
-    {
-        return GridSearchHelper.GetAllCubies(cubieGrid);
-    }
-    public List<Cubie> GetCubiesInLayer(Cubie selectedCubie, CubeAxisType axis)
-    {
-        int layer = GridSearchHelper.FindLayer(selectedCubie, axis, cubieGrid);
-        return GridSearchHelper.GetCubiesInLayer(layer, axis, cubieGrid);
-    }
-    private void UpdateCubieNames()
-    {
-        for (int x = 0; x < size; x++)
-            for (int y = 0; y < size; y++)
-                for (int z = 0; z < size; z++)
-                {
-                    if (cubieGrid[x, y, z] != null)
-                    {
-                        cubieGrid[x, y, z].name = $"Cubie_{x}_{y}_{z}";
-                    }
-                }
-    }
+    // ✅ 내부 구현 - 복사본 생성
+    private Cubie[,,] GetGridCopy() => (Cubie[,,])cubieGrid.Clone();
 }

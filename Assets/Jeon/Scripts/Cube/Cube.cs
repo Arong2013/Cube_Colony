@@ -51,35 +51,18 @@ public class Cube : MonoBehaviour
 
     public void InputRotateCube(KeyCode keyCode)
     {
-        switch(keyCode)
-        {
-            case KeyCode.W:
-                StartCoroutine(cubeRotater.RotateCubesSmooth(cubeGridHandler.GetAllCubies(), CubeAxisType.X, 90));
-                cubeGridHandler.RotateEntireCube(true, CubeAxisType.X);
-                break;
-            case KeyCode.S:
-                StartCoroutine(cubeRotater.RotateCubesSmooth(cubeGridHandler.GetAllCubies(), CubeAxisType.X, -90));
-                cubeGridHandler.RotateEntireCube(false, CubeAxisType.X);
-                break;
-            case KeyCode.A:
-                StartCoroutine(cubeRotater.RotateCubesSmooth(cubeGridHandler.GetAllCubies(), CubeAxisType.Y, 90));
-                cubeGridHandler.RotateEntireCube(true, CubeAxisType.Y);
-                break;
-            case KeyCode.D:
-                StartCoroutine(cubeRotater.RotateCubesSmooth(cubeGridHandler.GetAllCubies(), CubeAxisType.Y, -90));
-                cubeGridHandler.RotateEntireCube(false, CubeAxisType.Y);
-                break;
-        }
-    }
+        bool clockwise = keyCode == KeyCode.W || keyCode == KeyCode.A;
+        CubeAxisType axis = (keyCode == KeyCode.W || keyCode == KeyCode.S) ? CubeAxisType.X : CubeAxisType.Y;
 
+        int angle = clockwise ? 90 : -90;
+
+        StartCoroutine(cubeRotater.RotateCubesSmooth(cubeGridHandler.GetAllCubies(), axis, angle));
+        cubeGridHandler.RotateWholeCube(clockwise, axis);
+    }
     private void RotateCube(Cubie selectedCubie, CubeAxisType axis, int rotationAmount)
     {
         if (cubeRotater.IsRotating) return;
-        List<Cubie> cubies = cubeGridHandler.GetCubiesInLayer(selectedCubie, axis);
-        StartCoroutine(cubeRotater.RotateCubesSmooth(cubies, axis, rotationAmount));
-        cubeGridHandler.RotateLayer(selectedCubie, axis, rotationAmount);
-    }
-
-
-    public List<CubieFace> TestAstar(CubieFace start, CubieFace end) => cubeGridHandler.GetAstarFaceList(start, end);   
-}
+        List<Cubie> targetLayer = cubeGridHandler.GetCubiesOnSameLayer(selectedCubie, axis);
+        StartCoroutine(cubeRotater.RotateCubesSmooth(targetLayer, axis, rotationAmount));
+        cubeGridHandler.RotateSingleLayer(selectedCubie, axis, rotationAmount);
+    }}

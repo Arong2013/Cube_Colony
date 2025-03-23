@@ -4,7 +4,9 @@ public class CubieFace : MonoBehaviour
 {
     [SerializeField] GameObject tower;
     public Cubie cubie { get; private set; }
-    public CubeFaceType face;
+    public CubeFaceType face { get; private set; }
+
+
     public void Init(CubeFaceType face, Cubie cubie)
     {
         this.face = face;
