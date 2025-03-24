@@ -68,11 +68,9 @@ public class Cube : MonoBehaviour
 
     public void SpawnSpawner(EnemySpawnSequence seq, Action onMonsterDeath)
     {
-        var spawnerGO = Instantiate(SpawnerFactory.GetSpawnerPrefab(), GetFaceWorldPosition(seq.spawnOffset), Quaternion.identity);
-        var spawner = spawnerGO.GetComponent<MonsterSpawner>();
-        spawner.Init(seq, onMonsterDeath);
+        var spawnerGO = SpawnerFactory.Create(seq, this.transform);
+        spawnerGO.Init(seq, onMonsterDeath);
     }
-
     public Vector3 GetFaceWorldPosition(CubeFaceType face)
     {
         // face 기준으로 실제 월드 좌표 계산

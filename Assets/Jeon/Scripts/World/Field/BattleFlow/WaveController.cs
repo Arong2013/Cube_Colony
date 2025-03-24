@@ -14,8 +14,8 @@ public class WaveController
     private EnemySpawnSequence currentSequence;
 
     private float waveTimer;
-    private int spawnedCount;
     private int aliveEnemyCount;
+    private float sequenceTimer = 0f;
 
     public bool IsWaveRunning { get; private set; }
     public bool IsComplete => !IsWaveRunning;
@@ -34,7 +34,6 @@ public class WaveController
 
         PrepareSequenceQueue(waveData.spawnSequences);
         currentSequence = null;
-        spawnedCount = 0;
     }
 
     private void PrepareSequenceQueue(List<EnemySpawnSequence> sequences)
@@ -55,25 +54,32 @@ public class WaveController
             return;
         }
 
+        if (currentSequence != null)
+        {
+            sequenceTimer -= deltaTime;
+            if (sequenceTimer <= 0f)
+            {
+                SpawnSpawner(currentSequence);
+                currentSequence = null;
+            }
+        }
+
         if (currentSequence == null && pendingSequences.Count > 0)
         {
             BeginNextSequence();
         }
-    }
 
+    }
     private void BeginNextSequence()
     {
         currentSequence = pendingSequences.Dequeue();
-        SpawnSpawner(currentSequence);
-        currentSequence = null;
+        sequenceTimer = currentSequence.delayBeforeStart;
     }
-
     private void SpawnSpawner(EnemySpawnSequence seq)
     {
         cube.SpawnSpawner(seq, OnEnemyDeath);
         aliveEnemyCount += seq.count;
     }
-
     private void OnEnemyDeath()
     {
         aliveEnemyCount--;

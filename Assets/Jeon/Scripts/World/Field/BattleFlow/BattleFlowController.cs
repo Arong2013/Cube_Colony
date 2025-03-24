@@ -8,7 +8,6 @@ public class BattleFlowController : MonoBehaviour
 
     private IBattleState currentState;
     private int currentWaveIndex = 0;
-
     public void ChangeState(IBattleState newState)
     {
         currentState?.Exit();
@@ -18,7 +17,7 @@ public class BattleFlowController : MonoBehaviour
 
     private void Start()
     {
-        ChangeState(new CountdownState(this, 5f));
+        ChangeState(new CountdownState(this, 100000f));
     }
 
     private void Update()
@@ -40,7 +39,6 @@ public class BattleFlowController : MonoBehaviour
             return waveList[currentWaveIndex];
         return null;
     }
-
     private void OnWaveComplete()
     {
         currentWaveIndex++;
@@ -50,7 +48,7 @@ public class BattleFlowController : MonoBehaviour
         }
         else
         {
-            ChangeState(new CountdownState(this, 5f));
+            ChangeState(new CountdownState(this, 100000f));
         }
     }
 }

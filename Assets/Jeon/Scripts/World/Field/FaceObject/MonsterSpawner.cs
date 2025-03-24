@@ -23,7 +23,6 @@ public class MonsterSpawner : MonoBehaviour
             Debug.Log($"[Spawner] Warning: {sequence.warningTime}초 후 소환!");
         }
     }
-
     private void Update()
     {
         if (!isSpawning)
@@ -51,7 +50,6 @@ public class MonsterSpawner : MonoBehaviour
             timer = sequence.spawnInterval;
         }
     }
-
     private void SpawnMonster()
     {
         GameObject prefab = MonsterFactory.GetPrefab(sequence.monsterId);
@@ -65,7 +63,6 @@ public class MonsterSpawner : MonoBehaviour
     }
     private void DestroySelfIfFinished()
     {
-        // 모든 몬스터를 다 소환했으면 자신을 제거
         Debug.Log("[Spawner] All monsters spawned. Destroying spawner.");
         Destroy(gameObject);
     }
