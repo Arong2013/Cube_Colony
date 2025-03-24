@@ -1,8 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
-using UnityEngine.Rendering;
-using static UnityEditor.Experimental.GraphView.GraphView;
+using System;
 
 public enum CubeAxisType
 {
@@ -65,4 +64,28 @@ public class Cube : MonoBehaviour
         List<Cubie> targetLayer = cubeGridHandler.GetCubiesOnSameLayer(selectedCubie, axis);
         StartCoroutine(cubeRotater.RotateCubesSmooth(targetLayer, axis, rotationAmount));
         cubeGridHandler.RotateSingleLayer(selectedCubie, axis, rotationAmount);
-    }}
+    }
+
+    public void SpawnSpawner(EnemySpawnSequence seq, Action onMonsterDeath)
+    {
+        var spawnerGO = Instantiate(SpawnerFactory.GetSpawnerPrefab(), GetFaceWorldPosition(seq.spawnOffset), Quaternion.identity);
+        var spawner = spawnerGO.GetComponent<MonsterSpawner>();
+        spawner.Init(seq, onMonsterDeath);
+    }
+
+    public Vector3 GetFaceWorldPosition(CubeFaceType face)
+    {
+        // face 기준으로 실제 월드 좌표 계산
+        // (ex: forward, back 등)
+        return transform.position + face switch
+        {
+            CubeFaceType.Front => Vector3.forward * 5f,
+            CubeFaceType.Back => Vector3.back * 5f,
+            CubeFaceType.Left => Vector3.left * 5f,
+            CubeFaceType.Right => Vector3.right * 5f,
+            CubeFaceType.Top => Vector3.up * 5f,
+            CubeFaceType.Bottom => Vector3.down * 5f,
+            _ => Vector3.zero
+        };
+    }
+}
