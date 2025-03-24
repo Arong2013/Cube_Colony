@@ -52,14 +52,14 @@ public class MonsterSpawner : MonoBehaviour
     }
     private void SpawnMonster()
     {
-        GameObject prefab = MonsterFactory.GetPrefab(sequence.monsterId);
-        GameObject enemyGO = Instantiate(prefab, transform.position, Quaternion.identity);
+        //GameObject enemyGO = cube.SpawnMonster(sequence.monsterId, sequence.spawnOffset, onEnemyDeath);
 
-        var enemy = enemyGO.GetComponent<FaceObject>();
-        enemy.AddOnDeathAction(onEnemyDeath);
+        //var faceObj = enemyGO.GetComponent<FaceObject>();
+        //faceObj.AddOnDeathAction(onEnemyDeath);
 
         if (sequence.spawnSound != null)
             AudioSource.PlayClipAtPoint(sequence.spawnSound, transform.position);
+
     }
     private void DestroySelfIfFinished()
     {

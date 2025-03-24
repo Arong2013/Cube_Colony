@@ -71,6 +71,18 @@ public class Cube : MonoBehaviour
         var spawnerGO = SpawnerFactory.Create(seq, this.transform);
         spawnerGO.Init(seq, onMonsterDeath);
     }
+
+    public GameObject SpawnMonster(int monsterId, CubeFaceType face, Action onDeath)
+    {
+        GameObject prefab = MonsterFactory.Instance.GetPrefab(monsterId);
+        Vector3 spawnPos = GetFaceWorldPosition(face);
+        GameObject enemyGO = Instantiate(prefab, spawnPos, Quaternion.identity, transform);
+
+        // 계층 구조: Cube → Cubie → CubieFace → FaceObject (그 하위)
+        // 필요 시 FaceObject.Find(face).Attach(enemyGO); 처럼 가능
+
+        return enemyGO;
+    }
     public Vector3 GetFaceWorldPosition(CubeFaceType face)
     {
         // face 기준으로 실제 월드 좌표 계산
