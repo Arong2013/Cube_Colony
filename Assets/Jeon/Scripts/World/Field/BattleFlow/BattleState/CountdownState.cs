@@ -23,7 +23,7 @@ public class CountdownState : IBattleState
         timer -= Time.deltaTime;
         if (timer <= 0f)
         {
-            context.ChangeState(new InBattleState(context));
+          //  context.ChangeState(new InBattleState(context));
         }
     }
 }

@@ -31,6 +31,6 @@ public class InBattleState : IBattleState
 
     private void StartWave()
     {
-        waveController.StartWave(context.CurrentWaveIndex);
+        //waveController.StartWave(context.CurrentWaveIndex);
     }
 }
