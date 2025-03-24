@@ -14,12 +14,13 @@ public class BattleFlowController : MonoBehaviour
     {
         ChangeState(new CountdownState(this, 5f));
     }
+
+    private void FixedUpdate()
+    {
+        
+    }
     private void Update()
     {
         currentState?.Update();
-    }
-    public void OnWaveComplete()
-    {
-        ChangeState(new CountdownState(this, 5f)); // 다음 웨이브 카운트다운
     }
 }
