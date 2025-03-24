@@ -4,3 +4,9 @@
     RUNNING,
     FAILURE, 
 }
+public enum BattlePhase
+{
+    Countdown,
+    InBattle,
+    Ended
+}
