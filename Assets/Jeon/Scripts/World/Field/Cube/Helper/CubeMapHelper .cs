@@ -158,11 +158,12 @@ public static class CubeMapHelper
         return positionFaceMap;
     }
 
+
     // 외부 호출용: 최종 매핑 반환
-    public static Dictionary<Vector2Int, CubieFace> GetFinalFaceMap(Cubie[,,] cubieGrid)
+    public static Dictionary<Vector2Int, CubieFace> GetFinalFaceMap(Cubie[,,] cubieGrid, bool isAstar)
     {
         int size = cubieGrid.GetLength(0);
-        var layoutPositions = GetBaseFaceLayout(size);
+        var layoutPositions = isAstar ? GetExtendedLayoutForAstar(size) : GetBaseFaceLayout(size);
         var allCubies = GridSearchHelper.GetAllCubies(cubieGrid);
         var faceMap = GetCubieFaceMapByType(allCubies, cubieGrid);
         SetCubieFaceMapSorting(faceMap, cubieGrid);

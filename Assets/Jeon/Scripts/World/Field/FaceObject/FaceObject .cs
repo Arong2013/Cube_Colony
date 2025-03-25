@@ -7,12 +7,10 @@ public abstract class FaceObject : MonoBehaviour
     private CubieFace parentFace;
     private Action onDeath;
 
-    [SerializeField] List<BehaviorSequenceSO> behaviorSequencesSO;
-    private List<BehaviorSequence> behaviorSequences = new List<BehaviorSequence>();
-    
-    public void Init()
+
+    public virtual void Init(CubieFace cubieFace)
     {
-        //behaviorSequencesSO.ForEach(sequence => behaviorSequences.Add(sequence.CreateBehaviorSequence(this)));
+        parentFace = cubieFace;
     }
     public void AddOnDeathAction(Action action)
     {

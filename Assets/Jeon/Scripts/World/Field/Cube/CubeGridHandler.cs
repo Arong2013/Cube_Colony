@@ -46,13 +46,13 @@ public class CubeGridHandler
     }
 
     // ✅ 외부 호출 메서드 - 경로 탐색
-    public List<CubieFace> GetAstarPathFaces(CubieFace startFace, CubieFace targetFace)
+    public List<CubieFace> GetAstarPathFaces(CubieFace startFace, CubieFace targetFace,bool isAstar)
     {
         var referenceFace = startFace.face;
         try
         {
             ApplyViewAlignment(referenceFace, false);
-            var pathfinder = new AStarPathfinding(CubeMapHelper.GetFinalFaceMap(GetGridCopy()), Size);
+            var pathfinder = new AStarPathfinding(CubeMapHelper.GetFinalFaceMap(GetGridCopy(), isAstar), Size);
             return pathfinder.FindPath(startFace, targetFace);
         }
         finally

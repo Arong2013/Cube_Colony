@@ -1,6 +1,27 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class Enemy:FaceObject
+public class Enemy : FaceObject
 {
+    [SerializeField] private List<BehaviorSequenceSO> behaviorSequencesSO;
+    private List<BehaviorSequence> behaviorSequences = new List<BehaviorSequence>();
 
+    public override void Init(CubieFace cubieFace)
+    {
+        base.Init(cubieFace);
+        behaviorSequencesSO.ForEach(sequence => behaviorSequences.Add(sequence.CreateBehaviorSequence(this)));
+    }
+
+    public BehaviorState Execute()
+    {
+        foreach (var seq in behaviorSequences)
+        {
+            var behaviorState = seq.Execute();
+            if (behaviorState == BehaviorState.SUCCESS || behaviorState == BehaviorState.RUNNING)
+            {
+                return behaviorState;
+            }
+        }
+        return BehaviorState.FAILURE;
+    }
 }
