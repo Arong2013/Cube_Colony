@@ -1,23 +1,56 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public static class MonsterFactory
+public class MonsterFactory
 {
-    private static Dictionary<int, GameObject> monsterPrefabs = new();
-
-    public static void Register(int id, GameObject prefab)
+    private static MonsterFactory _instance;
+    public static MonsterFactory Instance
     {
-        if (!monsterPrefabs.ContainsKey(id))
-            monsterPrefabs.Add(id, prefab);
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new MonsterFactory();
+                _instance.Initialize(); 
+            }
+            return _instance;
+        }
     }
 
-    public static GameObject GetPrefab(int id)
+    private Dictionary<int, GameObject> monsterPrefabs = new();
+    private bool isInitialized = false;
+
+    private MonsterFactory() { }
+
+    public void Initialize()
     {
-        if (!monsterPrefabs.ContainsKey(id))
+        if (isInitialized) return;
+
+        GameObject[] loadedPrefabs = Resources.LoadAll<GameObject>("MonsterFactory");
+
+        for (int i = 0; i < loadedPrefabs.Length; i++)
         {
-            Debug.LogError($"[MonsterFactory] ID {id} not registered.");
+            monsterPrefabs[i] = loadedPrefabs[i];
+            Debug.Log($"[MonsterFactory] Registered ID {i} → {loadedPrefabs[i].name}");
+        }
+
+        isInitialized = true;
+    }
+
+    public GameObject GetPrefab(int id)
+    {
+        if (!isInitialized)
+        {
+            Debug.LogWarning("[MonsterFactory] Not initialized. Initializing now...");
+            Initialize();
+        }
+
+        if (!monsterPrefabs.TryGetValue(id, out var prefab))
+        {
+            Debug.LogError($"[MonsterFactory] ID {id} not found.");
             return null;
         }
-        return monsterPrefabs[id];
+
+        return prefab;
     }
 }

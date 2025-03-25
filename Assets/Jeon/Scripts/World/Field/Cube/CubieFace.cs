@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 public class CubieFace : MonoBehaviour
 {
@@ -16,9 +17,12 @@ public class CubieFace : MonoBehaviour
     {
         this.face = face;
     }
-    public void SpawnObject()
+    public FaceObject SpawnObject(GameObject prefab)
     {
-        GameObject spawnedObject = Instantiate(tower, transform.position, transform.rotation, transform);
+        GameObject spawned = Instantiate(prefab, transform.position, transform.rotation, transform);
+        var faceObj = spawned.GetComponent<FaceObject>();
+        faceObj.Init(); 
+        return faceObj; 
     }
 
     public CubeAxisType GetNotRotationAxis()

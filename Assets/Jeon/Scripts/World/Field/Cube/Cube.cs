@@ -1,15 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
-using UnityEngine.Rendering;
-using static UnityEditor.Experimental.GraphView.GraphView;
-
-public enum CubeAxisType
-{
-    X,       // X축 회전만 가능
-    Y,       // Y축 회전만 가능
-    Z        // Z축 회전만 가능
-}
+using System;
 
 public class Cube : MonoBehaviour
 {
@@ -65,4 +57,11 @@ public class Cube : MonoBehaviour
         List<Cubie> targetLayer = cubeGridHandler.GetCubiesOnSameLayer(selectedCubie, axis);
         StartCoroutine(cubeRotater.RotateCubesSmooth(targetLayer, axis, rotationAmount));
         cubeGridHandler.RotateSingleLayer(selectedCubie, axis, rotationAmount);
-    }}
+    }
+    public void SpawnSpawner(EnemySpawnSequence seq, Action onMonsterDeath,CubeFaceType cubeFaceType)
+    {
+        var face = cubeGridHandler.GetCenterFace(cubeFaceType);
+        var obj = face.SpawnObject(SpawnerFactory.Instance.GetPrefab(seq.spawnerId));
+        obj.GetComponent<MonsterSpawner>().Init(seq, onMonsterDeath, face);
+    }
+}

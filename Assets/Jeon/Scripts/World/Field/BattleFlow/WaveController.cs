@@ -1,100 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 /// <summary>
-/// 하나의 웨이브 진행을 관리하는 컨트롤러. Tick으로 시간 기반 실행.
+/// 하나의 웨이브 진행을 담당 (해당 웨이브의 시퀀스 실행, 몬스터 생성, 웨이브 종료 감지 등)
 /// </summary>
 public class WaveController
 {
     private readonly Cube cube;
-    private readonly Action onWaveComplete;
-    private readonly List<WaveData> waveList;
-    private readonly Func<int, WaveData> generateWaveFunc;
+    private readonly WaveData waveData;
 
     private Queue<EnemySpawnSequence> pendingSequences = new();
     private EnemySpawnSequence currentSequence;
-    private int spawnedCount;
-    private int aliveEnemyCount;
 
     private float waveTimer;
-    private float sequenceTimer;
+    private int aliveEnemyCount;
+    private float sequenceTimer = 0f;
 
-    private int currentWaveIndex;
     public bool IsWaveRunning { get; private set; }
+    public bool IsComplete => !IsWaveRunning;
 
-    public WaveController(List<WaveData> waveList, Cube cube, Action onWaveComplete, Func<int, WaveData> generator = null)
+    public WaveController(WaveData waveData, Cube cube)
     {
-        this.waveList = waveList;
+        this.waveData = waveData;
         this.cube = cube;
-        this.onWaveComplete = onWaveComplete;
-        this.generateWaveFunc = generator;
+        InitializeWave();
     }
 
-    /// <summary>
-    /// 외부에서 웨이브를 시작할 때 호출
-    /// </summary>
-    /// 
-    public void StartNextWave()
+    private void InitializeWave()
     {
-        var wave = GetWave(currentWaveIndex);
-        if (wave == null) return;
-
-        InitializeWave(wave);
-        currentWaveIndex++; // ✅ 이젠 내부에서 증가!
-    }
-
-    public void StartWave(int waveIndex)
-    {
-        var wave = GetWave(waveIndex);
-        if (wave == null) return;
-
-        InitializeWave(wave);
-    }
-    /// <summary>
-    /// 매 프레임마다 호출되어 웨이브의 타이머 및 시퀀스를 진행
-    /// </summary>
-    public void Tick(float deltaTime)
-    {
-        if (!IsWaveRunning) return;
-
-        if (waveTimer > 0f)
-        {
-            waveTimer -= deltaTime;
-            return;
-        }
-
-        if (currentSequence == null && pendingSequences.Count > 0)
-        {
-            BeginNextSequence();
-        }
-
-        if (currentSequence != null)
-        {
-            UpdateSequence(deltaTime);
-        }
-    }
-
-    private WaveData GetWave(int index)
-    {
-        if (waveList != null && index < waveList.Count)
-            return waveList[index];
-
-        return generateWaveFunc?.Invoke(index);
-    }
-
-    private void InitializeWave(WaveData wave)
-    {
+        waveTimer = waveData.startDelay;
         IsWaveRunning = true;
-        waveTimer = wave.startDelay;
-        currentWaveIndex++;
 
-        PrepareSequenceQueue(wave.spawnSequences);
-
+        PrepareSequenceQueue(waveData.spawnSequences);
         currentSequence = null;
-        spawnedCount = 0;
-        sequenceTimer = 0f;
     }
 
     private void PrepareSequenceQueue(List<EnemySpawnSequence> sequences)
@@ -105,44 +44,42 @@ public class WaveController
             pendingSequences.Enqueue(seq);
         }
     }
+    public void Tick(float deltaTime)
+    {
+        if (!IsWaveRunning) return;
 
+        if (waveTimer > 0f)
+        {
+            waveTimer -= deltaTime;
+            return;
+        }
+
+        if (currentSequence != null)
+        {
+            sequenceTimer -= deltaTime;
+            if (sequenceTimer <= 0f)
+            {
+                SpawnSpawner(currentSequence);
+                currentSequence = null;
+            }
+        }
+
+        if (currentSequence == null && pendingSequences.Count > 0)
+        {
+            BeginNextSequence();
+        }
+
+    }
     private void BeginNextSequence()
     {
         currentSequence = pendingSequences.Dequeue();
         sequenceTimer = currentSequence.delayBeforeStart;
-        spawnedCount = 0;
     }
-
-    private void UpdateSequence(float deltaTime)
+    private void SpawnSpawner(EnemySpawnSequence seq)
     {
-        if (sequenceTimer > 0f)
-        {
-            sequenceTimer -= deltaTime;
-            return;
-        }
-
-        SpawnEnemy(currentSequence);
-        spawnedCount++;
-        sequenceTimer = currentSequence.spawnInterval;
-
-        if (spawnedCount >= currentSequence.count)
-        {
-            currentSequence = null;
-        }
+        cube.SpawnSpawner(seq, OnEnemyDeath,seq.spawnOffset);
+        aliveEnemyCount += seq.count;
     }
-
-    private void SpawnEnemy(EnemySpawnSequence seq)
-    {
-        //GameObject prefab = MonsterFactory.GetPrefab(seq.monsterId);
-        //Vector3 spawnPosition = cube.GetFaceWorldPosition(seq.spawnOffset);
-
-        //GameObject enemyGO = GameObject.Instantiate(prefab, spawnPosition, Quaternion.identity);
-        //Enemy enemy = enemyGO.GetComponent<Enemy>();
-        //enemy.OnDeath += OnEnemyDeath;
-
-        aliveEnemyCount++;
-    }
-
     private void OnEnemyDeath()
     {
         aliveEnemyCount--;
@@ -150,7 +87,6 @@ public class WaveController
         if (aliveEnemyCount <= 0 && pendingSequences.Count == 0 && currentSequence == null)
         {
             IsWaveRunning = false;
-            onWaveComplete?.Invoke();
         }
     }
 }

@@ -41,7 +41,6 @@ public class CubeRotater
 
         isRotating = false;
     }
-
     private Vector3 GetRotationAxis(CubeAxisType axis)
     {
         return axis switch

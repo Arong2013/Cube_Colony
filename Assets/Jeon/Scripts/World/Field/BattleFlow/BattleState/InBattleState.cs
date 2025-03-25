@@ -1,36 +1,29 @@
 ﻿using UnityEngine;
-
-/// <summary>
-/// 전투 상태에서 웨이브 진행을 관리하는 상태 클래스.
-/// </summary>
+using System;
 public class InBattleState : IBattleState
 {
-    private readonly BattleFlowController context;
-    private readonly WaveController waveController;
-
-    public InBattleState(BattleFlowController context, WaveController waveController)
+    private WaveController waveController;
+    private BattleFlowController context;
+    private Action OnWaveComplete;  
+    public InBattleState(BattleFlowController context, WaveController waveController,Action onWaveComplete)
     {
         this.context = context;
         this.waveController = waveController;
+        OnWaveComplete = onWaveComplete;    
     }
 
     public void Enter()
     {
-        StartWave();
-    }
-
-    public void Exit()
-    {
-        // 필요 시 정리 작업
+        // 이미 StartNextWave()는 BattleFlow에서 호출했으므로 생략 가능
     }
 
     public void Update()
     {
         waveController.Tick(Time.deltaTime);
+        if (waveController.IsComplete)
+        {
+            OnWaveComplete?.Invoke();   
+        }
     }
-
-    private void StartWave()
-    {
-        //waveController.StartWave(context.CurrentWaveIndex);
-    }
+    public void Exit() { }
 }

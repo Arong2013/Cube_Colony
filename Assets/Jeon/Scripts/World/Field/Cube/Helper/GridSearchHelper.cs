@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 public static class GridSearchHelper
@@ -49,4 +50,25 @@ public static class GridSearchHelper
 
         return cubies;
     }
+
+    public static CubieFace GetCenterFace(CubeFaceType faceType,int size, Cubie[,,] cubieGrid)
+    {
+        int center = size / 2;
+
+        int x = center;
+        int y = center;
+        int z = center;
+
+        return faceType switch
+        {
+            CubeFaceType.Front => cubieGrid[x, y, 0].GetFace(CubeFaceType.Front),
+            CubeFaceType.Back => cubieGrid[x, y, size - 1].GetFace(CubeFaceType.Back),
+            CubeFaceType.Left => cubieGrid[0, y, z].GetFace(CubeFaceType.Left),
+            CubeFaceType.Right => cubieGrid[size - 1, y, z].GetFace(CubeFaceType.Right),
+            CubeFaceType.Top => cubieGrid[x, size - 1, z].GetFace(CubeFaceType.Top),
+            CubeFaceType.Bottom => cubieGrid[x, 0, z].GetFace(CubeFaceType.Bottom),
+            _ => null
+        };
+    }
+
 }

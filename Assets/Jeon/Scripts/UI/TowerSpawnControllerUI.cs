@@ -11,7 +11,7 @@ public class TowerSpawnControllerUI
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        selectedFace.SpawnObject(); 
+        //selectedFace.SpawnObject(); 
     }
 
     public void EnableUI(CubieFace selectedFace)
