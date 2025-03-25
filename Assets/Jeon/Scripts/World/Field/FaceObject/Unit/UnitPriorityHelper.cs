@@ -10,13 +10,13 @@ public class UnitPriorityHelper
         switch (priorityName)
         {
             case PriorityNameType.AttackEnemy:
-                return new List<UnitType> { UnitType.NPC, UnitType.Enemy, UnitType.AllyTower };
+                return new List<UnitType> { UnitType.NPC, UnitType.Ally, UnitType.AllyTower };
             case PriorityNameType.DefEnemy:
                 return new List<UnitType> { UnitType.Ally, UnitType.AllyTower, UnitType.NPC };
             case PriorityNameType.DefAlly:
-                return new List<UnitType> { UnitType.Ally, UnitType.AllyTower, UnitType.NPC };
+                return new List<UnitType> { UnitType.Enemy };
             case PriorityNameType.AttackAlly:
-                return new List<UnitType> { UnitType.Enemy, UnitType.NPC, UnitType.AllyTower };
+                return new List<UnitType> { UnitType.Enemy };
             default:
                 return new List<UnitType>();
         }

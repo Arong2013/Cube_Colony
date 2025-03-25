@@ -1,57 +1,79 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public abstract class FaceUnit : MonoBehaviour
 {
-    private UnitType unitType;
-    private PriorityNameType propertyType;
+    [SerializeField] private UnitType unitType;
+    [SerializeField] private PriorityNameType propertyType;
     private CubieFace parentFace;
     private Action onDeath;
     private float range = 100f;
 
-    public CubeFaceType CubeFaceType => parentFace.face;  
+    private Dictionary<IBehaviorDatable, object> behaviorData = new Dictionary<IBehaviorDatable, object>();
+    public CubeFaceType CubeFaceType => parentFace.face;
     public UnitType UnitType => unitType;
-    public PriorityNameType PropertyType => propertyType;   
-    public CubieFace ParentFace => parentFace;  
+    public PriorityNameType PropertyType => propertyType;
+    public CubieFace ParentFace => parentFace;
     public float Range => range;
-
-    private Dictionary<Type, object> unitData = new Dictionary<Type, object>();
 
     public virtual void Init(CubieFace cubieFace)
     {
         parentFace = cubieFace;
     }
+
     public void AddOnDeathAction(Action action)
     {
         onDeath += action;
     }
+
     public void DestroySelf()
     {
-        onDeath?.Invoke();  
+        onDeath?.Invoke();
+        behaviorData.Clear(); 
         Destroy(gameObject);
     }
 
-
-    public TData GetUnitData<TData>(Type type)
+    public TData GetUnitData<TData,Tkey>()
+        where Tkey : IBehaviorDatable
     {
-        if (unitData.ContainsKey(type))
+        var key = default(Tkey);    
+        if (behaviorData.TryGetValue(key, out object value))
         {
-            return (TData)unitData[type]; // 저장된 데이터 반환
+            return (TData)value;
         }
-        return default(TData); // 해당 유닛 타입에 대한 데이터가 없으면 기본값 반환
+        return default;
+    }
+    public void SetData<Tdata,Tkey>(Tdata data)
+        where Tkey : IBehaviorDatable
+    {
+        var key = default(Tkey);
+        behaviorData[key] = data;
+    }
+    public List<CubieFace> GetAstarList()
+    {
+        var unitlist =  GetUnitData<List<FaceUnit>,DetectEnemyCondition>();  
+        var faceList = new List<CubieFace>();   
+        foreach (var unit in unitlist)
+        {
+           faceList = parentFace.GetAstarList(unit.ParentFace);
+            if (faceList.Count > 1)
+            {
+                return faceList;
+            } 
+        }
+        return faceList;
     }
 
-    // 유닛 타입에 맞는 데이터를 저장하기
-    public void SetUnitData<TData>(Type type, TData data)
+    private void OnTriggerEnter(Collider other)
     {
-        if (unitData.ContainsKey(type))
+        var cubieFace = other.GetComponent<CubieFace>();
+
+        if (cubieFace != null)
         {
-            unitData[type] = data; // 이미 존재하면 업데이트
-        }
-        else
-        {
-            unitData.Add(type, data); // 없으면 추가
+            // 충돌한 CubieFace가 있을 때 부모 Face를 변경
+            parentFace = cubieFace;
         }
     }
 }

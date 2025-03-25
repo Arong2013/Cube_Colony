@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using UnityEngine;
 
-public class DetectEnemyConditionSO: BehaviorConditionSO
+public class DetectEnemyConditionSO : BehaviorConditionSO
 {
     public override BehaviorCondition CreateCondition()
     {
@@ -9,26 +8,26 @@ public class DetectEnemyConditionSO: BehaviorConditionSO
     }
 }
 
-public class DetectEnemyCondition : BehaviorCondition
+public class DetectEnemyCondition : BehaviorCondition, IBehaviorDatable
 {
-    public DetectEnemyCondition()
-    {
-
-    }
+    public DetectEnemyCondition() { }
     public override BehaviorState Execute()
     {
+        var detectedEnemies = GetDetectedEnemies();
 
-        List<FaceUnit> detectedEnemies = UnitConditionHelper.GetEnemiesInRange(FaceUnit);
-        if (detectedEnemies.Count > 0)
+        if (IsEnemyDetected(detectedEnemies))
         {
-            // 감지된 적 중 첫 번째를 우선 타겟으로 설정
-          //  faceUnit.TargetEnemy = detectedEnemies[0];
-            return BehaviorState.SUCCESS; // 행동 성공
+            return BehaviorState.SUCCESS;
         }
-        else
-        {
-            return BehaviorState.FAILURE; // 적이 없으면 실패
-        }
-
+        detectedEnemies = UnitConditionHelper.GetEnemiesInRange(FaceUnit);
+        return IsEnemyDetected(detectedEnemies) ? BehaviorState.SUCCESS : BehaviorState.FAILURE;
+    }
+    private bool IsEnemyDetected(List<FaceUnit> enemies)
+    {
+        return enemies != null && enemies.Count > 0;
+    }
+    private List<FaceUnit> GetDetectedEnemies()
+    {
+        return FaceUnit.GetUnitData<List<FaceUnit>, DetectEnemyCondition>();
     }
 }

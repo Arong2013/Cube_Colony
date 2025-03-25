@@ -40,7 +40,6 @@ public class Cube : MonoBehaviour
             InputRotateCube(KeyCode.D);
         }
     }
-
     public void InputRotateCube(KeyCode keyCode)
     {
         bool clockwise = keyCode == KeyCode.W || keyCode == KeyCode.A;
@@ -64,4 +63,4 @@ public class Cube : MonoBehaviour
         var obj = face.SpawnObject(SpawnerFactory.Instance.GetPrefab(seq.spawnerId));
         obj.GetComponent<MonsterSpawner>().Init(seq, onMonsterDeath, face);
     }
-}
+  }

@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 public class CubieFace : MonoBehaviour
 {
     [SerializeField] GameObject tower;
     public Cubie cubie { get; private set; }
     public CubeFaceType face { get; private set; }
-
-
-    public void Init(CubeFaceType face, Cubie cubie)
+    IAstarable astarable;
+    public void Init(CubeFaceType face, Cubie cubie, IAstarable astarable)
     {
         this.face = face;
         this.cubie = cubie;
+        this.astarable = astarable; 
     }
     public void SetFace(CubeFaceType face)
     {
@@ -35,4 +36,6 @@ public class CubieFace : MonoBehaviour
             _ => CubeAxisType.Y 
         };
     }
+
+    public List<CubieFace> GetAstarList(CubieFace targetFace) => astarable.GetAstarPathFaces(this,targetFace);
 }

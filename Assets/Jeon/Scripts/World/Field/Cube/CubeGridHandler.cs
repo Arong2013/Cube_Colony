@@ -7,7 +7,7 @@ using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 [System.Serializable]
-public class CubeGridHandler
+public class CubeGridHandler : IAstarable
 {
     public readonly int Size;
     private Cubie[,,] cubieGrid;
@@ -27,6 +27,7 @@ public class CubeGridHandler
                     Vector3 position = new Vector3(x - 1, y - 1, z - 1);
                     cubieGrid[x, y, z] = UnityEngine.Object.Instantiate(cubiePrefab, position, Quaternion.identity, parent);
                     cubieGrid[x, y, z].name = $"Cubie_{x}_{y}_{z}";
+                    cubieGrid[x, y, z].Init(this);
                 }
     }
 
@@ -46,13 +47,13 @@ public class CubeGridHandler
     }
 
     // ✅ 외부 호출 메서드 - 경로 탐색
-    public List<CubieFace> GetAstarPathFaces(CubieFace startFace, CubieFace targetFace,bool isAstar)
+    public List<CubieFace> GetAstarPathFaces(CubieFace startFace, CubieFace targetFace)
     {
         var referenceFace = startFace.face;
         try
         {
             ApplyViewAlignment(referenceFace, false);
-            var pathfinder = new AStarPathfinding(CubeMapHelper.GetFinalFaceMap(GetGridCopy(), isAstar), Size);
+            var pathfinder = new AStarPathfinding(CubeMapHelper.GetFinalFaceMap(GetGridCopy(), true), Size);
             return pathfinder.FindPath(startFace, targetFace);
         }
         finally

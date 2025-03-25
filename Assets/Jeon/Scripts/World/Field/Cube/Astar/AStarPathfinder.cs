@@ -133,7 +133,6 @@ public class AStarPathfinding
     private List<CubieFace> ReconstructPath(Dictionary<Vector2Int, Vector2Int> cameFrom, Vector2Int current)
     {
         List<CubieFace> path = new List<CubieFace>();
-        path.Add(v2CubieFaceMap[current]);  // 시작 지점 추가
         while (cameFrom.ContainsKey(current))
         {
             current = cameFrom[current];

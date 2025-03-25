@@ -7,12 +7,18 @@ public class Cubie : MonoBehaviour
     public bool isWalkable = true;
     public  CubieFace[] faces = new CubieFace[6];
 
-    private void Awake()
+
+    public void Init(IAstarable astarable)
     {
         for (int i = 0; i < faces.Length; i++)
         {
-            faces[i].Init((CubeFaceType)i,this);   
+            faces[i].Init((CubeFaceType)i, this,astarable);
         }
+    }
+
+    private void Awake()
+    {
+
     }
 
     public void RotateCubie(CubeAxisType axis, bool clockwise)
