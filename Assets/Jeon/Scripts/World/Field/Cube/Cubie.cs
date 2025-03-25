@@ -1,15 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public enum CubeFaceType
-{
-    Front,  // 정면
-    Back,   // 후면
-    Left,   // 왼쪽
-    Right,  // 오른쪽
-    Top,    // 위쪽
-    Bottom  // 아래쪽
-}
+
 public class Cubie : MonoBehaviour
 {
     public bool isWalkable = true;
@@ -38,7 +30,15 @@ public class Cubie : MonoBehaviour
                 break;
         }
     }
-
+    public CubieFace GetFace(CubeFaceType type)
+    {
+        foreach (var face in GetComponentsInChildren<CubieFace>())
+        {
+            if (face.face == type)
+                return face;
+        }
+        return null;
+    }
     private void RotateX(bool clockwise)
     {
         int[] indices = clockwise ?

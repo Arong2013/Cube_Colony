@@ -16,7 +16,8 @@ MonoBehaviour:
   startDelay: 3
   spawnSequences:
   - label: Sequence A
-    monsterId: 1
+    spawnerId: 0
+    monsterId: 0
     count: 5
     spawnInterval: 1
     delayBeforeStart: 1

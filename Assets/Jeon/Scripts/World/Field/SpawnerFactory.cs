@@ -1,32 +1,56 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public static class SpawnerFactory
+public class SpawnerFactory
 {
-    private static GameObject spawnerPrefab;
-
-    public static void SetSpawnerPrefab(GameObject prefab)
+    private static SpawnerFactory _instance;
+    public static SpawnerFactory Instance
     {
-        spawnerPrefab = prefab;
-    }
-
-    public static MonsterSpawner Create(EnemySpawnSequence sequence, Transform parent)
-    {
-        Vector3 spawnPos = parent.position + GetOffsetFromFace(sequence.spawnOffset);
-        GameObject go = Object.Instantiate(spawnerPrefab, spawnPos, Quaternion.identity, parent);
-
-        return go.GetComponent<MonsterSpawner>();
-    }
-    private static Vector3 GetOffsetFromFace(CubeFaceType face)
-    {
-        return face switch
+        get
         {
-            CubeFaceType.Front => Vector3.forward * 5,
-            CubeFaceType.Back => Vector3.back * 5,
-            CubeFaceType.Left => Vector3.left * 5,
-            CubeFaceType.Right => Vector3.right * 5,
-            CubeFaceType.Top => Vector3.up * 5,
-            CubeFaceType.Bottom => Vector3.down * 5,
-            _ => Vector3.zero,
-        };
+            if (_instance == null)
+            {
+                _instance = new SpawnerFactory();
+                _instance.Initialize();
+            }
+            return _instance;
+        }
+    }
+
+    private Dictionary<int, GameObject> spawnerPrefabs = new();
+    private bool isInitialized = false;
+
+    private SpawnerFactory() { }
+
+    private void Initialize()
+    {
+        if (isInitialized) return;
+
+        GameObject[] loadedPrefabs = Resources.LoadAll<GameObject>("SpawnerFactory");
+
+        for (int i = 0; i < loadedPrefabs.Length; i++)
+        {
+            spawnerPrefabs[i] = loadedPrefabs[i];
+            Debug.Log($"[SpawnerFactory] Registered Spawner ID {i} → {loadedPrefabs[i].name}");
+        }
+
+        isInitialized = true;
+    }
+
+    public GameObject GetPrefab(int id)
+    {
+        if (!isInitialized)
+        {
+            Debug.LogWarning("[SpawnerFactory] Not initialized. Initializing now...");
+            Initialize();
+        }
+
+        if (!spawnerPrefabs.TryGetValue(id, out var prefab))
+        {
+            Debug.LogError($"[SpawnerFactory] ID {id} not found.");
+            return null;
+        }
+
+        return prefab;
     }
 }

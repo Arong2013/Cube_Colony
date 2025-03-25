@@ -70,6 +70,7 @@ public class CubeGridHandler
         int layer = GridSearchHelper.FindLayer(referenceCubie, axis, GetGridCopy());
         return GridSearchHelper.GetCubiesInLayer(layer, axis, GetGridCopy());
     }
+    public CubieFace GetCenterFace(CubeFaceType faceType) => GridSearchHelper.GetCenterFace(faceType, Size, GetGridCopy());
 
     // ✅ 내부 구현 - 레이어 회전 흐름
     private void ApplyLayerRotation(int layer, bool isClockwise, CubeAxisType axis)
@@ -113,7 +114,6 @@ public class CubeGridHandler
                 break;
         }
     }
-
     // ✅ 내부 구현 - 레이어 데이터 적용
     private void InsertRotatedLayer(int layer, Cubie[,] slice, CubeAxisType axis)
     {
@@ -134,7 +134,6 @@ public class CubeGridHandler
                 }
             }
     }
-
     // ✅ 내부 구현 - 이름 정리
     private void RenameCubies()
     {

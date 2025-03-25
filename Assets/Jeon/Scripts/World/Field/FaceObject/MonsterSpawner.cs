@@ -1,22 +1,23 @@
 ﻿using System;
 using UnityEngine;
 
-public class MonsterSpawner : MonoBehaviour
+public class MonsterSpawner : FaceObject
 {
     private EnemySpawnSequence sequence;
     private Action onEnemyDeath;
+    private CubieFace cunCubieFace;
 
     private float timer;
     private int spawned;
     private bool isSpawning;
-    public void Init(EnemySpawnSequence sequence, Action onEnemyDeath)
+    public void Init(EnemySpawnSequence sequence, Action onEnemyDeath,CubieFace cubieFace)
     {
         this.sequence = sequence;
         this.onEnemyDeath = onEnemyDeath;
         this.timer = sequence.delayBeforeStart;
         this.spawned = 0;
         this.isSpawning = false;
-
+        cunCubieFace = cubieFace;   
 
         if (sequence.warningTime > 0f)
         {
@@ -52,10 +53,9 @@ public class MonsterSpawner : MonoBehaviour
     }
     private void SpawnMonster()
     {
-        //GameObject enemyGO = cube.SpawnMonster(sequence.monsterId, sequence.spawnOffset, onEnemyDeath);
-
-        //var faceObj = enemyGO.GetComponent<FaceObject>();
-        //faceObj.AddOnDeathAction(onEnemyDeath);
+        GameObject prefab = MonsterFactory.Instance.GetPrefab(sequence.monsterId);
+        var faceObj =  cunCubieFace.SpawnObject(prefab);
+        faceObj.AddOnDeathAction(onEnemyDeath);
 
         if (sequence.spawnSound != null)
             AudioSource.PlayClipAtPoint(sequence.spawnSound, transform.position);

@@ -3,13 +3,6 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 
-public enum CubeAxisType
-{
-    X,       // X축 회전만 가능
-    Y,       // Y축 회전만 가능
-    Z        // Z축 회전만 가능
-}
-
 public class Cube : MonoBehaviour
 {
     [SerializeField] PlayerUIController cubeUIController;
@@ -65,37 +58,10 @@ public class Cube : MonoBehaviour
         StartCoroutine(cubeRotater.RotateCubesSmooth(targetLayer, axis, rotationAmount));
         cubeGridHandler.RotateSingleLayer(selectedCubie, axis, rotationAmount);
     }
-
-    public void SpawnSpawner(EnemySpawnSequence seq, Action onMonsterDeath)
+    public void SpawnSpawner(EnemySpawnSequence seq, Action onMonsterDeath,CubeFaceType cubeFaceType)
     {
-        var spawnerGO = SpawnerFactory.Create(seq, this.transform);
-        spawnerGO.Init(seq, onMonsterDeath);
-    }
-
-    public GameObject SpawnMonster(int monsterId, CubeFaceType face, Action onDeath)
-    {
-        GameObject prefab = MonsterFactory.Instance.GetPrefab(monsterId);
-        Vector3 spawnPos = GetFaceWorldPosition(face);
-        GameObject enemyGO = Instantiate(prefab, spawnPos, Quaternion.identity, transform);
-
-        // 계층 구조: Cube → Cubie → CubieFace → FaceObject (그 하위)
-        // 필요 시 FaceObject.Find(face).Attach(enemyGO); 처럼 가능
-
-        return enemyGO;
-    }
-    public Vector3 GetFaceWorldPosition(CubeFaceType face)
-    {
-        // face 기준으로 실제 월드 좌표 계산
-        // (ex: forward, back 등)
-        return transform.position + face switch
-        {
-            CubeFaceType.Front => Vector3.forward * 5f,
-            CubeFaceType.Back => Vector3.back * 5f,
-            CubeFaceType.Left => Vector3.left * 5f,
-            CubeFaceType.Right => Vector3.right * 5f,
-            CubeFaceType.Top => Vector3.up * 5f,
-            CubeFaceType.Bottom => Vector3.down * 5f,
-            _ => Vector3.zero
-        };
+        var face = cubeGridHandler.GetCenterFace(cubeFaceType);
+        var obj = face.SpawnObject(SpawnerFactory.Instance.GetPrefab(seq.spawnerId));
+        obj.GetComponent<MonsterSpawner>().Init(seq, onMonsterDeath, face);
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FaceObject : MonoBehaviour
+public abstract class FaceObject : MonoBehaviour
 {
     private CubieFace parentFace;
     private Action onDeath;
@@ -14,7 +14,7 @@ public class FaceObject : MonoBehaviour
     
     public void Init()
     {
-        behaviorSequencesSO.ForEach(sequence => behaviorSequences.Add(sequence.CreateBehaviorSequence(this)));
+        //behaviorSequencesSO.ForEach(sequence => behaviorSequences.Add(sequence.CreateBehaviorSequence(this)));
     }
 
 

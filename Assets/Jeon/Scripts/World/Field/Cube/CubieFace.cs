@@ -17,13 +17,12 @@ public class CubieFace : MonoBehaviour
     {
         this.face = face;
     }
-    public void SpawnObject(GameObject prefab, Action onDeath = null)
+    public FaceObject SpawnObject(GameObject prefab)
     {
         GameObject spawned = Instantiate(prefab, transform.position, transform.rotation, transform);
-        if (spawned.TryGetComponent<FaceObject>(out var faceObject))
-        {
-            faceObject.AddOnDeathAction(onDeath);
-        }
+        var faceObj = spawned.GetComponent<FaceObject>();
+        faceObj.Init(); 
+        return faceObj; 
     }
 
     public CubeAxisType GetNotRotationAxis()

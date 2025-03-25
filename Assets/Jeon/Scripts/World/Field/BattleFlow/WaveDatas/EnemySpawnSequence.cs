@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySpawnSequence
 {
     public string label = "Sequence A";
+    public int spawnerId;
     public int monsterId;                 
     public int count = 5;
     public float spawnInterval = 1f;

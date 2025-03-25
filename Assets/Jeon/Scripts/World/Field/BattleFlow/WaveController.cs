@@ -77,7 +77,7 @@ public class WaveController
     }
     private void SpawnSpawner(EnemySpawnSequence seq)
     {
-        cube.SpawnSpawner(seq, OnEnemyDeath);
+        cube.SpawnSpawner(seq, OnEnemyDeath,seq.spawnOffset);
         aliveEnemyCount += seq.count;
     }
     private void OnEnemyDeath()
