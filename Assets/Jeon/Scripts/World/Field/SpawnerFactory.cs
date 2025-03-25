@@ -33,10 +33,9 @@ public class SpawnerFactory
             spawnerPrefabs[i] = loadedPrefabs[i];
             Debug.Log($"[SpawnerFactory] Registered Spawner ID {i} → {loadedPrefabs[i].name}");
         }
-
+        Debug.Log(spawnerPrefabs.Count);
         isInitialized = true;
     }
-
     public GameObject GetPrefab(int id)
     {
         if (!isInitialized)

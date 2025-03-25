@@ -12,11 +12,14 @@ public class CountdownState : IBattleState
     }
     public void Enter()
     {
+        Utils.GetUI<CountdownUI>().OnEnableUI(context.StartBattle); 
         //UIManager.Instance.ShowCountdownUI(timer);
     }
     public void Exit()
     {
-      ///  UIManager.Instance.HideCountdownUI();
+        Utils.GetUI<CountdownUI>().OnDisableUI();
+
+        ///  UIManager.Instance.HideCountdownUI();
     }
     public void Update()
     {
