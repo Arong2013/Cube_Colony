@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class MonsterSpawner : FaceObject
+public class MonsterSpawner : FaceUnit
 {
     private EnemySpawnSequence sequence;
     private Action onEnemyDeath;

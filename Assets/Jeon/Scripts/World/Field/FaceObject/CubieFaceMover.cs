@@ -13,7 +13,6 @@ public class CubieFaceMover : MonoBehaviour
     [SerializeField] CubieFace goalFace;   // 목표 CubieFace
 
     public Cube cube;
-
     void Update()
     {
         // 1. startFace와 goalFace가 존재하는지 확인
@@ -26,7 +25,6 @@ public class CubieFaceMover : MonoBehaviour
             }
         }
     }
-
     // 이동 시작 함수
     public void StartMovement(CubieFace start, CubieFace goal)
     {

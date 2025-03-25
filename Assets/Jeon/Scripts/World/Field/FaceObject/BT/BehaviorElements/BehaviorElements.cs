@@ -9,7 +9,7 @@ public abstract class BehaviorActionSO : ScriptableObject
 }
 public abstract class BehaviorCondition
 {
-    protected FaceObject faceObject => step.faceObject;
+    protected FaceUnit FaceUnit => step.FaceUnit;
     protected BehaviorStep step;
 
     public abstract BehaviorState Execute();
@@ -21,7 +21,7 @@ public abstract class BehaviorCondition
 }
 public abstract class BehaviorAction
 {
-    protected FaceObject faceObject => step.faceObject;
+    protected FaceUnit FaceUnit => step.FaceUnit;
     protected BehaviorStep step;
     public abstract BehaviorState Execute();
     public void SetParent(BehaviorStep step)

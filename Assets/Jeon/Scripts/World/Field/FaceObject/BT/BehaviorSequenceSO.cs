@@ -6,8 +6,8 @@ public class BehaviorSequenceSO : ScriptableObject
 {
     [SerializeField] private List<BehaviorStepSO> stepSOs;
 
-    public BehaviorSequence CreateBehaviorSequence(FaceObject faceObject)
+    public BehaviorSequence CreateBehaviorSequence(FaceUnit FaceUnit)
     {
-        return new BehaviorSequence(faceObject, stepSOs);
+        return new BehaviorSequence(FaceUnit, stepSOs);
     }
 }

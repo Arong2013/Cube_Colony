@@ -17,11 +17,11 @@ public class CubieFace : MonoBehaviour
     {
         this.face = face;
     }
-    public FaceObject SpawnObject(GameObject prefab)
+    public FaceUnit SpawnObject(GameObject prefab)
     {
         GameObject spawned = Instantiate(prefab, transform.position, transform.rotation, transform);
-        var faceObj = spawned.GetComponent<FaceObject>();
-        faceObj.Init(); 
+        var faceObj = spawned.GetComponent<FaceUnit>();
+        faceObj.Init(this); 
         return faceObj; 
     }
 

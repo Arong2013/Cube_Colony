@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BehaviorStep
 {
-    public FaceObject faceObject => parentSequence.faceObject;  // 오타 수정
+    public FaceUnit FaceUnit => parentSequence.FaceUnit;  // 오타 수정
     private BehaviorSequence parentSequence;
     private List<BehaviorCondition> conditions;
     private BehaviorAction taskAction;

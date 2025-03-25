@@ -6,11 +6,11 @@ public class BehaviorSequence
     private readonly List<BehaviorStep> steps;
     private readonly Dictionary<string, object> decisionContext = new();
 
-    public FaceObject faceObject { get; private set; }
+    public FaceUnit FaceUnit { get; private set; }
 
-    public BehaviorSequence(FaceObject faceObject, List<BehaviorStepSO> stepSOs)
+    public BehaviorSequence(FaceUnit FaceUnit, List<BehaviorStepSO> stepSOs)
     {
-        this.faceObject = faceObject;
+        this.FaceUnit = FaceUnit;
         steps = new List<BehaviorStep>();
 
         foreach (var stepSO in stepSOs)
