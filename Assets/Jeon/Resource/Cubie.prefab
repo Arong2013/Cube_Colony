@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ae96d7653b8549246ad3a4fc8d1c7e4d, type: 2}
+  - {fileID: 2100000, guid: 0d34820d66167544583110c5c5769c2f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -123,7 +123,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tower: {fileID: 1858523013235686093, guid: d7e4eaa9627ada945820f78bb4305bf4, type: 3}
-  cubie: {fileID: -913884292617206700}
 --- !u!1 &4098991580698989337
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,7 +246,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tower: {fileID: 1858523013235686093, guid: d7e4eaa9627ada945820f78bb4305bf4, type: 3}
-  cubie: {fileID: -913884292617206700}
 --- !u!1 &6195200229840448734
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,6 +373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1c1ecc9fefd8ac4e9b304d218e1fb34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isWalkable: 1
   faces:
   - {fileID: 65698545002581422}
   - {fileID: 7196366575631141369}
@@ -448,7 +447,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0d34820d66167544583110c5c5769c2f, type: 2}
+  - {fileID: 2100000, guid: 933df41c997379f48a0c4f08449dc83d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -505,7 +504,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tower: {fileID: 1858523013235686093, guid: d7e4eaa9627ada945820f78bb4305bf4, type: 3}
-  cubie: {fileID: -913884292617206700}
 --- !u!1 &7268831793021726084
 GameObject:
   m_ObjectHideFlags: 0
@@ -629,7 +627,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tower: {fileID: 1858523013235686093, guid: d7e4eaa9627ada945820f78bb4305bf4, type: 3}
-  cubie: {fileID: -913884292617206700}
 --- !u!1 &8347583270827263711
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,7 +693,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 933df41c997379f48a0c4f08449dc83d, type: 2}
+  - {fileID: 2100000, guid: ae96d7653b8549246ad3a4fc8d1c7e4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -753,7 +750,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tower: {fileID: 1858523013235686093, guid: d7e4eaa9627ada945820f78bb4305bf4, type: 3}
-  cubie: {fileID: -913884292617206700}
 --- !u!1 &8548381374575968842
 GameObject:
   m_ObjectHideFlags: 0
@@ -877,4 +873,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tower: {fileID: 1858523013235686093, guid: d7e4eaa9627ada945820f78bb4305bf4, type: 3}
-  cubie: {fileID: -913884292617206700}
