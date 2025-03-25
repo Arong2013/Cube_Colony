@@ -9,7 +9,6 @@ public class MonsterSpawner : MonoBehaviour
     private float timer;
     private int spawned;
     private bool isSpawning;
-
     public void Init(EnemySpawnSequence sequence, Action onEnemyDeath)
     {
         this.sequence = sequence;
@@ -17,6 +16,7 @@ public class MonsterSpawner : MonoBehaviour
         this.timer = sequence.delayBeforeStart;
         this.spawned = 0;
         this.isSpawning = false;
+
 
         if (sequence.warningTime > 0f)
         {
