@@ -54,8 +54,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!212 &3820739473693748797
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -129,6 +129,7 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0, z: 0}
   behaviorSequencesSO:
   - {fileID: 11400000, guid: e54f579efc5eaf444923835eb1db0a53, type: 2}
+  moveSpeed: 1
 --- !u!54 &1600187919927573364
 Rigidbody:
   m_ObjectHideFlags: 0

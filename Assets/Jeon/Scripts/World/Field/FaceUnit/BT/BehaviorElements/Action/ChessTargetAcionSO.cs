@@ -42,8 +42,6 @@ public class ChessTargetAcion : BehaviorAction, IBehaviorDatable
 
         return result;
     }
-
-
     private BehaviorState MoveToNextTarget()
     {
         if (HasReachedDestination(astarList[0]))

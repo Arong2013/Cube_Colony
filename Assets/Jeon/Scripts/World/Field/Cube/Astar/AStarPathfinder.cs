@@ -41,7 +41,8 @@ public class AStarPathfinding
             // 목표에 도달하면 경로 반환
             if (current == goal)
             {
-                List<CubieFace> path = ReconstructPath(cameFrom, current);
+                List<CubieFace> path = ReconstructPath(cameFrom, current, goalFace);
+
                 return path;
             }
 
@@ -130,14 +131,20 @@ public class AStarPathfinding
     }
 
     // 경로 재구성
-    private List<CubieFace> ReconstructPath(Dictionary<Vector2Int, Vector2Int> cameFrom, Vector2Int current)
+    private List<CubieFace> ReconstructPath(Dictionary<Vector2Int, Vector2Int> cameFrom, Vector2Int current, CubieFace goalFace)
     {
         List<CubieFace> path = new List<CubieFace>();
+
+        // 경로를 재구성하면서 CubieFace 리스트에 삽입
         while (cameFrom.ContainsKey(current))
         {
             current = cameFrom[current];
             path.Insert(0, v2CubieFaceMap[current]);  // 경로 순서를 올바르게 하여 삽입
         }
+
+        // 목표값 추가 (path의 끝에 goalFace 추가)
+        path.Add(goalFace);
+
         return path;
     }
 }

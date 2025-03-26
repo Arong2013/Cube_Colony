@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 public class Enemy : FaceUnit
 {
     [SerializeField] private List<BehaviorSequenceSO> behaviorSequencesSO;
+    [SerializeField] private float moveSpeed;
     private List<BehaviorSequence> behaviorSequences = new List<BehaviorSequence>();
     public override void Init(CubieFace cubieFace)
     {
@@ -14,14 +15,13 @@ public class Enemy : FaceUnit
     public void Update()
     {
         Execute();
-        if (nextPos != Vector3.zero)
+        if (moveDirection != Vector3.zero)
         {
-            transform.position = Vector3.MoveTowards(transform.position, nextPos, 1f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + moveDirection, moveSpeed * Time.deltaTime);
         }
     }
     public BehaviorState Execute()
     {
-        
         foreach (var seq in behaviorSequences)
         {
             var behaviorState = seq.Execute();
