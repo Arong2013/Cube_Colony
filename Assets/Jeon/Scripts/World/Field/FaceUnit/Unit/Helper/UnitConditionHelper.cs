@@ -37,5 +37,19 @@ public static class UnitConditionHelper
 
         return detectedEnemies;
     }
+    public static List<ExitGateObject> GetExitGateObjects(FaceUnit faceUnit)
+    {
+        List<ExitGateObject> exitGateObjects = new List<ExitGateObject>();
+        Collider[] colliders = Physics.OverlapSphere(faceUnit.transform.position,300f);
+        foreach (var col in colliders)
+        {
+            ExitGateObject targetUnit = col.GetComponent<ExitGateObject>();
+            if (targetUnit != null)
+            {
+                exitGateObjects.Add(targetUnit);
+            }
+        }
+        return exitGateObjects; 
+    }
 
 }

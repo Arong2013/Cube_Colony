@@ -51,7 +51,6 @@ public class BehaviorSequence
         {
 
             var result = step.Execute();
-            Debug.Log($"[BehaviorSequence] Step executed → Result: {result}");
 
             if (result == BehaviorState.FAILURE) return BehaviorState.FAILURE;
             if (result == BehaviorState.RUNNING) return BehaviorState.RUNNING;

@@ -9,9 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b935f8faa60fbb47be85bbb41e61359, type: 3}
-  m_Name: Step1
+  m_Script: {fileID: 11500000, guid: 9d3a281340ac25443a0c4d6c9638d853, type: 3}
+  m_Name: DetectExitConditionSO
   m_EditorClassIdentifier: 
-  conditions:
-  - {fileID: 11400000, guid: 364352c533d6e1f49a0f9bcfded75531, type: 2}
-  taskAction: {fileID: 11400000, guid: 9f5b9f2497bacca40b6d5e4fa5689db7, type: 2}

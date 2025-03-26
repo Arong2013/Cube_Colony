@@ -14,9 +14,9 @@ public class Enemy : FaceUnit
     public void Update()
     {
         Execute();
-        if (moveDirection != Vector3.zero)
+        if (nextPos != Vector3.zero)
         {
-            transform.position += moveDirection * Time.deltaTime * 5f; // 속도 조절 가능
+            transform.position = Vector3.MoveTowards(transform.position, nextPos, 1f * Time.deltaTime);
         }
     }
     public BehaviorState Execute()
@@ -31,5 +31,9 @@ public class Enemy : FaceUnit
             }
         }
         return BehaviorState.FAILURE;
+    }
+    protected override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
     }
 }

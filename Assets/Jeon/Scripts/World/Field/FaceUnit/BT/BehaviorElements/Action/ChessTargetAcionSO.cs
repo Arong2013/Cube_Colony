@@ -14,10 +14,12 @@ public class ChessTargetAcion : BehaviorAction, IBehaviorDatable
     private List<CubieFace> astarList;
     bool IsAstarListEmpty => astarList == null || astarList.Count == 0;
     bool HasMoreTargets => astarList.Count > 0;
+    private float arrivalThreshold = 0.1f; // 목표 지점에 도착했다고 판단할 거리 임계값
     public ChessTargetAcion() { }
     public override BehaviorState Execute()
     {
         astarList = FaceUnit.GetUnitData<List<CubieFace>, ChessTargetAcion>();
+
         if (IsAstarListEmpty)
         {
             astarList = FaceUnit.GetAstarList();
@@ -31,7 +33,7 @@ public class ChessTargetAcion : BehaviorAction, IBehaviorDatable
         var result = MoveToNextTarget();
         if (result == BehaviorState.RUNNING)
         {
-            FaceUnit.SetMoveDirection(UnitMovementHelper.GetMovementDirection(FaceUnit.ParentFace, astarList[0]));
+            FaceUnit.SetMoveDirection(astarList[0].transform.position);
         }
         else
         {
@@ -50,9 +52,10 @@ public class ChessTargetAcion : BehaviorAction, IBehaviorDatable
         }
         return BehaviorState.RUNNING;
     }
-
-    private bool HasReachedDestination(CubieFace target) => FaceUnit.ParentFace == target;
-
+    private bool HasReachedDestination(CubieFace target)
+    {
+        return Vector3.Distance(FaceUnit.transform.position, target.transform.position) <= arrivalThreshold;
+    }
     private BehaviorState HandleReachedDestination()
     {
         astarList.RemoveAt(0);

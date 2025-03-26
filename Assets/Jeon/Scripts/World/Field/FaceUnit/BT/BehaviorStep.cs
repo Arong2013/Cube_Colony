@@ -25,8 +25,7 @@ public class BehaviorStep
     public BehaviorState Execute()
     {
         bool allMet = conditions.TrueForAll(c => c.Execute() == BehaviorState.SUCCESS);
-        Debug.Log($"[BehaviorStep] Executing Step → ConditionsMet: {allMet}");
-
+       
         return allMet ? taskAction.Execute() : BehaviorState.FAILURE;
     }
 
