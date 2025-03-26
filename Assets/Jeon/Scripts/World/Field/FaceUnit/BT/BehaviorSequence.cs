@@ -46,8 +46,10 @@ public class BehaviorSequence
 
     public BehaviorState Execute()
     {
+
         foreach (BehaviorStep step in steps)
         {
+
             var result = step.Execute();
             Debug.Log($"[BehaviorSequence] Step executed → Result: {result}");
 

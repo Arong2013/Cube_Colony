@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Cubie : MonoBehaviour
 {
-    public bool isWalkable = true;
     public  CubieFace[] faces = new CubieFace[6];
 
 

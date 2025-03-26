@@ -5,19 +5,18 @@ public class MonsterSpawner : FaceUnit
 {
     private EnemySpawnSequence sequence;
     private Action onEnemyDeath;
-    private CubieFace cunCubieFace;
 
     private float timer;
     private int spawned;
     private bool isSpawning;
     public void Init(EnemySpawnSequence sequence, Action onEnemyDeath,CubieFace cubieFace)
     {
+        base.Init(cubieFace);
         this.sequence = sequence;
         this.onEnemyDeath = onEnemyDeath;
         this.timer = sequence.delayBeforeStart;
         this.spawned = 0;
         this.isSpawning = false;
-        cunCubieFace = cubieFace;   
 
         if (sequence.warningTime > 0f)
         {
@@ -54,12 +53,11 @@ public class MonsterSpawner : FaceUnit
     private void SpawnMonster()
     {
         GameObject prefab = MonsterFactory.Instance.GetPrefab(sequence.monsterId);
-        var faceObj =  cunCubieFace.SpawnObject(prefab);
+        var faceObj =  ParentFace.SpawnObject(prefab);
         faceObj.AddOnDeathAction(onEnemyDeath);
 
         if (sequence.spawnSound != null)
             AudioSource.PlayClipAtPoint(sequence.spawnSound, transform.position);
-
     }
     private void DestroySelfIfFinished()
     {

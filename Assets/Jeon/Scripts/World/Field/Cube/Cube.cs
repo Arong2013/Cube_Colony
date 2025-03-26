@@ -10,9 +10,9 @@ public class Cube : MonoBehaviour
     [SerializeField] Cubie cubie;
 
     CubeRotater cubeRotater;
-   public CubeGridHandler cubeGridHandler;
+    public CubeGridHandler cubeGridHandler;
 
-    private void Start()
+    public void Init()
     {
         cubeRotater = new CubeRotater(this.transform);
         cubeGridHandler = new CubeGridHandler(size, cubie,this.transform);
@@ -62,5 +62,12 @@ public class Cube : MonoBehaviour
         var face = cubeGridHandler.GetCenterFace(cubeFaceType);
         var obj = face.SpawnObject(SpawnerFactory.Instance.GetPrefab(seq.spawnerId));
         obj.GetComponent<MonsterSpawner>().Init(seq, onMonsterDeath, face);
+    }
+
+    public void SpawnExitGate(Action onEnemyExit,CubeFaceType cubeFaceType)
+    {
+        var face = cubeGridHandler.GetCenterFace(cubeFaceType);
+        var obj = face.SpawnObject(ExitGateFactory.Instance.GetPrefab(0));
+        obj.GetComponent<ExitGateObject>().Init(onEnemyExit,face);
     }
   }

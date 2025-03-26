@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Enemy : FaceUnit
 {
@@ -13,9 +14,14 @@ public class Enemy : FaceUnit
     public void Update()
     {
         Execute();
+        if (moveDirection != Vector3.zero)
+        {
+            transform.position += moveDirection * Time.deltaTime * 5f; // 속도 조절 가능
+        }
     }
     public BehaviorState Execute()
     {
+        
         foreach (var seq in behaviorSequences)
         {
             var behaviorState = seq.Execute();

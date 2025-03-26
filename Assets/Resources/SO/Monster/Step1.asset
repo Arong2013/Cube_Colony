@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b935f8faa60fbb47be85bbb41e61359, type: 3}
-  m_Name: StepChessTarget
+  m_Name: Step1
   m_EditorClassIdentifier: 
-  conditions: []
-  taskAction: {fileID: 11400000, guid: ec58abe0c58c9d044be1a829684fbee8, type: 2}
+  conditions:
+  - {fileID: 11400000, guid: 384c83daf7b74ca4cbbb8a280a30d38d, type: 2}
+  taskAction: {fileID: 11400000, guid: 9f5b9f2497bacca40b6d5e4fa5689db7, type: 2}
