@@ -120,9 +120,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1858523013235686093}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ee5879263eb0d841816389fca53ff2e, type: 3}
+  m_Script: {fileID: 11500000, guid: c870a6f802fbb544fa7368efbea7261d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unitType: 4
   propertyType: 0
   attackRange: 5
+  moveDirection: {x: 0, y: 0, z: 0}

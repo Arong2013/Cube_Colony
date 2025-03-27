@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public static class UnitMovementHelper
 {
@@ -41,4 +42,45 @@ public static class UnitMovementHelper
         if (v.z != 0) count++;
         return count;
     }
+    public static void Move(FaceUnit faceUnit, Vector3Int dir)
+    {
+        if (dir == Vector3.zero) return; // 방향 벡터가 0일 경우 회전 방지
+
+        faceUnit.transform.position = Vector3.MoveTowards(faceUnit.transform.position, faceUnit.transform.position + dir, 1f * Time.deltaTime);
+        Quaternion targetRotation = GetRotation(faceUnit.CubeFaceType, dir);
+        if (Quaternion.Angle(faceUnit.transform.rotation, targetRotation) > 1f) // 오차 허용
+        {
+            faceUnit.transform.rotation = targetRotation;
+        }
+    }
+
+    private static Quaternion GetRotation(CubeFaceType faceType, Vector3 dir)
+    {
+        switch (faceType)
+        {
+            case CubeFaceType.Top:
+                if (dir.x < 0)  // 왼쪽
+                    return Quaternion.Euler(-15f, -135f, 0f);
+                if (dir.x > 0) // 오른쪽
+                    return Quaternion.Euler(15f, 45f, 0f);
+                break;
+
+            case CubeFaceType.Front:
+                if (dir.y > 0) // 위쪽
+                    return Quaternion.Euler(-15f, -90f, 0f);
+                if (dir.y < 0) // 아래쪽
+                    return Quaternion.Euler(15f, 90f, 0f);
+                break;
+
+            case CubeFaceType.Left:
+                if (dir.y > 0) // 위쪽
+                    return Quaternion.Euler(15f, 0f, 0f);
+                if (dir.y < 0) // 아래쪽
+                    return Quaternion.Euler(-15f, 180f, 0f);
+                break;
+        }
+
+        return Quaternion.identity;
+    }
+
 }

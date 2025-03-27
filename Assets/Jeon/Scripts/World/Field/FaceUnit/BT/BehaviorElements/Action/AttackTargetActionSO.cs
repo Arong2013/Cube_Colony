@@ -16,12 +16,6 @@ public class AttackTargetAction : BehaviorAction, IBehaviorDatable
     public AttackTargetAction() { }
     public override BehaviorState Execute()
     {
-        target = FaceUnit.GetUnitData<FaceUnit, AttackTargetAction>();
-
-        if (!HasValidTarget)
-        {
-            return BehaviorState.FAILURE;
-        }
 
         return PerformAttack();
     }

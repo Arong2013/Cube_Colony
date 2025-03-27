@@ -15,6 +15,12 @@ public class AStarPathfinding
     // CubieFace를 입력받아 해당하는 시작점과 목표점의 인덱스를 구해서 경로 탐색을 실행
     public List<CubieFace> FindPath(CubieFace startFace, CubieFace goalFace)
     {
+        if (startFace == goalFace)
+        {
+            // 시작과 목표가 동일 → 이동할 필요 없음
+            return new List<CubieFace>();
+        }
+
         Vector2Int start = GetPositionFromCubieFace(startFace); // CubieFace에서 시작 위치 얻기
         Vector2Int goal = GetPositionFromCubieFace(goalFace); // CubieFace에서 목표 위치 얻기
 
@@ -42,7 +48,7 @@ public class AStarPathfinding
             if (current == goal)
             {
                 List<CubieFace> path = ReconstructPath(cameFrom, current, goalFace);
-
+                path.RemoveAt(0);   
                 return path;
             }
 
@@ -141,8 +147,6 @@ public class AStarPathfinding
             current = cameFrom[current];
             path.Insert(0, v2CubieFaceMap[current]);  // 경로 순서를 올바르게 하여 삽입
         }
-
-        // 목표값 추가 (path의 끝에 goalFace 추가)
         path.Add(goalFace);
 
         return path;

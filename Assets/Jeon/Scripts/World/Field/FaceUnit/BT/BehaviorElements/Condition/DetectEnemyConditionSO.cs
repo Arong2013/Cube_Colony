@@ -25,7 +25,6 @@ public class DetectEnemyCondition : BehaviorCondition, IBehaviorDatable
             return BehaviorState.SUCCESS;
         }
         detectedEnemies = UnitConditionHelper.GetEnemiesInRange(FaceUnit,isAttackDetect);
-        Debug.Log(detectedEnemies?.Count);
         return IsEnemyDetected(detectedEnemies) ? BehaviorState.SUCCESS : BehaviorState.FAILURE;
     }
     private bool IsEnemyDetected(List<FaceUnit> enemies)
@@ -34,6 +33,6 @@ public class DetectEnemyCondition : BehaviorCondition, IBehaviorDatable
     }
     private List<FaceUnit> GetDetectedEnemies()
     {
-        return FaceUnit.GetUnitData<List<FaceUnit>, DetectEnemyCondition>();
+        return FaceUnit.GetUnitData<List<FaceUnit>>(BehaviorDataType.TargetList);
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 [CreateAssetMenu(fileName = "ChessTargetAcionSO", menuName = "Behavior/Actions/ChessTarget")]
 public class ChessTargetAcionSO : BehaviorActionSO
@@ -14,32 +15,25 @@ public class ChessTargetAcion : BehaviorAction, IBehaviorDatable
     private List<CubieFace> astarList;
     bool IsAstarListEmpty => astarList == null || astarList.Count == 0;
     bool HasMoreTargets => astarList.Count > 0;
-    private float arrivalThreshold = 0.1f; // 목표 지점에 도착했다고 판단할 거리 임계값
+    private float arrivalThreshold = 0.3f; // 목표 지점에 도착했다고 판단할 거리 임계값
     public ChessTargetAcion() { }
     public override BehaviorState Execute()
     {
-        astarList = FaceUnit.GetUnitData<List<CubieFace>, ChessTargetAcion>();
-
         if (IsAstarListEmpty)
         {
             astarList = FaceUnit.GetAstarList();
-            FaceUnit.SetData<List<CubieFace>, ChessTargetAcion>(astarList);
             if (IsAstarListEmpty)
             {
-                FaceUnit.SetMoveDirection(Vector3.zero); // 실패 시 이동 방향 초기화
                 return BehaviorState.FAILURE;
             }
         }
         var result = MoveToNextTarget();
         if (result == BehaviorState.RUNNING)
         {
-            FaceUnit.SetMoveDirection(astarList[0].transform.position);
+            var dir = UnitMovementHelper.GetNextMoveDirection(FaceUnit.transform.position, astarList[0].transform.position);
+            Debug.Log(astarList[0].transform.position + "       " + dir);
+            FaceUnit.Move(dir);
         }
-        else
-        {
-            FaceUnit.SetMoveDirection(Vector3.zero); 
-        }
-
         return result;
     }
     private BehaviorState MoveToNextTarget()
@@ -57,13 +51,10 @@ public class ChessTargetAcion : BehaviorAction, IBehaviorDatable
     private BehaviorState HandleReachedDestination()
     {
         astarList.RemoveAt(0);
-        FaceUnit.SetData<List<CubieFace>, ChessTargetAcion>(astarList);
-
         if (HasMoreTargets)
         {
             return BehaviorState.RUNNING;
         }
-        FaceUnit.SetData<List<FaceUnit>, DetectEnemyCondition>(null);
         return BehaviorState.SUCCESS;
     }
 }

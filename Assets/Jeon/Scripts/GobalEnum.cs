@@ -41,3 +41,8 @@ public enum PriorityNameType
     AttackAlly,
     DefAlly
 }
+
+public enum BehaviorDataType
+{
+    TargetList
+}

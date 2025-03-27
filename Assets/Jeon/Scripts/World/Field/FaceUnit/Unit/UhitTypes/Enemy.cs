@@ -15,10 +15,6 @@ public class Enemy : FaceUnit
     public void Update()
     {
         Execute();
-        if (moveDirection != Vector3.zero)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + moveDirection, moveSpeed * Time.deltaTime);
-        }
     }
     public BehaviorState Execute()
     {

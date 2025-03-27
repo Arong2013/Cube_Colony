@@ -23,8 +23,16 @@ public class DetectExitCondition : BehaviorCondition, IBehaviorDatable
             return BehaviorState.SUCCESS;
         }
         detectedEnemies = UnitConditionHelper.GetExitGateObjects(FaceUnit);
-        FaceUnit.SetData<List<ExitGateObject>, DetectExitCondition>(detectedEnemies);
-        return IsEnemyDetected(detectedEnemies) ? BehaviorState.SUCCESS : BehaviorState.FAILURE;
+        
+        if(IsEnemyDetected(detectedEnemies))
+        {
+            FaceUnit.SetData<List<ExitGateObject>>(BehaviorDataType.TargetList, detectedEnemies);
+            return BehaviorState.SUCCESS;
+        }
+        else
+        {
+            return BehaviorState.FAILURE;
+        }
     }
     private bool IsEnemyDetected(List<ExitGateObject> enemies)
     {
@@ -32,6 +40,6 @@ public class DetectExitCondition : BehaviorCondition, IBehaviorDatable
     }
     private List<ExitGateObject> GetDetectedEnemies()
     {
-        return FaceUnit.GetUnitData<List<ExitGateObject>, DetectExitCondition>();
+        return FaceUnit.GetUnitData<List<ExitGateObject>>(BehaviorDataType.TargetList);
     }
 }

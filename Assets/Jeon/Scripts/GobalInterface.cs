@@ -7,10 +7,8 @@ public interface IBattleState
     void Exit();
     void Update();
 }
-
 public interface IAstarable
 {
     List<CubieFace> GetAstarPathFaces(CubieFace start, CubieFace target);
 }
-
 public interface IBehaviorDatable { }
