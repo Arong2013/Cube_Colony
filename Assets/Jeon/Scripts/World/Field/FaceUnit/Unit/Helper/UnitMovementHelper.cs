@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-
 public static class UnitMovementHelper
 {
     private const float TOLERANCE = 0.2f;
@@ -58,29 +57,59 @@ public static class UnitMovementHelper
     {
         switch (faceType)
         {
-            case CubeFaceType.Top:
-                if (dir.x < 0)  // 왼쪽
-                    return Quaternion.Euler(-15f, -135f, 0f);
-                if (dir.x > 0) // 오른쪽
-                    return Quaternion.Euler(15f, 45f, 0f);
+            case CubeFaceType.Top: // X축 이동
+                if (dir.x <= 0) return Quaternion.Euler(-15f, -135f, 0f); // 왼쪽
+                if (dir.x > 0) return Quaternion.Euler(15f, 45f, 0f);  // 오른쪽
                 break;
 
-            case CubeFaceType.Front:
-                if (dir.y > 0) // 위쪽
-                    return Quaternion.Euler(-15f, -90f, 0f);
-                if (dir.y < 0) // 아래쪽
-                    return Quaternion.Euler(15f, 90f, 0f);
+            case CubeFaceType.Bottom: // X축 이동
+                if (dir.x <= 0) return Quaternion.Euler(15f, -45f, 0f); // 왼쪽
+                if (dir.x > 0) return Quaternion.Euler(-15f, 135f, 0f); // 오른쪽
                 break;
 
-            case CubeFaceType.Left:
-                if (dir.y > 0) // 위쪽
-                    return Quaternion.Euler(15f, 0f, 0f);
-                if (dir.y < 0) // 아래쪽
-                    return Quaternion.Euler(-15f, 180f, 0f);
+            case CubeFaceType.Front: // Y축 이동
+                if (dir.y >= 0) return Quaternion.Euler(-15f, -90f, 0f); // 위쪽
+                if (dir.y < 0) return Quaternion.Euler(15f, 90f, 0f);  // 아래쪽
+                break;
+
+            case CubeFaceType.Back: // Y축 이동
+                if (dir.y >= 0) return Quaternion.Euler(-15f, 90f, 0f); // 위쪽
+                if (dir.y < 0) return Quaternion.Euler(15f, -90f, 0f); // 아래쪽
+                break;
+
+            case CubeFaceType.Left: // Y축 이동
+                if (dir.y >= 0) return Quaternion.Euler(15f, 0f, 0f); // 위쪽
+                if (dir.y < 0) return Quaternion.Euler(-15f, 180f, 0f); // 아래쪽
+                break;
+
+            case CubeFaceType.Right: // Y축 이동
+                if (dir.y >= 0) return Quaternion.Euler(-15f, 180f, 0f); // 위쪽
+                if (dir.y < 0) return Quaternion.Euler(15f, 0f, 0f); // 아래쪽
                 break;
         }
 
         return Quaternion.identity;
+    }
+
+
+    public static CubeFaceType CalculateCurrentFace(Transform transform, int size)
+    {
+        Vector3 pos = transform.position;
+
+        if (pos.x >= -1f && pos.x <= (-1f + size)) // Front / Back
+        {
+            return (pos.z < -1f) ? CubeFaceType.Back : CubeFaceType.Front;
+        }
+        else if (pos.y >= -2f && pos.y <= (-1f + size)) // Top / Bottom
+        {
+            return (pos.y > 1f) ? CubeFaceType.Top : CubeFaceType.Bottom;
+        }
+        else if (pos.z >= -1f && pos.z <= (-1f + size)) // Left / Right
+        {
+            return (pos.x < -1f) ? CubeFaceType.Left : CubeFaceType.Right;
+        }
+
+        return CubeFaceType.Front; // 기본값 (예외 처리)
     }
 
 }

@@ -12,7 +12,7 @@ public abstract class FaceUnit : MonoBehaviour
     private float range = 1000f;
     [SerializeField] private float attackRange = 5f;
     private Dictionary<BehaviorDataType, object> behaviorData = new Dictionary<BehaviorDataType, object>();
-    public CubeFaceType CubeFaceType => parentFace.face;
+    public CubeFaceType CubeFaceType => UnitMovementHelper.CalculateCurrentFace(this.transform, 3);
     public UnitType UnitType => unitType;
     public PriorityNameType PropertyType => propertyType;
     public CubieFace ParentFace => parentFace;
