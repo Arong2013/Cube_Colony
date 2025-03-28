@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using static UnityEditor.PlayerSettings;
 
 [System.Serializable]
 public class CubeGridHandler : IAstarable
@@ -45,8 +46,6 @@ public class CubeGridHandler : IAstarable
         for (int layer = 0; layer < Size; layer++)
             ApplyLayerRotation(layer, clockwise, axis);
     }
-
-    // ✅ 외부 호출 메서드 - 경로 탐색
     public List<CubieFace> GetAstarPathFaces(CubieFace startFace, CubieFace targetFace)
     {
         var referenceFace = startFace.face;
@@ -62,18 +61,21 @@ public class CubeGridHandler : IAstarable
             RenameCubies();
         }
     }
-
-    // ✅ 외부 호출 메서드 - 조회
     public List<Cubie> GetAllCubies() => GridSearchHelper.GetAllCubies(GetGridCopy());
-
     public List<Cubie> GetCubiesOnSameLayer(Cubie referenceCubie, CubeAxisType axis)
     {
         int layer = GridSearchHelper.FindLayer(referenceCubie, axis, GetGridCopy());
         return GridSearchHelper.GetCubiesInLayer(layer, axis, GetGridCopy());
     }
     public CubieFace GetCenterFace(CubeFaceType faceType) => GridSearchHelper.GetCenterFace(faceType, Size, GetGridCopy());
-
-    // ✅ 내부 구현 - 레이어 회전 흐름
+    public CubieFace GetCubieFaceInPos(CubeFaceType cubeFaceType, Vector3 pos) => GridSearchHelper.GetCubieFaceInPos(cubeFaceType,pos,GetGridCopy());
+  
+    
+    
+    
+    
+    
+    
     private void ApplyLayerRotation(int layer, bool isClockwise, CubeAxisType axis)
     {
         Cubie[,] layerSlice = CubieMatrixHelper.ExtractLayer(GetGridCopy(), layer, axis);

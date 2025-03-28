@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using UnityEngine;
 
 public static class GridSearchHelper
 {
@@ -69,6 +70,55 @@ public static class GridSearchHelper
             CubeFaceType.Bottom => cubieGrid[x, 0, z].GetFace(CubeFaceType.Bottom),
             _ => null
         };
+    }
+
+    public static CubieFace GetCubieFaceInPos(CubeFaceType cubeFaceType,Vector3 pos , Cubie[,,] cubieGrid)
+    {
+        var allCube = GetAllCubies(cubieGrid);
+        var dic = GetCubieFaceMapByType(allCube, cubieGrid);
+        var closestFace = dic[cubeFaceType]
+            .OrderBy(face => Vector3.Distance(face.transform.position, pos)) // 거리순 정렬
+            .FirstOrDefault(); 
+        return closestFace;
+
+    }
+
+    // 큐비로부터 각 면별 CubieFace 추출 및 분류
+    public static Dictionary<CubeFaceType, List<CubieFace>> GetCubieFaceMapByType(List<Cubie> allCubies, Cubie[,,] cubieGrid)
+    {
+        int size = cubieGrid.GetLength(0);
+
+        var faceMap = new Dictionary<CubeFaceType, List<CubieFace>>()
+        {
+            { CubeFaceType.Front, new List<CubieFace>() },
+            { CubeFaceType.Back, new List<CubieFace>() },
+            { CubeFaceType.Left, new List<CubieFace>() },
+            { CubeFaceType.Right, new List<CubieFace>() },
+            { CubeFaceType.Top, new List<CubieFace>() },
+            { CubeFaceType.Bottom, new List<CubieFace>() }
+        };
+
+        foreach (var cubie in allCubies)
+        {
+            int x = GridSearchHelper.FindLayer(cubie, CubeAxisType.X, cubieGrid);
+            int y = GridSearchHelper.FindLayer(cubie, CubeAxisType.Y, cubieGrid);
+            int z = GridSearchHelper.FindLayer(cubie, CubeAxisType.Z, cubieGrid);
+
+            foreach (var face in cubie.GetComponentsInChildren<CubieFace>())
+            {
+                if ((face.face == CubeFaceType.Front && z != 0) ||
+                    (face.face == CubeFaceType.Back && z != size - 1) ||
+                    (face.face == CubeFaceType.Top && y != size - 1) ||
+                    (face.face == CubeFaceType.Bottom && y != 0) ||
+                    (face.face == CubeFaceType.Left && x != 0) ||
+                    (face.face == CubeFaceType.Right && x != size - 1))
+                    continue;
+
+                faceMap[face.face].Add(face);
+            }
+        }
+
+        return faceMap;
     }
 
 }

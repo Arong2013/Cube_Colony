@@ -11,17 +11,19 @@ public abstract class FaceUnit : MonoBehaviour
     private Action onDeath;
     private float range = 1000f;
     [SerializeField] private float attackRange = 5f;
+
+    IAstarable astarable;
     private Dictionary<BehaviorDataType, object> behaviorData = new Dictionary<BehaviorDataType, object>();
     public CubeFaceType CubeFaceType => UnitMovementHelper.CalculateCurrentFace(this.transform, 3);
     public UnitType UnitType => unitType;
     public PriorityNameType PropertyType => propertyType;
-    public CubieFace ParentFace => parentFace;
+    public CubieFace ParentFace => astarable.GetCubieFaceInPos(CubeFaceType,transform.position);
     public float Range => range;
     public float AttackRange => attackRange;
 
-    public virtual void Init(CubieFace cubieFace)
+    public virtual void Init(IAstarable astarable)
     {
-        parentFace = cubieFace;
+        this.astarable = astarable;
     }
 
     public void AddOnDeathAction(Action action)

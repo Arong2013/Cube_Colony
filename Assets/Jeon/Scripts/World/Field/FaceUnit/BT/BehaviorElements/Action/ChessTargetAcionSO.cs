@@ -31,7 +31,6 @@ public class ChessTargetAcion : BehaviorAction, IBehaviorDatable
         if (result == BehaviorState.RUNNING)
         {
             var dir = UnitMovementHelper.GetNextMoveDirection(FaceUnit.transform.position, astarList[0].transform.position);
-            Debug.Log(astarList[0].transform.position + "       " + dir);
             FaceUnit.Move(dir);
         }
         return result;

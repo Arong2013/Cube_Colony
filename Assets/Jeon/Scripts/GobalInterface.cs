@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
+using UnityEngine;
 
 public interface IBattleState
 {
@@ -10,5 +11,6 @@ public interface IBattleState
 public interface IAstarable
 {
     List<CubieFace> GetAstarPathFaces(CubieFace start, CubieFace target);
+    CubieFace GetCubieFaceInPos(CubeFaceType cubeFaceType, Vector3 pos);
 }
 public interface IBehaviorDatable { }

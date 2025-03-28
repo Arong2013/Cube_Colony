@@ -47,10 +47,7 @@ public static class UnitMovementHelper
 
         faceUnit.transform.position = Vector3.MoveTowards(faceUnit.transform.position, faceUnit.transform.position + dir, 1f * Time.deltaTime);
         Quaternion targetRotation = GetRotation(faceUnit.CubeFaceType, dir);
-        if (Quaternion.Angle(faceUnit.transform.rotation, targetRotation) > 1f) // 오차 허용
-        {
-            faceUnit.transform.rotation = targetRotation;
-        }
+        faceUnit.transform.rotation = targetRotation;
     }
 
     private static Quaternion GetRotation(CubeFaceType faceType, Vector3 dir)
@@ -90,26 +87,24 @@ public static class UnitMovementHelper
 
         return Quaternion.identity;
     }
-
-
     public static CubeFaceType CalculateCurrentFace(Transform transform, int size)
     {
         Vector3 pos = transform.position;
+        float halfSize = size / 2f; // 중심에서의 절반 크기
 
-        if (pos.x >= -1f && pos.x <= (-1f + size)) // Front / Back
-        {
-            return (pos.z < -1f) ? CubeFaceType.Back : CubeFaceType.Front;
-        }
-        else if (pos.y >= -2f && pos.y <= (-1f + size)) // Top / Bottom
-        {
-            return (pos.y > 1f) ? CubeFaceType.Top : CubeFaceType.Bottom;
-        }
-        else if (pos.z >= -1f && pos.z <= (-1f + size)) // Left / Right
-        {
-            return (pos.x < -1f) ? CubeFaceType.Left : CubeFaceType.Right;
-        }
+        // ✅ 가장 큰 절대값을 가진 축 찾기
+        float absX = Mathf.Abs(pos.x);
+        float absY = Mathf.Abs(pos.y);
+        float absZ = Mathf.Abs(pos.z);
+        
+        if (absX > absY && absX > absZ)
+            return (pos.x > 0) ? CubeFaceType.Right : CubeFaceType.Left;
 
-        return CubeFaceType.Front; // 기본값 (예외 처리)
+        if (absY > absX && absY > absZ)
+            return (pos.y > 0) ? CubeFaceType.Top : CubeFaceType.Bottom;
+
+        return (pos.z > 0) ? CubeFaceType.Front : CubeFaceType.Back;
     }
+
 
 }

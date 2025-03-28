@@ -44,43 +44,7 @@ public static class CubeMapHelper
         return positions;
     }
 
-    // 큐비로부터 각 면별 CubieFace 추출 및 분류
-    private static Dictionary<CubeFaceType, List<CubieFace>> GetCubieFaceMapByType(List<Cubie> allCubies, Cubie[,,] cubieGrid)
-    {
-        int size = cubieGrid.GetLength(0);
-
-        var faceMap = new Dictionary<CubeFaceType, List<CubieFace>>()
-        {
-            { CubeFaceType.Front, new List<CubieFace>() },
-            { CubeFaceType.Back, new List<CubieFace>() },
-            { CubeFaceType.Left, new List<CubieFace>() },
-            { CubeFaceType.Right, new List<CubieFace>() },
-            { CubeFaceType.Top, new List<CubieFace>() },
-            { CubeFaceType.Bottom, new List<CubieFace>() }
-        };
-
-        foreach (var cubie in allCubies)
-        {
-            int x = GridSearchHelper.FindLayer(cubie, CubeAxisType.X, cubieGrid);
-            int y = GridSearchHelper.FindLayer(cubie, CubeAxisType.Y, cubieGrid);
-            int z = GridSearchHelper.FindLayer(cubie, CubeAxisType.Z, cubieGrid);
-
-            foreach (var face in cubie.GetComponentsInChildren<CubieFace>())
-            {
-                if ((face.face == CubeFaceType.Front && z != 0) ||
-                    (face.face == CubeFaceType.Back && z != size - 1) ||
-                    (face.face == CubeFaceType.Top && y != size - 1) ||
-                    (face.face == CubeFaceType.Bottom && y != 0) ||
-                    (face.face == CubeFaceType.Left && x != 0) ||
-                    (face.face == CubeFaceType.Right && x != size - 1))
-                    continue;
-
-                faceMap[face.face].Add(face);
-            }
-        }
-
-        return faceMap;
-    }
+ 
 
     // 두 축 기준으로 CubieFace 리스트 정렬
     private static void SetCubieFaceSort(List<CubieFace> cubieFaces, CubeAxisType primaryAxis, bool primaryAsc, CubeAxisType secondaryAxis, bool secondaryAsc, Cubie[,,] cubieGrid)
@@ -165,7 +129,7 @@ public static class CubeMapHelper
         int size = cubieGrid.GetLength(0);
         var layoutPositions = isAstar ? GetExtendedLayoutForAstar(size) : GetBaseFaceLayout(size);
         var allCubies = GridSearchHelper.GetAllCubies(cubieGrid);
-        var faceMap = GetCubieFaceMapByType(allCubies, cubieGrid);
+        var faceMap = GridSearchHelper.GetCubieFaceMapByType(allCubies, cubieGrid);
         SetCubieFaceMapSorting(faceMap, cubieGrid);
         return GetPositionFaceMap(faceMap, layoutPositions);
     }

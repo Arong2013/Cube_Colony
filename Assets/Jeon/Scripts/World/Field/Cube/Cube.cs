@@ -61,13 +61,13 @@ public class Cube : MonoBehaviour
     {
         var face = cubeGridHandler.GetCenterFace(cubeFaceType);
         var obj = face.SpawnObject(SpawnerFactory.Instance.GetPrefab(seq.spawnerId));
-        obj.GetComponent<MonsterSpawner>().Init(seq, onMonsterDeath, face);
+        obj.GetComponent<MonsterSpawner>().Init(seq, onMonsterDeath, cubeGridHandler);
     }
 
     public void SpawnExitGate(Action onEnemyExit,CubeFaceType cubeFaceType)
     {
         var face = cubeGridHandler.GetCenterFace(cubeFaceType);
         var obj = face.SpawnObject(ExitGateFactory.Instance.GetPrefab(0));
-        obj.GetComponent<ExitGateObject>().Init(onEnemyExit,face);
+        obj.GetComponent<ExitGateObject>().Init(onEnemyExit,cubeGridHandler);
     }
   }

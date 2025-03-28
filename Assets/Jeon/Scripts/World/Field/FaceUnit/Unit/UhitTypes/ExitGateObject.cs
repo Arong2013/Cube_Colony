@@ -5,9 +5,9 @@ public class ExitGateObject : FaceUnit
 {
     private Action onEnemyExit;
 
-    public void Init(Action onEnemyExit, CubieFace cubieFace)
+    public void Init(Action onEnemyExit, IAstarable astarable)
     {
-        base.Init(cubieFace);
+        base.Init(astarable);
         this.onEnemyExit = onEnemyExit;
     }
     private void OnTriggerEnter(Collider other)

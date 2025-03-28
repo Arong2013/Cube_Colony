@@ -7,9 +7,9 @@ public class Enemy : FaceUnit
     [SerializeField] private List<BehaviorSequenceSO> behaviorSequencesSO;
     [SerializeField] private float moveSpeed;
     private List<BehaviorSequence> behaviorSequences = new List<BehaviorSequence>();
-    public override void Init(CubieFace cubieFace)
+    public override void Init(IAstarable astarable)
     {
-        base.Init(cubieFace);
+        base.Init(astarable);
         behaviorSequencesSO.ForEach(sequence => behaviorSequences.Add(sequence.CreateBehaviorSequence(this)));
     }
     public void Update()
@@ -30,6 +30,6 @@ public class Enemy : FaceUnit
     }
     protected override void OnTriggerEnter(Collider other)
     {
-        base.OnTriggerEnter(other);
+        //base.OnTriggerEnter(other);
     }
 }

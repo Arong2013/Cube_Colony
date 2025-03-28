@@ -8,6 +8,7 @@ public class CubieFace : MonoBehaviour
     public Cubie cubie { get; private set; }
     public CubeFaceType face { get; private set; }
     IAstarable astarable;
+
     public void Init(CubeFaceType face, Cubie cubie, IAstarable astarable)
     {
         this.face = face;
@@ -22,7 +23,7 @@ public class CubieFace : MonoBehaviour
     {
         GameObject spawned = Instantiate(prefab, transform.position, transform.rotation, transform);
         var faceObj = spawned.GetComponent<FaceUnit>();
-        faceObj.Init(this); 
+        faceObj.Init(astarable); 
         return faceObj; 
     }
 

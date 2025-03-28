@@ -9,9 +9,9 @@ public class MonsterSpawner : FaceUnit
     private float timer;
     private int spawned;
     private bool isSpawning;
-    public void Init(EnemySpawnSequence sequence, Action onEnemyDeath,CubieFace cubieFace)
+    public void Init(EnemySpawnSequence sequence, Action onEnemyDeath,IAstarable astarable)
     {
-        base.Init(cubieFace);
+        base.Init(astarable);
         this.sequence = sequence;
         this.onEnemyDeath = onEnemyDeath;
         this.timer = sequence.delayBeforeStart;
