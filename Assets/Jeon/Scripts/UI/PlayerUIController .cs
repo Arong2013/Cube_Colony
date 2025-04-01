@@ -9,9 +9,8 @@ public class PlayerUIController : MonoBehaviour, IPointerDownHandler, IPointerUp
 
     [Header("Dependencies")]
     [SerializeField] private CubeRotaterUI cubeRotaterUI = new CubeRotaterUI();
-    [SerializeField] private TowerSpawnControllerUI towerSpawnControllerUI;
 
-    private Action<Cubie, CubeAxisType, int> rotateAction;
+    private Action<Cubie, CubeAxisType, bool> rotateAction;
 
     private CubieFace currentSelectedCubieFace;
     private Vector2 initialMousePosition;
@@ -38,14 +37,14 @@ public class PlayerUIController : MonoBehaviour, IPointerDownHandler, IPointerUp
         }
     }
 
-    public void SetRotateAction(Action<Cubie, CubeAxisType, int> rotateCube)
+    public void SetRotateAction(Action<Cubie, CubeAxisType, bool> rotateCube)
     {
         rotateAction = rotateCube;
     }
 
-    public void RotateCubeEvent(CubeAxisType axis, int direction)
+    public void RotateCubeEvent(CubeAxisType axis, bool isClock)
     {
-        rotateAction?.Invoke(currentSelectedCubieFace.cubie, axis, direction);
+        rotateAction?.Invoke(currentSelectedCubieFace.cubie, axis, isClock);
     }
 
     public void OnPointerDown(PointerEventData eventData)
