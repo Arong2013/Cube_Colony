@@ -2,6 +2,6 @@
 {
     public override void Use(PlayerEntity player)
     {
-        base.Use(player);   
+        
     }
 }

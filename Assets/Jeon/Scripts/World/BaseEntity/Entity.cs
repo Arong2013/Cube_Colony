@@ -14,7 +14,6 @@ public class Entity : MonoBehaviour
     }
     public void AddEntityComponent<T>(T component) where T : IEntityComponent
         => _componentHandler.Add(component);
-
     public bool HasEntityComponent<T>() where T : class, IEntityComponent
         => _componentHandler.Has<T>();
 

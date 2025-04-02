@@ -15,7 +15,6 @@ public class CombatComponent : IEntityComponent
         AttackCooldown = cooldown;
         OnAttackSuccess = onAttack;
     }
-
     public void Start(Entity entity) { }
     public void Update(Entity entity)
     {
