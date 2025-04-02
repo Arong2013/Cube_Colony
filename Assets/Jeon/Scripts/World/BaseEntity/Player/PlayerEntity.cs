@@ -10,6 +10,7 @@ public class PlayerEntity : Entity
         AddEntityComponent(new MovementComponent());
         AddEntityComponent(new ChopComponent());
 
+
         SetController(new PCController(OnMoveInput));
     }
     private void OnPlayerDamaged(int dmg)
@@ -25,9 +26,5 @@ public class PlayerEntity : Entity
         var mover = GetEntityComponent<MovementComponent>();
         mover?.Move(direction);
     }
-    private void Attack(Entity target)
-    {
-        var combat = GetEntityComponent<CombatComponent>();
-        combat?.Attack(target);
-    }
+
 }

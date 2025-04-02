@@ -116,7 +116,7 @@ public class PCController : IEntityController
         foreach (var col in colliders)
         {
             var interactable = col.GetComponent<IInteractable>();
-            if (interactable == null) continue; Debug.Log("아아");
+            if (interactable == null) continue; 
             if (!interactable.CanInteract(entity)) continue;
 
             Vector3 offset = col.transform.position - origin;

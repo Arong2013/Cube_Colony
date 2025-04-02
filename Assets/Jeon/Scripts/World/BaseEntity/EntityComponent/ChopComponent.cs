@@ -8,13 +8,13 @@ public class ChopComponent : IEntityComponent
 
     private float _cooldownTimer = 0f;
 
-    public Action<Entity> OnChopSuccess;
 
-    public ChopComponent(int chopDamage = 5, float cooldown = 1.0f, Action<Entity> onChop = null)
+
+    public ChopComponent(int chopDamage = 1, float cooldown = 1.0f)
     {
         ChopDamage = chopDamage;
         ChopCooldown = cooldown;
-        OnChopSuccess = onChop;
+
     }
 
     public void Start(Entity entity) { }
@@ -38,7 +38,7 @@ public class ChopComponent : IEntityComponent
         {
             health.TakeDamage(ChopDamage);
             _cooldownTimer = ChopCooldown;
-            OnChopSuccess?.Invoke(target);
+
         }
     }
 }

@@ -1690,7 +1690,6 @@ GameObject:
   - component: {fileID: 1299681319712819071}
   - component: {fileID: 8617348018963270637}
   - component: {fileID: 7615030489463672287}
-  - component: {fileID: 8617348018963270638}
   - component: {fileID: 8617348018963270639}
   m_Layer: 0
   m_Name: Enemy
@@ -1907,7 +1906,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1938,7 +1937,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &6503051028517427230
 GameObject:
@@ -1999,7 +1998,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!212 &8183656896485042674
 SpriteRenderer:
@@ -2071,24 +2070,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8617348018963270638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 514064748250573422}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0aec5a7ce122f5742b40caaf15cfcc8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8617348018963270639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2096,7 +2083,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 514064748250573422}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e036109f5c22ce4f8f2e7eef5106afb, type: 3}
   m_Name: 

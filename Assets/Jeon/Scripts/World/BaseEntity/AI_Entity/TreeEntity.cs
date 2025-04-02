@@ -10,9 +10,9 @@ public class TreeEntity : Entity, IInteractable
         AddEntityComponent(new HealthComponent(5, OnDamaged, OnDeath));
     }
     public bool CanInteract(Entity interactor)
-    {var boo = interactor.HasEntityComponent<HealthComponent>();
-        Debug.Log(boo);
-        return boo;
+    {
+       
+        return interactor.HasEntityComponent<ChopComponent>(); 
     }
     public string GetInteractionLabel()
     {
@@ -20,7 +20,9 @@ public class TreeEntity : Entity, IInteractable
     }
     public void Interact(Entity interactor)
     {
+        
         var combat = interactor.GetEntityComponent<ChopComponent>();
+        
         combat?.Chop(this);
     }
     private void OnDamaged(int dmg)
@@ -33,7 +35,6 @@ public class TreeEntity : Entity, IInteractable
         DropItems(_dropEntry);
         Destroy(gameObject);
     }
-
     public void DropItems(DropEntry dropEntry)
     {
         int dropCount = UnityEngine.Random.Range(dropEntry.MinDropItem, dropEntry.MaxDropItem + 1);
