@@ -8,8 +8,6 @@ public class PlayerEntity : Entity
 
         AddEntityComponent(new HealthComponent(100, OnPlayerDamaged, OnPlayerDeath));
         AddEntityComponent(new MovementComponent());
-        AddEntityComponent(new ChopComponent());
-
 
         SetController(new PCController(OnMoveInput));
     }
@@ -26,5 +24,4 @@ public class PlayerEntity : Entity
         var mover = GetEntityComponent<MovementComponent>();
         mover?.Move(direction);
     }
-
 }
