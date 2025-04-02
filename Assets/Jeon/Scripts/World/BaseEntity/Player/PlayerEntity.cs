@@ -8,7 +8,7 @@ public class PlayerEntity : Entity
 
         AddEntityComponent(new HealthComponent(100, OnPlayerDamaged, OnPlayerDeath));
         AddEntityComponent(new MovementComponent());
-        AddEntityComponent(new CombatComponent());
+        AddEntityComponent(new ChopComponent());
 
         SetController(new PCController(OnMoveInput));
     }
@@ -16,12 +16,10 @@ public class PlayerEntity : Entity
     {
         Debug.Log($"[UI] Player took {dmg} damage!");
     }
-
     private void OnPlayerDeath()
     {
         Debug.Log("[UI] Player died!");
     }
-
     private void OnMoveInput(Vector3 direction)
     {
         var mover = GetEntityComponent<MovementComponent>();

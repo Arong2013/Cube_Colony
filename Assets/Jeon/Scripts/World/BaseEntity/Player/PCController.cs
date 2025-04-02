@@ -111,12 +111,12 @@ public class PCController : IEntityController
 
         IInteractable closest = null;
         float closestDist = float.MaxValue;
-        Debug.Log("아아");
+        
 
         foreach (var col in colliders)
         {
             var interactable = col.GetComponent<IInteractable>();
-            if (interactable == null) continue;
+            if (interactable == null) continue; Debug.Log("아아");
             if (!interactable.CanInteract(entity)) continue;
 
             Vector3 offset = col.transform.position - origin;

@@ -31,3 +31,8 @@ public interface IInteractable
     void Interact(Entity interactor);
     string GetInteractionLabel();
 }
+public interface IitemAction
+{
+    bool IsInstant { get; }
+    void Execute(PlayerEntity player, Item item);
+}
