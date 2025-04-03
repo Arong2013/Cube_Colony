@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 717922156080579940}
   - component: {fileID: 1812523877394737675}
   - component: {fileID: 4494088525537504510}
-  - component: {fileID: 3121492146464699714}
+  - component: {fileID: 6408238748625645954}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -111,7 +111,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &3121492146464699714
+--- !u!114 &6408238748625645954
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,7 +120,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 342083681535336487}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d840d2ef9eeefe4696949ec34a22a1a, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f9ea70263abb564b85860b8efd2b1ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behaviorSequencesSO: []
+  unitType: 4
+  propertyType: 0
+  attackRange: 5
+  moveDirection: {x: 0, y: 0, z: 0}

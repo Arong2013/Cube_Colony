@@ -25,3 +25,32 @@ public enum CubeFaceType
     Top,    // 위쪽
     Bottom  // 아래쪽
 }
+public enum UnitType
+{
+    Player,      // 플레이어 유닛
+    Enemy,       // 적 유닛
+    Ally,        // 아군 유닛
+    AllyTower,   // 아군 타워 (같은 팀의 타워)
+    NPC,         // Non-Player Character (NPC)
+    Boss         // 보스 유닛
+}
+public enum PriorityNameType
+{
+    AttackEnemy,
+    DefEnemy,
+    AttackAlly,
+    DefAlly
+}
+
+public enum BehaviorDataType
+{
+    TargetList
+}
+
+
+public enum EntityAnimeBoolName
+{
+    IsAttack,
+    IsWalk,
+    IsDeath
+}

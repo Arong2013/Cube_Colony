@@ -9,13 +9,13 @@ public class CubeRotaterUI
     [SerializeField] RotaterSelectUI rotaterSelectUI = new RotaterSelectUI();
 
     private CubieFace cubieFace;
-    private Action<CubeAxisType, int> rotateAction;
+    private Action<CubeAxisType, bool> rotateAction;
     private Vector2 initialMousePosition;
     private CubeAxisType cantAxis,compomAxis;
     private bool isClockwise;
     private bool canAction;
 
-    public void SetUp(Action<CubeAxisType, int> _rotateAction, CubieFace _cubieFace, Vector2 _initialMousePosition)
+    public void SetUp(Action<CubeAxisType, bool> _rotateAction, CubieFace _cubieFace, Vector2 _initialMousePosition)
     {
         rotateAction = _rotateAction;
         initialMousePosition = _initialMousePosition;
@@ -42,7 +42,7 @@ public class CubeRotaterUI
     {
         if(canAction)
         {
-            rotateAction?.Invoke(compomAxis, isClockwise == true ? 90 : -90);
+            rotateAction?.Invoke(compomAxis, isClockwise);
             canAction = false;
         }
     }
