@@ -46,3 +46,11 @@ public enum BehaviorDataType
 {
     TargetList
 }
+
+
+public enum EntityAnimeBoolName
+{
+    IsAttack,
+    IsWalk,
+    IsDeath
+}

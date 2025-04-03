@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class ComponentHandler
+public class EntityComponentHandler
 {
     private Dictionary<Type, IEntityComponent> _components = new();
     private Entity _owner;
-    public ComponentHandler(Entity owner)
+    public EntityComponentHandler(Entity owner)
     {
         _owner = owner;
     }

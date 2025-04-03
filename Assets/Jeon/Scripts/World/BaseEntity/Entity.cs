@@ -1,12 +1,17 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    private ComponentHandler _componentHandler;
+    private EntityComponentHandler _componentHandler;
+    private EntityAnimatorHandler _animatorHandler;
     private IEntityController _controller;
+    private Animator _animator; 
     protected virtual void Awake()
     {
-        _componentHandler = new ComponentHandler(this);
+        _animator = GetComponent<Animator>();
+        _animatorHandler = new EntityAnimatorHandler(_animator);
+        _componentHandler = new EntityComponentHandler(this);
     }
     public void SetController(IEntityController controller)
     {
@@ -32,5 +37,7 @@ public class Entity : MonoBehaviour
     {
         _componentHandler.ExitAll();
     }
-
+    public void SetAnimatorValue<T>(T type, object value) where T : Enum { _animatorHandler.SetAnimatorValue(type, value); }
+    public TResult GetAnimatorValue<T, TResult>(T type) where T : Enum { return _animatorHandler.GetAnimatorValue<T, TResult>(type); }
 }
+
