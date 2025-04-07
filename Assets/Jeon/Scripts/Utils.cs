@@ -1,5 +1,6 @@
 ﻿using UnityEngine.EventSystems;
 using UnityEngine;
+using System.Collections.Generic;
 
 public static class Utils
 {
@@ -11,9 +12,9 @@ public static class Utils
         if (Camera.main == null) return selectedObject;
 
         Ray ray = Camera.main.ScreenPointToRay(eventData.position);
-        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f);
+        Debug.DrawRay(ray.origin, ray.direction * 300f, Color.red, 2f);
 
-        RaycastHit[] hits = Physics.RaycastAll(ray, 100f);
+        RaycastHit[] hits = Physics.RaycastAll(ray, 300f);
         if (hits.Length == 0) return selectedObject;
 
         T closestCubieFace = null;
@@ -59,5 +60,18 @@ public static class Utils
 
         return component;
     }
+    public static Vector3 GetCentroid(List<Vector3> points)
+    {
+        if (points == null || points.Count == 0)
+            return Vector3.zero;
 
+        Vector3 sum = Vector3.zero;
+
+        foreach (var point in points)
+        {
+            sum += point;
+        }
+
+        return sum / points.Count;
+    }
 }

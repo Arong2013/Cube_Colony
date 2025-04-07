@@ -1,11 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using Sirenix.OdinInspector;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleFlowController : MonoBehaviour
+public class BattleFlowController : SerializedMonoBehaviour
 {
-    [SerializeField] int size;
+    [Header("스테이지 큐브 설정")]
     [SerializeField] private Cube cube;
+    [SerializeField] private int currentStage = 1;
+
     private IGameSequenceState currentState;
+
+
+    [Title("큐브 데이터")]
+    [SerializeField]
+    private Dictionary<int, CubeData> stageCubeDataMap;
+
+    [Header("스테이지 필드 설정")]
+    [SerializeField] private Field field;
 
     public void ChangeState(IGameSequenceState newState)
     {
@@ -15,25 +26,19 @@ public class BattleFlowController : MonoBehaviour
     }
     private void Start()
     {
-        ChangeState(new CountdownState(this, 100000f)); 
-        cube.Init(size);    
+        ChangeState(new CountdownState(this,cube, stageCubeDataMap[currentStage]));
     }
     private void Update()
     {
         currentState?.Update();
     }
-
+    public Field GetField() => field;   
     public void StartBattle()
     {
-        
-    }
 
-    private void OnWaveComplete()
-    {
     }
-
     private void GameOver()
     {
-        Debug.Log("Game Over!"); 
+        Debug.Log("Game Over!");
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
 using UnityEngine;
-
-
 public class Cubie : MonoBehaviour
 {
     public  CubieFace[] faces = new CubieFace[6];
@@ -40,6 +38,7 @@ public class Cubie : MonoBehaviour
         }
         return null;
     }
+
     private void RotateX(bool clockwise)
     {
         int[] indices = clockwise ?

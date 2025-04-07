@@ -30,7 +30,16 @@ public interface IInteractable
     bool CanInteract(Entity interactor);
     void Interact(Entity interactor);
     string GetInteractionLabel();
+    float GetInteractionDistance(); 
 }
+
+public interface IInteractionStrategy
+{
+    bool CanInteract(Entity self, Entity interactor);
+    void Interact(Entity self, Entity interactor);
+    string GetLabel();
+}
+
 public interface IitemAction
 {
     bool IsInstant { get; }

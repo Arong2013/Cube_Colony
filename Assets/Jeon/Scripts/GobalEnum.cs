@@ -25,6 +25,14 @@ public enum CubeFaceType
     Top,    // 위쪽
     Bottom  // 아래쪽
 }
+
+public enum CubieFaceSkillType
+{
+    Monster,
+    Gold,
+    Mine,
+    Plant,
+}
 public enum UnitType
 {
     Player,      // 플레이어 유닛
@@ -48,9 +56,37 @@ public enum BehaviorDataType
 }
 
 
-public enum EntityAnimeBoolName
+public enum EntityAnimTrigger
 {
-    IsAttack,
-    IsWalk,
-    IsDeath
+    AttackTrigger,
+    HitTrigger,
+    DieTrigger,
+    DashTrigger
+}
+public enum EntityAnimBool
+{
+    IsMoving
+}
+public enum EntityAnimFloat
+{
+    Speed,
+    MoveX,
+    MoveY
+}
+
+
+public enum EntityStatName
+{
+    HP, MaxHP,
+    SP, MaxSP,
+    ATK,
+    DEF,
+    SPD,
+}
+public enum InteractionType
+{
+    Attack,
+    Chop,
+    Mine,
+    Talk
 }
