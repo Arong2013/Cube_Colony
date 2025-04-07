@@ -20,7 +20,6 @@ public class EntityHealthHandler
         float newHp = MathF.Max(0, hp - amount);
         _entity.SetEntityBaseStat(EntityStatName.HP, newHp);
         _entity.SetAnimatorValue(EntityAnimTrigger.HitTrigger, null);
-        Debug.Log("데미지 받음");
     }
     public void Heal(float amount)
     {

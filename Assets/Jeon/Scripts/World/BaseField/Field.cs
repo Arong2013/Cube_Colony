@@ -8,7 +8,6 @@ public struct FieldData
     public List<CubieFaceInfo> faceinfos;
     public int size;
 }
-
 public class Field : MonoBehaviour
 {
     private PlayerEntity spawnedPlayer;
@@ -23,7 +22,7 @@ public class Field : MonoBehaviour
         navMeshSurface = GetComponent<NavMeshSurface>();
 
         transform.position = fieldData.position;
-        transform.localScale = new Vector3(fieldData.size + 1.5f, 0.1f, fieldData.size + 1.5f);
+        transform.localScale = new Vector3(fieldData.size, 0.1f, fieldData.size);
         navMeshSurface.BuildNavMesh();
 
         var spawnPos = transform.position + Vector3.up;

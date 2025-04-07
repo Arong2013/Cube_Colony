@@ -22,7 +22,6 @@ public class InteractableEntity : Entity, IInteractable
 
         if (dropEntry != null)
             DropItems(dropEntry);
-
         Destroy(gameObject);
     }
     public void DropItems(DropEntry dropEntry)

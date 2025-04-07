@@ -6,7 +6,6 @@ public class InSurvivalState : IGameSequenceState
     private BattleFlowController context;
     private List<CubieFaceInfo> cubieFaceInfos;
     private CubeData cubeData;
-
     private Field field;
     public InSurvivalState(BattleFlowController context,CubeData cubeData,List<CubieFaceInfo> cubieFaceInfos)
     {
@@ -29,9 +28,11 @@ public class InSurvivalState : IGameSequenceState
         };
         field.Initialize(fieldfata);    
     }
-
     public void Update()
     {
+
     }
     public void Exit() { }
+
+
 }
