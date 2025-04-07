@@ -129,7 +129,7 @@ public static class CubeMapHelper
         int size = cubieGrid.GetLength(0);
         var layoutPositions = isAstar ? GetExtendedLayoutForAstar(size) : GetBaseFaceLayout(size);
         var allCubies = GridSearchHelper.GetAllCubies(cubieGrid);
-        var faceMap = GridSearchHelper.GetCubieFaceMapByType(allCubies, cubieGrid);
+        var faceMap = GridSearchHelper.GetCubieFaceMapByType(cubieGrid);
         SetCubieFaceMapSorting(faceMap, cubieGrid);
         return GetPositionFaceMap(faceMap, layoutPositions);
     }

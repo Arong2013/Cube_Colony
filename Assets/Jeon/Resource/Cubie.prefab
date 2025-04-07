@@ -100,7 +100,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c72507745d9346438c87823cc91b574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tower: {fileID: 1858523013235686093, guid: d7e4eaa9627ada945820f78bb4305bf4, type: 3}
+  targetRenderer: {fileID: 8098230308217086016}
+  cubieFaceInfo:
+    type: 0
+    level: 0
+    maxLevel: 3
+    position: {x: 0, y: 0, z: 0}
 --- !u!64 &1991626101785818878
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -223,7 +228,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c72507745d9346438c87823cc91b574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tower: {fileID: 1858523013235686093, guid: d7e4eaa9627ada945820f78bb4305bf4, type: 3}
+  targetRenderer: {fileID: 2775283134220596102}
+  cubieFaceInfo:
+    type: 0
+    level: 0
+    maxLevel: 3
+    position: {x: 0, y: 0, z: 0}
 --- !u!64 &1516366083919929943
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -276,15 +286,15 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3232757858523551945}
+  - {fileID: 2375643367052606508}
   - {fileID: 8095721626671240364}
   - {fileID: 8352297349135267732}
   - {fileID: 8245540332633616145}
   - {fileID: 4542373272052282158}
-  - {fileID: 2375643367052606508}
-  - {fileID: 3232757858523551945}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7522138931369834575
@@ -480,7 +490,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c72507745d9346438c87823cc91b574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tower: {fileID: 1858523013235686093, guid: d7e4eaa9627ada945820f78bb4305bf4, type: 3}
+  targetRenderer: {fileID: 3095687788630946403}
+  cubieFaceInfo:
+    type: 0
+    level: 0
+    maxLevel: 3
+    position: {x: 0, y: 0, z: 0}
 --- !u!64 &7580208024012353864
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -603,7 +618,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c72507745d9346438c87823cc91b574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tower: {fileID: 1858523013235686093, guid: d7e4eaa9627ada945820f78bb4305bf4, type: 3}
+  targetRenderer: {fileID: 4579129101004706278}
+  cubieFaceInfo:
+    type: 0
+    level: 0
+    maxLevel: 3
+    position: {x: 0, y: 0, z: 0}
 --- !u!64 &2033260323682482377
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -726,7 +746,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c72507745d9346438c87823cc91b574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tower: {fileID: 1858523013235686093, guid: d7e4eaa9627ada945820f78bb4305bf4, type: 3}
+  targetRenderer: {fileID: 4443555218546497461}
+  cubieFaceInfo:
+    type: 0
+    level: 0
+    maxLevel: 3
+    position: {x: 0, y: 0, z: 0}
 --- !u!64 &6245364250631405727
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -849,7 +874,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c72507745d9346438c87823cc91b574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tower: {fileID: 1858523013235686093, guid: d7e4eaa9627ada945820f78bb4305bf4, type: 3}
+  targetRenderer: {fileID: 6985378542794655534}
+  cubieFaceInfo:
+    type: 0
+    level: 0
+    maxLevel: 3
+    position: {x: 0, y: 0, z: 0}
 --- !u!64 &9089990493099887224
 MeshCollider:
   m_ObjectHideFlags: 0

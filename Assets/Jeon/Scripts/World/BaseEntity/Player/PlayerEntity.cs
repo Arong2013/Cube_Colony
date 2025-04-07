@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
+using static UnityEngine.UI.ScrollRect;
 
 public class PlayerEntity : Entity
 {
+    public bool CanWalk => (Mathf.Abs(CurrentDir.x) > 0.1f || Mathf.Abs(CurrentDir.z) > 0.1f);
     protected override void Awake()
     {
         base.Awake();
-
-        AddEntityComponent(new HealthComponent(100, OnPlayerDamaged, OnPlayerDeath));
-        AddEntityComponent(new MovementComponent());
-
         SetController(new PCController(OnMoveInput));
+        Initialize();
     }
     private void OnPlayerDamaged(int dmg)
     {
@@ -19,9 +18,20 @@ public class PlayerEntity : Entity
     {
         Debug.Log("[UI] Player died!");
     }
-    private void OnMoveInput(Vector3 direction)
+    private void OnMoveInput(Vector3 direction) => SetDir(direction);
+
+    public override void Initialize()
     {
-        var mover = GetEntityComponent<MovementComponent>();
-        mover?.Move(direction);
+        AddEntityComponent(new AttackComponent());  
     }
-}
+
+    protected override void Update()
+    {
+        base.Update();
+        if (CanWalk)
+            SetAnimatorValue(EntityAnimBool.IsMoving, true);
+        else
+            SetAnimatorValue(EntityAnimBool.IsMoving, false);
+    }
+}   
+

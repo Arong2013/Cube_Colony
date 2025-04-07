@@ -1325,7 +1325,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubeUIController: {fileID: 83098490}
-  size: 3
   cubie: {fileID: -913884292617206700, guid: 9b59f789c54058a448d315302315af58, type: 3}
 --- !u!1 &1926894177
 GameObject:

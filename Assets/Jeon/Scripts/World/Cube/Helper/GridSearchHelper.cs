@@ -52,7 +52,7 @@ public static class GridSearchHelper
         return cubies;
     }
 
-    public static CubieFace GetCenterFace(CubeFaceType faceType,int size, Cubie[,,] cubieGrid)
+    public static CubieFace GetCenterFace(CubeFaceType faceType, int size, Cubie[,,] cubieGrid)
     {
         int center = size / 2;
 
@@ -72,20 +72,21 @@ public static class GridSearchHelper
         };
     }
 
-    public static CubieFace GetCubieFaceInPos(CubeFaceType cubeFaceType,Vector3 pos , Cubie[,,] cubieGrid)
+    public static CubieFace GetCubieFaceInPos(CubeFaceType cubeFaceType, Vector3 pos, Cubie[,,] cubieGrid)
     {
         var allCube = GetAllCubies(cubieGrid);
-        var dic = GetCubieFaceMapByType(allCube, cubieGrid);
+        var dic = GetCubieFaceMapByType(cubieGrid);
         var closestFace = dic[cubeFaceType]
             .OrderBy(face => Vector3.Distance(face.transform.position, pos)) // 거리순 정렬
-            .FirstOrDefault(); 
+            .FirstOrDefault();
         return closestFace;
 
     }
     // 큐비로부터 각 면별 CubieFace 추출 및 분류
-    public static Dictionary<CubeFaceType, List<CubieFace>> GetCubieFaceMapByType(List<Cubie> allCubies, Cubie[,,] cubieGrid)
+    public static Dictionary<CubeFaceType, List<CubieFace>> GetCubieFaceMapByType(Cubie[,,] cubieGrid)
     {
         int size = cubieGrid.GetLength(0);
+        List<Cubie> allCubies = GetAllCubies(cubieGrid);    
 
         var faceMap = new Dictionary<CubeFaceType, List<CubieFace>>()
         {
@@ -118,6 +119,48 @@ public static class GridSearchHelper
         }
 
         return faceMap;
+    }
+
+    public static List<CubieFace> GetCubieFaces(CubeFaceType CubeFaceType, Cubie[,,] cubieGrid)
+    {
+        var faceMap = GetCubieFaceMapByType( cubieGrid);
+        return faceMap[CubeFaceType];   
+    }
+    public static CubieFaceSkillType GetRandomSkill(Dictionary<CubieFaceSkillType, float> probs, System.Random rand)
+    {
+        float total = 0;
+        foreach (var prob in probs.Values) total += prob;
+
+        float randomValue = (float)(rand.NextDouble() * total);
+        float cumulative = 0;
+
+        foreach (var kv in probs)
+        {
+            cumulative += kv.Value;
+            if (randomValue < cumulative)
+                return kv.Key;
+        }
+
+        return CubieFaceSkillType.Monster; // fallback
+    }
+
+    public static Vector3Int GetCubieGridPosition(Cubie cubie, Cubie[,,] cubieGrid)
+    {
+        int sizeX = cubieGrid.GetLength(0);
+        int sizeY = cubieGrid.GetLength(1);
+        int sizeZ = cubieGrid.GetLength(2);
+
+        for (int x = 0; x < sizeX; x++)
+            for (int y = 0; y < sizeY; y++)
+                for (int z = 0; z < sizeZ; z++)
+                {
+                    if (cubieGrid[x, y, z] == cubie)
+                    {
+                        return new Vector3Int(x, y, z);
+                    }
+                }
+
+        return new Vector3Int(-1, -1, -1); // 못 찾은 경우
     }
 
 }

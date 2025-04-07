@@ -9,23 +9,6 @@ public class EntityAnimatorHandler
     }
     public void SetAnimatorValue<T>(T type, object value) where T : Enum
     {
-        foreach (AnimatorControllerParameter param in animator.parameters)
-        {
-            switch (param.type)
-            {
-                case AnimatorControllerParameterType.Bool:
-                    animator.SetBool(param.name, false);
-                    break;
-
-                case AnimatorControllerParameterType.Float:
-                    animator.SetFloat(param.name, 0f);
-                    break;
-
-                case AnimatorControllerParameterType.Int:
-                    animator.SetInteger(param.name, 0);
-                    break;
-            }
-        }
         string parameterName = type.ToString();
 
         if (value is bool boolValue)
@@ -40,12 +23,10 @@ public class EntityAnimatorHandler
         {
             animator.SetInteger(parameterName, intValue);
         }
-        else
+        else if(value is null)
         {
-            Debug.LogError($"Unsupported type for parameter: {parameterName}");
-        }
-
-       
+            animator.SetTrigger(parameterName); 
+        }  
     }
     public TResult GetAnimatorValue<T, TResult>(T type) where T : Enum
     {
