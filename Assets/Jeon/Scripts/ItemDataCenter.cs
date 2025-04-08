@@ -7,9 +7,6 @@ using UnityEngine;
 public static class ItemDataCenter
 {
     private static readonly Dictionary<Type, IDictionary> _typeToDict = new();
-    /// <summary>
-    /// 공통 등록: ID 필드를 가진 어떤 클래스든 등록 가능
-    /// </summary>
     public static void Register<T>(T obj)
     {
         if (obj == null)
@@ -48,10 +45,6 @@ public static class ItemDataCenter
 
         typedDict[id] = obj;
     }
-
-    /// <summary>
-    /// 타입별로 객체를 ID로 가져오기
-    /// </summary>
     public static T Get<T>(int id)
     {
         Type type = typeof(T);
@@ -63,10 +56,6 @@ public static class ItemDataCenter
 
         return default;
     }
-
-    /// <summary>
-    /// 타입 전체 조회
-    /// </summary>
     public static IEnumerable<T> GetAll<T>()
     {
         Type type = typeof(T);

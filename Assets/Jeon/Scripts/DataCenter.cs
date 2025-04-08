@@ -11,11 +11,9 @@ public class DataCenter : SerializedMonoBehaviour
     [DictionaryDrawerSettings(KeyLabel = "Skill Type", ValueLabel = "Face Data")]
     private Dictionary<CubieFaceSkillType, CubieFaceVisualData> cubieFaceDataMap = new();
 
-
     [Title("플레이어 데이터")]
     [SerializeField]
     private GameObject playerEntityPreFabs;
-
 
     [Title("엔티티 데이터")]
     [SerializeField]

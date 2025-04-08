@@ -1602,6 +1602,8 @@ MonoBehaviour:
     - {fileID: 2100000, guid: ab534b6269e0905488d14daf7dea6ef9, type: 2}
     - {fileID: 2100000, guid: 933df41c997379f48a0c4f08449dc83d, type: 2}
     - {fileID: 2100000, guid: 966f7a4972bcf16439e126a2d1594581, type: 2}
+    - {fileID: 8767409848285342345, guid: 97f979f775fffde45b1b78a053e8ad20, type: 3}
+    - {fileID: 8767409848285342345, guid: c43c7bf84af75e64ab4fe1b414568531, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -1663,6 +1665,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: FieldMesh
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1704,6 +1709,9 @@ MonoBehaviour:
       Data: 0
     - Name: 
       Entry: 8
+      Data: 
+    - Name: FieldMesh
+      Entry: 6
       Data: 
     - Name: 
       Entry: 8
@@ -1747,6 +1755,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: FieldMesh
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1789,9 +1800,56 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: FieldMesh
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EntityData
+      Entry: 7
+      Data: 6|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 7|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 10
+      Data: 5
     - Name: 
       Entry: 8
       Data: 
@@ -2141,6 +2199,7 @@ MonoBehaviour:
   cube: {fileID: 1815109174}
   currentStage: 1
   field: {fileID: 1326101566}
+  stageTime: 0
 --- !u!1 &1567909823
 GameObject:
   m_ObjectHideFlags: 0

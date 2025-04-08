@@ -6,10 +6,11 @@ using UnityEngine.Networking;
 
 public class SheetLoader : MonoBehaviour
 {
-//    const string ItemURL = "https://docs.google.com/spreadsheets/d/1jAfQJlPQzMduSH0xk_0NgoM_dd3L05sfmkG6eL5xEL0/export?format=tsv&range=A1:F&gid=0";
     const string ConsumableItemURL = "https://docs.google.com/spreadsheets/d/1KDTCr-4-E_XC6CY_gD8N_BvpDukUzlhoTXrCtnLWdr4/export?format=tsv&range=A1:D&gid=0";
     const string EquipableItemURL = "https://docs.google.com/spreadsheets/d/1KDTCr-4-E_XC6CY_gD8N_BvpDukUzlhoTXrCtnLWdr4/export?format=tsv&range=A1:B&gid=584148317";
-    const string ItemAcionURL = "https://docs.google.com/spreadsheets/d/1KDTCr-4-E_XC6CY_gD8N_BvpDukUzlhoTXrCtnLWdr4/export?format=tsv&range=A1:C&gid=972242930";   
+    const string ItemAcionURL = "https://docs.google.com/spreadsheets/d/1KDTCr-4-E_XC6CY_gD8N_BvpDukUzlhoTXrCtnLWdr4/export?format=tsv&range=A1:C&gid=972242930";
+    const string FieldTileData = "https://docs.google.com/spreadsheets/d/1KDTCr-4-E_XC6CY_gD8N_BvpDukUzlhoTXrCtnLWdr4/export?format=tsv&range=A1:F&gid=197591956";
+
 
     [ShowInInspector] ConsumableItem testItem;
     [ShowInInspector] HealAction testAction;
@@ -45,7 +46,16 @@ public class SheetLoader : MonoBehaviour
             ItemDataCenter.Register<itemAction>(item);
         }
 
-                testAction = ItemDataCenter.Get<itemAction>(1) as HealAction;
+        www = UnityWebRequest.Get(FieldTileData);
+        yield return www.SendWebRequest();
+        tsv = www.downloadHandler.text;
+        List<FieldTileData> fieldTileDatas = TSVParser.Parse<FieldTileData>(tsv);
+        foreach (var item in fieldTileDatas)
+        {
+            ItemDataCenter.Register<FieldTileData>(item);
+        }
+
+        testAction = ItemDataCenter.Get<itemAction>(1) as HealAction;
         testItem = ItemDataCenter.Get<ConsumableItem>(1);
 
     }

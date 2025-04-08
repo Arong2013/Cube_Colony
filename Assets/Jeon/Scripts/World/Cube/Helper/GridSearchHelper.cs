@@ -141,7 +141,7 @@ public static class GridSearchHelper
                 return kv.Key;
         }
 
-        return CubieFaceSkillType.Monster; // fallback
+        return CubieFaceSkillType.RMonster; // fallback
     }
 
     public static Vector3Int GetCubieGridPosition(Cubie cubie, Cubie[,,] cubieGrid)

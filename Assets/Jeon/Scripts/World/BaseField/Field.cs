@@ -76,4 +76,9 @@ public class Field : MonoBehaviour
         // Plane 밑에 붙이기 (선택사항)
         obj.transform.SetParent(plane.transform);
     }
+
+    public void SpawnNextStage()
+    {
+
+    }
 }

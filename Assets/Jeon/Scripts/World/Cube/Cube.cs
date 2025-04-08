@@ -41,7 +41,6 @@ public class Cube : MonoBehaviour
     {
         cubeGridHandler.RotateWholeCube(cubeAxisType, isClock);
         yield return  StartCoroutine(cubeRotater.RotateCubesSmooth(cubeGridHandler.GetAllCubies(), cubeAxisType, isClock));
-        onRotateAction?.Invoke();
     }
 
     IEnumerator RotateCubeCoroutine(Cubie selectedCubie, CubeAxisType axis, bool isClock)

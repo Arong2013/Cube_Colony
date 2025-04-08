@@ -17,7 +17,7 @@ public class BattleFlowController : SerializedMonoBehaviour
 
     [Header("스테이지 필드 설정")]
     [SerializeField] private Field field;
-
+    [SerializeField] public float stageTime;
     public void ChangeState(IGameSequenceState newState)
     {
         currentState?.Exit();
