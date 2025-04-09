@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class InSurvivalState : IGameSequenceState
 {
     private BattleFlowController context;
+
     private List<CubieFaceInfo> cubieFaceInfos;
     private CubeData cubeData;
     private Field field;
@@ -27,7 +28,8 @@ public class InSurvivalState : IGameSequenceState
         {
             position = flipped,
             faceinfos = cubieFaceInfos,
-            size = cubeData.size
+            size = cubeData.size,
+            currentStageLevel = context.CurrentStage  
         };
         field.Initialize(fieldfata);    
     }
@@ -40,6 +42,10 @@ public class InSurvivalState : IGameSequenceState
             SpawnNextStage();
         }   
     }
+    public void Exit() 
+    {
+        field.OnDisableField(); 
+    }
     public void SpawnNextStage() => field.SpawnNextStage();
-    public void Exit() { }
+    public void SetCountDownState() => context.SetCountDwonState();
 }

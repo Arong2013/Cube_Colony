@@ -22,14 +22,12 @@ public class CountdownState : IGameSequenceState
     {
         cube.RemoveCube();
     }
-
     public void CheckCount()
     {
         rotateCount++;
         if (rotateCount >= 3)
         {
             context.ChangeState(new InSurvivalState(context, cubeData, cube.GetTopCubieFace()));
-
         }
     }
     public void Update()

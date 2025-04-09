@@ -18,6 +18,11 @@ public class DataCenter : SerializedMonoBehaviour
     [Title("엔티티 데이터")]
     [SerializeField]
     private Dictionary<int, GameObject> EntityData = new();
+
+    [Title("엔티티 데이터")]
+    [SerializeField]
+    private Dictionary<int, GameObject> ExitGateData = new();  
+
     public CubieFaceVisualData GetFaceData(CubieFaceSkillType type)
     {
         return cubieFaceDataMap.TryGetValue(type, out var data) ? data : null;
@@ -29,6 +34,19 @@ public class DataCenter : SerializedMonoBehaviour
     public GameObject GetEntity(int id)
     {
         if (EntityData.TryGetValue(id, out var entity))
+        {
+            return entity;
+        }
+        else
+        {
+            Debug.LogError($"[DataCenter] Entity with ID {id} not found.");
+            return null;
+        }
+    }
+
+    public GameObject GetExitGate(int id)
+    {
+        if (ExitGateData.TryGetValue(id, out var entity))
         {
             return entity;
         }

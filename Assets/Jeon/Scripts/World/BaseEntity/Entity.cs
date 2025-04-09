@@ -53,6 +53,7 @@ public  abstract class Entity : MonoBehaviour
     public void OnAttackHit() => GetEntityComponent<AttackComponent>()?.DoHit();
     public void SetOnDestoryAction(Action action) => onDestoryAction += action;
     public void SetOnHitAction(Action action) => onHitAction += action;
+    public void SeReturnStageState() => _entityState?.Exit(); 
     public void ChangePlayerState(EntityState newState)
     {
         newState?.Exit();

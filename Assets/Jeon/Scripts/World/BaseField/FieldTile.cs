@@ -7,11 +7,13 @@ public class FieldTile : MonoBehaviour
     private FieldTileData tileData;
 
     public CubieFaceSkillType Type => faceInfo.Type;
-    public int Level => faceInfo.Level;
+
+    private int cunStageLevel;
     public int MaxLevel => faceInfo.MaxLevel;
-    public int CombinedTypeCode => Level * 10 + (int)Type;
-    public void Initialize(int currentLevel, CubieFaceInfo info)
+    public int CombinedTypeCode => cunStageLevel * 10 + (int)Type;
+    public void Initialize(int cunStageLevel, CubieFaceInfo info)
     {
+        this.cunStageLevel = cunStageLevel;   
         faceInfo = info;
         tileData = ItemDataCenter.Get<FieldTileData>(CombinedTypeCode);
         SpawnObjects();
@@ -38,7 +40,7 @@ public class FieldTile : MonoBehaviour
             }
 
             Vector3 spawnPos = GetRandomPositionWithinBounds();
-            GameObject obj = Instantiate(prefab, spawnPos, Quaternion.identity);
+            GameObject obj = Instantiate(prefab.gameObject, spawnPos, Quaternion.identity);
             obj.transform.SetParent(transform);
         }
     }
@@ -72,8 +74,6 @@ public class FieldTile : MonoBehaviour
                 return tileData.ObjectID[i];
             }
         }
-
-        // 예외 fallback (혹시 모를 부정확한 값 대응)
         return tileData.ObjectID[0];
     }
 
