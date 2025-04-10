@@ -8,8 +8,6 @@ public class AttackComponent : IEntityComponent
     public void Start(Entity entity) => _entity = entity;
     public void Update(Entity entity) { }
     public void Exit(Entity entity) { }
-
-    // ✅ 타겟을 지정하고 애니메이션만 재생
     public void Attack(Entity target)
     {
         if (target == null) return;

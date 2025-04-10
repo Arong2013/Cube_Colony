@@ -241,4 +241,4 @@ MonoBehaviour:
   dropEntry:
     MinDropItem: 0
     MaxDropItem: 0
-  interactionDistance: 0.5
+  interactionDistance: 0.2

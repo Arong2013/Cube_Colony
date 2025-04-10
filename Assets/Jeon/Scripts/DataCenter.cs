@@ -11,10 +11,18 @@ public class DataCenter : SerializedMonoBehaviour
     [DictionaryDrawerSettings(KeyLabel = "Skill Type", ValueLabel = "Face Data")]
     private Dictionary<CubieFaceSkillType, CubieFaceVisualData> cubieFaceDataMap = new();
 
-
     [Title("플레이어 데이터")]
     [SerializeField]
-    private GameObject playerEntityPreFabs;  
+    private GameObject playerEntityPreFabs;
+
+    [Title("엔티티 데이터")]
+    [SerializeField]
+    private Dictionary<int, GameObject> EntityData = new();
+
+    [Title("엔티티 데이터")]
+    [SerializeField]
+    private Dictionary<int, GameObject> ExitGateData = new();  
+
     public CubieFaceVisualData GetFaceData(CubieFaceSkillType type)
     {
         return cubieFaceDataMap.TryGetValue(type, out var data) ? data : null;
@@ -23,6 +31,31 @@ public class DataCenter : SerializedMonoBehaviour
     {
         return playerEntityPreFabs;
     }   
+    public GameObject GetEntity(int id)
+    {
+        if (EntityData.TryGetValue(id, out var entity))
+        {
+            return entity;
+        }
+        else
+        {
+            Debug.LogError($"[DataCenter] Entity with ID {id} not found.");
+            return null;
+        }
+    }
+
+    public GameObject GetExitGate(int id)
+    {
+        if (ExitGateData.TryGetValue(id, out var entity))
+        {
+            return entity;
+        }
+        else
+        {
+            Debug.LogError($"[DataCenter] Entity with ID {id} not found.");
+            return null;
+        }
+    }
 
     private void Awake()
     {

@@ -25,13 +25,12 @@ public enum CubeFaceType
     Top,    // 위쪽
     Bottom  // 아래쪽
 }
-
 public enum CubieFaceSkillType
 {
-    Monster,
-    Gold,
-    Mine,
-    Plant,
+    RMonster = 0,
+    AMonster = 1,
+    Mine = 2,
+    Plant = 3,
 }
 public enum UnitType
 {

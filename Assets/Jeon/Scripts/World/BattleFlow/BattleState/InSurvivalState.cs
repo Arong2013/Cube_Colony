@@ -4,16 +4,19 @@ using System.Collections.Generic;
 public class InSurvivalState : IGameSequenceState
 {
     private BattleFlowController context;
+
     private List<CubieFaceInfo> cubieFaceInfos;
     private CubeData cubeData;
-
     private Field field;
+    private float nextStageTime;
+
     public InSurvivalState(BattleFlowController context,CubeData cubeData,List<CubieFaceInfo> cubieFaceInfos)
     {
         this.context = context;
         this.cubieFaceInfos = cubieFaceInfos;
         this.cubeData = cubeData;
-        this.field = context.GetField();    
+        this.field = context.GetField();
+        this.nextStageTime = context.stageTime; 
     }
     public void Enter()
     {
@@ -25,13 +28,24 @@ public class InSurvivalState : IGameSequenceState
         {
             position = flipped,
             faceinfos = cubieFaceInfos,
-            size = cubeData.size
+            size = cubeData.size,
+            currentStageLevel = context.CurrentStage  
         };
         field.Initialize(fieldfata);    
     }
-
     public void Update()
     {
+         nextStageTime -= nextStageTime > 0 ? nextStageTime - Time.deltaTime : 0;    
+        if (nextStageTime <= 0)
+        {
+            nextStageTime = 0;
+            SpawnNextStage();
+        }   
     }
-    public void Exit() { }
+    public void Exit() 
+    {
+        field.OnDisableField(); 
+    }
+    public void SpawnNextStage() => field.SpawnNextStage();
+    public void SetCountDownState() => context.SetCountDwonState();
 }

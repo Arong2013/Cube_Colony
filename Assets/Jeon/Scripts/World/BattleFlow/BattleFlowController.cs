@@ -6,7 +6,7 @@ public class BattleFlowController : SerializedMonoBehaviour
 {
     [Header("스테이지 큐브 설정")]
     [SerializeField] private Cube cube;
-    [SerializeField] private int currentStage = 1;
+    private int currentStage = 1;
 
     private IGameSequenceState currentState;
 
@@ -17,7 +17,12 @@ public class BattleFlowController : SerializedMonoBehaviour
 
     [Header("스테이지 필드 설정")]
     [SerializeField] private Field field;
+    [SerializeField] public float stageTime;
 
+
+
+
+    public int CurrentStage => currentStage;    
     public void ChangeState(IGameSequenceState newState)
     {
         currentState?.Exit();
@@ -36,6 +41,11 @@ public class BattleFlowController : SerializedMonoBehaviour
     public void StartBattle()
     {
 
+    }
+    public void SetCountDwonState()
+    {
+        currentStage++;
+        new CountdownState(this, cube, stageCubeDataMap[currentStage]);
     }
     private void GameOver()
     {

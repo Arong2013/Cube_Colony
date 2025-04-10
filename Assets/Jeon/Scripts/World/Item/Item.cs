@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework.Interfaces;
+using Sirenix.OdinInspector;
 using UnityEngine;
+[System.Serializable]
 public abstract class Item
 {
-    public readonly int ID; 
-    public readonly string ItemName;
+    [ShowInInspector] public readonly int ID;
+    [ShowInInspector] public readonly string ItemName;
     public abstract void Use(PlayerEntity player);
 }

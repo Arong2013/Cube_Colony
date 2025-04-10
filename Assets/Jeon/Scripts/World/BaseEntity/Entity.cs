@@ -11,6 +11,9 @@ public  abstract class Entity : MonoBehaviour
     private EntityState _entityState;
     private IEntityController _controller;
     private Animator _animator;
+
+    private Action onDestoryAction;
+    private Action onHitAction;
     public EntityStat Stats { get; private set; }
     public Vector3 CurrentDir { get; protected set; }
     public Entity CurrentTarget { get; private set; }
@@ -24,6 +27,9 @@ public  abstract class Entity : MonoBehaviour
         _movementHandler = new EntityMovementHandler(this);
         _entityState = new IdleState(this, _animator); 
         Stats = EntityStat.CreatPlayerData(); 
+    }
+    public void Init()
+    {
     }
     public abstract void Initialize(); // Initialize the entity
     public void SetController(IEntityController controller) => _controller = controller;
@@ -45,6 +51,9 @@ public  abstract class Entity : MonoBehaviour
     public void Heal(float amount) => _healthHandler?.Heal(amount); 
     public void Move() => _movementHandler?.Move(CurrentDir);
     public void OnAttackHit() => GetEntityComponent<AttackComponent>()?.DoHit();
+    public void SetOnDestoryAction(Action action) => onDestoryAction += action;
+    public void SetOnHitAction(Action action) => onHitAction += action;
+    public void SeReturnStageState() => _entityState?.Exit(); 
     public void ChangePlayerState(EntityState newState)
     {
         newState?.Exit();

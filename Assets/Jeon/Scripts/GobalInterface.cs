@@ -40,8 +40,3 @@ public interface IInteractionStrategy
     string GetLabel();
 }
 
-public interface IitemAction
-{
-    bool IsInstant { get; }
-    void Execute(PlayerEntity player, Item item);
-}

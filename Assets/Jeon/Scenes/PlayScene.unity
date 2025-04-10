@@ -1459,9 +1459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f33f8f27d5ec394eb6c972fd22bf370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navMeshSurface: {fileID: 1326101562}
-  randomPrefabs:
-  - {fileID: 8767409848285342345, guid: 97f979f775fffde45b1b78a053e8ad20, type: 3}
+  disableField: {fileID: 1458031734}
 --- !u!1 &1397948338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1574,6 +1572,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1410936300}
   - component: {fileID: 1410936299}
+  - component: {fileID: 1410936301}
   m_Layer: 0
   m_Name: DataCenter
   m_TagString: Untagged
@@ -1598,9 +1597,12 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 2100000, guid: edccd2b141de46842b095c8e83763b6d, type: 2}
+    - {fileID: 7682730074218717400, guid: 4efd54472ecc14c40a7cd83c973a0cc3, type: 3}
     - {fileID: 2100000, guid: ab534b6269e0905488d14daf7dea6ef9, type: 2}
     - {fileID: 2100000, guid: 933df41c997379f48a0c4f08449dc83d, type: 2}
     - {fileID: 2100000, guid: 966f7a4972bcf16439e126a2d1594581, type: 2}
+    - {fileID: 8767409848285342345, guid: 97f979f775fffde45b1b78a053e8ad20, type: 3}
+    - {fileID: 8767409848285342345, guid: c43c7bf84af75e64ab4fe1b414568531, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -1662,6 +1664,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: FieldMesh
+      Entry: 10
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -1679,7 +1684,7 @@ MonoBehaviour:
       Data: 3|CubieFaceVisualData, Assembly-CSharp
     - Name: material
       Entry: 10
-      Data: 1
+      Data: 2
     - Name: icon
       Entry: 6
       Data: 
@@ -1704,6 +1709,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: FieldMesh
+      Entry: 10
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -1721,7 +1729,7 @@ MonoBehaviour:
       Data: 4|CubieFaceVisualData, Assembly-CSharp
     - Name: material
       Entry: 10
-      Data: 2
+      Data: 3
     - Name: icon
       Entry: 6
       Data: 
@@ -1746,6 +1754,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: FieldMesh
+      Entry: 10
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -1763,7 +1774,7 @@ MonoBehaviour:
       Data: 5|CubieFaceVisualData, Assembly-CSharp
     - Name: material
       Entry: 10
-      Data: 3
+      Data: 4
     - Name: icon
       Entry: 6
       Data: 
@@ -1788,12 +1799,79 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: FieldMesh
+      Entry: 10
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 8
       Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EntityData
+      Entry: 7
+      Data: 6|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 7|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: ExitGateData
+      Entry: 7
+      Data: 8|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 9|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
     - Name: 
       Entry: 13
       Data: 
@@ -1816,6 +1894,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1410936301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410936298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71a547114cda8ea4482903b0a1c1d804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1458031733
 GameObject:
   m_ObjectHideFlags: 0
@@ -2126,8 +2216,8 @@ MonoBehaviour:
       Entry: 8
       Data: 
   cube: {fileID: 1815109174}
-  currentStage: 1
   field: {fileID: 1326101566}
+  stageTime: 10000
 --- !u!1 &1567909823
 GameObject:
   m_ObjectHideFlags: 0

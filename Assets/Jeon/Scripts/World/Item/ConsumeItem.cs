@@ -1,16 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using Sirenix.OdinInspector;
+using System.Collections.Generic;
+using System.Linq;
 
+[System.Serializable]
 public class ConsumableItem : Item
 {
-    public int consumePerUse = 1;
+    [ShowInInspector] public int maxamount;
+    [ShowInInspector] public List<int> ids = new List<int>();
     public int cunamount;
-    public int maxamount;
-    public List<IitemAction> actions = new List<IitemAction>();
+
+
+    [ShowInInspector, ReadOnly]
+    public List<itemAction> actions => ids
+      .Select(id => ItemDataCenter.Get<itemAction>(id))
+      .Where(action => action != null)
+      .ToList();
     public override void Use(PlayerEntity player)
     {
         foreach (var action in actions)
         {
-            action.Execute(player, this);
+            action.Execute(player);
         }
     }
 }

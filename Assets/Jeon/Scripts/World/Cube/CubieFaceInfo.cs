@@ -12,11 +12,9 @@ public class CubieFaceInfo
     [SerializeField] private int level = 0;
     [SerializeField] private int maxLevel = 3;
     [SerializeField] private Vector3 position;  
-
     public CubieFaceSkillType Type => type;
     public int Level => level;
     public int MaxLevel => maxLevel;
-
     public Vector3 Position => position;    
 
     public void Initialize(Vector3 pos,CubieFaceSkillType type, int maxLevel = 3)

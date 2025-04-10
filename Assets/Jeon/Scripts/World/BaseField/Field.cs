@@ -4,18 +4,17 @@ using UnityEngine;
 
 public struct FieldData
 {
+    public int currentStageLevel;
     public Vector3 position;
     public List<CubieFaceInfo> faceinfos;
     public int size;
 }
-
 public class Field : MonoBehaviour
 {
+    [SerializeField] private Transform disableField;
     private PlayerEntity spawnedPlayer;
-    [SerializeField] private NavMeshSurface navMeshSurface;
-    [SerializeField] private GameObject[] randomPrefabs;
+    private NavMeshSurface navMeshSurface;
     private FieldData fieldData;
-
     public void Initialize(FieldData fieldData)
     {
         gameObject.SetActive(true);
@@ -23,11 +22,10 @@ public class Field : MonoBehaviour
         navMeshSurface = GetComponent<NavMeshSurface>();
 
         transform.position = fieldData.position;
-        transform.localScale = new Vector3(fieldData.size + 1.5f, 0.1f, fieldData.size + 1.5f);
+        transform.localScale = new Vector3(fieldData.size, 0.1f, fieldData.size);
         navMeshSurface.BuildNavMesh();
 
         var spawnPos = transform.position + Vector3.up;
-
         if (spawnedPlayer == null)
         {
 
@@ -40,7 +38,16 @@ public class Field : MonoBehaviour
             spawnedPlayer.transform.position = spawnPos;
         }
 
-
+        SpawnFieldTile();
+    }
+    public void SpawnNextStage()
+    {
+        var spawnPos = transform.position + Vector3.up;
+        var spawnOBj = Instantiate(DataCenter.Instance.GetExitGate(fieldData.currentStageLevel).gameObject, spawnPos, Quaternion.identity);
+        spawnOBj.transform.SetParent(disableField);    
+    }
+    public void SpawnFieldTile()
+    {
         int size = fieldData.size;
         float spacing = size == 2 ? 5 : 3;
         float half = (size - 1) * 0.5f;
@@ -50,31 +57,20 @@ public class Field : MonoBehaviour
             float x = (info.Position.x - half) * spacing;
             float z = (info.Position.z - half) * spacing;
 
-            GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
-            plane.transform.SetParent(transform, false);
+            GameObject plane = Instantiate(DataCenter.Instance.GetFaceData(info.Type).FieldMesh.gameObject, Vector3.zero, Quaternion.identity); 
+            plane.transform.SetParent(disableField, false);
             plane.transform.localPosition = new Vector3(x, 0.5f, z);
-            var scaleSize = 1f / size;  
-            plane.transform.localScale = new Vector3(scaleSize, 1f, scaleSize); // or just Vector3.one if 1x1 tile
-
-            SpawnRandomObjectOnPlane(plane);
+            var scaleSize = 1f / size;
+            plane.transform.localScale = new Vector3(scaleSize, 1f, scaleSize);
+            plane.GetComponent<FieldTile>().Initialize(fieldData.currentStageLevel, info);   
         }
     }
-    void SpawnRandomObjectOnPlane(GameObject plane)
+    public void OnDisableField()
     {
-        var bounds = plane.GetComponent<Renderer>().bounds;
-
-        // 랜덤 위치 (XZ 평면)
-        float randX = UnityEngine.Random.Range(bounds.min.x, bounds.max.x);
-        float randZ = UnityEngine.Random.Range(bounds.min.z, bounds.max.z);
-        float y = bounds.max.y; 
-
-        Vector3 spawnPos = new Vector3(randX, y + 0.1f, randZ);
-
-        // 랜덤 오브젝트 선택
-        var prefab = randomPrefabs[UnityEngine.Random.Range(0, randomPrefabs.Length)];
-        GameObject obj = Instantiate(prefab, spawnPos, Quaternion.identity);
-
-        // Plane 밑에 붙이기 (선택사항)
-        obj.transform.SetParent(plane.transform);
+        gameObject.SetActive(false);
+        for (int i = disableField.childCount - 1; i >= 0; i--)
+        {
+            Destroy(disableField.GetChild(i).gameObject);
+        }
     }
 }
