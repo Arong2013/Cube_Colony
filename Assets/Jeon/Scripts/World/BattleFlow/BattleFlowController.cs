@@ -45,7 +45,7 @@ public class BattleFlowController : SerializedMonoBehaviour
     public void SetCountDwonState()
     {
         currentStage++;
-        new CountdownState(this, cube, stageCubeDataMap[currentStage]);
+        ChangeState(new CountdownState(this, cube, stageCubeDataMap[currentStage]));
     }
     private void GameOver()
     {

@@ -14,9 +14,12 @@ public  abstract class Entity : MonoBehaviour
 
     private Action onDestoryAction;
     private Action onHitAction;
+    private Action returnAction;
     public EntityStat Stats { get; private set; }
     public Vector3 CurrentDir { get; protected set; }
     public Entity CurrentTarget { get; private set; }
+
+
     protected virtual void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -53,7 +56,8 @@ public  abstract class Entity : MonoBehaviour
     public void OnAttackHit() => GetEntityComponent<AttackComponent>()?.DoHit();
     public void SetOnDestoryAction(Action action) => onDestoryAction += action;
     public void SetOnHitAction(Action action) => onHitAction += action;
-    public void SeReturnStageState() => _entityState?.Exit(); 
+    public void SeReturnStageState() => returnAction?.Invoke();
+    public void SetReturnAction(Action action) => returnAction = action;
     public void ChangePlayerState(EntityState newState)
     {
         newState?.Exit();

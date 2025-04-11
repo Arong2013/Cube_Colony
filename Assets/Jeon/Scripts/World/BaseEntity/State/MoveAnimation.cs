@@ -17,5 +17,10 @@ public class MoveState : EntityState
     public override void Execute()
     {
         _entity.Move();
+        if(_entity.CurrentDir == Vector3.zero)
+        {
+            _entity.SetAnimatorValue(EntityAnimBool.IsMoving, false);
+            
+        }   
     }
 }

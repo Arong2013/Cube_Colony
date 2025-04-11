@@ -9,7 +9,7 @@ public class InSurvivalState : IGameSequenceState
     private CubeData cubeData;
     private Field field;
     private float nextStageTime;
-
+    private bool isSpawnedNextStage = false;
     public InSurvivalState(BattleFlowController context,CubeData cubeData,List<CubieFaceInfo> cubieFaceInfos)
     {
         this.context = context;
@@ -31,13 +31,14 @@ public class InSurvivalState : IGameSequenceState
             size = cubeData.size,
             currentStageLevel = context.CurrentStage  
         };
-        field.Initialize(fieldfata);    
+        field.Initialize(fieldfata,SetCountDownState);    
     }
     public void Update()
     {
-         nextStageTime -= nextStageTime > 0 ? nextStageTime - Time.deltaTime : 0;    
-        if (nextStageTime <= 0)
+         nextStageTime -= nextStageTime > 0 ? Time.deltaTime : 0;    
+        if (nextStageTime <= 0 && !isSpawnedNextStage)
         {
+            isSpawnedNextStage = true;  
             nextStageTime = 0;
             SpawnNextStage();
         }   

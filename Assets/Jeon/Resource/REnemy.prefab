@@ -87,7 +87,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 10275027ef10ebc45ab18c5005b36570, type: 3}
+  - {fileID: 2100000, guid: edccd2b141de46842b095c8e83763b6d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 2150117612522569001}
   - component: {fileID: 4771306770354774480}
   m_Layer: 8
-  m_Name: Enemy
+  m_Name: REnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
