@@ -74,4 +74,20 @@ public static class Utils
 
         return sum / points.Count;
     }
+
+    public static List<IPlayerUesableUI> SetPlayerMarcineOnUI()
+    {
+        var list = new List<IPlayerUesableUI>();
+        GameObject canvas = GameObject.Find("Canvas");
+        foreach (Transform child in canvas.GetComponentsInChildren<Transform>(true))
+        {
+            IPlayerUesableUI usableUI = child.GetComponent<IPlayerUesableUI>();
+            if (usableUI != null)
+            {
+                Debug.Log(child.name);
+                list.Add(usableUI);
+            }
+        }
+        return list;
+    }
 }

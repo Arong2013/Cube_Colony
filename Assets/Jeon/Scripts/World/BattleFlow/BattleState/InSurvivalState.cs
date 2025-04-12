@@ -31,7 +31,9 @@ public class InSurvivalState : IGameSequenceState
             size = cubeData.size,
             currentStageLevel = context.CurrentStage  
         };
-        field.Initialize(fieldfata,SetCountDownState);    
+        field.Initialize(fieldfata,SetCountDownState);
+
+        Utils.GetUI<InSurvivalStateUI>().Initialize();
     }
     public void Update()
     {
@@ -45,7 +47,8 @@ public class InSurvivalState : IGameSequenceState
     }
     public void Exit() 
     {
-        field.OnDisableField(); 
+        field.OnDisableField();
+        Utils.GetUI<InSurvivalStateUI>().Disable();
     }
     public void SpawnNextStage() => field.SpawnNextStage();
     public void SetCountDownState() => context.SetCountDwonState();

@@ -40,3 +40,18 @@ public interface IInteractionStrategy
     string GetLabel();
 }
 
+public interface ISubject
+{
+    void RegisterObserver(IObserver observer);
+    void UnregisterObserver(IObserver observer);
+    void NotifyObservers();
+}
+public interface IObserver
+{
+    void UpdateObserver();
+}
+
+public interface IPlayerUesableUI
+{
+    void Initialize(PlayerEntity playerEntity);
+}

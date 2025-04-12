@@ -34,7 +34,7 @@ public  abstract class Entity : MonoBehaviour
     public void Init()
     {
     }
-    public abstract void Initialize(); // Initialize the entity
+    public abstract void Initialize(); 
     public void SetController(IEntityController controller) => _controller = controller;
     public void AddEntityComponent<T>(T component) where T : IEntityComponent => _components.Add(component);
     public T GetEntityComponent<T>() where T : class, IEntityComponent => _components.Get<T>();
@@ -49,8 +49,7 @@ public  abstract class Entity : MonoBehaviour
     public TResult GetAnimatorValue<T, TResult>(T param) where T : Enum => _animatorHandler.GetAnimatorValue<T, TResult>(param);
     public void SetTarget(Entity target) => CurrentTarget = target;
     public void ClearTarget() => CurrentTarget = null;
-
-    public void TakeDamage(float dmg) => _healthHandler?.TakeDamage(dmg);
+    public virtual void TakeDamage(float dmg) => _healthHandler?.TakeDamage(dmg);
     public void Heal(float amount) => _healthHandler?.Heal(amount); 
     public void Move() => _movementHandler?.Move(CurrentDir);
     public void OnAttackHit() => GetEntityComponent<AttackComponent>()?.DoHit();
