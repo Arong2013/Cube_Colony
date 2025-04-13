@@ -22,12 +22,13 @@ public class IsPlayerNearbyCondition : BehaviorCondition
         Collider[] hits = Physics.OverlapSphere(entity.transform.position, detectionRadius);
         foreach (var hit in hits)
         {
-            if (hit.GetComponent<PlayerEntity>() != null)
+            PlayerEntity player = hit.GetComponent<PlayerEntity>();
+            if (player != null)
             {
+                step.SetData("target", player); 
                 return BehaviorState.SUCCESS;
             }
         }
-
         return BehaviorState.FAILURE;
     }
 }

@@ -237,6 +237,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e036109f5c22ce4f8f2e7eef5106afb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  behaviorSequencesSO:
+  - {fileID: 11400000, guid: 3406730a3ba17df41b8b015967238255, type: 2}
   strategyAsset: {fileID: 11400000, guid: e99be3362f4f05e4ab6590b3e3ffe8f5, type: 2}
   dropEntry:
     MinDropItem: 0

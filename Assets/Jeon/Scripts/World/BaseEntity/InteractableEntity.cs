@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Linq;
+using System.Collections.Generic;
 
 public class InteractableEntity : Entity, IInteractable
 {
+    [SerializeField] private List<BehaviorSequenceSO> behaviorSequencesSO;
     [SerializeField] private ScriptableInteractionStrategy strategyAsset;
     [SerializeField] private DropEntry dropEntry;
     [SerializeField] private float interactionDistance;
@@ -11,6 +13,15 @@ public class InteractableEntity : Entity, IInteractable
     {
         base.Awake();
         _strategy = strategyAsset?.CreateStrategy();
+        if(behaviorSequencesSO != null)
+        {
+            SetController(new AIController(behaviorSequencesSO,this));
+        }
+    }
+
+    protected override void Update()
+    {
+        base.Update();
     }
     public bool CanInteract(Entity interactor) => _strategy?.CanInteract(this, interactor) ?? false;
     public void Interact(Entity interactor) => _strategy?.Interact(this, interactor);
