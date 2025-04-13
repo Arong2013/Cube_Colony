@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: STP1
   m_EditorClassIdentifier: 
   conditions: []
-  taskAction: {fileID: 0}
+  taskAction: {fileID: 11400000, guid: 5560d5116c7c6f24f8069e272f52149a, type: 2}

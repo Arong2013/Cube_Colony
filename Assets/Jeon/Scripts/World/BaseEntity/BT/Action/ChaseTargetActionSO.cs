@@ -5,50 +5,79 @@ using UnityEngine.AI;
 [CreateAssetMenu(menuName = "Behavior/Action/ChaseTarget")]
 public class ChaseTargetActionSO : BehaviorActionSO
 {
-    public float speed = 3f;
-
+    public float maxChaseTime = 5f;
+   public float waitDuration = 0.5f;
     public override BehaviorAction CreateAction()
     {
         var action = new ChaseTargetAction();
-
-        // 속도 설정
-        typeof(ChaseTargetAction).GetField("speed", BindingFlags.NonPublic | BindingFlags.Instance)
-            ?.SetValue(action, speed);
-
+        typeof(ChaseTargetAction).GetField("maxChaseTime", BindingFlags.NonPublic | BindingFlags.Instance)
+    ?.SetValue(action, maxChaseTime);
+        typeof(ChaseTargetAction).GetField("waitDuration", BindingFlags.NonPublic | BindingFlags.Instance)
+?.SetValue(action, waitDuration);
         return action;
     }
 }
 public class ChaseTargetAction : BehaviorAction
 {
-    [SerializeField] private float speed = 3f;
+    [SerializeField] private float waitDuration = 0.5f;
+    [SerializeField] private float arriveDistance = 0.3f;
+    [SerializeField] private float maxChaseTime = 5f;
 
     private NavMeshPath path;
+    private Vector3 targetPos;
+    private Vector3 currentDirection;
+    private float chaseTimer = 0f;
 
     public override BehaviorState Execute()
     {
-        if (!step.TryGetData<PlayerEntity>("target", out var target))
+        if (!entity.TryGetData<PlayerEntity>("target", out var target))
         {
-            Debug.LogWarning("[ChaseTargetAction] No target to chase.");
             return BehaviorState.FAILURE;
         }
 
         if (path == null)
             path = new NavMeshPath();
-        bool success = NavMesh.CalculatePath(entity.transform.position, target.transform.position, NavMesh.AllAreas, path);
 
-        if (!success || path.status != NavMeshPathStatus.PathComplete || path.corners.Length < 2)
+        chaseTimer += Time.deltaTime;
+
+        // ⏰ 추적 시간 초과 시 중단
+        if (chaseTimer >= maxChaseTime)
         {
+            StopChase();
             return BehaviorState.FAILURE;
         }
-        Vector3 nextCorner = path.corners[1]; // [0]은 현재 위치
-        Vector3 direction = (nextCorner - entity.transform.position).normalized;
+
+        // 📍 경로 계산 실패 시 중단
+        if (!NavMesh.CalculatePath(entity.transform.position, target.transform.position, NavMesh.AllAreas, path) ||
+            path.status != NavMeshPathStatus.PathComplete || path.corners.Length < 2)
+        {
+            StopChase();
+            return BehaviorState.SUCCESS;
+        }
+
+        // 🎯 이동 방향 설정
+        targetPos = path.corners[1];
+        currentDirection = (targetPos - entity.transform.position).normalized;
+        
+        float dist = Vector3.Distance(entity.transform.position, targetPos);
+        if (dist <= arriveDistance)
+        {
+            StopChase();
+            return BehaviorState.SUCCESS;
+        }
+        else
+        {
+            entity.SetDir(currentDirection);
+        }
 
         return BehaviorState.RUNNING;
     }
 
-    public void SetSpeed(float speed)
+    private void StopChase()
     {
-        this.speed = speed;
+        entity.RemoveData("target");
+        entity.SetDir(Vector3.zero);
+        currentDirection = Vector3.zero;
+        chaseTimer = 0f;
     }
 }
-

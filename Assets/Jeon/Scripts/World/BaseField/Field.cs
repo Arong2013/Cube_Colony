@@ -16,7 +16,7 @@ public class Field : MonoBehaviour
     private PlayerEntity spawnedPlayer;
     private NavMeshSurface navMeshSurface;
     private FieldData fieldData;
-    public void Initialize(FieldData fieldData, Action returnAction)
+    public void Initialize(FieldData fieldData, Action returnAction,Action gameOverAction)
     {
         gameObject.SetActive(true);
         this.fieldData = fieldData;
@@ -26,7 +26,7 @@ public class Field : MonoBehaviour
         transform.localScale = new Vector3(fieldData.size-0.5f, 0.1f, fieldData.size-0.5f);
         navMeshSurface.BuildNavMesh();
 
-        SpawnPlayer(returnAction);
+        SpawnPlayer(returnAction, gameOverAction);
         SpawnFieldTile();
     }
     public void SpawnNextStage()
@@ -63,7 +63,7 @@ public class Field : MonoBehaviour
         }
         spawnedPlayer.gameObject.SetActive(false);  
     }
-    private void SpawnPlayer(Action returnAction)
+    private void SpawnPlayer(Action returnAction, Action gameOverAction)
     {
         var spawnPos = transform.position + Vector3.up;
         if (spawnedPlayer == null)
@@ -72,7 +72,7 @@ public class Field : MonoBehaviour
             GameObject playerObj = Instantiate(DataCenter.Instance.GetPlayerEntity(), spawnPos, Quaternion.identity);
             spawnedPlayer = playerObj.GetComponent<PlayerEntity>();
             playerObj.transform.SetParent(transform);
-            spawnedPlayer.SetReturnAction(returnAction);
+            spawnedPlayer.SetScurivalAction(returnAction, gameOverAction);
         }
         else
         {

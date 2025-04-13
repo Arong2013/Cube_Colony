@@ -1,20 +1,16 @@
-using System.Reflection;
+ï»¿using System.Reflection;
 using UnityEngine;
 using UnityEngine.AI;
 
 [CreateAssetMenu(menuName = "Behavior/Action/Wander")]
 public class WanderActionSO : BehaviorActionSO
 {
-    public float speed = 2f;
     public float arriveDistance = 0.3f;
     public float wanderRadius = 3f;
 
     public override BehaviorAction CreateAction()
     {
         var action = new WanderAction();
-
-        typeof(WanderAction).GetField("speed", BindingFlags.NonPublic | BindingFlags.Instance)
-            ?.SetValue(action, speed);
         typeof(WanderAction).GetField("arriveDistance", BindingFlags.NonPublic | BindingFlags.Instance)
             ?.SetValue(action, arriveDistance);
         typeof(WanderAction).GetField("wanderRadius", BindingFlags.NonPublic | BindingFlags.Instance)
@@ -23,43 +19,61 @@ public class WanderActionSO : BehaviorActionSO
         return action;
     }
 }
-
 public class WanderAction : BehaviorAction
 {
-    private Vector3 target;
-    private bool hasTarget = false;
-
-    [SerializeField] private float speed = 2f;
-    [SerializeField] private float arriveDistance = 0.3f;
+    [SerializeField] private float waitDuration = 1f;
     [SerializeField] private float wanderRadius = 3f;
+    [SerializeField] private float arriveDistance = 0.3f;
+
+    private Vector3 initPos;
+    private Vector3 targetPos;
+    private Vector3 currentDirection;
+
+    private float timer = 0f;
+    private bool isWaiting = true;
+    private bool initialized = false;
 
     public override BehaviorState Execute()
     {
-        
-        if (!hasTarget)
+      
+        if (!initialized)
         {
-            // ·£´ıÇÑ ¹æÇâÀ¸·Î »õ À§Ä¡ ¼³Á¤
-            Vector2 offset = Random.insideUnitCircle * wanderRadius;
-            Vector3 candidate = entity.transform.position + new Vector3(offset.x, 0, offset.y);
+            initPos = entity.transform.position;
+            initialized = true;
+        }
 
-            if (NavMesh.SamplePosition(candidate, out NavMeshHit hit, 1f, NavMesh.AllAreas))
+        timer += Time.deltaTime;
+        if (isWaiting)
+        {
+            if (timer >= waitDuration)
             {
-                target = hit.position;
-                hasTarget = true;
+                timer = 0f;
+                isWaiting = false;
+                Vector2 offset = Random.insideUnitCircle * wanderRadius;
+                targetPos = initPos + new Vector3(offset.x, 0f, offset.y);
+                currentDirection = (targetPos - entity.transform.position).normalized;
+                entity.SetDir(currentDirection); // íšŒì „/ì• ë‹ˆë©”ì´ì…˜
+            }
+
+            return BehaviorState.RUNNING;
+        }
+        else
+        {
+            float distance = Vector3.Distance(entity.transform.position, targetPos);
+            if (distance <= arriveDistance)
+            {
+                isWaiting = true;
+                timer = 0f;
+                currentDirection = Vector3.zero;
+                entity.SetDir(Vector3.zero); // íšŒì „/ì• ë‹ˆë©”ì´ì…˜ ì •ì§€
             }
             else
             {
-                return BehaviorState.FAILURE;
+                entity.SetDir(currentDirection); // âš ï¸ ì‹¤ì œ ì´ë™ ë¡œì§ (Rigidbodyë“  ì§ì ‘ì´ë“ )
             }
-        }
-        Vector3 direction = (target - entity.transform.position).normalized;
-        Debug.Log(direction);
-        if (Vector3.Distance(entity.transform.position, target) < arriveDistance)
-        {
-            hasTarget = false;
-            return BehaviorState.SUCCESS;
-        }
 
-        return BehaviorState.RUNNING;
+
+            return BehaviorState.RUNNING;
+        }
     }
 }

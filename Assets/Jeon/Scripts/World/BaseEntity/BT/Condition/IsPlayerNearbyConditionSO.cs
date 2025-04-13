@@ -25,7 +25,7 @@ public class IsPlayerNearbyCondition : BehaviorCondition
             PlayerEntity player = hit.GetComponent<PlayerEntity>();
             if (player != null)
             {
-                step.SetData("target", player); 
+                entity.SetData("target",player); 
                 return BehaviorState.SUCCESS;
             }
         }

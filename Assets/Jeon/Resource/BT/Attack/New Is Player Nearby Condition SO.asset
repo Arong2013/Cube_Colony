@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 346aab9abac260e44bf32aac10e0759a, type: 3}
-  m_Name: Wander Action SO
+  m_Script: {fileID: 11500000, guid: 26b1cb00629536e408d48557eb8a4433, type: 3}
+  m_Name: New Is Player Nearby Condition SO
   m_EditorClassIdentifier: 
-  arriveDistance: 0.3
-  wanderRadius: 1
+  detectionRadius: 1
