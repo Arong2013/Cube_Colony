@@ -24,6 +24,16 @@ public class ItemEntity : Entity, IInteractable
         
     }
     public void Interact(Entity interactor) => interactor.GetEntityComponent<InventoryComponent>()?.AddItem(_item);
+    public override void OnDeath()
+    {
+     
+    }
+
+    public override void OnHit(int dmg)
+    {
+        
+    }
+
     protected override void Awake()
     {
         base.Awake();

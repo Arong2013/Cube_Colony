@@ -14,15 +14,16 @@ public class ReturnAnimation : StateMachineBehaviour
 }
 public class ReturnState : EntityState
 {
-    private float _returnTime;  
-    public ReturnState(Entity _entity, float _returnTime) : base(_entity) { this._returnTime = _returnTime;}
+    private float _returnTime;
+    private PlayerEntity playerEntity;
+    public ReturnState(Entity _entity, float _returnTime) : base(_entity) { this._returnTime = _returnTime; playerEntity = _entity.GetComponent<PlayerEntity>(); }
     public override void Execute()
     {
         _returnTime -= Time.deltaTime;
         if (_returnTime <= 0)
         {
             _entity.SetAnimatorValue(EntityAnimBool.IsReturn, false);
-            _entity.SeReturnStageState();   
+            playerEntity.SeReturnStageState();   
         }
     }
 }

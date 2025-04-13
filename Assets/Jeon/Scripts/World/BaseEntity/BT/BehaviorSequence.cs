@@ -4,8 +4,6 @@ using UnityEngine;
 public class BehaviorSequence
 {
     private readonly List<BehaviorStep> steps;
-    private readonly Dictionary<string, object> decisionContext = new();
-
     public Entity entity { get; private set; }
 
     public BehaviorSequence(Entity entity, List<BehaviorStepSO> stepSOs)
@@ -20,41 +18,20 @@ public class BehaviorSequence
             steps.Add(step);
         }
     }
-
-    public void SetData(string key, object value) => decisionContext[key] = value;
-
-    public bool TryGetData(string key, out object value) => decisionContext.TryGetValue(key, out value);
-
-    public bool TryGetData<T>(string key, out T value)
-    {
-        if (decisionContext.TryGetValue(key, out var obj) && obj is T casted)
-        {
-            value = casted;
-            return true;
-        }
-        value = default;
-        return false;
-    }
-
-    public T GetData<T>(string key)
-    {
-        if (TryGetData<T>(key, out T result)) return result;
-
-        Debug.LogWarning($"[BehaviorSequence] Key '{key}' not found or wrong type.");
-        return default;
-    }
-
     public BehaviorState Execute()
     {
-
         foreach (BehaviorStep step in steps)
         {
-
             var result = step.Execute();
 
-            if (result == BehaviorState.FAILURE) return BehaviorState.FAILURE;
-            if (result == BehaviorState.RUNNING) return BehaviorState.RUNNING;
+            if (result == BehaviorState.FAILURE)
+                return BehaviorState.FAILURE; // 하나라도 실패하면 시퀀스 실패
+
+            if (result == BehaviorState.RUNNING)
+                return BehaviorState.RUNNING; // 진행 중이면 그대로 유지
         }
+
+        // 모든 Step이 SUCCESS인 경우
         return BehaviorState.SUCCESS;
     }
 }

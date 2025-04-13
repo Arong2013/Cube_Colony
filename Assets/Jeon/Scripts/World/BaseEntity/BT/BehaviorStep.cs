@@ -29,31 +29,6 @@ public class BehaviorStep
         return allMet ? taskAction.Execute() : BehaviorState.FAILURE;
     }
 
-    public void SetData(string key, object value)
-    {
-        parentSequence.SetData(key, value);
-    }
-
-    public T GetData<T>(string key)
-    {
-        if (TryGetData<T>(key, out T result))
-            return result;
-
-        Debug.LogWarning($"[BehaviorStep] Key {key} not found or wrong type.");
-        return default;
-    }
-
-    public bool TryGetData<T>(string key, out T value)
-    {
-        if (parentSequence.TryGetData(key, out var obj) && obj is T casted)
-        {
-            value = casted;
-            return true;
-        }
-        value = default;
-        return false;
-    }
-
     public void SetParentSequence(BehaviorSequence sequence)
     {
         parentSequence = sequence;

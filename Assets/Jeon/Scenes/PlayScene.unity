@@ -1646,7 +1646,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1326101561
 Transform:
   m_ObjectHideFlags: 0
@@ -1657,7 +1657,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 0.1, z: 3}
+  m_LocalScale: {x: 1.5, y: 0.1, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 117732991}
@@ -1698,7 +1698,7 @@ MonoBehaviour:
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
-  m_BuildHeightMesh: 0
+  m_BuildHeightMesh: 1
 --- !u!64 &1326101563
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1839,19 +1839,6 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
-    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
-      propertyPath: 'serializationData.PrefabModifications.Array.data[0]'
-      value: '"path":"EntityData","add_keys":{"$id":0,"$type":"System.Object[], mscorlib","$rlength":1,"$rcontent":[{"$id":1,"$type":"System.Int32,
-        mscorlib",3}]},"remove_keys":null'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
-      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5571489857094754299, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: m_Name
       value: DataCenter
