@@ -23,7 +23,7 @@ public class Field : MonoBehaviour
         navMeshSurface = GetComponent<NavMeshSurface>();
 
         transform.position = fieldData.position;
-        transform.localScale = new Vector3(fieldData.size, 0.1f, fieldData.size);
+        transform.localScale = new Vector3(fieldData.size-0.5f, 0.1f, fieldData.size-0.5f);
         navMeshSurface.BuildNavMesh();
 
         SpawnPlayer(returnAction);

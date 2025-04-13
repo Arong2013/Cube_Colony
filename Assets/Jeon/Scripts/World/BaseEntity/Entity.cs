@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public  abstract class Entity : MonoBehaviour
@@ -15,6 +16,8 @@ public  abstract class Entity : MonoBehaviour
     private Action onDestoryAction;
     private Action onHitAction;
     private Action returnAction;
+    private Dictionary<string, object> decisionContext = new();
+
     public EntityStat Stats { get; private set; }
     public Vector3 CurrentDir { get; protected set; }
     public Entity CurrentTarget { get; private set; }
@@ -66,6 +69,27 @@ public  abstract class Entity : MonoBehaviour
     public Type GetCharacterStateType() => _entityState.GetType();
     public EntityState GetState() => _entityState;
     public void SetDir(Vector3 dir) { CurrentDir = dir; }
+    public bool TryGetData<T>(string key, out T value)
+    {
+        if (decisionContext.TryGetValue(key, out var obj) && obj is T casted)
+        {
+            value = casted;
+            return true;
+        }
+        value = default;
+        return false;
+    }
+    public T GetData<T>(string key)
+    {
+        if (TryGetData<T>(key, out T result)) return result;
+
+        Debug.LogWarning($"[BehaviorSequence] Key '{key}' not found or wrong type.");
+        return default;
+    }
+    public bool RemoveData(string key)
+    {
+        return decisionContext.Remove(key);
+    }
 
     protected virtual void Update()
     {
