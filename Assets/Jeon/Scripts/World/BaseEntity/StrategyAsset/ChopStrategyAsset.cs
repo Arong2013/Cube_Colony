@@ -13,4 +13,9 @@ public class ChopStrategy : IInteractionStrategy
     public void Interact(Entity self, Entity interactor)
         => interactor.GetEntityComponent<ChopComponent>()?.Chop(self);
     public string GetLabel() => "나무 베기";
+
+    public void Initialize(Entity self)
+    {
+        
+    }
 }

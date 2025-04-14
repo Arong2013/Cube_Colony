@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 
@@ -15,29 +16,17 @@ public class Field : MonoBehaviour
     private PlayerEntity spawnedPlayer;
     private NavMeshSurface navMeshSurface;
     private FieldData fieldData;
-    public void Initialize(FieldData fieldData)
+    public void Initialize(FieldData fieldData, Action returnAction,Action gameOverAction)
     {
         gameObject.SetActive(true);
         this.fieldData = fieldData;
         navMeshSurface = GetComponent<NavMeshSurface>();
 
         transform.position = fieldData.position;
-        transform.localScale = new Vector3(fieldData.size, 0.1f, fieldData.size);
+        transform.localScale = new Vector3(fieldData.size-0.5f, 0.1f, fieldData.size-0.5f);
         navMeshSurface.BuildNavMesh();
 
-        var spawnPos = transform.position + Vector3.up;
-        if (spawnedPlayer == null)
-        {
-
-            GameObject playerObj = Instantiate(DataCenter.Instance.GetPlayerEntity(), spawnPos, Quaternion.identity);
-            spawnedPlayer = playerObj.GetComponent<PlayerEntity>();
-            playerObj.transform.SetParent(transform);
-        }
-        else
-        {
-            spawnedPlayer.transform.position = spawnPos;
-        }
-
+        SpawnPlayer(returnAction, gameOverAction);
         SpawnFieldTile();
     }
     public void SpawnNextStage()
@@ -71,6 +60,24 @@ public class Field : MonoBehaviour
         for (int i = disableField.childCount - 1; i >= 0; i--)
         {
             Destroy(disableField.GetChild(i).gameObject);
+        }
+        spawnedPlayer.gameObject.SetActive(false);  
+    }
+    private void SpawnPlayer(Action returnAction, Action gameOverAction)
+    {
+        var spawnPos = transform.position + Vector3.up;
+        if (spawnedPlayer == null)
+        {
+
+            GameObject playerObj = Instantiate(DataCenter.Instance.GetPlayerEntity(), spawnPos, Quaternion.identity);
+            spawnedPlayer = playerObj.GetComponent<PlayerEntity>();
+            playerObj.transform.SetParent(transform);
+            spawnedPlayer.SetScurivalAction(returnAction, gameOverAction);
+        }
+        else
+        {
+            spawnedPlayer.gameObject.SetActive(true);   
+            spawnedPlayer.transform.position = spawnPos;
         }
     }
 }

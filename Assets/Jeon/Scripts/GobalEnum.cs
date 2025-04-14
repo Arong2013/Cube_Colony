@@ -64,7 +64,8 @@ public enum EntityAnimTrigger
 }
 public enum EntityAnimBool
 {
-    IsMoving
+    IsMoving,
+    IsReturn
 }
 public enum EntityAnimFloat
 {

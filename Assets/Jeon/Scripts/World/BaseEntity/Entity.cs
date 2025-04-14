@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public  abstract class Entity : MonoBehaviour
@@ -14,15 +15,20 @@ public  abstract class Entity : MonoBehaviour
 
     private Action onDestoryAction;
     private Action onHitAction;
-    public EntityStat Stats { get; private set; }
+
+    private Dictionary<string, object> decisionContext = new();
+
+    public EntityStat Stats { get; protected set; }
     public Vector3 CurrentDir { get; protected set; }
     public Entity CurrentTarget { get; private set; }
+    public bool CanWalk => (Mathf.Abs(CurrentDir.x) > 0.1f || Mathf.Abs(CurrentDir.z) > 0.1f) && GetState().GetType() != typeof(MoveState);
+    public bool CanAttack => GetState().GetType() != typeof(AttackState);
     protected virtual void Awake()
     {
         _animator = GetComponent<Animator>();
         _animatorHandler = new EntityAnimatorHandler(_animator);
         _components = new EntityComponentHandler(this);
-        _healthHandler = new EntityHealthHandler(this);
+        _healthHandler = new EntityHealthHandler(this, OnHit,OnDeath);
         _combatHandler = new EntityCombatHandler(this);
         _movementHandler = new EntityMovementHandler(this);
         _entityState = new IdleState(this, _animator); 
@@ -31,7 +37,7 @@ public  abstract class Entity : MonoBehaviour
     public void Init()
     {
     }
-    public abstract void Initialize(); // Initialize the entity
+    public abstract void Initialize(); 
     public void SetController(IEntityController controller) => _controller = controller;
     public void AddEntityComponent<T>(T component) where T : IEntityComponent => _components.Add(component);
     public T GetEntityComponent<T>() where T : class, IEntityComponent => _components.Get<T>();
@@ -46,14 +52,13 @@ public  abstract class Entity : MonoBehaviour
     public TResult GetAnimatorValue<T, TResult>(T param) where T : Enum => _animatorHandler.GetAnimatorValue<T, TResult>(param);
     public void SetTarget(Entity target) => CurrentTarget = target;
     public void ClearTarget() => CurrentTarget = null;
-
-    public void TakeDamage(float dmg) => _healthHandler?.TakeDamage(dmg);
+    public virtual void TakeDamage(float dmg) => _healthHandler?.TakeDamage(dmg);
     public void Heal(float amount) => _healthHandler?.Heal(amount); 
     public void Move() => _movementHandler?.Move(CurrentDir);
     public void OnAttackHit() => GetEntityComponent<AttackComponent>()?.DoHit();
-    public void SetOnDestoryAction(Action action) => onDestoryAction += action;
     public void SetOnHitAction(Action action) => onHitAction += action;
-    public void SeReturnStageState() => _entityState?.Exit(); 
+    public abstract void OnHit(int dmg);
+    public abstract void OnDeath();
     public void ChangePlayerState(EntityState newState)
     {
         newState?.Exit();
@@ -63,12 +68,36 @@ public  abstract class Entity : MonoBehaviour
     public Type GetCharacterStateType() => _entityState.GetType();
     public EntityState GetState() => _entityState;
     public void SetDir(Vector3 dir) { CurrentDir = dir; }
+    public void SetData(string key, object value) => decisionContext[key] = value;
+    public bool TryGetData<T>(string key, out T value)
+    {
+        if (decisionContext.TryGetValue(key, out var obj) && obj is T casted)
+        {
+            value = casted;
+            return true;
+        }
+        value = default;
+        return false;
+    }
+    public T GetData<T>(string key)
+    {
+        if (TryGetData<T>(key, out T result)) return result;
+
+        Debug.LogWarning($"[BehaviorSequence] Key '{key}' not found or wrong type.");
+        return default;
+    }
+    public bool RemoveData(string key)
+    {
+        return decisionContext.Remove(key);
+    }
 
     protected virtual void Update()
     {
         _controller?.Update(this);
         _components.UpdateAll();
-        _entityState?.Execute(); 
+        _entityState?.Execute();
+        if (CanWalk)
+            SetAnimatorValue(EntityAnimBool.IsMoving, true);
     }
     private void OnDestroy() => _components.ExitAll();
 }

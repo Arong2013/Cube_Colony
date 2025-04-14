@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4141908256780064808}
   - component: {fileID: 6811253069687935954}
   - component: {fileID: 3391024037803944180}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 10275027ef10ebc45ab18c5005b36570, type: 3}
+  - {fileID: 2100000, guid: 966f7a4972bcf16439e126a2d1594581, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -131,9 +131,9 @@ GameObject:
   - component: {fileID: 3608631008520376673}
   - component: {fileID: 3261597914559758549}
   - component: {fileID: 2150117612522569001}
-  - component: {fileID: 4771306770354774480}
-  m_Layer: 8
-  m_Name: Enemy
+  - component: {fileID: 8086120718917371260}
+  m_Layer: 0
+  m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -184,7 +184,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8767409848285342345}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: f64ee888c3cf0d542b382c272d81ce5d, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -196,7 +196,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5, y: 1, z: 0.5}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2150117612522569001
 Rigidbody:
@@ -217,15 +217,15 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_Constraints: 112
-  m_CollisionDetection: 0
---- !u!114 &4771306770354774480
+  m_CollisionDetection: 1
+--- !u!114 &8086120718917371260
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -237,8 +237,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e036109f5c22ce4f8f2e7eef5106afb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strategyAsset: {fileID: 11400000, guid: e99be3362f4f05e4ab6590b3e3ffe8f5, type: 2}
+  behaviorSequencesSO: []
+  strategyAsset: {fileID: 0}
   dropEntry:
     MinDropItem: 0
     MaxDropItem: 0
-  interactionDistance: 0.2
+  interactionDistance: 0

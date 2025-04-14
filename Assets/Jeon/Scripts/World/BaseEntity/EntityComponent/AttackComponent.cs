@@ -4,7 +4,10 @@ public class AttackComponent : IEntityComponent
 {
     private Entity _entity;
     private float _attackRange = 3f;
-
+    public AttackComponent(float attackRange)
+    {
+        _attackRange = attackRange;
+    }   
     public void Start(Entity entity) => _entity = entity;
     public void Update(Entity entity) { }
     public void Exit(Entity entity) { }
@@ -28,7 +31,7 @@ public class AttackComponent : IEntityComponent
     public bool HasValidTarget(float maxDistance)
     {
         if (_entity.CurrentTarget == null) return false;
-        
+
         float dist = Vector3.Distance(_entity.transform.position, _entity.CurrentTarget.transform.position);
         return dist <= maxDistance;
     }

@@ -35,8 +35,24 @@ public interface IInteractable
 
 public interface IInteractionStrategy
 {
+    void Initialize(Entity self);
     bool CanInteract(Entity self, Entity interactor);
     void Interact(Entity self, Entity interactor);
     string GetLabel();
 }
 
+public interface ISubject
+{
+    void RegisterObserver(IObserver observer);
+    void UnregisterObserver(IObserver observer);
+    void NotifyObservers();
+}
+public interface IObserver
+{
+    void UpdateObserver();
+}
+
+public interface IPlayerUesableUI
+{
+    void Initialize(PlayerEntity playerEntity);
+}

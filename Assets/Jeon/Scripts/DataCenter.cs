@@ -19,7 +19,7 @@ public class DataCenter : SerializedMonoBehaviour
     [SerializeField]
     private Dictionary<int, GameObject> EntityData = new();
 
-    [Title("엔티티 데이터")]
+    [Title("리턴 게이트 데이터")]
     [SerializeField]
     private Dictionary<int, GameObject> ExitGateData = new();  
 
@@ -43,7 +43,6 @@ public class DataCenter : SerializedMonoBehaviour
             return null;
         }
     }
-
     public GameObject GetExitGate(int id)
     {
         if (ExitGateData.TryGetValue(id, out var entity))
@@ -56,7 +55,6 @@ public class DataCenter : SerializedMonoBehaviour
             return null;
         }
     }
-
     private void Awake()
     {
         if (Instance != null && Instance != this)

@@ -17,6 +17,7 @@ public class Cube : MonoBehaviour
     {
         cubeRotater = new CubeRotater(this.transform);
         cubeGridHandler = new CubeGridHandler(cubie,this.transform, cubeData);
+        cubeUIController.gameObject.SetActive(true);    
         cubeUIController.SetRotateAction(RotateCube);
         cubeController = new CubeKeybordController(RotateAllCube);
         onRotateAction = action;    
