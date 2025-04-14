@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public struct FieldData
@@ -73,11 +75,32 @@ public class Field : MonoBehaviour
             spawnedPlayer = playerObj.GetComponent<PlayerEntity>();
             playerObj.transform.SetParent(transform);
             spawnedPlayer.SetScurivalAction(returnAction, gameOverAction);
+            
         }
         else
         {
             spawnedPlayer.gameObject.SetActive(true);   
             spawnedPlayer.transform.position = spawnPos;
+        }
+
+        spawnedPlayer.Init();
+    }
+
+    private IEnumerator DelayedEntityInit()
+    {
+        yield return new WaitForSeconds(3f);
+        InitAllEntitiesInField();
+    }
+
+    private void InitAllEntitiesInField()
+    {
+        foreach (Transform child in disableField)
+        {
+            var initables = child.GetComponentsInChildren<Entity>();
+            foreach (var item in initables)
+            {
+                item.Init();
+            }
         }
     }
 }

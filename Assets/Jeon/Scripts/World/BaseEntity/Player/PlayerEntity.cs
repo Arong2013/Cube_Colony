@@ -9,9 +9,9 @@ public class PlayerEntity : Entity, ISubject
     private Action gameOverAction;
 
     List<IObserver> observers = new List<IObserver>();
-    protected override void Awake()
+    public override void Init()
     {
-        base.Awake();
+        base.Init();
         SetController(new PCController(OnMoveInput));
         Initialize();
         LinkUi();
@@ -25,7 +25,7 @@ public class PlayerEntity : Entity, ISubject
         Debug.Log("[UI] Player died!");
     }
     private void OnMoveInput(Vector3 direction) => SetDir(direction);
-    public override void Initialize()
+    public void Initialize()
     {
         AddEntityComponent(new AttackComponent(1f));  
         AddEntityComponent(new InventoryComponent());

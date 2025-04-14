@@ -23,7 +23,7 @@ public  abstract class Entity : MonoBehaviour
     public Entity CurrentTarget { get; private set; }
     public bool CanWalk => (Mathf.Abs(CurrentDir.x) > 0.1f || Mathf.Abs(CurrentDir.z) > 0.1f) && GetState().GetType() != typeof(MoveState);
     public bool CanAttack => GetState().GetType() != typeof(AttackState);
-    protected virtual void Awake()
+    public virtual void Init()
     {
         _animator = GetComponent<Animator>();
         _animatorHandler = new EntityAnimatorHandler(_animator);
@@ -34,10 +34,6 @@ public  abstract class Entity : MonoBehaviour
         _entityState = new IdleState(this, _animator); 
         Stats = EntityStat.CreatPlayerData(); 
     }
-    public void Init()
-    {
-    }
-    public abstract void Initialize(); 
     public void SetController(IEntityController controller) => _controller = controller;
     public void AddEntityComponent<T>(T component) where T : IEntityComponent => _components.Add(component);
     public T GetEntityComponent<T>() where T : class, IEntityComponent => _components.Get<T>();

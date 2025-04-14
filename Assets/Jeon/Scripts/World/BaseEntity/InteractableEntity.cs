@@ -9,18 +9,21 @@ public class InteractableEntity : Entity, IInteractable
     [SerializeField] private DropEntry dropEntry;
     [SerializeField] private float interactionDistance;
     private IInteractionStrategy _strategy;
-    protected override void Awake()
+    private bool initavle;
+    public override void Init()
     {
-        base.Awake();
+        base.Init();
         _strategy = strategyAsset?.CreateStrategy();
         _strategy?.Initialize(this);    
         if (behaviorSequencesSO != null)
         {
             SetController(new AIController(behaviorSequencesSO,this));
         }
+        initavle = true;    
     }
     protected override void Update()
     {
+        if (!initavle) return;  
         base.Update();
     }
     public bool CanInteract(Entity interactor) => _strategy?.CanInteract(this, interactor) ?? false;
@@ -45,10 +48,6 @@ public class InteractableEntity : Entity, IInteractable
                 }
             }
         }
-    }
-    public override void Initialize()
-    {
-        
     }
     public float GetInteractionDistance() => interactionDistance;
 
