@@ -55,6 +55,7 @@ public  abstract class Entity : MonoBehaviour
     public void SetOnHitAction(Action action) => onHitAction += action;
     public abstract void OnHit(int dmg);
     public abstract void OnDeath();
+
     public void ChangePlayerState(EntityState newState)
     {
         newState?.Exit();
@@ -93,7 +94,7 @@ public  abstract class Entity : MonoBehaviour
         _components.UpdateAll();
         _entityState?.Execute();
         if (CanWalk)
-            SetAnimatorValue(EntityAnimBool.IsMoving, true);
+              SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Move);
     }
     private void OnDestroy() => _components.ExitAll();
 }

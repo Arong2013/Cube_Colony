@@ -15,14 +15,23 @@ public class ReturnAnimation : StateMachineBehaviour
 public class ReturnState : EntityState
 {
     private float _returnTime;
+    private float currentTime;  
     private PlayerEntity playerEntity;
     public ReturnState(Entity _entity, float _returnTime) : base(_entity) { this._returnTime = _returnTime; playerEntity = _entity.GetComponent<PlayerEntity>(); }
+    public override void Enter()
+    {
+        base.Enter();
+        Utils.GetUI<InSurvivalStateUI>().EnterReturn();
+        currentTime = _returnTime;  
+    }
     public override void Execute()
     {
-        _returnTime -= Time.deltaTime;
-        if (_returnTime <= 0)
+        currentTime -= Time.deltaTime;
+        Utils.GetUI<InSurvivalStateUI>().UpdateReturn(_returnTime,currentTime);
+        if (currentTime <= 0)
         {
-            _entity.SetAnimatorValue(EntityAnimBool.IsReturn, false);
+            Utils.GetUI<InSurvivalStateUI>().ExitReturn();
+            _entity.SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Idle);
             playerEntity.SeReturnStageState();   
         }
     }
