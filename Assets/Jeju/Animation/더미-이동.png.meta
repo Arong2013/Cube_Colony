@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 584eb9cbe195d7140905c5c11b4760ba
+guid: f391fa3893974534f805e1d0e4623d59
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -97,12 +97,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: monster_attack_0
+      name: "\uB354\uBBF8-\uC774\uB3D9_0"
       rect:
         serializedVersion: 2
         x: 0
         y: 600
-        width: 600
+        width: 800
         height: 600
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -112,19 +112,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d918e26dde33364fa7ffe637ecfa05d
-      internalID: 787181882
+      spriteID: 7c896acd0023db24281c3b14818b42a9
+      internalID: -304096863
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: monster_attack_1
+      name: "\uB354\uBBF8-\uC774\uB3D9_1"
       rect:
         serializedVersion: 2
-        x: 600
+        x: 800
         y: 600
-        width: 600
+        width: 800
         height: 600
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -134,41 +134,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 59c63b44688780e43ad4dad78595d66c
-      internalID: 900259760
+      spriteID: b7fa018df2b74cf41b94826e58d78d69
+      internalID: 1054361960
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: monster_attack_2
-      rect:
-        serializedVersion: 2
-        x: 1200
-        y: 600
-        width: 600
-        height: 600
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a2b38c1cf41bafd41aae3984219f6008
-      internalID: -425174630
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: monster_attack_3
+      name: "\uB354\uBBF8-\uC774\uB3D9_2"
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 600
+        width: 800
         height: 600
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -178,19 +156,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70db1a87e9960f046a03b2e3a1c5f5ff
-      internalID: -1994086431
+      spriteID: 3bfe5f5405a7ec14788cea4a68e60dce
+      internalID: 994662378
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: monster_attack_4
+      name: "\uB354\uBBF8-\uC774\uB3D9_3"
       rect:
         serializedVersion: 2
-        x: 600
+        x: 800
         y: 0
-        width: 600
+        width: 800
         height: 600
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -200,8 +178,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 715a554b0b85edd4dba112ce02874414
-      internalID: 2016797402
+      spriteID: 1508df80e1a6c2b44b5e425b9c810fa4
+      internalID: -1903214018
       vertices: []
       indices: 
       edges: []
@@ -210,7 +188,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 573b02db661cf02488a50a177ae7fb06
+    spriteID: 61d824247aa498a438d8225ebae9366f
     internalID: 0
     vertices: []
     indices: 
@@ -220,11 +198,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      monster_attack_0: 787181882
-      monster_attack_1: 900259760
-      monster_attack_2: -425174630
-      monster_attack_3: -1994086431
-      monster_attack_4: 2016797402
+      "\uB354\uBBF8-\uC774\uB3D9_0": -304096863
+      "\uB354\uBBF8-\uC774\uB3D9_1": 1054361960
+      "\uB354\uBBF8-\uC774\uB3D9_2": 994662378
+      "\uB354\uBBF8-\uC774\uB3D9_3": -1903214018
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

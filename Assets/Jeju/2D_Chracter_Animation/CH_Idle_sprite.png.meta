@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 584eb9cbe195d7140905c5c11b4760ba
+guid: 32d6c5e169b0e4f4689c1ab63c3a26a4
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 700
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: monster_attack_0
+      name: CH_Idle_sprite_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 600
-        width: 600
-        height: 600
+        y: 900
+        width: 900
+        height: 900
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,20 +112,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d918e26dde33364fa7ffe637ecfa05d
-      internalID: 787181882
+      spriteID: 2ee6d22203e7b0b448d73ba8ad53ad30
+      internalID: -1063627692
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: monster_attack_1
+      name: CH_Idle_sprite_1
       rect:
         serializedVersion: 2
-        x: 600
-        y: 600
-        width: 600
-        height: 600
+        x: 900
+        y: 900
+        width: 900
+        height: 900
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,20 +134,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 59c63b44688780e43ad4dad78595d66c
-      internalID: 900259760
+      spriteID: 3e78d9cef6b51a54ab90d3bc712d5832
+      internalID: -1053749923
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: monster_attack_2
+      name: CH_Idle_sprite_2
       rect:
         serializedVersion: 2
-        x: 1200
-        y: 600
-        width: 600
-        height: 600
+        x: 1800
+        y: 900
+        width: 900
+        height: 900
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,20 +156,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a2b38c1cf41bafd41aae3984219f6008
-      internalID: -425174630
+      spriteID: 782573e0256c1534d807ffa8bd379c06
+      internalID: 829418435
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: monster_attack_3
+      name: CH_Idle_sprite_3
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 600
-        height: 600
+        width: 900
+        height: 900
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -178,20 +178,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70db1a87e9960f046a03b2e3a1c5f5ff
-      internalID: -1994086431
+      spriteID: 0f1ab7e13fc87884a87ade7b7d79d8ae
+      internalID: -1038129058
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: monster_attack_4
+      name: CH_Idle_sprite_4
       rect:
         serializedVersion: 2
-        x: 600
+        x: 900
         y: 0
-        width: 600
-        height: 600
+        width: 900
+        height: 900
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,8 +200,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 715a554b0b85edd4dba112ce02874414
-      internalID: 2016797402
+      spriteID: fae81858415a52e49b9f6315c7f1bcce
+      internalID: -1392957962
       vertices: []
       indices: 
       edges: []
@@ -210,7 +210,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 573b02db661cf02488a50a177ae7fb06
+    spriteID: 7164dc14a3bcb7c40bd083f155bc9f3d
     internalID: 0
     vertices: []
     indices: 
@@ -220,11 +220,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      monster_attack_0: 787181882
-      monster_attack_1: 900259760
-      monster_attack_2: -425174630
-      monster_attack_3: -1994086431
-      monster_attack_4: 2016797402
+      CH_Idle_sprite_0: -1063627692
+      CH_Idle_sprite_1: -1053749923
+      CH_Idle_sprite_2: 829418435
+      CH_Idle_sprite_3: -1038129058
+      CH_Idle_sprite_4: -1392957962
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

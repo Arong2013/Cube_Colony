@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 584eb9cbe195d7140905c5c11b4760ba
+guid: 359c30695d712074ab3d8fa60e77ffca
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 700
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -97,111 +97,111 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: monster_attack_0
+      name: RB_MD_Attack_sprite_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 600
-        width: 600
-        height: 600
+        y: 0
+        width: 1200
+        height: 1200
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d918e26dde33364fa7ffe637ecfa05d
-      internalID: 787181882
+      spriteID: 75fb3e62d42846a4e80cac84f773c84e
+      internalID: -1956795361
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: monster_attack_1
-      rect:
-        serializedVersion: 2
-        x: 600
-        y: 600
-        width: 600
-        height: 600
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 59c63b44688780e43ad4dad78595d66c
-      internalID: 900259760
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: monster_attack_2
+      name: RB_MD_Attack_sprite_1
       rect:
         serializedVersion: 2
         x: 1200
-        y: 600
-        width: 600
-        height: 600
+        y: 0
+        width: 1200
+        height: 1200
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a2b38c1cf41bafd41aae3984219f6008
-      internalID: -425174630
+      spriteID: 604c5839cee00d34c8e5415313b9d41e
+      internalID: -3232497
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: monster_attack_3
+      name: RB_MD_Attack_sprite_2
       rect:
         serializedVersion: 2
-        x: 0
+        x: 2400
         y: 0
-        width: 600
-        height: 600
+        width: 1200
+        height: 1200
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70db1a87e9960f046a03b2e3a1c5f5ff
-      internalID: -1994086431
+      spriteID: 5cc598516c764184b8d73c4c2d12bac0
+      internalID: 1939896706
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: monster_attack_4
+      name: RB_MD_Attack_sprite_3
       rect:
         serializedVersion: 2
-        x: 600
+        x: 3600
         y: 0
-        width: 600
-        height: 600
+        width: 1200
+        height: 1200
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 715a554b0b85edd4dba112ce02874414
-      internalID: 2016797402
+      spriteID: c9888e56c4a0e464e879533085bfaa3c
+      internalID: 930127502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RB_MD_Attack_sprite_4
+      rect:
+        serializedVersion: 2
+        x: 4800
+        y: 0
+        width: 1200
+        height: 1200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4972bcd5c454704b833e887a65a3004
+      internalID: -1221605599
       vertices: []
       indices: 
       edges: []
@@ -210,7 +210,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 573b02db661cf02488a50a177ae7fb06
+    spriteID: b80aea86e19c52545a03486901944b0d
     internalID: 0
     vertices: []
     indices: 
@@ -220,11 +220,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      monster_attack_0: 787181882
-      monster_attack_1: 900259760
-      monster_attack_2: -425174630
-      monster_attack_3: -1994086431
-      monster_attack_4: 2016797402
+      RB_MD_Attack_sprite_0: -1956795361
+      RB_MD_Attack_sprite_1: -3232497
+      RB_MD_Attack_sprite_2: 1939896706
+      RB_MD_Attack_sprite_3: 930127502
+      RB_MD_Attack_sprite_4: -1221605599
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

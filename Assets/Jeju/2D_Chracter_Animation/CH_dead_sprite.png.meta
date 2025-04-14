@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 584eb9cbe195d7140905c5c11b4760ba
+guid: a0fa6a36eb78a954a8de9da8b6547e3f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 700
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: monster_attack_0
+      name: CH_dead_sprite_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 600
-        width: 600
-        height: 600
+        y: 900
+        width: 900
+        height: 900
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,20 +112,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d918e26dde33364fa7ffe637ecfa05d
-      internalID: 787181882
+      spriteID: 36699a29d9573a145a8c1aa63f9fa8e7
+      internalID: -451888904
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: monster_attack_1
+      name: CH_dead_sprite_1
       rect:
         serializedVersion: 2
-        x: 600
-        y: 600
-        width: 600
-        height: 600
+        x: 900
+        y: 900
+        width: 900
+        height: 900
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,42 +134,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 59c63b44688780e43ad4dad78595d66c
-      internalID: 900259760
+      spriteID: a1220de868d2abe4aaafac26a6bde712
+      internalID: -663487236
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: monster_attack_2
-      rect:
-        serializedVersion: 2
-        x: 1200
-        y: 600
-        width: 600
-        height: 600
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a2b38c1cf41bafd41aae3984219f6008
-      internalID: -425174630
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: monster_attack_3
+      name: CH_dead_sprite_2
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 600
-        height: 600
+        width: 900
+        height: 900
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -178,20 +156,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70db1a87e9960f046a03b2e3a1c5f5ff
-      internalID: -1994086431
+      spriteID: 0d909f4919d2c0548ac72370483bf03f
+      internalID: 1104981989
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: monster_attack_4
+      name: CH_dead_sprite_3
       rect:
         serializedVersion: 2
-        x: 600
+        x: 900
         y: 0
-        width: 600
-        height: 600
+        width: 900
+        height: 900
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,8 +178,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 715a554b0b85edd4dba112ce02874414
-      internalID: 2016797402
+      spriteID: 9e65a659fbf22ed428703ff520308b3b
+      internalID: -2093824286
       vertices: []
       indices: 
       edges: []
@@ -210,7 +188,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 573b02db661cf02488a50a177ae7fb06
+    spriteID: fb205ce59f7be4543826174eecc12d66
     internalID: 0
     vertices: []
     indices: 
@@ -220,11 +198,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      monster_attack_0: 787181882
-      monster_attack_1: 900259760
-      monster_attack_2: -425174630
-      monster_attack_3: -1994086431
-      monster_attack_4: 2016797402
+      CH_dead_sprite_0: -451888904
+      CH_dead_sprite_1: -663487236
+      CH_dead_sprite_2: 1104981989
+      CH_dead_sprite_3: -2093824286
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
