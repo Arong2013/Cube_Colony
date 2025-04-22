@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public struct FieldData
@@ -16,24 +18,26 @@ public class Field : MonoBehaviour
     private PlayerEntity spawnedPlayer;
     private NavMeshSurface navMeshSurface;
     private FieldData fieldData;
-    public void Initialize(FieldData fieldData, Action returnAction)
+    public void Initialize(FieldData fieldData, Action returnAction,Action gameOverAction)
     {
         gameObject.SetActive(true);
         this.fieldData = fieldData;
         navMeshSurface = GetComponent<NavMeshSurface>();
 
         transform.position = fieldData.position;
-        transform.localScale = new Vector3(fieldData.size, 0.1f, fieldData.size);
+        transform.localScale = new Vector3(fieldData.size-0.5f, 0.1f, fieldData.size-0.5f);
         navMeshSurface.BuildNavMesh();
 
-        SpawnPlayer(returnAction);
+        SpawnPlayer(returnAction, gameOverAction);
         SpawnFieldTile();
+        StartCoroutine(DelayedEntityInit());    
     }
     public void SpawnNextStage()
     {
         var spawnPos = transform.position + Vector3.up;
         var spawnOBj = Instantiate(DataCenter.Instance.GetExitGate(fieldData.currentStageLevel).gameObject, spawnPos, Quaternion.identity);
-        spawnOBj.transform.SetParent(disableField);    
+        spawnOBj.transform.SetParent(disableField);
+        spawnOBj.GetComponent<InteractableEntity>().Init();
     }
     public void SpawnFieldTile()
     {
@@ -50,7 +54,7 @@ public class Field : MonoBehaviour
             plane.transform.SetParent(disableField, false);
             plane.transform.localPosition = new Vector3(x, 0.5f, z);
             var scaleSize = 1f / size;
-            plane.transform.localScale = new Vector3(scaleSize, 1f, scaleSize);
+            plane.transform.localScale = new Vector3(scaleSize+0.2f, 1f, scaleSize+0.2f);
             plane.GetComponent<FieldTile>().Initialize(fieldData.currentStageLevel, info);   
         }
     }
@@ -63,21 +67,40 @@ public class Field : MonoBehaviour
         }
         spawnedPlayer.gameObject.SetActive(false);  
     }
-    private void SpawnPlayer(Action returnAction)
+    private void SpawnPlayer(Action returnAction, Action gameOverAction)
     {
         var spawnPos = transform.position + Vector3.up;
         if (spawnedPlayer == null)
         {
-
             GameObject playerObj = Instantiate(DataCenter.Instance.GetPlayerEntity(), spawnPos, Quaternion.identity);
             spawnedPlayer = playerObj.GetComponent<PlayerEntity>();
             playerObj.transform.SetParent(transform);
-            spawnedPlayer.SetReturnAction(returnAction);
+            spawnedPlayer.SetScurivalAction(returnAction, gameOverAction);
+            spawnedPlayer.Init();
         }
         else
         {
             spawnedPlayer.gameObject.SetActive(true);   
             spawnedPlayer.transform.position = spawnPos;
+            
+        }
+    }
+
+    private IEnumerator DelayedEntityInit()
+    {
+        yield return new WaitForSeconds(3f);
+        InitAllEntitiesInField();
+    }
+
+    private void InitAllEntitiesInField()
+    {
+        foreach (Transform child in disableField)
+        {
+            var initables = child.GetComponentsInChildren<Entity>();
+            foreach (var item in initables)
+            {
+                item.Init();
+            }
         }
     }
 }

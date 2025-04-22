@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class ChopComponent : IEntityComponent
 {
-    public void Start(Entity entity) { }
+    private Entity _entity;
+    public void Start(Entity entity) => _entity = entity;
     public void Update(Entity entity) { }
     public void Exit(Entity entity) { }
     public void Chop(Entity target)
-    {
-        float power = 5f; // 또는 entity.GetStat(CharacterStatName.ATK)
-        target.TakeDamage(power);
-        Debug.Log("[Chop] 나무를 쳤습니다!");
+    {     
+        _entity.SetTarget(target);
+        _entity.SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Attack);
+
     }
 }

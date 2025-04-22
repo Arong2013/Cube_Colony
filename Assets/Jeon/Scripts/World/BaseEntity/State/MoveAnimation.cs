@@ -19,8 +19,7 @@ public class MoveState : EntityState
         _entity.Move();
         if(_entity.CurrentDir == Vector3.zero)
         {
-            _entity.SetAnimatorValue(EntityAnimBool.IsMoving, false);
-            
+            _entity.SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Idle);
         }   
     }
 }

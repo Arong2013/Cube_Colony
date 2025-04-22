@@ -1,0 +1,143 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library:
+  - m_Name: Idle
+    m_Hash: 1008081451
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: CH_Idle_sprite_0
+      m_Hash: 595851277
+      m_Sprite: {fileID: -1063627692, guid: 32d6c5e169b0e4f4689c1ab63c3a26a4, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1063627692, guid: 32d6c5e169b0e4f4689c1ab63c3a26a4, type: 3}
+    - m_Name: CH_Idle_sprite_1
+      m_Hash: 344246427
+      m_Sprite: {fileID: -1053749923, guid: 32d6c5e169b0e4f4689c1ab63c3a26a4, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1053749923, guid: 32d6c5e169b0e4f4689c1ab63c3a26a4, type: 3}
+    - m_Name: CH_Idle_sprite_2
+      m_Hash: 227383585
+      m_Sprite: {fileID: 829418435, guid: 32d6c5e169b0e4f4689c1ab63c3a26a4, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 829418435, guid: 32d6c5e169b0e4f4689c1ab63c3a26a4, type: 3}
+    - m_Name: CH_Idle_sprite_3
+      m_Hash: 982165943
+      m_Sprite: {fileID: -1038129058, guid: 32d6c5e169b0e4f4689c1ab63c3a26a4, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1038129058, guid: 32d6c5e169b0e4f4689c1ab63c3a26a4, type: 3}
+    - m_Name: CH_Idle_sprite_4
+      m_Hash: 619592724
+      m_Sprite: {fileID: -1392957962, guid: 32d6c5e169b0e4f4689c1ab63c3a26a4, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1392957962, guid: 32d6c5e169b0e4f4689c1ab63c3a26a4, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 5
+  - m_Name: Attack
+    m_Hash: 7088141
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: CH_attack_sprite_0
+      m_Hash: 727139035
+      m_Sprite: {fileID: 961276307, guid: 63f85cfa07e87d14da0cb8ef0c5210c7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 961276307, guid: 63f85cfa07e87d14da0cb8ef0c5210c7, type: 3}
+    - m_Name: CH_attack_sprite_1
+      m_Hash: 475034189
+      m_Sprite: {fileID: -1450256469, guid: 63f85cfa07e87d14da0cb8ef0c5210c7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1450256469, guid: 63f85cfa07e87d14da0cb8ef0c5210c7, type: 3}
+    - m_Name: CH_attack_sprite_2
+      m_Hash: 89727991
+      m_Sprite: {fileID: -1161319073, guid: 63f85cfa07e87d14da0cb8ef0c5210c7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1161319073, guid: 63f85cfa07e87d14da0cb8ef0c5210c7, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 3
+  - m_Name: Hit
+    m_Hash: 580870305
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: CH_hit_sprite_0
+      m_Hash: 705016055
+      m_Sprite: {fileID: 424852935, guid: acb9f72b0b81c194fa4b33369d9dcd3f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 424852935, guid: acb9f72b0b81c194fa4b33369d9dcd3f, type: 3}
+    - m_Name: CH_hit_sprite_1
+      m_Hash: 486703201
+      m_Sprite: {fileID: -731855922, guid: acb9f72b0b81c194fa4b33369d9dcd3f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -731855922, guid: acb9f72b0b81c194fa4b33369d9dcd3f, type: 3}
+    - m_Name: CH_hit_sprite_2
+      m_Hash: 67883483
+      m_Sprite: {fileID: 635017269, guid: acb9f72b0b81c194fa4b33369d9dcd3f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 635017269, guid: acb9f72b0b81c194fa4b33369d9dcd3f, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 3
+  - m_Name: Walk
+    m_Hash: 765711723
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: CH_move_sprite_0
+      m_Hash: 764404015
+      m_Sprite: {fileID: -1137910632, guid: da7c8f07815bb094d9e8737b5251b185, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1137910632, guid: da7c8f07815bb094d9e8737b5251b185, type: 3}
+    - m_Name: CH_move_sprite_1
+      m_Hash: 445174201
+      m_Sprite: {fileID: -432974524, guid: da7c8f07815bb094d9e8737b5251b185, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -432974524, guid: da7c8f07815bb094d9e8737b5251b185, type: 3}
+    - m_Name: CH_move_sprite_2
+      m_Hash: 58818563
+      m_Sprite: {fileID: 1727156018, guid: da7c8f07815bb094d9e8737b5251b185, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1727156018, guid: da7c8f07815bb094d9e8737b5251b185, type: 3}
+    - m_Name: CH_move_sprite_3
+      m_Hash: 881242261
+      m_Sprite: {fileID: -2028487860, guid: da7c8f07815bb094d9e8737b5251b185, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2028487860, guid: da7c8f07815bb094d9e8737b5251b185, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  - m_Name: Death
+    m_Hash: 646380074
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: CH_dead_sprite_0
+      m_Hash: 673364432
+      m_Sprite: {fileID: -451888904, guid: a0fa6a36eb78a954a8de9da8b6547e3f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -451888904, guid: a0fa6a36eb78a954a8de9da8b6547e3f, type: 3}
+    - m_Name: CH_dead_sprite_1
+      m_Hash: 522553670
+      m_Sprite: {fileID: -663487236, guid: a0fa6a36eb78a954a8de9da8b6547e3f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -663487236, guid: a0fa6a36eb78a954a8de9da8b6547e3f, type: 3}
+    - m_Name: CH_dead_sprite_2
+      m_Hash: 103602428
+      m_Sprite: {fileID: 1104981989, guid: a0fa6a36eb78a954a8de9da8b6547e3f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1104981989, guid: a0fa6a36eb78a954a8de9da8b6547e3f, type: 3}
+    - m_Name: CH_dead_sprite_3
+      m_Hash: 824961130
+      m_Sprite: {fileID: -2093824286, guid: a0fa6a36eb78a954a8de9da8b6547e3f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2093824286, guid: a0fa6a36eb78a954a8de9da8b6547e3f, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  m_PrimaryLibraryGUID: 
+  m_ModificationHash: 638802582977833156
+  m_Version: 1

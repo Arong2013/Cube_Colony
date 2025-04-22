@@ -19,17 +19,17 @@ public class ItemEntity : Entity, IInteractable
     {
         return "줍기";
     }
-    public override void Initialize()
+
+    public void Interact(Entity interactor) => interactor.GetEntityComponent<InventoryComponent>()?.AddItem(_item);
+    public override void OnDeath()
+    {
+     
+    }
+
+    public override void OnHit(int dmg)
     {
         
     }
-    public void Interact(Entity interactor) => interactor.GetEntityComponent<InventoryComponent>()?.AddItem(_item);
-    protected override void Awake()
-    {
-        base.Awake();
-        ApplyDropPhysics();
-    }
-
     private void ApplyDropPhysics()
     {
         _rb = gameObject.AddComponent<Rigidbody>();

@@ -55,17 +55,25 @@ public enum BehaviorDataType
 }
 
 
+public enum EntityActionType
+{
+    Idle = 0,
+    Move = 1,
+    Attack = 2,
+    Return = 3
+}
+public enum EntityAnimInt
+{
+    ActionType
+}
 public enum EntityAnimTrigger
 {
-    AttackTrigger,
     HitTrigger,
     DieTrigger,
     DashTrigger
 }
 public enum EntityAnimBool
 {
-    IsMoving,
-    IsReturn
 }
 public enum EntityAnimFloat
 {
