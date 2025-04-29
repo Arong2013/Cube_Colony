@@ -24,7 +24,7 @@ public class AttackAction : BehaviorAction
         }
    
         entity.SetTarget(target);   
-        entity.SetAnimatorValue(EntityAnimTrigger.AttackTrigger,null); 
+        entity.SetAnimatorValue(EntityAnimInt.ActionType,(int)EntityActionType.Attack); 
         entity.RemoveData("target");    
         return BehaviorState.SUCCESS;
     }

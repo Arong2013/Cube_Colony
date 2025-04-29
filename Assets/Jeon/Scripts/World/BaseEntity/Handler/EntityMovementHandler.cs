@@ -28,7 +28,7 @@ public class EntityMovementHandler
         if (direction.x != 0)
         {
             Vector3 scale = _entity.transform.localScale;
-            scale.x = direction.x < 0 ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
+            scale.x = direction.x > 0 ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
             _entity.transform.localScale = scale;
         }
     }

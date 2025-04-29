@@ -29,8 +29,7 @@ public class ReturnComponent : IEntityComponent
         if (entity == null) return;
         if(entity is PlayerEntity player)
         {
-            player.SeReturnStageState();
-            entity.SetAnimatorValue(EntityAnimBool.IsReturn, true);
+            entity.SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Return);
         }
 
     }   

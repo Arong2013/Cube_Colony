@@ -25,13 +25,11 @@ public class PCController : IEntityController
                 TryStartInteractTask(entity);
             }
         }
-
-        _currentTask?.Update(entity, _onMoveInput);
-
         if (_currentTask?.IsComplete == true)
         {
             _currentTask = null;
         }
+        _currentTask?.Update(entity, _onMoveInput);
     }
 
     private void HandleMovementInput(Entity entity)
@@ -60,19 +58,7 @@ public class PCController : IEntityController
             _currentTask = new InteractTask(target);
            // Debug.Log($"[Space] {target.GetInteractionLabel()} 상호작용을 시도합니다.");
         }
-        else
-        {
-            //Debug.Log("주변에 상호작용 가능한 대상이 없습니다.");
-        }
     }
-
-    /// <summary>
-    /// 주변에서 상호작용 가능한 대상을 탐색만 합니다.
-    /// 이 함수는 단순히 대상 선택(의사결정)을 위한 코드로, 직접 행동을 수행하지 않습니다.
-    /// </summary>
-    /// <param name="entity">탐색을 시작할 엔티티</param>
-    /// <param name="maxDistance">탐색 최대 거리</param>
-    /// <returns>조건에 맞는 가장 가까운 상호작용 대상</returns>
     private IInteractable FindClosestInteractable(Entity entity, float maxDistance)
     {
         Vector3 origin = entity.transform.position;
@@ -89,8 +75,6 @@ public class PCController : IEntityController
 
             Vector3 offset = col.transform.position - origin;
             float dist = new Vector2(offset.x, offset.z).magnitude;
-
-            // 대상이 자신의 상호작용 거리 내에 있고, 현재까지의 최단 거리보다 가까우면 선택
             if (dist < closestDist)
             {
                 closestDist = dist;
