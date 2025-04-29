@@ -8,11 +8,17 @@ using UnityEngine;
 [System.Serializable]
 public class CubeGridHandler 
 {
+    public static CubeGridHandler Instance { get; private set; }
     public readonly int Size;
     private Cubie[,,] cubieGrid;
     public Cubie[,,] GridSnapshot => GetGridCopy();
     public CubeGridHandler(Cubie cubiePrefab, Transform parent,CubeData cubeData)
     {
+        if (Instance != null)
+            Debug.LogWarning("CubeGridHandler instance already exists. Overwriting.");
+
+        Instance = this; // ✅ 싱글톤 등록
+
         Size = cubeData.size;
         cubieGrid = new Cubie[Size, Size, Size];
 
@@ -74,6 +80,7 @@ public class CubeGridHandler
                     }
                 }
     }
+    public int GetSameTypeAdjacentCount(CubieFace cubieFace) => GridSearchHelper.GetSameTypeAdjacentCount(cubieFace, GetGridCopy());    
     private void ApplyLayerRotation(int layer, bool isClockwise, CubeAxisType axis)
     {
         Cubie[,] layerSlice = CubieMatrixHelper.ExtractLayer(GetGridCopy(), layer, axis);

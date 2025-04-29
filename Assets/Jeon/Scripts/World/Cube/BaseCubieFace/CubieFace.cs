@@ -15,26 +15,24 @@ public class CubieFace : MonoBehaviour
         this.face = face;
         this.cubie = cubie;
     }
-
     public void SetFace(CubeFaceType face)
     {
         this.face = face;
+      
     }
-
     public void SetSkillType(CubieFaceSkillType type)
     {
         cubieFaceInfo.Initialize(transform.position,type); // 상태 초기화
         ApplyVisual(DataCenter.Instance.GetFaceData(type));
     }
-
     public void ApplyVisual(CubieFaceVisualData data)
     {
-        if (targetRenderer != null && data != null && data.material != null)
-        {
-            targetRenderer.material = data.material;
-        }
-    }
+        if (targetRenderer == null || data == null || data.materials == null || data.materials.Count == 0)
+            return;
 
+        int level = Mathf.Clamp(cubieFaceInfo.Level - 1, 0, data.materials.Count - 1);
+        targetRenderer.material = data.materials[level];
+    }
     public void LevelUp()
     {
         if (cubieFaceInfo.LevelUp())
@@ -48,10 +46,18 @@ public class CubieFace : MonoBehaviour
             ResetFace();
         }
     }
-
     protected virtual void OnLevelUp()
     {
-        // Override 가능
+       var count = CubeGridHandler.Instance.GetSameTypeAdjacentCount(this); // 같은 면의 인접한 개수   
+        if (count > 0)
+        {
+            Debug.Log($"CubieFace {face} has {count} adjacent same type faces.");
+        }
+        else
+        {
+            Debug.Log($"CubieFace {face} has no adjacent same type faces.");
+        }   
+
     }
 
     protected virtual void ResetFace()

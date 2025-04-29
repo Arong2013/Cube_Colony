@@ -11,7 +11,6 @@ public class Cube : MonoBehaviour
     CubeRotater cubeRotater;
     CubeGridHandler cubeGridHandler;
     ICubeController cubeController;
-
     public Action onRotateAction;
     public void Init(CubeData cubeData, Action action)
     {

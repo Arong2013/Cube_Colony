@@ -163,4 +163,55 @@ public static class GridSearchHelper
         return new Vector3Int(-1, -1, -1); // 못 찾은 경우
     }
 
+    public static int GetSameTypeAdjacentCount(CubieFace cubieFace, Cubie[,,] cubieGrid)
+    {
+        var sameFaceList = GetCubieFaces(cubieFace.face, cubieGrid); // 같은 면
+
+        int sizeX = cubieGrid.GetLength(0);
+        int sizeY = cubieGrid.GetLength(1);
+        int sizeZ = cubieGrid.GetLength(2);
+
+        // 현재 위치 찾기
+        for (int x = 0; x < sizeX; x++)
+            for (int y = 0; y < sizeY; y++)
+                for (int z = 0; z < sizeZ; z++)
+                {
+                    if (cubieGrid[x, y, z] != cubieFace.cubie) continue;
+
+                    int count = 0;
+
+                    foreach (var offset in _adjacentOffsets)
+                    {
+                        int nx = x + offset.x;
+                        int ny = y + offset.y;
+                        int nz = z + offset.z;
+
+                        if (nx < 0 || ny < 0 || nz < 0 ||
+                            nx >= sizeX || ny >= sizeY || nz >= sizeZ)
+                            continue;
+
+                        var neighbor = cubieGrid[nx, ny, nz];
+                        if (neighbor == null) continue;
+
+                        var neighborFace = neighbor.GetFace(cubieFace.face); // 같은 면
+                        if (neighborFace != null && neighborFace.SkillType == cubieFace.SkillType)
+                        {
+                            count++;
+                        }
+                    }
+
+                    return count;
+                }
+
+        return 0;
+    }
+
+
+    private static readonly (int x, int y, int z)[] _adjacentOffsets = new (int, int, int)[]
+    {
+    (1, 0, 0), (-1, 0, 0),
+    (0, 1, 0), (0, -1, 0),
+    (0, 0, 1), (0, 0, -1),
+    };
+
 }
