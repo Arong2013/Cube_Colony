@@ -2479,7 +2479,7 @@ MonoBehaviour:
       Data: 2
     - Name: requiredMatches
       Entry: 3
-      Data: 3
+      Data: 1000
     - Name: skillProbabilities
       Entry: 7
       Data: 3|System.Collections.Generic.Dictionary`2[[CubieFaceSkillType, Assembly-CSharp],[System.Single,

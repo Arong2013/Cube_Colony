@@ -163,55 +163,46 @@ public static class GridSearchHelper
         return new Vector3Int(-1, -1, -1); // 못 찾은 경우
     }
 
-    public static int GetSameTypeAdjacentCount(CubieFace cubieFace, Cubie[,,] cubieGrid)
+    public static int GetConnectedSameSkillCount(CubieFace startFace, Cubie[,,] cubieGrid)
     {
-        var sameFaceList = GetCubieFaces(cubieFace.face, cubieGrid); // 같은 면
+        var faceType = startFace.face;
+        var skillType = startFace.SkillType;
 
-        int sizeX = cubieGrid.GetLength(0);
-        int sizeY = cubieGrid.GetLength(1);
-        int sizeZ = cubieGrid.GetLength(2);
+        var allSameFaceList = GetCubieFaces(faceType, cubieGrid);
+        var candidates = allSameFaceList
+            .Where(f => f != null && f.SkillType == skillType)
+            .ToList();
 
-        // 현재 위치 찾기
-        for (int x = 0; x < sizeX; x++)
-            for (int y = 0; y < sizeY; y++)
-                for (int z = 0; z < sizeZ; z++)
+        var visited = new HashSet<CubieFace>();
+        DFS(startFace);
+
+        return visited.Count;
+
+        void DFS(CubieFace current)
+        {
+            visited.Add(current);
+
+            foreach (var neighbor in candidates)
+            {
+                if (visited.Contains(neighbor)) continue;
+                if (AreCubiesAdjacent(current.cubie, neighbor.cubie, cubieGrid))
                 {
-                    if (cubieGrid[x, y, z] != cubieFace.cubie) continue;
-
-                    int count = 0;
-
-                    foreach (var offset in _adjacentOffsets)
-                    {
-                        int nx = x + offset.x;
-                        int ny = y + offset.y;
-                        int nz = z + offset.z;
-
-                        if (nx < 0 || ny < 0 || nz < 0 ||
-                            nx >= sizeX || ny >= sizeY || nz >= sizeZ)
-                            continue;
-
-                        var neighbor = cubieGrid[nx, ny, nz];
-                        if (neighbor == null) continue;
-
-                        var neighborFace = neighbor.GetFace(cubieFace.face); // 같은 면
-                        if (neighborFace != null && neighborFace.SkillType == cubieFace.SkillType)
-                        {
-                            count++;
-                        }
-                    }
-
-                    return count;
+                    DFS(neighbor);
                 }
-
-        return 0;
+            }
+        }
     }
 
-
-    private static readonly (int x, int y, int z)[] _adjacentOffsets = new (int, int, int)[]
+    private static bool AreCubiesAdjacent(Cubie a, Cubie b, Cubie[,,] grid)
     {
-    (1, 0, 0), (-1, 0, 0),
-    (0, 1, 0), (0, -1, 0),
-    (0, 0, 1), (0, 0, -1),
-    };
+        var pa = GetCubieGridPosition(a, grid);
+        var pb = GetCubieGridPosition(b, grid);
+
+        int dx = Mathf.Abs(pa.x - pb.x);
+        int dy = Mathf.Abs(pa.y - pb.y);
+        int dz = Mathf.Abs(pa.z - pb.z);
+
+        return dx + dy + dz == 1;
+    }
 
 }

@@ -5,13 +5,15 @@ public class CountdownState : IGameSequenceState
 {
     private BattleFlowController context;
     private int rotateCount;
+    private int cunrotateCount;
     Cube cube;
     CubeData cubeData;  
     public CountdownState(BattleFlowController context, Cube cube, CubeData cubeData)
     {
         this.context = context;
         this.cube = cube;   
-        this.cubeData = cubeData;   
+        this.cubeData = cubeData;
+        rotateCount = cubeData.requiredMatches;
     }
     public void Enter()
     {
@@ -24,8 +26,8 @@ public class CountdownState : IGameSequenceState
     }
     public void CheckCount()
     {
-        rotateCount++;
-        if (rotateCount >= 3)
+        cunrotateCount++;
+        if (cunrotateCount >= rotateCount)
         {
             context.ChangeState(new InSurvivalState(context, cubeData, cube.GetTopCubieFace()));
         }

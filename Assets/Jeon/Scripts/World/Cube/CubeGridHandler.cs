@@ -80,7 +80,7 @@ public class CubeGridHandler
                     }
                 }
     }
-    public int GetSameTypeAdjacentCount(CubieFace cubieFace) => GridSearchHelper.GetSameTypeAdjacentCount(cubieFace, GetGridCopy());    
+    public int GetSameTypeAdjacentCount(CubieFace cubieFace) => GridSearchHelper.GetConnectedSameSkillCount(cubieFace, GetGridCopy());    
     private void ApplyLayerRotation(int layer, bool isClockwise, CubeAxisType axis)
     {
         Cubie[,] layerSlice = CubieMatrixHelper.ExtractLayer(GetGridCopy(), layer, axis);
@@ -88,6 +88,7 @@ public class CubeGridHandler
         Cubie[,] rotated = CubieMatrixHelper.RotateMatrix(layerSlice, isClockwise, axis);
         InsertRotatedLayer(layer, rotated, axis);
         RenameCubies();
+        UpDateCubieVisual();
     }
     private void AssignCubieFaceSkills(Dictionary<CubieFaceSkillType, float> skillProbabilities)
     {
@@ -102,6 +103,10 @@ public class CubeGridHandler
                 face.SetSkillType(skill); // <- 아래에 SetSkillType 메서드 추가 필요
             }
         }
+        foreach (var cubie in cubieGrid)
+        {
+            cubie.UpdateCubieVisual();
+        }
     }
     public void RotateCubies(Cubie[,] cubies, bool isClockwise, CubeAxisType axis)
     {
@@ -110,6 +115,13 @@ public class CubeGridHandler
             cubie.RotateCubie(axis, isClockwise);
         }
     }
+    public void UpDateCubieVisual()
+    {
+        foreach (var cubie in cubieGrid)
+        {
+            cubie.UpdateCubieVisual();
+        }
+    }       
     // ✅ 내부 구현 - 레이어 데이터 적용
     private void InsertRotatedLayer(int layer, Cubie[,] slice, CubeAxisType axis)
     {

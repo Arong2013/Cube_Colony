@@ -49,14 +49,26 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 2100000, guid: edccd2b141de46842b095c8e83763b6d, type: 2}
     - {fileID: 7682730074218717400, guid: 4efd54472ecc14c40a7cd83c973a0cc3, type: 3}
-    - {fileID: 2100000, guid: ab534b6269e0905488d14daf7dea6ef9, type: 2}
+    - {fileID: 2100000, guid: ccf880705e9415243961fd1d50e82550, type: 2}
+    - {fileID: 2100000, guid: bff317e597b620d4188338ba018cd054, type: 2}
+    - {fileID: 2100000, guid: 2003a40b2eb5cda4c86e3363cb6f6722, type: 2}
+    - {fileID: 2100000, guid: 63c375888a1576649a352a21c987358a, type: 2}
     - {fileID: 7682730074218717400, guid: c45c50fd5c322614391bc82d18ba381b, type: 3}
-    - {fileID: 2100000, guid: 933df41c997379f48a0c4f08449dc83d, type: 2}
+    - {fileID: 2100000, guid: 522b58c7553380342a8e6399a9f2d8f7, type: 2}
+    - {fileID: 2100000, guid: 156c24db9ccc92f41ace972d8fe097aa, type: 2}
+    - {fileID: 2100000, guid: e53492579a9a7d6419ff762ec15c32a3, type: 2}
+    - {fileID: 2100000, guid: 064c3f7871d11db428ecbbfc462e1a3a, type: 2}
     - {fileID: 7682730074218717400, guid: b2cf8b21d4796784db182074b0cbec39, type: 3}
-    - {fileID: 2100000, guid: 966f7a4972bcf16439e126a2d1594581, type: 2}
+    - {fileID: 2100000, guid: 8690c9166fa4a704abb5475901dbc4bd, type: 2}
+    - {fileID: 2100000, guid: 8f64d3954987b6d4bbfc5931bf5ae2ca, type: 2}
+    - {fileID: 2100000, guid: d9835683a960f5a47b6d1752b162c656, type: 2}
+    - {fileID: 2100000, guid: 91eaa60f053a2f64587abcebc3584feb, type: 2}
     - {fileID: 7682730074218717400, guid: bbbf8d594aa7b114a8661c359150a72b, type: 3}
+    - {fileID: 2100000, guid: 8f8d4e56778afa946894b4a8a1ced1ae, type: 2}
+    - {fileID: 2100000, guid: 4e42a9d94f498a642aa6141863961270, type: 2}
+    - {fileID: 2100000, guid: 807758a12ef7f8f41b310ee032d18a8b, type: 2}
+    - {fileID: 2100000, guid: 00804cdd7253e614b9d71251889dfa26, type: 2}
     - {fileID: 8767409848285342345, guid: 97f979f775fffde45b1b78a053e8ad20, type: 3}
     - {fileID: 8979364925643761595, guid: 1d2355e071a82704d86a7b00b74daa98, type: 3}
     - {fileID: 6548352704846502216, guid: da279a74bf8fa924a8cc8a2d53d18450, type: 3}
@@ -95,9 +107,6 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 2|CubieFaceVisualData, Assembly-CSharp
-    - Name: material
-      Entry: 10
-      Data: 0
     - Name: icon
       Entry: 6
       Data: 
@@ -124,53 +133,33 @@ MonoBehaviour:
       Data: 
     - Name: FieldMesh
       Entry: 10
+      Data: 0
+    - Name: materials
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 10
       Data: 1
     - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1
-    - Name: $v
-      Entry: 7
-      Data: 3|CubieFaceVisualData, Assembly-CSharp
-    - Name: material
       Entry: 10
       Data: 2
-    - Name: icon
-      Entry: 6
-      Data: 
-    - Name: displayName
-      Entry: 6
-      Data: 
-    - Name: glowColor
-      Entry: 7
-      Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: FieldMesh
       Entry: 10
       Data: 3
     - Name: 
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 8
       Data: 
     - Name: 
@@ -181,13 +170,10 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: $v
       Entry: 7
       Data: 4|CubieFaceVisualData, Assembly-CSharp
-    - Name: material
-      Entry: 10
-      Data: 4
     - Name: icon
       Entry: 6
       Data: 
@@ -215,6 +201,31 @@ MonoBehaviour:
     - Name: FieldMesh
       Entry: 10
       Data: 5
+    - Name: materials
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 10
+      Data: 9
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -226,13 +237,10 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 3
+      Data: 2
     - Name: $v
       Entry: 7
-      Data: 5|CubieFaceVisualData, Assembly-CSharp
-    - Name: material
-      Entry: 10
-      Data: 6
+      Data: 6|CubieFaceVisualData, Assembly-CSharp
     - Name: icon
       Entry: 6
       Data: 
@@ -259,7 +267,99 @@ MonoBehaviour:
       Data: 
     - Name: FieldMesh
       Entry: 10
-      Data: 7
+      Data: 10
+    - Name: materials
+      Entry: 7
+      Data: 7|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 10
+      Data: 11
+    - Name: 
+      Entry: 10
+      Data: 12
+    - Name: 
+      Entry: 10
+      Data: 13
+    - Name: 
+      Entry: 10
+      Data: 14
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3
+    - Name: $v
+      Entry: 7
+      Data: 8|CubieFaceVisualData, Assembly-CSharp
+    - Name: icon
+      Entry: 6
+      Data: 
+    - Name: displayName
+      Entry: 6
+      Data: 
+    - Name: glowColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: FieldMesh
+      Entry: 10
+      Data: 15
+    - Name: materials
+      Entry: 7
+      Data: 9|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 10
+      Data: 16
+    - Name: 
+      Entry: 10
+      Data: 17
+    - Name: 
+      Entry: 10
+      Data: 18
+    - Name: 
+      Entry: 10
+      Data: 19
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -274,11 +374,11 @@ MonoBehaviour:
       Data: 
     - Name: EntityData
       Entry: 7
-      Data: 6|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
+      Data: 10|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 7|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+      Data: 11|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -294,7 +394,7 @@ MonoBehaviour:
       Data: 1
     - Name: $v
       Entry: 10
-      Data: 8
+      Data: 20
     - Name: 
       Entry: 8
       Data: 
@@ -306,7 +406,7 @@ MonoBehaviour:
       Data: 2
     - Name: $v
       Entry: 10
-      Data: 9
+      Data: 21
     - Name: 
       Entry: 8
       Data: 
@@ -318,7 +418,7 @@ MonoBehaviour:
       Data: 3
     - Name: $v
       Entry: 10
-      Data: 10
+      Data: 22
     - Name: 
       Entry: 8
       Data: 
@@ -330,11 +430,11 @@ MonoBehaviour:
       Data: 
     - Name: ExitGateData
       Entry: 7
-      Data: 8|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
+      Data: 12|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 9|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+      Data: 13|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -350,7 +450,7 @@ MonoBehaviour:
       Data: 1
     - Name: $v
       Entry: 10
-      Data: 11
+      Data: 23
     - Name: 
       Entry: 8
       Data: 

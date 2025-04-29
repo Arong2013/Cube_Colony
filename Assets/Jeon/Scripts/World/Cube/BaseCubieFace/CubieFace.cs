@@ -18,7 +18,12 @@ public class CubieFace : MonoBehaviour
     public void SetFace(CubeFaceType face)
     {
         this.face = face;
-      
+    }
+    public void SetVisual()
+    {
+        var count = CubeGridHandler.Instance.GetSameTypeAdjacentCount(this);
+        cubieFaceInfo.SetLevel(count);
+        ApplyVisual(DataCenter.Instance.GetFaceData(cubieFaceInfo.Type));
     }
     public void SetSkillType(CubieFaceSkillType type)
     {
@@ -30,36 +35,9 @@ public class CubieFace : MonoBehaviour
         if (targetRenderer == null || data == null || data.materials == null || data.materials.Count == 0)
             return;
 
-        int level = Mathf.Clamp(cubieFaceInfo.Level - 1, 0, data.materials.Count - 1);
+        int level = Mathf.Clamp(cubieFaceInfo.Level, 0, data.materials.Count-1);
         targetRenderer.material = data.materials[level];
     }
-    public void LevelUp()
-    {
-        if (cubieFaceInfo.LevelUp())
-        {
-            Debug.Log($"{this.GetType().Name} leveled up to {cubieFaceInfo.Level}");
-            OnLevelUp();
-        }
-        else
-        {
-            Debug.Log($"{this.GetType().Name} reached max level and is being reset.");
-            ResetFace();
-        }
-    }
-    protected virtual void OnLevelUp()
-    {
-       var count = CubeGridHandler.Instance.GetSameTypeAdjacentCount(this); // 같은 면의 인접한 개수   
-        if (count > 0)
-        {
-            Debug.Log($"CubieFace {face} has {count} adjacent same type faces.");
-        }
-        else
-        {
-            Debug.Log($"CubieFace {face} has no adjacent same type faces.");
-        }   
-
-    }
-
     protected virtual void ResetFace()
     {
         cubieFaceInfo.Reset();
