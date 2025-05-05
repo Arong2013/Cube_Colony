@@ -16,8 +16,6 @@ public class AttackComponent : IEntityComponent
         if (target == null) return;
 
         _entity.SetTarget(target);
-
-        // 회전 처리
         FaceTarget(target.transform.position);
         _entity.SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Attack);
     }

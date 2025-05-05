@@ -44,6 +44,8 @@ public class InteractableEntity : Entity, IInteractable
                 if (roll <= cumulative)
                 {
                     int itemId = pair.Value;
+                    var itemPre =  Instantiate(DataCenter.Instance.GetDropItemPrefab().gameObject, transform.position, Quaternion.identity);     
+                    itemPre.GetComponent<ItemEntity>().SetItem(itemId); 
                     break;
                 }
             }

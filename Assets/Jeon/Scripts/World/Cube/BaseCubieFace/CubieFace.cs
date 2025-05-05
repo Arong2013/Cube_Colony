@@ -8,7 +8,7 @@ public class CubieFace : MonoBehaviour
      public CubieFaceSkillType SkillType => cubieFaceInfo.Type;
     public CubieFaceInfo FaceInfo => cubieFaceInfo;
 
-    [SerializeField] private Renderer targetRenderer;
+    [SerializeField] private Renderer targetRenderer,outLineRenderer;
     [SerializeField] private CubieFaceInfo cubieFaceInfo = new();
     public void Init(CubeFaceType face, Cubie cubie)
     {
@@ -37,6 +37,7 @@ public class CubieFace : MonoBehaviour
 
         int level = Mathf.Clamp(cubieFaceInfo.Level, 0, data.materials.Count-1);
         targetRenderer.material = data.materials[level];
+        outLineRenderer.material = data.outLines[level];    
     }
     protected virtual void ResetFace()
     {
