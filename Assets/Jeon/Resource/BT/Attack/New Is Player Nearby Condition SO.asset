@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26b1cb00629536e408d48557eb8a4433, type: 3}
   m_Name: New Is Player Nearby Condition SO
   m_EditorClassIdentifier: 
-  detectionRadius: 1
+  detectionRadius: 3

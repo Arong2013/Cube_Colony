@@ -32,6 +32,7 @@ public class ChaseTargetAction : BehaviorAction
     {
         if (!entity.TryGetData<PlayerEntity>("target", out var target))
         {
+            
             return BehaviorState.FAILURE;
         }
 
@@ -63,13 +64,14 @@ public class ChaseTargetAction : BehaviorAction
         if (dist <= arriveDistance)
         {
             StopChase();
+
             return BehaviorState.SUCCESS;
         }
         else
         {
             entity.SetDir(currentDirection);
         }
-
+        
         return BehaviorState.RUNNING;
     }
 
@@ -79,5 +81,6 @@ public class ChaseTargetAction : BehaviorAction
         entity.SetDir(Vector3.zero);
         currentDirection = Vector3.zero;
         chaseTimer = 0f;
+
     }
 }

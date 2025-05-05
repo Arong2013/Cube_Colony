@@ -10,12 +10,12 @@ public class AttackActionSO : BehaviorActionSO
 }
 public class AttackAction : BehaviorAction
 {
-
-
     public override BehaviorState Execute()
     {
+        Debug.Log("성공");
         if (entity.GetState().GetType() == typeof(AttackState))
         {
+            
             return BehaviorState.RUNNING;
         }
         if (!entity.TryGetData<PlayerEntity>("target", out var target) && !entity.CanAttack)

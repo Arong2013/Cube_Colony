@@ -89,7 +89,6 @@ public  abstract class Entity : SerializedMonoBehaviour
     {
         return decisionContext.Remove(key);
     }
-
     protected virtual void Update()
     {
         _controller?.Update(this);
