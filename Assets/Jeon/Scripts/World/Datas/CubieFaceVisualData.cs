@@ -9,4 +9,5 @@ public class CubieFaceVisualData
     public Color glowColor; // 필요 시 쉐이더 효과 등
     public GameObject FieldMesh;
     public List<Material> materials;
+    public List<Material> outLines;
 }

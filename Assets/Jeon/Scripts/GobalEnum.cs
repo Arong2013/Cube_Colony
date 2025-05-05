@@ -70,7 +70,7 @@ public enum EntityAnimTrigger
 {
     HitTrigger,
     DieTrigger,
-    DashTrigger
+    DashTrigger,
 }
 public enum EntityAnimBool
 {
@@ -86,7 +86,8 @@ public enum EntityAnimFloat
 public enum EntityStatName
 {
     HP, MaxHP,
-    SP, MaxSP,
+    O2, MaxO2,
+    Eng, MaxEng,    
     ATK,
     DEF,
     SPD,

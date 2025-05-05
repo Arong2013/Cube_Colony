@@ -32,7 +32,7 @@ public  abstract class Entity : MonoBehaviour
         _combatHandler = new EntityCombatHandler(this);
         _movementHandler = new EntityMovementHandler(this);
         _entityState = new IdleState(this, _animator); 
-        Stats = EntityStat.CreatPlayerData(); 
+        Stats = EntityStat.CreatePlayerData(); 
     }
     public void SetController(IEntityController controller) => _controller = controller;
     public void AddEntityComponent<T>(T component) where T : IEntityComponent => _components.Add(component);
@@ -52,6 +52,7 @@ public  abstract class Entity : MonoBehaviour
     public void Heal(float amount) => _healthHandler?.Heal(amount); 
     public void Move() => _movementHandler?.Move(CurrentDir);
     public void OnAttackHit() => GetEntityComponent<AttackComponent>()?.DoHit();
+    public void OnAttackAnime() => SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Attack);
     public void SetOnHitAction(Action action) => onHitAction += action;
     public abstract void OnHit(int dmg);
     public abstract void OnDeath();

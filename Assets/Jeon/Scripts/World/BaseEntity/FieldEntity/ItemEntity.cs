@@ -1,15 +1,20 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class ItemEntity : Entity, IInteractable
 {
     [SerializeField] private Item _item;
-
+    [SerializeField] private SpriteRenderer itemSprite;
     [Header("Drop Physics")]
     [SerializeField] private Vector3 dropForce = new Vector3(1f, 5f, 0f);
     [SerializeField] private float stopAfter = 1.5f;
 
     private Rigidbody _rb;
-
+    public override void Init()
+    {
+        base.Init();
+        _rb = GetComponent<Rigidbody>(); 
+    }
     public bool CanInteract(Entity interactor)
     {
         return interactor.HasEntityComponent<InventoryComponent>();
@@ -32,11 +37,9 @@ public class ItemEntity : Entity, IInteractable
     }
     private void ApplyDropPhysics()
     {
-        _rb = gameObject.AddComponent<Rigidbody>();
         _rb.AddForce(dropForce, ForceMode.Impulse);
         Invoke(nameof(FreezeDrop), stopAfter);
     }
-
     private void FreezeDrop()
     {
         if (_rb == null) return;
@@ -45,5 +48,10 @@ public class ItemEntity : Entity, IInteractable
         _rb.angularVelocity = Vector3.zero;
         _rb.isKinematic = true; 
         Destroy(_rb);           
+    }
+    public void SetItem(int itemId)
+    {
+        _item = ItemDataCenter.Get<Item>(itemId);
+        itemSprite.sprite = _item.ItemIcon;   
     }
 }
