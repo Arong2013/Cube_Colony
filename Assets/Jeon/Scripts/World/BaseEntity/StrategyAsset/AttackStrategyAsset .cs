@@ -7,7 +7,6 @@ public class AttackStrategyAsset : ScriptableInteractionStrategy
     [SerializeField] float _attackRange = 3f;
     public override IInteractionStrategy CreateStrategy() => new AttackStrategy(_attackRange);
 }
-
 public class AttackStrategy : IInteractionStrategy
 {
     private float _attackRange = 3f;

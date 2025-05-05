@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public  abstract class Entity : MonoBehaviour
+public  abstract class Entity : SerializedMonoBehaviour
 {
     private EntityComponentHandler _components;
     private EntityAnimatorHandler _animatorHandler;

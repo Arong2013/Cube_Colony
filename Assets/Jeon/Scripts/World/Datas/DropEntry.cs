@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 [System.Serializable]
-public class DropEntry
+public class DropEntry 
 {
     public int MinDropItem;
     public int MaxDropItem;

@@ -6,8 +6,11 @@ public class InteractableEntity : Entity, IInteractable
 {
     [SerializeField] private List<BehaviorSequenceSO> behaviorSequencesSO;
     [SerializeField] private ScriptableInteractionStrategy strategyAsset;
-    [SerializeField] private DropEntry dropEntry;
     [SerializeField] private float interactionDistance;
+    [SerializeField] private int MinDropItem;
+    [SerializeField] private int MaxDropItem;
+    [SerializeField] private Dictionary<float, int> DropChances;
+
     private IInteractionStrategy _strategy;
     private bool initavle;
     public override void Init()
@@ -29,16 +32,16 @@ public class InteractableEntity : Entity, IInteractable
     public bool CanInteract(Entity interactor) => _strategy?.CanInteract(this, interactor) ?? false;
     public void Interact(Entity interactor) => _strategy?.Interact(this, interactor);
     public string GetInteractionLabel() => _strategy?.GetLabel() ?? "상호작용";
-    public void DropItems(DropEntry dropEntry)
+    public void DropItems()
     {
-        int dropCount = Random.Range(dropEntry.MinDropItem, dropEntry.MaxDropItem + 1);
+        int dropCount = Random.Range(MinDropItem, MaxDropItem + 1);
 
         for (int i = 0; i < dropCount; i++)
         {
             float roll = Random.value;
             float cumulative = 0f;
 
-            foreach (var pair in dropEntry.DropChances.OrderByDescending(p => p.Key))
+            foreach (var pair in DropChances.OrderByDescending(p => p.Key))
             {
                 cumulative += pair.Key;
                 if (roll <= cumulative)
@@ -52,7 +55,6 @@ public class InteractableEntity : Entity, IInteractable
         }
     }
     public float GetInteractionDistance() => interactionDistance;
-
     public override void OnHit(int dmg)
     {
         
@@ -60,6 +62,7 @@ public class InteractableEntity : Entity, IInteractable
 
     public override void OnDeath()
     {
+        DropItems();    
         Destroy(gameObject);    
     }
 }
