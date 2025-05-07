@@ -13,8 +13,7 @@ public class ItemEntity : Entity, IInteractable
     public override void Init()
     {
         base.Init();
-        _rb = GetComponent<Rigidbody>();
-        ApplyDropPhysics();
+        _rb = GetComponent<Rigidbody>(); 
     }
     public bool CanInteract(Entity interactor)
     {
@@ -53,7 +52,6 @@ public class ItemEntity : Entity, IInteractable
     public void SetItem(int itemId)
     {
         _item = ItemDataCenter.Get<Item>(itemId);
-        itemSprite.sprite = _item.ItemIcon;  
-        Init(); 
+        itemSprite.sprite = _item.ItemIcon;   
     }
 }
