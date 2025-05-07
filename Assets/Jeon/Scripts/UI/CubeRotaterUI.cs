@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class CubeRotaterUI 
 {
     [SerializeField] float threshold = 2f;
-    [SerializeField] RotaterSelectUI rotaterSelectUI = new RotaterSelectUI();
+    //[SerializeField] RotaterSelectUI rotaterSelectUI = new RotaterSelectUI();
 
     private CubieFace cubieFace;
     private Action<CubeAxisType, bool> rotateAction;
@@ -30,7 +30,7 @@ public class CubeRotaterUI
         {
             TestAxis(dragVector);
             DetectRotation(dragVector);
-            rotaterSelectUI.EnableUI(cubieFace,compomAxis,isClockwise);    
+            //rotaterSelectUI.EnableUI(cubieFace,compomAxis,isClockwise);    
             canAction = true;   
         }
         else

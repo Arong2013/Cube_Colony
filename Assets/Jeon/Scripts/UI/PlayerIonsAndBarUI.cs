@@ -21,6 +21,7 @@ public class PlayerIonsAndBar : MonoBehaviour, IObserver, IPlayerUesableUI
         currentEng = targetEng = player.GetEntityStat(EntityStatName.Eng);
 
         UpdateBarsInstantly();
+
     }
 
     public void UpdateObserver()
@@ -53,5 +54,7 @@ public class PlayerIonsAndBar : MonoBehaviour, IObserver, IPlayerUesableUI
         HpBar.value = currentHp / player.GetEntityStat(EntityStatName.MaxHP);
         O2Bar.value = currentO2 / player.GetEntityStat(EntityStatName.MaxO2);
         EngBar.value = currentEng / player.GetEntityStat(EntityStatName.MaxEng);
+
+        print(O2Bar.value);
     }
 }
