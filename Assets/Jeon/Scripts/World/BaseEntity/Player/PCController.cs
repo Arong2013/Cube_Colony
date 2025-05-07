@@ -17,7 +17,7 @@ public class PCController : IEntityController
     {
         HandleMovementInput(entity);
 
-        // Space키를 누르고 있는 동안, (반복적으로 상호작용 대상 탐색)
+        // Space키를 누르면 상호작용 시도
         if (Input.GetKey(KeyCode.Space))
         {
             if (_currentTask == null || _currentTask.IsComplete)
@@ -25,11 +25,25 @@ public class PCController : IEntityController
                 TryStartInteractTask(entity);
             }
         }
+
         if (_currentTask?.IsComplete == true)
         {
             _currentTask = null;
         }
+
         _currentTask?.Update(entity, _onMoveInput);
+
+        // ✅ 좌클릭 시 공격 애니메이션 실행
+        if (Input.GetMouseButtonDown(0))
+        {
+            entity.OnAttackAnime();
+        }
+
+        // 인벤토리 토글
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            ToggleInventory(entity);
+        }
     }
 
     private void HandleMovementInput(Entity entity)
@@ -41,7 +55,7 @@ public class PCController : IEntityController
         {
             _onMoveInput?.Invoke(new Vector3(input.x, 0f, input.y).normalized);
             _wasMoving = true;
-            _currentTask = null; // 수동 조작 시 자동 상호작용 취소
+            _currentTask = null;
         }
         else if (_wasMoving)
         {
@@ -56,9 +70,9 @@ public class PCController : IEntityController
         if (target != null)
         {
             _currentTask = new InteractTask(target);
-           // Debug.Log($"[Space] {target.GetInteractionLabel()} 상호작용을 시도합니다.");
         }
     }
+
     private IInteractable FindClosestInteractable(Entity entity, float maxDistance)
     {
         Vector3 origin = entity.transform.position;
@@ -82,5 +96,10 @@ public class PCController : IEntityController
             }
         }
         return closest;
+    }
+
+    private void ToggleInventory(Entity entity)
+    {
+        Utils.GetUI<InventoryUI>().ToggleInventoryUI();
     }
 }

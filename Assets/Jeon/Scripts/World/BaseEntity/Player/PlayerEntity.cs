@@ -54,7 +54,7 @@ public class PlayerEntity : Entity, ISubject
     }
     public void DamageO2()
     {
-        Stats.UpdateStat(EntityStatName.HP, this,-Time.deltaTime);
+        Stats.UpdateStat(EntityStatName.O2, this,-Time.deltaTime);
         NotifyObservers();  
     }
     public override void OnHit(int dmg)
@@ -63,9 +63,10 @@ public class PlayerEntity : Entity, ISubject
     }
     public override void OnDeath()
     {
-        Stats = EntityStat.CreatPlayerData();
+        Stats = EntityStat.CreatePlayerData();
         gameOverAction?.Invoke();   
     }
+
     public void SetScurivalAction(Action returnAction, Action gameOverAction)
     {
         this.returnAction = returnAction;

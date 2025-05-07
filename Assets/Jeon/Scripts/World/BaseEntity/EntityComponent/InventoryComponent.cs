@@ -10,7 +10,8 @@ public class InventoryComponent : IEntityComponent
    private Action<InventoryComponent> _OnItemAdded;
    private Action<InventoryComponent> _OnItemUsed;
    private Action<InventoryComponent> _OnItemRemoved;
-    public InventoryComponent(int maxSlots = 20)
+    public List<Item> items => _Items;  
+    public InventoryComponent(int maxSlots = 10)
     {
         _maxSlot = maxSlots;
         _Items = new List<Item>();
