@@ -3,7 +3,27 @@ guid: b7fd0592c111e284ab497225a42ed717
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floor
+    second: {fileID: 2100000, guid: 31b103263a610b3489d671154c0a8188, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Robot_obj_B1
+    second: {fileID: 2100000, guid: d4cc6419356044441acaf9381cb823d1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Robot_obj_B2
+    second: {fileID: 2100000, guid: 1a06241109fc6d442beb19ca4831aa85, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Robot_obj_S1
+    second: {fileID: 2100000, guid: 7519375d25bc4b541b0105ba67d40138, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
