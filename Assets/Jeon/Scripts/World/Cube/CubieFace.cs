@@ -37,7 +37,7 @@ public class CubieFace : MonoBehaviour
 
         int level = Mathf.Clamp(cubieFaceInfo.Level, 0, data.materials.Count-1);
         targetRenderer.material = data.materials[level];
-        outLineRenderer.material = data.outLines[level];    
+     //   outLineRenderer.material = data.outLines[level];    
     }
     protected virtual void ResetFace()
     {
