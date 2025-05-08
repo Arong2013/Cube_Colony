@@ -19,6 +19,7 @@ MonoBehaviour:
     filterSettings:
       RenderQueueType: 0
       LayerMask:
+        serializedVersion: 2
         m_Bits: 4294967295
       PassNames:
       - MKToonOutline
@@ -43,6 +44,7 @@ MonoBehaviour:
       offset: {x: 0, y: 0, z: 0, w: 0}
       cameraFieldOfView: 60
   _layerMask:
+    serializedVersion: 2
     m_Bits: 4294967295
 --- !u!114 &11400000
 MonoBehaviour:
@@ -70,7 +72,7 @@ MonoBehaviour:
     probeVolumeBlendStatesCS: {fileID: 7200000, guid: b9a23f869c4fd45f19c5ada54dd82176, type: 3}
   m_RendererFeatures:
   - {fileID: 7833122117494664109}
-  - {fileID: 0}
+  - {fileID: -5843161437764737916}
   m_RendererFeatureMap: ad6b866f10d7b46c84a4c578a1ebe8ae
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
