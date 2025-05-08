@@ -15,15 +15,6 @@ public class EntityStat
 
     [NonSerialized]
     private Dictionary<EntityStatName, Dictionary<object, float>> updatedStats = new();
-
-    // 스탯 제한용 맵 (HP -> MaxHP, O2 -> MaxO2, Eng -> MaxEng)
-    private static readonly Dictionary<EntityStatName, EntityStatName> StatLimitMap = new()
-    {
-        { EntityStatName.HP, EntityStatName.MaxHP },
-        { EntityStatName.O2, EntityStatName.MaxO2 },
-        { EntityStatName.Eng, EntityStatName.MaxEng }
-    };
-
     public EntityStat(string name, int level)
     {
         Name = name;
@@ -104,13 +95,13 @@ public class EntityStat
 
     private void ClampIfNeeded(EntityStatName statName)
     {
-        if (StatLimitMap.TryGetValue(statName, out var maxStat))
-        {
-            float maxValue = GetStat(maxStat);
-            if (baseStats.ContainsKey(statName))
-            {
-                baseStats[statName] = Mathf.Min(baseStats[statName], maxValue);
-            }
-        }
+        //if (StatLimitMap.TryGetValue(statName, out var maxStat))
+        //{
+        //    float maxValue = GetStat(maxStat);
+        //    if (baseStats.ContainsKey(statName))
+        //    {
+        //        baseStats[statName] = Mathf.Min(baseStats[statName], maxValue);
+        //    }
+        //}
     }
 }
