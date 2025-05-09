@@ -3,7 +3,22 @@ guid: e6a277fdff358584d81cd549b5206ea0
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Alien_obj_S1
+    second: {fileID: 2100000, guid: 93a8dfaee8d3bc94b8d7bba2a2f922b1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Alien_obj_S3
+    second: {fileID: 2100000, guid: 7574dd1f0b591ea4f88d1d03c79a8a40, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floor
+    second: {fileID: 2100000, guid: c1f03b63d41156543a05f8fd4d3317b5, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
