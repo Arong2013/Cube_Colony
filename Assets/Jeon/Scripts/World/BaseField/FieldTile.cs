@@ -15,7 +15,7 @@ public class FieldTile : MonoBehaviour
     {
         this.cunStageLevel = cunStageLevel;   
         faceInfo = info;
-        tileData = ItemDataCenter.Get<FieldTileData>(CombinedTypeCode);
+        tileData = ItemDataCenter.GetRealData<FieldTileData>(CombinedTypeCode);
         SpawnObjects();
     }
 

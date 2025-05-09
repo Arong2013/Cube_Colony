@@ -66,7 +66,6 @@ public class PlayerEntity : Entity, ISubject
         Stats = EntityStat.CreatePlayerData();
         gameOverAction?.Invoke();   
     }
-
     public void SetScurivalAction(Action returnAction, Action gameOverAction)
     {
         this.returnAction = returnAction;

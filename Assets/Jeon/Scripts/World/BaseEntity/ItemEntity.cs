@@ -9,15 +9,19 @@ public class ItemEntity : Entity, IInteractable
     [SerializeField] private Vector3 dropForce = new Vector3(1f, 5f, 0f);
     [SerializeField] private float stopAfter = 1.5f;
 
+    private bool isCollectable = false;
+
     private Rigidbody _rb;
     public override void Init()
     {
         base.Init();
-        _rb = GetComponent<Rigidbody>(); 
+        _rb = GetComponent<Rigidbody>();
+        ApplyDropPhysics();
     }
     public bool CanInteract(Entity interactor)
     {
-        
+        if (!isCollectable)
+            return false;
         return interactor.HasEntityComponent<InventoryComponent>();
     }
     public float GetInteractionDistance() => 1f;
@@ -29,16 +33,16 @@ public class ItemEntity : Entity, IInteractable
     public void Interact(Entity interactor)
     {
         interactor.GetEntityComponent<InventoryComponent>()?.AddItem(_item);
-        Destroy(gameObject);    
-    } 
+        Destroy(gameObject);
+    }
     public override void OnDeath()
     {
-     
+
     }
 
     public override void OnHit(int dmg)
     {
-        
+
     }
     private void ApplyDropPhysics()
     {
@@ -51,12 +55,12 @@ public class ItemEntity : Entity, IInteractable
 
         _rb.linearVelocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
-        _rb.isKinematic = true; 
-        Destroy(_rb);           
+        _rb.isKinematic = true;
+        isCollectable = true;
     }
     public void SetItem(int itemId)
     {
-        _item = ItemDataCenter.Get<ConsumableItem>(itemId);
+        _item = ItemDataCenter.GetCloneData<Item>(itemId);
         itemSprite.sprite = _item.ItemIcon;
         Init();
     }

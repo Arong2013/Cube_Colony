@@ -26,7 +26,7 @@ public class SheetLoader : MonoBehaviour
         List<ConsumableItem> EquipableDetails = TSVParser.Parse<ConsumableItem>(tsv);
         foreach (var item in EquipableDetails)
         {
-            ItemDataCenter.Register<ConsumableItem>(item);
+            ItemDataCenter.Register<Item>(item);
         }
         www = UnityWebRequest.Get(EquipableItemURL);
         yield return www.SendWebRequest();
@@ -34,7 +34,7 @@ public class SheetLoader : MonoBehaviour
         List<EquipableItem> ConsumeDetails = TSVParser.Parse<EquipableItem>(tsv);
         foreach (var item in ConsumeDetails)
         {
-            ItemDataCenter.Register<EquipableItem>(item);
+            ItemDataCenter.Register<Item>(item);
         }
 
         www = UnityWebRequest.Get(ItemAcionURL);
@@ -54,9 +54,7 @@ public class SheetLoader : MonoBehaviour
         {
             ItemDataCenter.Register<FieldTileData>(item);
         }
-
-        testAction = ItemDataCenter.Get<itemAction>(1) as HealAction;
-        testItem = ItemDataCenter.Get<ConsumableItem>(1);
+        testItem = ItemDataCenter.GetCloneData<Item>(1) as ConsumableItem;
 
     }
 }

@@ -47,6 +47,7 @@ public class ItemSlot : MonoBehaviour
     }
     public void UseItem()
     {
+        Debug.Log("아이템사용");
         _item?.Use(playerEntity);      
     }
 }
