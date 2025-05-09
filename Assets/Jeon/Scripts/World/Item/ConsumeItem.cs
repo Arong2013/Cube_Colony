@@ -7,7 +7,7 @@ public class ConsumableItem : Item
 {
     [ShowInInspector] public int maxamount;
     [ShowInInspector] public List<int> ids = new List<int>();
-    public int cunamount;
+    public int cunamount = 1;
 
 
     [ShowInInspector, ReadOnly]

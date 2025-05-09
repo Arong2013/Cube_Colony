@@ -17,15 +17,20 @@ public class ItemEntity : Entity, IInteractable
     }
     public bool CanInteract(Entity interactor)
     {
+        
         return interactor.HasEntityComponent<InventoryComponent>();
     }
-    public float GetInteractionDistance() => 0.5f;
+    public float GetInteractionDistance() => 1f;
     public string GetInteractionLabel()
     {
         return "줍기";
     }
 
-    public void Interact(Entity interactor) => interactor.GetEntityComponent<InventoryComponent>()?.AddItem(_item);
+    public void Interact(Entity interactor)
+    {
+        interactor.GetEntityComponent<InventoryComponent>()?.AddItem(_item);
+        Destroy(gameObject);    
+    } 
     public override void OnDeath()
     {
      
@@ -51,7 +56,8 @@ public class ItemEntity : Entity, IInteractable
     }
     public void SetItem(int itemId)
     {
-        _item = ItemDataCenter.Get<Item>(itemId);
-        itemSprite.sprite = _item.ItemIcon;   
+        _item = ItemDataCenter.Get<ConsumableItem>(itemId);
+        itemSprite.sprite = _item.ItemIcon;
+        Init();
     }
 }

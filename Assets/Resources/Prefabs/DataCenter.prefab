@@ -473,7 +473,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   playerEntityPreFabs: {fileID: 8767409848285342345, guid: a8f93b0610e536e48aee89bfc787d37b, type: 3}
-  itemSlotPrefab: {fileID: 6905940604542391252, guid: b453fd6e1cf534cfc935220607b244ca, type: 3}
+  itemSlotPrefab: {fileID: 2039979778653042102, guid: b444e9084907c45419664925db3967df, type: 3}
   dropItemPrefab: {fileID: 471980115231275519, guid: dcbb17a53c082de45ab0656a6a27d618, type: 3}
 --- !u!114 &811521713952712452
 MonoBehaviour:

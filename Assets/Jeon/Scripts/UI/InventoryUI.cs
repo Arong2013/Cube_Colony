@@ -40,8 +40,9 @@ public class InventoryUI : MonoBehaviour, IObserver, IPlayerUesableUI
         }
         foreach (var item in _inventory.items)
         {
-            var curSlot = Instantiate(DataCenter.Instance.GetItemSlotPrefab().gameObject, _slotContainer).GetComponent<ItemSlot>();
-            curSlot.SetItem(item, _playerEntity);
+            var curSlot = Instantiate(DataCenter.Instance.GetItemSlotPrefab().gameObject, _slotContainer);
+           var slot =   curSlot.GetComponent<ItemSlot>();
+            slot.SetItem(item, _playerEntity);
         }
     }
 

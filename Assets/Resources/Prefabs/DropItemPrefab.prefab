@@ -95,6 +95,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cfa43351177504438db646143efd71c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: _item
+      Entry: 6
+      Data: 
   itemSprite: {fileID: 7707013170692619927}
   dropForce: {x: 1, y: 5, z: 0}
   stopAfter: 1.5
@@ -107,8 +119,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2556633299879358683}
-  - component: {fileID: 8889040109810218883}
-  - component: {fileID: 5729165738254863457}
   - component: {fileID: 7707013170692619927}
   m_Layer: 8
   m_Name: Sprite
@@ -132,36 +142,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2413954613838670171}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8889040109810218883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3603067392241571111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Library: []
-  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 6a61fd88a7052e340b7084fbeadaa88d, type: 3}
---- !u!114 &5729165738254863457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3603067392241571111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_CategoryHash: 9.365925e-16
-  m_labelHash: 1.4183162e-25
-  m_SpriteKey: 0
-  m_SpriteHash: 32008109
 --- !u!212 &7707013170692619927
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -185,7 +165,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 10275027ef10ebc45ab18c5005b36570, type: 3}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
