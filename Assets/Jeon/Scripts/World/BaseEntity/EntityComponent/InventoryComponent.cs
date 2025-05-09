@@ -32,11 +32,11 @@ public class InventoryComponent : IEntityComponent
         bool isAdd = true;
         if (item is ConsumableItem consumable)
         {
-            isAdd =  AddConsumableItem(consumable);
+           isAdd =  AddConsumableItem(consumable);
         }
         if (_Items.Count >= _maxSlot)
         {
-            return false;
+           return false;
         }
         if(isAdd)
         _Items.Add(item);

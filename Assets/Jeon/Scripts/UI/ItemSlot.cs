@@ -20,14 +20,12 @@ public class ItemSlot : MonoBehaviour
     {
         _item = null;
         _icon.sprite = null;
-        _icon.enabled = false;
         _amountText.text = "";
     }
     private void UpdateUI()
     {
         if (_item != null)
         {
-            _icon.enabled = true;
             _icon.sprite = _item.ItemIcon;
             if (_item is ConsumableItem consumable)
             {
@@ -49,6 +47,7 @@ public class ItemSlot : MonoBehaviour
     }
     public void UseItem()
     {
+        Debug.Log("아이템사용");
         _item?.Use(playerEntity);      
     }
 }

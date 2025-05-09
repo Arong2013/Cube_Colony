@@ -54,10 +54,6 @@ MonoBehaviour:
     - {fileID: 2100000, guid: bff317e597b620d4188338ba018cd054, type: 2}
     - {fileID: 2100000, guid: 2003a40b2eb5cda4c86e3363cb6f6722, type: 2}
     - {fileID: 2100000, guid: 63c375888a1576649a352a21c987358a, type: 2}
-    - {fileID: 2100000, guid: c216fdb385476ca44a5d0847c8b58f7c, type: 2}
-    - {fileID: 2100000, guid: 094cc692b7eb8284d9f5a4db0149c0c4, type: 2}
-    - {fileID: 2100000, guid: 6291cc99388a9d2478192ca512b579b1, type: 2}
-    - {fileID: 2100000, guid: e22b8a3189b5c0a42a90449426f4cfef, type: 2}
     - {fileID: 7682730074218717400, guid: c45c50fd5c322614391bc82d18ba381b, type: 3}
     - {fileID: 2100000, guid: 522b58c7553380342a8e6399a9f2d8f7, type: 2}
     - {fileID: 2100000, guid: 156c24db9ccc92f41ace972d8fe097aa, type: 2}
@@ -164,32 +160,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: outLines
-      Entry: 7
-      Data: 4|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 5
-    - Name: 
-      Entry: 10
-      Data: 5
-    - Name: 
-      Entry: 10
-      Data: 5
-    - Name: 
-      Entry: 10
-      Data: 6
-    - Name: 
-      Entry: 10
-      Data: 7
-    - Name: 
-      Entry: 10
-      Data: 8
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
+      Entry: 6
       Data: 
     - Name: 
       Entry: 8
@@ -205,7 +176,7 @@ MonoBehaviour:
       Data: 1
     - Name: $v
       Entry: 7
-      Data: 5|CubieFaceVisualData, Assembly-CSharp
+      Data: 4|CubieFaceVisualData, Assembly-CSharp
     - Name: icon
       Entry: 6
       Data: 
@@ -232,45 +203,14 @@ MonoBehaviour:
       Data: 
     - Name: FieldMesh
       Entry: 10
-      Data: 9
+      Data: 5
     - Name: materials
       Entry: 7
-      Data: 6|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
+      Data: 5|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 4
-    - Name: 
-      Entry: 10
-      Data: 10
-    - Name: 
-      Entry: 10
-      Data: 11
-    - Name: 
-      Entry: 10
-      Data: 12
-    - Name: 
-      Entry: 10
-      Data: 13
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: outLines
-      Entry: 7
-      Data: 7|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 5
-    - Name: 
-      Entry: 10
-      Data: 5
-    - Name: 
-      Entry: 10
-      Data: 5
     - Name: 
       Entry: 10
       Data: 6
@@ -281,10 +221,16 @@ MonoBehaviour:
       Entry: 10
       Data: 8
     - Name: 
+      Entry: 10
+      Data: 9
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
       Entry: 8
+      Data: 
+    - Name: outLines
+      Entry: 6
       Data: 
     - Name: 
       Entry: 8
@@ -298,6 +244,76 @@ MonoBehaviour:
     - Name: $k
       Entry: 3
       Data: 2
+    - Name: $v
+      Entry: 7
+      Data: 6|CubieFaceVisualData, Assembly-CSharp
+    - Name: icon
+      Entry: 6
+      Data: 
+    - Name: displayName
+      Entry: 6
+      Data: 
+    - Name: glowColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: FieldMesh
+      Entry: 10
+      Data: 10
+    - Name: materials
+      Entry: 7
+      Data: 7|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 10
+      Data: 11
+    - Name: 
+      Entry: 10
+      Data: 12
+    - Name: 
+      Entry: 10
+      Data: 13
+    - Name: 
+      Entry: 10
+      Data: 14
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: outLines
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3
     - Name: $v
       Entry: 7
       Data: 8|CubieFaceVisualData, Assembly-CSharp
@@ -327,7 +343,7 @@ MonoBehaviour:
       Data: 
     - Name: FieldMesh
       Entry: 10
-      Data: 14
+      Data: 15
     - Name: materials
       Entry: 7
       Data: 9|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
@@ -335,9 +351,6 @@ MonoBehaviour:
     - Name: 
       Entry: 12
       Data: 4
-    - Name: 
-      Entry: 10
-      Data: 15
     - Name: 
       Entry: 10
       Data: 16
@@ -348,100 +361,8 @@ MonoBehaviour:
       Entry: 10
       Data: 18
     - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: outLines
-      Entry: 7
-      Data: 10|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 5
-    - Name: 
-      Entry: 10
-      Data: 5
-    - Name: 
-      Entry: 10
-      Data: 5
-    - Name: 
-      Entry: 10
-      Data: 6
-    - Name: 
-      Entry: 10
-      Data: 7
-    - Name: 
-      Entry: 10
-      Data: 8
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 3
-    - Name: $v
-      Entry: 7
-      Data: 11|CubieFaceVisualData, Assembly-CSharp
-    - Name: icon
-      Entry: 6
-      Data: 
-    - Name: displayName
-      Entry: 6
-      Data: 
-    - Name: glowColor
-      Entry: 7
-      Data: UnityEngine.Color, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: FieldMesh
       Entry: 10
       Data: 19
-    - Name: materials
-      Entry: 7
-      Data: 12|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 4
-    - Name: 
-      Entry: 10
-      Data: 20
-    - Name: 
-      Entry: 10
-      Data: 21
-    - Name: 
-      Entry: 10
-      Data: 22
-    - Name: 
-      Entry: 10
-      Data: 23
     - Name: 
       Entry: 13
       Data: 
@@ -449,32 +370,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: outLines
-      Entry: 7
-      Data: 13|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 5
-    - Name: 
-      Entry: 10
-      Data: 5
-    - Name: 
-      Entry: 10
-      Data: 5
-    - Name: 
-      Entry: 10
-      Data: 6
-    - Name: 
-      Entry: 10
-      Data: 7
-    - Name: 
-      Entry: 10
-      Data: 8
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
+      Entry: 6
       Data: 
     - Name: 
       Entry: 8
@@ -490,11 +386,11 @@ MonoBehaviour:
       Data: 
     - Name: EntityData
       Entry: 7
-      Data: 14|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
+      Data: 10|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 15|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+      Data: 11|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -510,7 +406,7 @@ MonoBehaviour:
       Data: 1
     - Name: $v
       Entry: 10
-      Data: 24
+      Data: 20
     - Name: 
       Entry: 8
       Data: 
@@ -522,7 +418,7 @@ MonoBehaviour:
       Data: 2
     - Name: $v
       Entry: 10
-      Data: 25
+      Data: 21
     - Name: 
       Entry: 8
       Data: 
@@ -534,7 +430,7 @@ MonoBehaviour:
       Data: 3
     - Name: $v
       Entry: 10
-      Data: 26
+      Data: 22
     - Name: 
       Entry: 8
       Data: 
@@ -546,11 +442,11 @@ MonoBehaviour:
       Data: 
     - Name: ExitGateData
       Entry: 7
-      Data: 16|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
+      Data: 12|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 17|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+      Data: 13|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -566,7 +462,7 @@ MonoBehaviour:
       Data: 1
     - Name: $v
       Entry: 10
-      Data: 27
+      Data: 23
     - Name: 
       Entry: 8
       Data: 
@@ -577,6 +473,8 @@ MonoBehaviour:
       Entry: 8
       Data: 
   playerEntityPreFabs: {fileID: 8767409848285342345, guid: a8f93b0610e536e48aee89bfc787d37b, type: 3}
+  itemSlotPrefab: {fileID: 2039979778653042102, guid: b444e9084907c45419664925db3967df, type: 3}
+  dropItemPrefab: {fileID: 471980115231275519, guid: dcbb17a53c082de45ab0656a6a27d618, type: 3}
 --- !u!114 &811521713952712452
 MonoBehaviour:
   m_ObjectHideFlags: 0
