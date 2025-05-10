@@ -2628,7 +2628,7 @@ PrefabInstance:
       objectReference: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
     - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: 'serializationData.PrefabModifications.Array.data[0]'
@@ -2636,24 +2636,52 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: 'serializationData.PrefabModifications.Array.data[1]'
-      value: '"path":"cubieFaceDataMap.{1es}.FieldMesh","value":$eref:0'
+      value: '"path":"cubieFaceDataMap.{1es}.FieldMesh","value":$eref:1'
       objectReference: {fileID: 0}
     - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: 'serializationData.PrefabModifications.Array.data[2]'
-      value: '"path":"cubieFaceDataMap.{2es}.FieldMesh","value":$eref:0'
+      value: '"path":"cubieFaceDataMap.{2es}.FieldMesh","value":$eref:2'
       objectReference: {fileID: 0}
     - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: 'serializationData.PrefabModifications.Array.data[3]'
-      value: '"path":"cubieFaceDataMap.{3es}.FieldMesh","value":$eref:0'
+      value: '"path":"cubieFaceDataMap.{3es}.FieldMesh","value":$eref:3'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[4]'
+      value: '"path":"EntityData.{2si}","value":$eref:4'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[5]'
+      value: '"path":"EntityData.{3si}","value":$eref:5'
       objectReference: {fileID: 0}
     - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: 'serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]'
       value: 
+      objectReference: {fileID: 6489030815539060485, guid: 85d767fea353d5d40b6471f0f0629f2a, type: 3}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModificationsReferencedUnityObjects.Array.data[1]'
+      value: 
       objectReference: {fileID: 6489030815539060485, guid: b775b68be95aa6244b436e283b64aacd, type: 3}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModificationsReferencedUnityObjects.Array.data[2]'
+      value: 
+      objectReference: {fileID: 6489030815539060485, guid: cb0cc7c41fcfd4d47be73a0f5462964a, type: 3}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModificationsReferencedUnityObjects.Array.data[3]'
+      value: 
+      objectReference: {fileID: 6489030815539060485, guid: 6d01235e64d439c4eb1b400ca330fb10, type: 3}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModificationsReferencedUnityObjects.Array.data[4]'
+      value: 
+      objectReference: {fileID: 8979364925643761595, guid: 1d2355e071a82704d86a7b00b74daa98, type: 3}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModificationsReferencedUnityObjects.Array.data[5]'
+      value: 
+      objectReference: {fileID: 6548352704846502216, guid: da279a74bf8fa924a8cc8a2d53d18450, type: 3}
     - target: {fileID: 5571489857094754299, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: m_Name
       value: DataCenter
