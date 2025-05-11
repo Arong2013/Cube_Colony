@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.EventSystems; // 반드시 필요
 
 public class PCController : IEntityController
 {
@@ -36,10 +37,11 @@ public class PCController : IEntityController
         // ✅ 좌클릭 시 공격 애니메이션 실행
         if (Input.GetMouseButtonDown(0))
         {
-            entity.OnAttackAnime();
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                entity.OnAttackAnime(); // UI를 클릭한 게 아니라면 공격 수행
+            }
         }
-
-        // 인벤토리 토글
         if (Input.GetKeyDown(KeyCode.I))
         {
             ToggleInventory(entity);
