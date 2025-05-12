@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using System;
 
-public class PlayerUIController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
+public class CubeControllerUI : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     [Header("Settings")]
     [SerializeField] private float clickHoldTime = 1f;
