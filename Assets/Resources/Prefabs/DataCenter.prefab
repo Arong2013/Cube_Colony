@@ -132,11 +132,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: FieldMesh
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
       Entry: 10
       Data: 0
-    - Name: materials
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CubieFaceMaterials
       Entry: 7
-      Data: 3|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
+      Data: 4|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
@@ -159,9 +172,6 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: outLines
-      Entry: 6
-      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -176,7 +186,7 @@ MonoBehaviour:
       Data: 1
     - Name: $v
       Entry: 7
-      Data: 4|CubieFaceVisualData, Assembly-CSharp
+      Data: 5|CubieFaceVisualData, Assembly-CSharp
     - Name: icon
       Entry: 6
       Data: 
@@ -202,11 +212,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: FieldMesh
+      Entry: 7
+      Data: 6|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
       Entry: 10
       Data: 5
-    - Name: materials
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CubieFaceMaterials
       Entry: 7
-      Data: 5|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
+      Data: 7|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
@@ -229,9 +252,6 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: outLines
-      Entry: 6
-      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -244,76 +264,6 @@ MonoBehaviour:
     - Name: $k
       Entry: 3
       Data: 2
-    - Name: $v
-      Entry: 7
-      Data: 6|CubieFaceVisualData, Assembly-CSharp
-    - Name: icon
-      Entry: 6
-      Data: 
-    - Name: displayName
-      Entry: 6
-      Data: 
-    - Name: glowColor
-      Entry: 7
-      Data: UnityEngine.Color, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: FieldMesh
-      Entry: 10
-      Data: 10
-    - Name: materials
-      Entry: 7
-      Data: 7|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 4
-    - Name: 
-      Entry: 10
-      Data: 11
-    - Name: 
-      Entry: 10
-      Data: 12
-    - Name: 
-      Entry: 10
-      Data: 13
-    - Name: 
-      Entry: 10
-      Data: 14
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: outLines
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 3
     - Name: $v
       Entry: 7
       Data: 8|CubieFaceVisualData, Assembly-CSharp
@@ -342,11 +292,104 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: FieldMesh
+      Entry: 7
+      Data: 9|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 10
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CubieFaceMaterials
+      Entry: 7
+      Data: 10|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 10
+      Data: 11
+    - Name: 
+      Entry: 10
+      Data: 12
+    - Name: 
+      Entry: 10
+      Data: 13
+    - Name: 
+      Entry: 10
+      Data: 14
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3
+    - Name: $v
+      Entry: 7
+      Data: 11|CubieFaceVisualData, Assembly-CSharp
+    - Name: icon
+      Entry: 6
+      Data: 
+    - Name: displayName
+      Entry: 6
+      Data: 
+    - Name: glowColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: FieldMesh
+      Entry: 7
+      Data: 12|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
       Entry: 10
       Data: 15
-    - Name: materials
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CubieFaceMaterials
       Entry: 7
-      Data: 9|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
+      Data: 13|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
@@ -369,9 +412,6 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: outLines
-      Entry: 6
-      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -386,11 +426,11 @@ MonoBehaviour:
       Data: 
     - Name: EntityData
       Entry: 7
-      Data: 10|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
+      Data: 14|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 11|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+      Data: 15|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -442,11 +482,11 @@ MonoBehaviour:
       Data: 
     - Name: ExitGateData
       Entry: 7
-      Data: 12|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
+      Data: 16|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 13|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+      Data: 17|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
