@@ -176,7 +176,7 @@ public static class GridSearchHelper
         var visited = new HashSet<CubieFace>();
         DFS(startFace);
 
-        return visited.Count;
+        return visited.Count-1;
 
         void DFS(CubieFace current)
         {

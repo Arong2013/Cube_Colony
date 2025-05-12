@@ -10,7 +10,6 @@ public class ObjectExploder : MonoBehaviour
     public int maxHP = 5;
     private int currentHP;
     private bool isDestroyed = false;
-
     void Start()
     {
         currentHP = maxHP;
@@ -21,7 +20,6 @@ public class ObjectExploder : MonoBehaviour
         }
         StartCoroutine(DealPeriodicDamage()); // 주기적인 데미지 코루틴 시작
     }
-
     System.Collections.IEnumerator DealPeriodicDamage()
     {
         while (!isDestroyed)
@@ -33,7 +31,6 @@ public class ObjectExploder : MonoBehaviour
             }
         }
     }
-
     public void TakeDamage(int damageAmount)
     {
         if (isDestroyed) return;

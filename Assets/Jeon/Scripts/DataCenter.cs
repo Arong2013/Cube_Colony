@@ -23,7 +23,6 @@ public class DataCenter : SerializedMonoBehaviour
     [SerializeField]
     private Dictionary<int, GameObject> ExitGateData = new();
 
-
     [Title("UI 데이터")]
     [SerializeField] private GameObject itemSlotPrefab;
 

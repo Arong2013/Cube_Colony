@@ -32,12 +32,8 @@ public class CubieFace : MonoBehaviour
     }
     public void ApplyVisual(CubieFaceVisualData data)
     {
-        if (targetRenderer == null || data == null || data.materials == null || data.materials.Count == 0)
-            return;
-
-        int level = Mathf.Clamp(cubieFaceInfo.Level, 0, data.materials.Count-1);
-        targetRenderer.material = data.materials[level];
-     //   outLineRenderer.material = data.outLines[level];    
+        int level = Mathf.Clamp(cubieFaceInfo.Level, 0, data.CubieFaceMaterials.Count);
+        targetRenderer.material = data.CubieFaceMaterials[level];
     }
     protected virtual void ResetFace()
     {
