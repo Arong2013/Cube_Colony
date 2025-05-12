@@ -317,13 +317,6 @@ MonoBehaviour:
   clickHoldTime: 0.1
   cubeRotaterUI:
     threshold: 0.5
-    rotaterSelectUI:
-      rectTransform: {fileID: 1567909824}
-      rotaterSelectButtons:
-      - {fileID: 1684802098}
-      - {fileID: 1631615553}
-      - {fileID: 317840792}
-      - {fileID: 1198265898}
 --- !u!1 &117732990
 GameObject:
   m_ObjectHideFlags: 0
@@ -1476,6 +1469,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HpBar: {fileID: 829996686}
+  O2Bar: {fileID: 0}
+  EngBar: {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
