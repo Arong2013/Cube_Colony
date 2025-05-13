@@ -45,7 +45,20 @@ public static class ItemDataCenter
 
         typedDict[id] = obj;
     }
-    public static T Get<T>(int id)
+    public static T GetCloneData<T>(int id) where T : ICloneableItem<T>
+    {
+        Type type = typeof(T);
+        if (_typeToDict.TryGetValue(type, out var dict))
+        {
+            var typedDict = (IDictionary<int, T>)dict;
+            if (typedDict.TryGetValue(id, out var value))
+            {
+                return value.Clone(); // 복제해서 반환
+            }
+        }
+        return default;
+    }
+    public static T GetRealData<T>(int id)
     {
         Type type = typeof(T);
         if (_typeToDict.TryGetValue(type, out var dict))

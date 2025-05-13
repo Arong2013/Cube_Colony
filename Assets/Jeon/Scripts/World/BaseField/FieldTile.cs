@@ -15,7 +15,7 @@ public class FieldTile : MonoBehaviour
     {
         this.cunStageLevel = cunStageLevel;   
         faceInfo = info;
-        tileData = ItemDataCenter.Get<FieldTileData>(CombinedTypeCode);
+        tileData = ItemDataCenter.GetRealData<FieldTileData>(CombinedTypeCode);
         SpawnObjects();
     }
 
@@ -48,8 +48,13 @@ public class FieldTile : MonoBehaviour
     private Vector3 GetRandomPositionWithinBounds()
     {
         var bounds = GetComponent<Renderer>().bounds;
-        float randX = Random.Range(bounds.min.x, bounds.max.x);
-        float randZ = Random.Range(bounds.min.z, bounds.max.z);
+
+        float marginRatio = 0.1f; 
+        float marginX = bounds.size.x * marginRatio;
+        float marginZ = bounds.size.z * marginRatio;
+
+        float randX = Random.Range(bounds.min.x + marginX, bounds.max.x - marginX);
+        float randZ = Random.Range(bounds.min.z + marginZ, bounds.max.z - marginZ);
         float y = bounds.max.y;
 
         return new Vector3(randX, y + 0.1f, randZ);

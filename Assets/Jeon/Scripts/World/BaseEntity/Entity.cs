@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Sirenix.OdinInspector;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public  abstract class Entity : MonoBehaviour
+public  abstract class Entity : SerializedMonoBehaviour
 {
     private EntityComponentHandler _components;
     private EntityAnimatorHandler _animatorHandler;
@@ -14,27 +16,25 @@ public  abstract class Entity : MonoBehaviour
 
     private Action onDestoryAction;
     private Action onHitAction;
-    private Action returnAction;
-    public EntityStat Stats { get; private set; }
+
+    private Dictionary<string, object> decisionContext = new();
+
+    public EntityStat Stats { get; protected set; }
     public Vector3 CurrentDir { get; protected set; }
     public Entity CurrentTarget { get; private set; }
-
-
-    protected virtual void Awake()
+    public bool CanWalk => (Mathf.Abs(CurrentDir.x) > 0.1f || Mathf.Abs(CurrentDir.z) > 0.1f) && GetState().GetType() != typeof(MoveState);
+    public bool CanAttack => GetState().GetType() != typeof(AttackState);
+    public virtual void Init()
     {
         _animator = GetComponent<Animator>();
         _animatorHandler = new EntityAnimatorHandler(_animator);
         _components = new EntityComponentHandler(this);
-        _healthHandler = new EntityHealthHandler(this);
+        _healthHandler = new EntityHealthHandler(this, OnHit,OnDeath);
         _combatHandler = new EntityCombatHandler(this);
         _movementHandler = new EntityMovementHandler(this);
         _entityState = new IdleState(this, _animator); 
-        Stats = EntityStat.CreatPlayerData(); 
+        Stats = EntityStat.CreatePlayerData(); 
     }
-    public void Init()
-    {
-    }
-    public abstract void Initialize(); 
     public void SetController(IEntityController controller) => _controller = controller;
     public void AddEntityComponent<T>(T component) where T : IEntityComponent => _components.Add(component);
     public T GetEntityComponent<T>() where T : class, IEntityComponent => _components.Get<T>();
@@ -53,10 +53,11 @@ public  abstract class Entity : MonoBehaviour
     public void Heal(float amount) => _healthHandler?.Heal(amount); 
     public void Move() => _movementHandler?.Move(CurrentDir);
     public void OnAttackHit() => GetEntityComponent<AttackComponent>()?.DoHit();
-    public void SetOnDestoryAction(Action action) => onDestoryAction += action;
+    public void OnAttackAnime() => SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Attack);
     public void SetOnHitAction(Action action) => onHitAction += action;
-    public void SeReturnStageState() => returnAction?.Invoke();
-    public void SetReturnAction(Action action) => returnAction = action;
+    public abstract void OnHit(int dmg);
+    public abstract void OnDeath();
+
     public void ChangePlayerState(EntityState newState)
     {
         newState?.Exit();
@@ -66,12 +67,36 @@ public  abstract class Entity : MonoBehaviour
     public Type GetCharacterStateType() => _entityState.GetType();
     public EntityState GetState() => _entityState;
     public void SetDir(Vector3 dir) { CurrentDir = dir; }
+    public void SetData(string key, object value) => decisionContext[key] = value;
+    public bool TryGetData<T>(string key, out T value)
+    {
+        if (decisionContext.TryGetValue(key, out var obj) && obj is T casted)
+        {
+            value = casted;
+            return true;
+        }
+        value = default;
+        return false;
+    }
+    public T GetData<T>(string key)
+    {
+        if (TryGetData<T>(key, out T result)) return result;
+
+        Debug.LogWarning($"[BehaviorSequence] Key '{key}' not found or wrong type.");
+        return default;
+    }
+    public bool RemoveData(string key)
+    {
+        return decisionContext.Remove(key);
+    }
 
     protected virtual void Update()
     {
         _controller?.Update(this);
-        _components.UpdateAll();
-        _entityState?.Execute(); 
+        _components?.UpdateAll();
+        _entityState?.Execute();
+        if (CanWalk)
+              SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Move);
     }
     private void OnDestroy() => _components.ExitAll();
 }

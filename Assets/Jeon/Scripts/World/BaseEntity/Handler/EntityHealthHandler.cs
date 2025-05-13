@@ -13,13 +13,17 @@ public class EntityHealthHandler
        this.onDamaged = onDamaged;
        this.onDeath = onDeath;
     }
-
     public void TakeDamage(float amount)
     {
         float hp = _entity.GetEntityStat(EntityStatName.HP);
         float newHp = MathF.Max(0, hp - amount);
         _entity.SetEntityBaseStat(EntityStatName.HP, newHp);
         _entity.SetAnimatorValue(EntityAnimTrigger.HitTrigger, null);
+        onDamaged?.Invoke((int)amount); 
+        if (IsDead)
+        {
+            onDeath?.Invoke();  
+        }
     }
     public void Heal(float amount)
     {

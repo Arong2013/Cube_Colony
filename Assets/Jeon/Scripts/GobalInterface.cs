@@ -35,6 +35,7 @@ public interface IInteractable
 
 public interface IInteractionStrategy
 {
+    void Initialize(Entity self);
     bool CanInteract(Entity self, Entity interactor);
     void Interact(Entity self, Entity interactor);
     string GetLabel();

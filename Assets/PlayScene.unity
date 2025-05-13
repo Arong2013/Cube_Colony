@@ -211,13 +211,6 @@ MonoBehaviour:
   clickHoldTime: 0.1
   cubeRotaterUI:
     threshold: 0.5
-    rotaterSelectUI:
-      rectTransform: {fileID: 1567909824}
-      rotaterSelectButtons:
-      - {fileID: 1684802098}
-      - {fileID: 1631615553}
-      - {fileID: 317840792}
-      - {fileID: 1198265898}
 --- !u!1 &317840792
 GameObject:
   m_ObjectHideFlags: 0

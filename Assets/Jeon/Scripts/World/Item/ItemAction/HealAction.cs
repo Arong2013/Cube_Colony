@@ -17,6 +17,6 @@ public class HealAction : itemAction
     }
     public override void Execute(PlayerEntity player)
     {
-       // player.Heal(healAmount);   
+         player.Heal(healAmount);   
     }
 }

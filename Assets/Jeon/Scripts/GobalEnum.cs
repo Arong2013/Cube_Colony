@@ -55,17 +55,25 @@ public enum BehaviorDataType
 }
 
 
+public enum EntityActionType
+{
+    Idle = 0,
+    Move = 1,
+    Attack = 2,
+    Return = 3
+}
+public enum EntityAnimInt
+{
+    ActionType
+}
 public enum EntityAnimTrigger
 {
-    AttackTrigger,
     HitTrigger,
     DieTrigger,
-    DashTrigger
+    DashTrigger,
 }
 public enum EntityAnimBool
 {
-    IsMoving,
-    IsReturn
 }
 public enum EntityAnimFloat
 {
@@ -78,7 +86,8 @@ public enum EntityAnimFloat
 public enum EntityStatName
 {
     HP, MaxHP,
-    SP, MaxSP,
+    O2, MaxO2,
+    Eng, MaxEng,    
     ATK,
     DEF,
     SPD,

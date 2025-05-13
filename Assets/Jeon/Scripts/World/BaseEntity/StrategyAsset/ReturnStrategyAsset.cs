@@ -13,6 +13,11 @@ public class ReturnStrategy : IInteractionStrategy
     public void Interact(Entity self, Entity interactor)
         => interactor.GetEntityComponent<ReturnComponent>()?.ReturnStage(interactor);
     public string GetLabel() => "돌아가";
+
+    public void Initialize(Entity self)
+    {
+        
+    }
 }
 public class ReturnComponent : IEntityComponent
 {
@@ -22,7 +27,10 @@ public class ReturnComponent : IEntityComponent
     public void ReturnStage(Entity entity)
     {
         if (entity == null) return;
-        entity.SeReturnStageState();
-        entity.SetAnimatorValue(EntityAnimBool.IsReturn, true);
+        if(entity is PlayerEntity player)
+        {
+            entity.SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Return);
+        }
+
     }   
 }   

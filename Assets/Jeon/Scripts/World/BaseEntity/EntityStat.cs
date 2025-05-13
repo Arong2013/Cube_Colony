@@ -11,12 +11,10 @@ public class EntityStat
     public Vector3 position;
 
     [SerializeField]
-    private Dictionary<EntityStatName, float> baseStats = new Dictionary<EntityStatName, float>();
-
+    private Dictionary<EntityStatName, float> baseStats = new();
 
     [NonSerialized]
-    private Dictionary<EntityStatName, Dictionary<object, float>> updatedStats = new Dictionary<EntityStatName, Dictionary<object, float>>();
-
+    private Dictionary<EntityStatName, Dictionary<object, float>> updatedStats = new();
     public EntityStat(string name, int level)
     {
         Name = name;
@@ -27,23 +25,27 @@ public class EntityStat
         }
     }
 
-    public static EntityStat CreatPlayerData()
+    public static EntityStat CreatePlayerData()
     {
         var data = new EntityStat("Player", 1);
         data.SetBaseStat(EntityStatName.HP, 100);
         data.SetBaseStat(EntityStatName.MaxHP, 100);
-        data.SetBaseStat(EntityStatName.SP, 100);
-        data.SetBaseStat(EntityStatName.MaxSP, 100);
+        data.SetBaseStat(EntityStatName.O2, 100);
+        data.SetBaseStat(EntityStatName.MaxO2, 100);
+        data.SetBaseStat(EntityStatName.Eng, 100);
+        data.SetBaseStat(EntityStatName.MaxEng, 100);
         data.SetBaseStat(EntityStatName.ATK, 20);
         data.SetBaseStat(EntityStatName.DEF, 20);
         data.SetBaseStat(EntityStatName.SPD, 3);
         return data;
     }
+
     public void SetBaseStat(EntityStatName statName, float value)
     {
         if (baseStats.ContainsKey(statName))
         {
             baseStats[statName] = value;
+            ClampIfNeeded(statName);
             Debug.Log($"{statName}={value}");
         }
     }
@@ -53,45 +55,29 @@ public class EntityStat
         if (baseStats.ContainsKey(statName))
         {
             baseStats[statName] += value;
-            if (statName == EntityStatName.HP)
-            {
-                baseStats[statName] = Mathf.Min(baseStats[statName], GetStat(EntityStatName.MaxHP));
-            }
-            else if (statName == EntityStatName.SP)
-            {
-                baseStats[statName] = Mathf.Min(baseStats[statName], GetStat(EntityStatName.MaxSP));
-            }
+            ClampIfNeeded(statName);
         }
     }
+
     public void UpdateStat(EntityStatName statName, object source, float value)
     {
         if (!updatedStats.ContainsKey(statName))
-        {
-            updatedStats[statName] = new Dictionary<object, float>();
-        }
+            updatedStats[statName] = new();
+
         if (!updatedStats[statName].ContainsKey(source))
-        {
             updatedStats[statName][source] = 0;
-        }
 
         updatedStats[statName][source] += value;
-
-        if (statName == EntityStatName.HP)
-        {
-            baseStats[statName] = Mathf.Min(baseStats[statName], GetStat(EntityStatName.MaxHP));
-        }
-        else if (statName == EntityStatName.SP)
-        {
-            baseStats[statName] = Mathf.Min(baseStats[statName], GetStat(EntityStatName.MaxSP));
-        }
+        ClampIfNeeded(statName);
     }
+
     public void ChangeStat(EntityStatName statName, object source, float value)
     {
         if (!updatedStats.ContainsKey(statName))
-        {
-            updatedStats[statName] = new Dictionary<object, float>();
-        }
+            updatedStats[statName] = new();
+
         updatedStats[statName][source] = value;
+        ClampIfNeeded(statName);
     }
 
     public float GetStat(EntityStatName statName)
@@ -101,11 +87,21 @@ public class EntityStat
         if (updatedStats.ContainsKey(statName))
         {
             foreach (var bonus in updatedStats[statName].Values)
-            {
                 baseValue += bonus;
-            }
         }
 
         return baseValue;
+    }
+
+    private void ClampIfNeeded(EntityStatName statName)
+    {
+        //if (StatLimitMap.TryGetValue(statName, out var maxStat))
+        //{
+        //    float maxValue = GetStat(maxStat);
+        //    if (baseStats.ContainsKey(statName))
+        //    {
+        //        baseStats[statName] = Mathf.Min(baseStats[statName], maxValue);
+        //    }
+        //}
     }
 }
