@@ -5,21 +5,18 @@ using System;
 
 public class Cube : MonoBehaviour
 {
-    [SerializeField] PlayerUIController cubeUIController;
     [SerializeField] Cubie cubie;
 
     CubeRotater cubeRotater;
     CubeGridHandler cubeGridHandler;
     ICubeController cubeController;
-    public Action onRotateAction;
-    public void Init(CubeData cubeData, Action action)
+
+    public void Init(CubeData cubeData)
     {
         cubeRotater = new CubeRotater(this.transform);
         cubeGridHandler = new CubeGridHandler(cubie,this.transform, cubeData);
-        cubeUIController.gameObject.SetActive(true);    
-        cubeUIController.SetRotateAction(RotateCube);
+
         cubeController = new CubeKeybordController(RotateAllCube);
-        onRotateAction = action;    
     }
     public List<CubieFaceInfo> GetTopCubieFace() => cubeGridHandler.GetCubieFaces(CubeFaceType.Top);        
     private void Update()
@@ -27,15 +24,17 @@ public class Cube : MonoBehaviour
         if (cubeRotater.IsRotating) return;
         cubeController?.RotateCube();
     }
+
+    public void RotateCube(Cubie selectedCubie, CubeAxisType axis, bool isClock)
+    {
+        StartCoroutine(RotateCubeCoroutine(selectedCubie, axis, isClock));
+    }
     private void  RotateAllCube(CubeAxisType cubeAxisType,bool isClock)
     {
         StartCoroutine(RotateAllCubeCoroutine(cubeAxisType, isClock));
 
     }
-    private void RotateCube(Cubie selectedCubie, CubeAxisType axis, bool isClock)
-    {
-        StartCoroutine(RotateCubeCoroutine(selectedCubie, axis, isClock));  
-    }
+
 
     IEnumerator RotateAllCubeCoroutine(CubeAxisType cubeAxisType, bool isClock)
     {
@@ -48,11 +47,9 @@ public class Cube : MonoBehaviour
         List<Cubie> targetLayer = cubeGridHandler.GetCubiesOnSameLayer(selectedCubie, axis);
         cubeGridHandler.RotateSingleLayer(selectedCubie, axis, isClock);
         yield return StartCoroutine(cubeRotater.RotateCubesSmooth(targetLayer, axis, isClock));
-        onRotateAction?.Invoke();
     }
     public void RemoveCube()
     {
-        cubeUIController.gameObject.SetActive(false);
         cubeGridHandler.DestroyAllCubies();
 
         cubeGridHandler = null;

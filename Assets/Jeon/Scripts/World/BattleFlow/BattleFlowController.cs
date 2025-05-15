@@ -20,7 +20,8 @@ public class BattleFlowController : SerializedMonoBehaviour
     [SerializeField] public float stageTime;
 
 
-
+    [Header("플레이어 스탯")]
+    public EntityStat playerstat;
 
     public int CurrentStage => currentStage;    
     public void ChangeState(IGameSequenceState newState)
@@ -31,6 +32,7 @@ public class BattleFlowController : SerializedMonoBehaviour
     }
     private void Start()
     {
+        playerstat = EntityStat.CreatePlayerData();
         ChangeState(new CountdownState(this,cube, stageCubeDataMap[currentStage]));
     }
     private void Update()
@@ -38,7 +40,7 @@ public class BattleFlowController : SerializedMonoBehaviour
         currentState?.Update();
     }
     public Field GetField() => field;   
-    public void StartBattle()
+    public void SetInSurvialState()
     {
 
     }
