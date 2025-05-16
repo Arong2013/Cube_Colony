@@ -8,6 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Jeon/Scenes/PlayScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Jeong/Scenes/test.unity
+    guid: b2ed0caf9734a3d4ca1d1ca39d7d5dc2
+  - enabled: 1
+    path: Assets/Jeong/Scenes/Play.unity
+    guid: 0d31072727c768b4ebfd528acd7e5c4a
+  - enabled: 1
+    path: Assets/Jeong/Scenes/Loading.unity
+    guid: 2f7771da451778e4da210a0390d246a0
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: fdf208d0af8419d47b8e4b1bbdc03ef0, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
