@@ -23,6 +23,7 @@ public class CountdownState : IGameSequenceState
     public void Exit()
     {
         cube.RemoveCube();
+        inCountDownStateUI.Disable();   
     }
     public void RotateCubeAction(Cubie selectedCubie, CubeAxisType axis, bool isClock)
     {

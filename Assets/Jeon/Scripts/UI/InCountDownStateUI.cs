@@ -25,7 +25,18 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
     }
     public void UpdateObserver()
     {
-        
+
+        //float currentHp = playerStat.GetStat(EntityStatName.HP);
+        //float maxHp = playerStat.GetStat(EntityStatName.MaxHP);
+        //Hp.value = currentHp / maxHp;
+
+        //float currentO2 = playerStat.GetStat(EntityStatName.O2);
+        //float maxO2 = playerStat.GetStat(EntityStatName.MaxO2);
+        //O2.value = currentO2 / maxO2;
+
+        //float currentEng = playerStat.GetStat(EntityStatName.Eng);
+        //float maxEng = playerStat.GetStat(EntityStatName.MaxEng);
+        //Eng.value = currentEng / maxEng;
     }
     public void RotateCubeAction(Cubie selectedCubie, CubeAxisType axis, bool isClock)
     {

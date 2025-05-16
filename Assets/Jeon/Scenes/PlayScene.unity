@@ -324,7 +324,7 @@ RectTransform:
   m_Father: {fileID: 1326835154}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.847, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -996,7 +996,7 @@ RectTransform:
   m_Father: {fileID: 1928405715}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.859, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2078,8 +2078,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1079381933}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.847, y: 0}
-  m_AnchorMax: {x: 0.847, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2625,12 +2625,12 @@ GameObject:
   - component: {fileID: 703336289}
   - component: {fileID: 703336290}
   m_Layer: 0
-  m_Name: Incube
+  m_Name: InCountDownStateUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &703336289
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2647,7 +2647,6 @@ RectTransform:
   - {fileID: 1383092303}
   - {fileID: 1615726874}
   - {fileID: 905250909}
-  - {fileID: 1474457334}
   - {fileID: 588464952}
   m_Father: {fileID: 1957468132}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3822,8 +3821,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 754169888}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4099,8 +4098,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 64722499}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.859, y: 0}
-  m_AnchorMax: {x: 0.859, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4858,7 +4857,7 @@ RectTransform:
   m_Father: {fileID: 164176124}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.424, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5515,12 +5514,12 @@ RectTransform:
   m_Children:
   - {fileID: 491639528}
   - {fileID: 1086000178}
-  m_Father: {fileID: 703336289}
+  m_Father: {fileID: 1957468132}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1474457335
 MonoBehaviour:
@@ -5750,7 +5749,7 @@ RectTransform:
   m_Father: {fileID: 1366988029}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6491,7 +6490,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1615726876}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 703336290}
+        m_TargetAssemblyTypeName: InCountDownStateUI, Assembly-CSharp
+        m_MethodName: SuvalStartAction
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1615726876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6598,8 +6609,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1425573262}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.424, y: 0}
-  m_AnchorMax: {x: 0.424, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7542,7 +7553,7 @@ GameObject:
   - component: {fileID: 1957468130}
   - component: {fileID: 1957468129}
   m_Layer: 5
-  m_Name: 'Canvas '
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7625,6 +7636,7 @@ RectTransform:
   m_Children:
   - {fileID: 703336289}
   - {fileID: 1788329687}
+  - {fileID: 1474457334}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
