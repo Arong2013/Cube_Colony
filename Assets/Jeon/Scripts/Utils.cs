@@ -1,6 +1,7 @@
 ﻿using UnityEngine.EventSystems;
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public static class Utils
 {
@@ -37,17 +38,23 @@ public static class Utils
     public static T GetUI<T>(string _name = null) where T : MonoBehaviour
     {
         T component = null;
+        if (_name != null)
+        {
+            GameObject go = GameObject.Find(_name);
+            if (go != null)
+            {
+                component = go.GetComponent<T>();
+            }
+        }
+
         if (component == null)
         {
             component = FindInCanvasChildren<T>();
         }
-        else if (component == null)
-        {
-            Debug.Log(component.name + " found in the current scene.");
 
-        }
         return component;
     }
+
     private static T FindInCanvasChildren<T>() where T : MonoBehaviour
     {
         T component = null;
@@ -89,5 +96,24 @@ public static class Utils
             }
         }
         return list;
+    }
+
+    public static PlayerEntity GetPlayer()
+    {
+        // GameObject.FindWithTag를 사용하여 플레이어 찾기
+        GameObject playerObj = GameObject.FindWithTag("Player");
+        if (playerObj != null)
+        {
+            return playerObj.GetComponent<PlayerEntity>();
+        }
+
+        // 태그로 못 찾으면 컴포넌트로 찾기
+        PlayerEntity players = GameObject.FindAnyObjectByType<PlayerEntity>();
+        if (players != null)
+        {
+            return players;
+        }
+
+        return null;
     }
 }

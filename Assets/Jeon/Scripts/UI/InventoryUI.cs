@@ -8,6 +8,10 @@ public class InventoryUI : MonoBehaviour, IObserver
     [LabelText("슬롯 컨테이너"), Required]
     [SerializeField] private Transform _slotContainer;
 
+    [TitleGroup("인벤토리 UI")]
+    [LabelText("아이템 정보 UI"), Required]
+    [SerializeField] private ItemInfoUI _itemInfoUI;
+
     [TitleGroup("디버그 정보")]
     [ReadOnly, ShowInInspector]
     private List<ItemSlot> _slots = new();
@@ -22,6 +26,22 @@ public class InventoryUI : MonoBehaviour, IObserver
         {
             BattleFlowController.Instance.RegisterObserver(this);
             Initialize();
+        }
+
+        // 아이템 정보 UI 찾기
+        if (_itemInfoUI == null)
+        {
+            _itemInfoUI = GetComponentInChildren<ItemInfoUI>(true);
+            if (_itemInfoUI == null)
+            {
+                _itemInfoUI = Utils.GetUI<ItemInfoUI>();
+            }
+        }
+
+        // 아이템 정보 UI 초기화
+        if (_itemInfoUI != null)
+        {
+            _itemInfoUI.Initialize();
         }
     }
 
@@ -42,6 +62,12 @@ public class InventoryUI : MonoBehaviour, IObserver
     {
         gameObject.SetActive(true);
         UpdateSlots();
+
+        // 열 때 아이템 정보 UI 닫기
+        if (_itemInfoUI != null)
+        {
+            _itemInfoUI.Hide();
+        }
     }
 
     public void ToggleInventoryUI()
@@ -49,6 +75,12 @@ public class InventoryUI : MonoBehaviour, IObserver
         if (gameObject.activeSelf)
         {
             gameObject.SetActive(false);
+
+            // 닫을 때 아이템 정보 UI도 닫기
+            if (_itemInfoUI != null)
+            {
+                _itemInfoUI.Hide();
+            }
         }
         else
         {
@@ -89,5 +121,11 @@ public class InventoryUI : MonoBehaviour, IObserver
     public void SetActiveFalse()
     {
         gameObject.SetActive(false);
+
+        // 인벤토리 UI를 닫을 때 아이템 정보 UI도 닫기
+        if (_itemInfoUI != null)
+        {
+            _itemInfoUI.Hide();
+        }
     }
 }

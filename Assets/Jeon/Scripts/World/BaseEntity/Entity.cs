@@ -121,7 +121,11 @@ public abstract class Entity : SerializedMonoBehaviour
 
     public void ClearTarget() => CurrentTarget = null;
 
-    public virtual void TakeDamage(float dmg) => _healthHandler?.TakeDamage(dmg);
+    public virtual void TakeDamage(float dmg)
+    {
+        _healthHandler?.TakeDamage(dmg);
+        SetAnimatorValue(EntityAnimTrigger.HitTrigger, null);
+    }
 
     public void Heal(float amount) => _healthHandler?.Heal(amount);
 
