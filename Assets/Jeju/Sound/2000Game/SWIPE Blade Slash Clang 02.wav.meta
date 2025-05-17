@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: d1856d576f2b4414c82a3139f33db3f4
+labels:
+- Audio
+- Blade
+- Clang
+- Slash
+- Sound
+- Swipe
+- Sword
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
