@@ -61,9 +61,6 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
             o2Bar.SetBarType(BarUI.BarType.Oxygen);
             engBar.SetBarType(BarUI.BarType.Energy);
             explorationBar.SetBarType(BarUI.BarType.Custom);
-
-            // 초기 값 설정
-            explorationBar.SetValue(0, 100);
         }
     }
 
@@ -82,20 +79,31 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
         this.cubeControlAction = cubeControlAction;
         this.canRotate = canRotate;
 
-        cubeControllerUI.SetRotateAction(cubeControlAction);
+        if (cubeControllerUI != null)
+        {
+            cubeControllerUI.SetRotateAction(cubeControlAction);
+            cubeControllerUI.gameObject.SetActive(true);
+        }
 
-        // 초기 상태값 설정
+        // 게임 오브젝트 활성화
+        gameObject.SetActive(true);
+
+        // 게임 오브젝트가 활성화된 후에 상태 업데이트
         UpdateStatUI();
 
-        // 진행 바 초기화
-        explorationBar.SetValue(0, 100);
-
-        gameObject.SetActive(true);
+        // 진행 바 초기화 (참조가 유효할 때만)
+        if (explorationBar != null && explorationBar.gameObject.activeInHierarchy)
+        {
+            explorationBar.SetValue(0, 100);
+        }
     }
 
     public void Disable()
     {
-        cubeControllerUI.gameObject.SetActive(true);
+        if (cubeControllerUI != null)
+        {
+            cubeControllerUI.gameObject.SetActive(true);
+        }
         gameObject.SetActive(false);
     }
 
@@ -107,32 +115,51 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
     private void UpdateStatUI()
     {
         // BarUI 컴포넌트 자체에서 업데이트 처리
-        hpBar?.UpdateValueFromPlayerData();
-        o2Bar?.UpdateValueFromPlayerData();
-        engBar?.UpdateValueFromPlayerData();
+        if (hpBar != null && hpBar.gameObject.activeInHierarchy)
+            hpBar.UpdateValueFromPlayerData();
+
+        if (o2Bar != null && o2Bar.gameObject.activeInHierarchy)
+            o2Bar.UpdateValueFromPlayerData();
+
+        if (engBar != null && engBar.gameObject.activeInHierarchy)
+            engBar.UpdateValueFromPlayerData();
     }
 
     public void UpdateExplorationProgress(float progress)
     {
-        if (explorationBar != null)
+        if (explorationBar != null && explorationBar.gameObject.activeInHierarchy)
         {
             explorationBar.SetValue(progress * 100, 100);
         }
     }
 
-    public void RotateCubeAction(Cubie selectedCubie, CubeAxisType axis, bool isClock)
+    public void DisableCubeController()
     {
-        cubeControlAction?.Invoke(selectedCubie, axis, isClock);
-
-        // 회전 불가능한 상태라면 큐브 컨트롤러 비활성화
-        if (!canRotate())
+        if (cubeControllerUI != null)
         {
             cubeControllerUI.gameObject.SetActive(false);
         }
     }
 
+    public void RotateCubeAction(Cubie selectedCubie, CubeAxisType axis, bool isClock)
+    {
+        if (cubeControlAction != null)
+        {
+            cubeControlAction.Invoke(selectedCubie, axis, isClock);
+        }
+
+        // 회전 불가능한 상태라면 큐브 컨트롤러 비활성화
+        if (canRotate != null && !canRotate())
+        {
+            DisableCubeController();
+        }
+    }
+
     public void SurvivalStartAction()
     {
-        survivalStartAction?.Invoke();
+        if (survivalStartAction != null)
+        {
+            survivalStartAction.Invoke();
+        }
     }
 }

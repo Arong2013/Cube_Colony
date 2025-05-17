@@ -166,12 +166,7 @@ public class BarUI : MonoBehaviour
             UpdateValueFromPlayerData();
         }
     }
-    [Button("바 타입 설정", ButtonSizes.Medium), GUIColor(0.3f, 0.7f, 0.9f)]
-    public void SetBarType(BarType type)
-    {
-        barType = type;
-        UpdateValueFromPlayerData();
-    }
+
     private void UpdateShowPercentageOption()
     {
         if (!usePercentText && percentText != null)
@@ -183,6 +178,14 @@ public class BarUI : MonoBehaviour
             percentText.gameObject.SetActive(true);
             percentText.fontSize = fontSize;
         }
+    }
+
+    // 바 타입 설정
+    [Button("바 타입 설정", ButtonSizes.Medium), GUIColor(0.3f, 0.7f, 0.9f)]
+    public void SetBarType(BarType type)
+    {
+        barType = type;
+        UpdateValueFromPlayerData();
     }
 
     // 값 업데이트 (외부에서 호출)
@@ -197,7 +200,8 @@ public class BarUI : MonoBehaviour
         bool valueChanged = currentValue != current;
         currentValue = Mathf.Clamp(current, 0, maxValue);
 
-        if (useAnimation && valueChanged)
+        // 게임 오브젝트가 활성화된 상태이고 애니메이션을 사용하는 경우에만 코루틴 실행
+        if (useAnimation && valueChanged && gameObject.activeInHierarchy)
         {
             // 이전 애니메이션 중지
             if (animationCoroutine != null)
@@ -210,6 +214,7 @@ public class BarUI : MonoBehaviour
         }
         else
         {
+            // 게임 오브젝트가 비활성화되었거나 애니메이션을 사용하지 않는 경우 바로 값 설정
             displayValue = currentValue;
             UpdateVisuals();
         }
@@ -228,6 +233,12 @@ public class BarUI : MonoBehaviour
         if (BattleFlowController.Instance == null || BattleFlowController.Instance.playerData == null)
         {
             Debug.LogWarning("BattleFlowController.Instance 또는 playerData가 null입니다.");
+            return;
+        }
+
+        // 게임 오브젝트가 비활성화된 상태면 업데이트 건너뛰기
+        if (!gameObject.activeInHierarchy)
+        {
             return;
         }
 
@@ -258,7 +269,6 @@ public class BarUI : MonoBehaviour
 
             case BarType.Custom:
                 // Custom 타입은 외부에서 직접 SetValue 호출해야 함
-                Debug.Log("Custom 타입은 외부에서 직접 SetValue를 호출해야 합니다.");
                 break;
         }
     }
