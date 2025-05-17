@@ -235,6 +235,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2687090996866741494}
   - component: {fileID: 3702442017867458371}
+  - component: {fileID: 7168397691053303215}
   m_Layer: 5
   m_Name: HPBar
   m_TagString: Untagged
@@ -249,7 +250,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2687090996866741495}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -274,6 +275,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2687090996866741495}
   m_CullTransparentMesh: 0
+--- !u!114 &7168397691053303215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2687090996866741495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 178edfdd6f529764a99f468b9c299af0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barType: 5
+  fillImage: {fileID: 2687090997469381337}
+  usePercentText: 1
+  percentText: {fileID: 3034186923110636835}
+  fontSize: 30
+  useColorChange: 0
+  colorThresholds:
+  - label: "\uB192\uC74C"
+    threshold: 0.66
+    color: {r: 0, g: 1, b: 0, a: 1}
+  - label: "\uC911\uAC04"
+    threshold: 0.33
+    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - label: "\uB0AE\uC74C"
+    threshold: 0
+    color: {r: 1, g: 0, b: 0, a: 1}
+  useAnimation: 1
+  animationSpeed: 2
 --- !u!1 &2687090997469381340
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +316,6 @@ GameObject:
   - component: {fileID: 2687090997469381343}
   - component: {fileID: 2687090997469381336}
   - component: {fileID: 2687090997469381337}
-  - component: {fileID: 2687090997469381342}
   m_Layer: 5
   m_Name: Loading Bar
   m_TagString: Untagged
@@ -350,20 +380,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2687090997469381342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2687090997469381340}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3e4c3ce525184910878c8552b1aa5fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 3034186923110636835}
-  duration: 6
 --- !u!1 &3373829194452496176
 GameObject:
   m_ObjectHideFlags: 0

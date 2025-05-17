@@ -1,50 +1,138 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Sirenix.OdinInspector;
+
 public class InCountDownStateUI : MonoBehaviour, IObserver
 {
-    [SerializeField] Slider Hp,O2,Eng;
-    [SerializeField] Slider explorationBar;
-    [SerializeField] Button survalStartBtn;
-    [SerializeField] CubeControllerUI cubeControllerUI; 
-    private Action survalStartAction;
-    private Action<Cubie, CubeAxisType, bool> cubeControllAction;
+    [TitleGroup("상태 표시 UI")]
+    [LabelText("체력 바"), Required]
+    [SerializeField] private BarUI hpBar;
+
+    [TitleGroup("상태 표시 UI")]
+    [LabelText("산소 바"), Required]
+    [SerializeField] private BarUI o2Bar;
+
+    [TitleGroup("상태 표시 UI")]
+    [LabelText("에너지 바"), Required]
+    [SerializeField] private BarUI engBar;
+
+    [TitleGroup("게임 진행 UI")]
+    [LabelText("진행 바"), Required]
+    [SerializeField] private BarUI explorationBar;
+
+    [TitleGroup("게임 진행 UI")]
+    [LabelText("생존 시작 버튼"), Required]
+    [SerializeField] private Button survivalStartBtn;
+
+    [TitleGroup("게임 진행 UI")]
+    [LabelText("큐브 컨트롤러"), Required]
+    [SerializeField] private CubeControllerUI cubeControllerUI;
+
+    [ShowInInspector, ReadOnly]
+    [TitleGroup("디버그 정보")]
+    private Action survivalStartAction;
+
+    [ShowInInspector, ReadOnly]
+    [TitleGroup("디버그 정보")]
+    private Action<Cubie, CubeAxisType, bool> cubeControlAction;
+
+    [ShowInInspector, ReadOnly]
+    [TitleGroup("디버그 정보")]
     private Func<bool> canRotate;
-    public void Initialize(Action survalStartAction, Action<Cubie, CubeAxisType, bool> cubeControllAction,Func<bool> canRoate)
+
+    private void Start()
     {
-        this.survalStartAction = survalStartAction;
-        this.cubeControllAction = cubeControllAction;
-        this.canRotate = canRoate;
-        cubeControllerUI.SetRotateAction(cubeControllAction);   
+        if (BattleFlowController.Instance != null)
+        {
+            // 옵저버로 등록
+            BattleFlowController.Instance.RegisterObserver(this);
+        }
+
+        // BarUI 컴포넌트 초기화 확인
+        if (hpBar == null || o2Bar == null || engBar == null || explorationBar == null)
+        {
+            Debug.LogError("InCountDownStateUI: BarUI 컴포넌트가 할당되지 않았습니다.");
+        }
+        else
+        {
+            // 바 타입 설정
+            hpBar.SetBarType(BarUI.BarType.Health);
+            o2Bar.SetBarType(BarUI.BarType.Oxygen);
+            engBar.SetBarType(BarUI.BarType.Energy);
+            explorationBar.SetBarType(BarUI.BarType.Custom);
+
+            // 초기 값 설정
+            explorationBar.SetValue(0, 100);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (BattleFlowController.Instance != null)
+        {
+            // 옵저버 해제
+            BattleFlowController.Instance.UnregisterObserver(this);
+        }
+    }
+
+    public void Initialize(Action survivalStartAction, Action<Cubie, CubeAxisType, bool> cubeControlAction, Func<bool> canRotate)
+    {
+        this.survivalStartAction = survivalStartAction;
+        this.cubeControlAction = cubeControlAction;
+        this.canRotate = canRotate;
+
+        cubeControllerUI.SetRotateAction(cubeControlAction);
+
+        // 초기 상태값 설정
+        UpdateStatUI();
+
+        // 진행 바 초기화
+        explorationBar.SetValue(0, 100);
+
         gameObject.SetActive(true);
     }
+
     public void Disable()
     {
         cubeControllerUI.gameObject.SetActive(true);
         gameObject.SetActive(false);
     }
+
     public void UpdateObserver()
     {
-
-        //float currentHp = playerStat.GetStat(EntityStatName.HP);
-        //float maxHp = playerStat.GetStat(EntityStatName.MaxHP);
-        //Hp.value = currentHp / maxHp;
-
-        //float currentO2 = playerStat.GetStat(EntityStatName.O2);
-        //float maxO2 = playerStat.GetStat(EntityStatName.MaxO2);
-        //O2.value = currentO2 / maxO2;
-
-        //float currentEng = playerStat.GetStat(EntityStatName.Eng);
-        //float maxEng = playerStat.GetStat(EntityStatName.MaxEng);
-        //Eng.value = currentEng / maxEng;
+        UpdateStatUI();
     }
-    public void RotateCubeAction(Cubie selectedCubie, CubeAxisType axis, bool isClock)
+
+    private void UpdateStatUI()
     {
-        cubeControllAction?.Invoke(selectedCubie,axis,isClock);
-        if(!canRotate())
+        // BarUI 컴포넌트 자체에서 업데이트 처리
+        hpBar?.UpdateValueFromPlayerData();
+        o2Bar?.UpdateValueFromPlayerData();
+        engBar?.UpdateValueFromPlayerData();
+    }
+
+    public void UpdateExplorationProgress(float progress)
+    {
+        if (explorationBar != null)
         {
-            cubeControllerUI.gameObject.SetActive(false);   
+            explorationBar.SetValue(progress * 100, 100);
         }
     }
-    public void SuvalStartAction() => survalStartAction?.Invoke();  
+
+    public void RotateCubeAction(Cubie selectedCubie, CubeAxisType axis, bool isClock)
+    {
+        cubeControlAction?.Invoke(selectedCubie, axis, isClock);
+
+        // 회전 불가능한 상태라면 큐브 컨트롤러 비활성화
+        if (!canRotate())
+        {
+            cubeControllerUI.gameObject.SetActive(false);
+        }
+    }
+
+    public void SurvivalStartAction()
+    {
+        survivalStartAction?.Invoke();
+    }
 }

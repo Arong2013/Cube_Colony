@@ -1,25 +1,49 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
-public class InventoryUI : MonoBehaviour, IObserver, IPlayerUesableUI
+public class InventoryUI : MonoBehaviour, IObserver
 {
+    [TitleGroup("인벤토리 UI")]
+    [LabelText("슬롯 컨테이너"), Required]
     [SerializeField] private Transform _slotContainer;
 
+    [TitleGroup("디버그 정보")]
+    [ReadOnly, ShowInInspector]
     private List<ItemSlot> _slots = new();
-    private InventoryComponent _inventory;
-    private PlayerEntity _playerEntity;
 
-    public void Initialize(PlayerEntity playerEntity)
+    [TitleGroup("디버그 정보")]
+    [ReadOnly, ShowInInspector]
+    private int itemCount => BattleFlowController.Instance?.playerData?.inventory?.Count ?? 0;
+
+    private void Start()
     {
-        this._playerEntity = playerEntity;
-        _inventory = playerEntity.GetEntityComponent<InventoryComponent>();
-        playerEntity.RegisterObserver(this);
+        if (BattleFlowController.Instance != null)
+        {
+            BattleFlowController.Instance.RegisterObserver(this);
+            Initialize();
+        }
     }
+
+    private void OnDestroy()
+    {
+        if (BattleFlowController.Instance != null)
+        {
+            BattleFlowController.Instance.UnregisterObserver(this);
+        }
+    }
+
+    public void Initialize()
+    {
+        UpdateSlots();
+    }
+
     public void OpenInventoryUI()
     {
         gameObject.SetActive(true);
-        UpDateSlots();
+        UpdateSlots();
     }
+
     public void ToggleInventoryUI()
     {
         if (gameObject.activeSelf)
@@ -32,24 +56,36 @@ public class InventoryUI : MonoBehaviour, IObserver, IPlayerUesableUI
         }
     }
 
-    public void UpDateSlots()
+    public void UpdateSlots()
     {
+        if (BattleFlowController.Instance == null ||
+            BattleFlowController.Instance.playerData == null ||
+            BattleFlowController.Instance.playerData.inventory == null)
+            return;
+
+        // 기존 슬롯 제거
         foreach (Transform child in _slotContainer)
         {
             Destroy(child.gameObject);
         }
-        foreach (var item in _inventory.items)
+
+        _slots.Clear();
+
+        // 새 슬롯 생성
+        foreach (var item in BattleFlowController.Instance.playerData.inventory)
         {
             var curSlot = Instantiate(DataCenter.Instance.GetItemSlotPrefab().gameObject, _slotContainer);
-            var slot =   curSlot.GetComponent<ItemSlot>();
-            slot.SetItem(item, _playerEntity);
+            var slot = curSlot.GetComponent<ItemSlot>();
+            slot.SetItem(item);
+            _slots.Add(slot);
         }
     }
 
     public void UpdateObserver()
     {
-        UpDateSlots();
+        UpdateSlots();
     }
+
     public void SetActiveFalse()
     {
         gameObject.SetActive(false);
