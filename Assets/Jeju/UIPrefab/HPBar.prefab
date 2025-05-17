@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 178edfdd6f529764a99f468b9c299af0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  barType: 5
+  barType: 0
   fillImage: {fileID: 2687090997469381337}
   usePercentText: 1
   percentText: {fileID: 3034186923110636835}
