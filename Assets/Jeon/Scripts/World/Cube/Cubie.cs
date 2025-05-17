@@ -29,7 +29,15 @@ public class Cubie : MonoBehaviour
                 break;
         }
     }
-    public CubieFace GetFace(CubeFaceType type)
+
+    public void UpdateCubieVisual()
+    {
+        foreach (var face in faces)
+        {
+            face.SetVisual();
+        }
+    }
+        public CubieFace GetFace(CubeFaceType type)
     {
         foreach (var face in GetComponentsInChildren<CubieFace>())
         {

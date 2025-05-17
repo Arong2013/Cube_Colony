@@ -163,4 +163,46 @@ public static class GridSearchHelper
         return new Vector3Int(-1, -1, -1); // 못 찾은 경우
     }
 
+    public static int GetConnectedSameSkillCount(CubieFace startFace, Cubie[,,] cubieGrid)
+    {
+        var faceType = startFace.face;
+        var skillType = startFace.SkillType;
+
+        var allSameFaceList = GetCubieFaces(faceType, cubieGrid);
+        var candidates = allSameFaceList
+            .Where(f => f != null && f.SkillType == skillType)
+            .ToList();
+
+        var visited = new HashSet<CubieFace>();
+        DFS(startFace);
+
+        return visited.Count-1;
+
+        void DFS(CubieFace current)
+        {
+            visited.Add(current);
+
+            foreach (var neighbor in candidates)
+            {
+                if (visited.Contains(neighbor)) continue;
+                if (AreCubiesAdjacent(current.cubie, neighbor.cubie, cubieGrid))
+                {
+                    DFS(neighbor);
+                }
+            }
+        }
+    }
+
+    private static bool AreCubiesAdjacent(Cubie a, Cubie b, Cubie[,,] grid)
+    {
+        var pa = GetCubieGridPosition(a, grid);
+        var pb = GetCubieGridPosition(b, grid);
+
+        int dx = Mathf.Abs(pa.x - pb.x);
+        int dy = Mathf.Abs(pa.y - pb.y);
+        int dz = Mathf.Abs(pa.z - pb.z);
+
+        return dx + dy + dz == 1;
+    }
+
 }

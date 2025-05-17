@@ -21,8 +21,13 @@ public class DataCenter : SerializedMonoBehaviour
 
     [Title("리턴 게이트 데이터")]
     [SerializeField]
-    private Dictionary<int, GameObject> ExitGateData = new();  
+    private Dictionary<int, GameObject> ExitGateData = new();
 
+    [Title("UI 데이터")]
+    [SerializeField] private GameObject itemSlotPrefab;
+
+    [Title("드롭 아이템 프리펩")]
+    [SerializeField] private GameObject dropItemPrefab; 
     public CubieFaceVisualData GetFaceData(CubieFaceSkillType type)
     {
         return cubieFaceDataMap.TryGetValue(type, out var data) ? data : null;
@@ -55,6 +60,15 @@ public class DataCenter : SerializedMonoBehaviour
             return null;
         }
     }
+    public GameObject GetItemSlotPrefab()
+    {
+        return itemSlotPrefab;
+    }   
+
+    public GameObject GetDropItemPrefab()
+    {
+        return dropItemPrefab;
+    }   
     private void Awake()
     {
         if (Instance != null && Instance != this)

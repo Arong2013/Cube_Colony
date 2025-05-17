@@ -27,17 +27,10 @@ public class CubieFaceInfo
 
     public bool CanLevelUp => level < maxLevel;
 
-    public bool LevelUp()
+    public void SetLevel(int level)
     {
-        if (CanLevelUp)
-        {
-            level++;
-            return true;
-        }
-
-        return false;
-    }
-
+        this.level = level;
+    }   
     public void Reset()
     {
         level = 0;

@@ -3,10 +3,19 @@ using System.Linq;
 using NUnit.Framework.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
-[System.Serializable]
-public abstract class Item
+
+public interface ICloneableItem<T>
 {
-    [ShowInInspector] public readonly int ID;
-    [ShowInInspector] public readonly string ItemName;
+    T Clone();
+}
+
+[System.Serializable]
+public abstract class Item : ICloneableItem<Item>
+{
+    [ShowInInspector] public int ID;
+    [ShowInInspector] public string ItemName;
+    public Sprite ItemIcon => Resources.Load<Sprite>($"Sprites/Items/{ItemName}");
+
     public abstract void Use(PlayerEntity player);
+    public abstract Item Clone();
 }
