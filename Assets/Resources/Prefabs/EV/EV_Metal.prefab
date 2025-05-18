@@ -44,7 +44,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8979364925643761595}
-  m_Mesh: {fileID: -4538664988323527497, guid: 14c16b12938e03145b7d24a19443433c, type: 3}
+  m_Mesh: {fileID: -8162716379859079424, guid: 10fd26b667751ea4d902541535ae6edc, type: 3}
 --- !u!23 &8098448045329808372
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 03cfcdea6d0b1dd4c9f5e65ffde31f13, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -150,12 +150,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e036109f5c22ce4f8f2e7eef5106afb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: DropChances
+      Entry: 6
+      Data: 
   behaviorSequencesSO: []
   strategyAsset: {fileID: 11400000, guid: 36c4e7908fdc3144b8e633ff73a2eb76, type: 2}
-  dropEntry:
-    MinDropItem: 0
-    MaxDropItem: 0
   interactionDistance: 0.3
+  MinDropItem: 0
+  MaxDropItem: 0
 --- !u!95 &-8225212178698050351
 Animator:
   serializedVersion: 7

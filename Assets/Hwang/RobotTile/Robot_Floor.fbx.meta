@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: a3064efa7ced2034383b36a914f130c5
+guid: 5410d056295661a4eb2d7d7b9a4dab6f
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Robot_Floor
+    second: {fileID: 2100000, guid: 31b103263a610b3489d671154c0a8188, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

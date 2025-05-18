@@ -25,7 +25,7 @@ public class Field : MonoBehaviour
         navMeshSurface = GetComponent<NavMeshSurface>();
 
         transform.position = fieldData.position;
-        transform.localScale = new Vector3(fieldData.size-0.5f, 0.1f, fieldData.size-0.5f);
+        transform.localScale = new Vector3(fieldData.size-0.5f, 1f, fieldData.size-0.5f);
         navMeshSurface.BuildNavMesh();
 
         SpawnPlayer(returnAction, gameOverAction);
@@ -50,7 +50,11 @@ public class Field : MonoBehaviour
             float x = (info.Position.x - half) * spacing;
             float z = (info.Position.z - half) * spacing;
 
-            GameObject plane = Instantiate(DataCenter.Instance.GetFaceData(info.Type).FieldMesh.gameObject, Vector3.zero, Quaternion.identity); 
+            var meshList = DataCenter.Instance.GetFaceData(info.Type).FieldMesh;
+            int randomIndex = UnityEngine.Random.Range(0, meshList.Count);
+            GameObject selectedMesh = meshList[randomIndex];
+
+            GameObject plane = Instantiate(selectedMesh, Vector3.zero, Quaternion.identity); 
             plane.transform.SetParent(disableField, false);
             plane.transform.localPosition = new Vector3(x, 0.5f, z);
             var scaleSize = 1f / size;

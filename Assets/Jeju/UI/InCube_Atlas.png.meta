@@ -1,0 +1,827 @@
+fileFormatVersion: 2
+guid: 5922b3e22075d5e4aa0f791e9ad9a1e7
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: InCube_Atlas_0
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 1576
+        width: 1877
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e499e5ded7c4de448394f47504bca83
+      internalID: -249994281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_1
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 1411
+        width: 1920
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78f6a94576ca66844aa5b5ad277667c3
+      internalID: 726376698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_11
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 602
+        width: 465
+        height: 712
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aea9b95af9062d047b00b2ae36d17944
+      internalID: 510111477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_13
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 1276
+        width: 383
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b995e0e58a137f44bab793707bc7c855
+      internalID: 1023548567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_21
+      rect:
+        serializedVersion: 2
+        x: 1586
+        y: 1194
+        width: 4
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d28c1bfac08fd8544a48ca362d80172a
+      internalID: 2031898547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_26
+      rect:
+        serializedVersion: 2
+        x: 677
+        y: 1174
+        width: 335
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f0c14f8a31222b43aba8178c25e7b3d
+      internalID: 169587049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_45
+      rect:
+        serializedVersion: 2
+        x: 689
+        y: 1042
+        width: 124
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bfb53454ddfa8c4bbe04214c45a6377
+      internalID: -411886396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_52
+      rect:
+        serializedVersion: 2
+        x: 882
+        y: 1041
+        width: 68
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc866f537280f3b4c8b71c9e73954a69
+      internalID: 1729126991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_82
+      rect:
+        serializedVersion: 2
+        x: 858
+        y: 910
+        width: 57
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 294528c200c69ef4292799cc8ffdcc77
+      internalID: 2010818504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_91
+      rect:
+        serializedVersion: 2
+        x: 677
+        y: 919
+        width: 25
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b079567393f69a4a8d6b02ed1edb679
+      internalID: 1245761744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_111
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 666
+        width: 323
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0b1280ae92441148a82373f96bfa8df
+      internalID: -1992068072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_119
+      rect:
+        serializedVersion: 2
+        x: 644
+        y: 688
+        width: 92
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7feb46a58e51474484b695d40fb546e
+      internalID: -2084676340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_123
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 435
+        width: 463
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 976b6ae9ca9fb12438e42c8d3957daff
+      internalID: -734730131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_124
+      rect:
+        serializedVersion: 2
+        x: 949
+        y: 408
+        width: 53
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be9ba58c1b835aa4397a2a06be6417bb
+      internalID: 1762724538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_125
+      rect:
+        serializedVersion: 2
+        x: 1055
+        y: 409
+        width: 352
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28c06d97373ab3a4db597ac83eb7c130
+      internalID: -429876693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_126
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 419
+        width: 330
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ebcc7b1105eece4dbbbbfeb57e85b44
+      internalID: -1288427870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_127
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 280
+        width: 156
+        height: 87
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 906fd0671f24aa84fac30b8fa951f42a
+      internalID: 2115395269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_128
+      rect:
+        serializedVersion: 2
+        x: 951
+        y: 324
+        width: 47
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98bde56da662bcd488e0ea9d7d1fc589
+      internalID: 336052872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_129
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 337
+        width: 330
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e07c6ad251e265b40b253fa630ce457e
+      internalID: 80028808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_131
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 140
+        width: 179
+        height: 189
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b632a27c9ff16bd4fbb434cc6e639ff9
+      internalID: -100190901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_133
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 152
+        width: 78
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8a1af7b0471aeb41856181dc9b86cd9
+      internalID: 403728390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_134
+      rect:
+        serializedVersion: 2
+        x: 651
+        y: 152
+        width: 78
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11afb594a201a2f4c91837eb742aada5
+      internalID: 893937388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_135
+      rect:
+        serializedVersion: 2
+        x: 956
+        y: 234
+        width: 32
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55dada5c475169f43a1a3cf0e323a81f
+      internalID: -462228124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_136
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 277
+        width: 354
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec2c3aec07694814eb55d831336d4e0a
+      internalID: 553479939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_137
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 251
+        width: 330
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c8ff6ce9a1f2b948be090f48e5bba48
+      internalID: 460496994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InCube_Atlas_2
+      rect:
+        serializedVersion: 2
+        x: 1343
+        y: 759
+        width: 352
+        height: 470
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5540054444738254bb465b30bc04f7ab
+      internalID: -939331991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 8c5ac3cd7579cd049b9181f65444e304
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      InCube_Atlas_0: -249994281
+      InCube_Atlas_1: 726376698
+      InCube_Atlas_10: 1255868677
+      InCube_Atlas_100: 1160467429
+      InCube_Atlas_101: 496279750
+      InCube_Atlas_102: -717020432
+      InCube_Atlas_103: -1938601073
+      InCube_Atlas_104: -1777680614
+      InCube_Atlas_105: -821369387
+      InCube_Atlas_106: 1000284586
+      InCube_Atlas_107: -1525033050
+      InCube_Atlas_108: -1087311657
+      InCube_Atlas_109: -2050947947
+      InCube_Atlas_11: 510111477
+      InCube_Atlas_110: 1281520798
+      InCube_Atlas_111: -1992068072
+      InCube_Atlas_112: 1716143965
+      InCube_Atlas_113: 520279810
+      InCube_Atlas_114: -114556439
+      InCube_Atlas_115: 1175386536
+      InCube_Atlas_116: -1650236922
+      InCube_Atlas_117: 282249531
+      InCube_Atlas_118: -1537388152
+      InCube_Atlas_119: -2084676340
+      InCube_Atlas_12: 373912241
+      InCube_Atlas_120: -956855860
+      InCube_Atlas_121: -1316964663
+      InCube_Atlas_122: -1342229438
+      InCube_Atlas_123: -734730131
+      InCube_Atlas_124: 1762724538
+      InCube_Atlas_125: -429876693
+      InCube_Atlas_126: -1288427870
+      InCube_Atlas_127: 2115395269
+      InCube_Atlas_128: 336052872
+      InCube_Atlas_129: 80028808
+      InCube_Atlas_13: 1023548567
+      InCube_Atlas_130: 1408818863
+      InCube_Atlas_131: -100190901
+      InCube_Atlas_132: 1698014999
+      InCube_Atlas_133: 403728390
+      InCube_Atlas_134: 893937388
+      InCube_Atlas_135: -462228124
+      InCube_Atlas_136: 553479939
+      InCube_Atlas_137: 460496994
+      InCube_Atlas_14: 514183860
+      InCube_Atlas_15: 1669471768
+      InCube_Atlas_16: 1811972288
+      InCube_Atlas_17: 418196352
+      InCube_Atlas_18: -1844613038
+      InCube_Atlas_19: -610075982
+      InCube_Atlas_2: -939331991
+      InCube_Atlas_20: 1017871171
+      InCube_Atlas_21: 2031898547
+      InCube_Atlas_22: 1196817598
+      InCube_Atlas_23: -121845847
+      InCube_Atlas_24: -1761083421
+      InCube_Atlas_25: -834085817
+      InCube_Atlas_26: 169587049
+      InCube_Atlas_27: 1563602558
+      InCube_Atlas_28: 1094126682
+      InCube_Atlas_29: 1807621704
+      InCube_Atlas_3: -1996677564
+      InCube_Atlas_30: -723268816
+      InCube_Atlas_31: -1396722277
+      InCube_Atlas_32: -1392828299
+      InCube_Atlas_33: 1527217116
+      InCube_Atlas_34: -2139644392
+      InCube_Atlas_35: -1063088944
+      InCube_Atlas_36: -650540344
+      InCube_Atlas_37: -1262841125
+      InCube_Atlas_38: 1246357462
+      InCube_Atlas_39: -659805469
+      InCube_Atlas_4: -359595279
+      InCube_Atlas_40: 1965600272
+      InCube_Atlas_41: 5332817
+      InCube_Atlas_42: -2011575280
+      InCube_Atlas_43: -52412242
+      InCube_Atlas_44: -347560574
+      InCube_Atlas_45: -411886396
+      InCube_Atlas_46: -2142705892
+      InCube_Atlas_47: 1802338361
+      InCube_Atlas_48: 45519957
+      InCube_Atlas_49: 500135993
+      InCube_Atlas_5: -2030140931
+      InCube_Atlas_50: -884711406
+      InCube_Atlas_51: 1370718159
+      InCube_Atlas_52: 1729126991
+      InCube_Atlas_53: 2016025367
+      InCube_Atlas_54: -160871195
+      InCube_Atlas_55: -1691080142
+      InCube_Atlas_56: 558081529
+      InCube_Atlas_57: -1189765400
+      InCube_Atlas_58: -226900876
+      InCube_Atlas_59: 1604285913
+      InCube_Atlas_6: 1709688457
+      InCube_Atlas_60: 500051542
+      InCube_Atlas_61: 860003545
+      InCube_Atlas_62: -128219333
+      InCube_Atlas_63: 196359262
+      InCube_Atlas_64: -1714727494
+      InCube_Atlas_65: -1983033169
+      InCube_Atlas_66: 1341328429
+      InCube_Atlas_67: 406426270
+      InCube_Atlas_68: 102557480
+      InCube_Atlas_69: -1206006329
+      InCube_Atlas_7: -1328512055
+      InCube_Atlas_70: 1361830167
+      InCube_Atlas_71: -1690822202
+      InCube_Atlas_72: -268352848
+      InCube_Atlas_73: 1006725828
+      InCube_Atlas_74: -1261905304
+      InCube_Atlas_75: -1725090946
+      InCube_Atlas_76: 1133566924
+      InCube_Atlas_77: 123864840
+      InCube_Atlas_78: -198005113
+      InCube_Atlas_79: 635707611
+      InCube_Atlas_8: -1191627341
+      InCube_Atlas_80: -1701788430
+      InCube_Atlas_81: 1639530444
+      InCube_Atlas_82: 2010818504
+      InCube_Atlas_83: -658165047
+      InCube_Atlas_84: 1157667458
+      InCube_Atlas_85: 79620760
+      InCube_Atlas_86: -1533761090
+      InCube_Atlas_87: -761561718
+      InCube_Atlas_88: -574589125
+      InCube_Atlas_89: 1991811495
+      InCube_Atlas_9: 1825324595
+      InCube_Atlas_90: -1380561834
+      InCube_Atlas_91: 1245761744
+      InCube_Atlas_92: 1054195139
+      InCube_Atlas_93: -1479810908
+      InCube_Atlas_94: 552480391
+      InCube_Atlas_95: 1947485087
+      InCube_Atlas_96: 646221885
+      InCube_Atlas_97: -1749843313
+      InCube_Atlas_98: -1178705968
+      InCube_Atlas_99: -97772449
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
