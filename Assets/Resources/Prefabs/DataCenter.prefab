@@ -68,6 +68,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 24b3b51102c83f8458df265c7b437aab, type: 2}
     - {fileID: 11400000, guid: 828babd4dff9b3948a1dc76cc7d26f04, type: 2}
     - {fileID: 11400000, guid: 6ccc42ead612f8b4883838300a7309c7, type: 2}
+    - {fileID: 7682730074218717400, guid: 4efd54472ecc14c40a7cd83c973a0cc3, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -410,37 +411,16 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 7|CubieFaceVisualData, Assembly-CSharp
-    - Name: icon
-      Entry: 6
-      Data: 
-    - Name: displayName
-      Entry: 6
-      Data: 
-    - Name: glowColor
-      Entry: 7
-      Data: UnityEngine.Color, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: FieldMesh
       Entry: 7
       Data: 8|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
-      Data: 0
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 20
     - Name: 
       Entry: 13
       Data: 

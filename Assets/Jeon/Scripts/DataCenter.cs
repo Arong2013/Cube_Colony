@@ -25,6 +25,24 @@ public class DataCenter : SerializedMonoBehaviour
     }
 
     [TitleGroup("자동 등록")]
+    [Button("📦 큐브 시각 데이터 자동 등록", ButtonSizes.Medium), GUIColor(0.3f, 0.6f, 0.8f)]
+    public void AutoRegisterCubeVisualData()
+    {
+#if UNITY_EDITOR
+        RegisterCubeVisualDataFromResources();
+#endif
+    }
+
+    [TitleGroup("자동 등록")]
+    [Button("🎭 엔티티 데이터 자동 등록", ButtonSizes.Medium), GUIColor(0.8f, 0.3f, 0.6f)]
+    public void AutoRegisterEntityData()
+    {
+#if UNITY_EDITOR
+        RegisterEntityDataFromFolder();
+#endif
+    }
+
+    [TitleGroup("자동 등록")]
     [Button("🔍 등록된 데이터 정보 확인", ButtonSizes.Medium), GUIColor(0.3f, 0.5f, 0.9f)]
     public void PrintRegisteredData()
     {
@@ -82,11 +100,11 @@ public class DataCenter : SerializedMonoBehaviour
     // ===== 동적 정보 =====
     [FoldoutGroup("🔍 동적 정보", expanded: false)]
     [ShowInInspector, ReadOnly]
-    public Dictionary<string, int> 등록된_SO_개수 => GetAllDictionaryCounts();
+    public Dictionary<string, int> 등록된_데이터_개수 => GetAllDataCounts();
 
     [FoldoutGroup("🔍 동적 정보")]
     [ShowInInspector, ReadOnly]
-    public int 총_SO_개수 => GetAllDictionaryCounts().Values.Sum();
+    public int 총_데이터_개수 => GetAllDataCounts().Values.Sum();
 
     private void Awake()
     {
@@ -101,6 +119,145 @@ public class DataCenter : SerializedMonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// Resources 폴더에서 Cube로 시작하는 폴더들을 찾아 큐브 시각 데이터를 자동 등록
+    /// </summary>
+    private void RegisterCubeVisualDataFromResources()
+    {
+        string resourcesPath = "Assets/Resources";
+
+        if (!Directory.Exists(resourcesPath))
+        {
+            Debug.LogWarning($"⚠️ Resources 폴더가 없습니다: {resourcesPath}");
+            return;
+        }
+
+        // 기존 큐브 데이터 클리어
+        cubieFaceDataMap.Clear();
+
+        // Resources 하위의 Cube로 시작하는 폴더들 찾기
+        var cubeDirectories = Directory.GetDirectories(resourcesPath)
+            .Where(dir => Path.GetFileName(dir).StartsWith("Cube"))
+            .ToArray();
+
+        foreach (string cubeDir in cubeDirectories)
+        {
+            string folderName = Path.GetFileName(cubeDir);
+
+            // 폴더명에서 스킬 타입 추출 (예: CubeRMonster -> RMonster)
+            string skillTypeName = folderName.Replace("Cube", "");
+
+            // 스킬 타입 파싱
+            if (Enum.TryParse<CubieFaceSkillType>(skillTypeName, out CubieFaceSkillType skillType))
+            {
+                var visualData = new CubieFaceVisualData();
+                visualData.FieldMesh = new List<GameObject>();
+                visualData.CubieFaceMaterials = new List<Material>();
+
+                // 폴더 내의 모든 에셋 스캔
+                var assetGuids = AssetDatabase.FindAssets("", new[] { cubeDir });
+
+                foreach (string guid in assetGuids)
+                {
+                    string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+                    var asset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(assetPath);
+
+                    if (asset != null)
+                    {
+                        // GameObject는 FieldMesh에 추가
+                        if (asset is GameObject gameObject)
+                        {
+                            visualData.FieldMesh.Add(gameObject);
+                        }
+                        // Material은 CubieFaceMaterials에 추가
+                        else if (asset is Material material)
+                        {
+                            visualData.CubieFaceMaterials.Add(material);
+                        }
+                    }
+                }
+
+                // Dictionary에 등록
+                cubieFaceDataMap[skillType] = visualData;
+
+                Debug.Log($"📦 {skillType} 등록: FieldMesh {visualData.FieldMesh.Count}개, Materials {visualData.CubieFaceMaterials.Count}개");
+            }
+            else
+            {
+                Debug.LogWarning($"⚠️ 스킬 타입을 파싱할 수 없습니다: {skillTypeName}");
+            }
+        }
+
+        // 변경사항 저장
+        EditorUtility.SetDirty(this);
+        EditorUtility.SetDirty(gameObject);
+        AssetDatabase.SaveAssets();
+
+        Debug.Log($"✅ 큐브 시각 데이터 등록 완료! 총 {cubieFaceDataMap.Count}개 스킬 타입");
+    }
+
+    /// <summary>
+    /// EntityData 폴더에서 프리팹들을 찾아 순차적으로 엔티티 데이터에 등록
+    /// </summary>
+    private void RegisterEntityDataFromFolder()
+    {
+        string entityDataPath = "Assets/Resources/EntityData";
+
+        if (!Directory.Exists(entityDataPath))
+        {
+            Debug.LogWarning($"⚠️ EntityData 폴더가 없습니다: {entityDataPath}");
+            return;
+        }
+
+        // 기존 엔티티 데이터 클리어
+        EntityData.Clear();
+
+        // EntityData 폴더의 하위 폴더들 스캔
+        var subDirectories = Directory.GetDirectories(entityDataPath);
+
+        foreach (string subDir in subDirectories)
+        {
+            string folderName = Path.GetFileName(subDir);
+            Debug.Log($"🔍 엔티티 폴더 스캔: {folderName}");
+
+            // 폴더 내의 프리팹들 찾기
+            var prefabGuids = AssetDatabase.FindAssets("t:Prefab", new[] { subDir });
+            var prefabs = new List<GameObject>();
+
+            foreach (string guid in prefabGuids)
+            {
+                string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
+
+                if (prefab != null)
+                {
+                    prefabs.Add(prefab);
+                }
+            }
+
+            // 이름순으로 정렬
+            prefabs.Sort((a, b) => string.Compare(a.name, b.name, StringComparison.Ordinal));
+
+            // 순차적으로 ID 할당하여 등록
+            for (int i = 0; i < prefabs.Count; i++)
+            {
+                int id = EntityData.Count + 1; // 연속된 ID 할당
+                EntityData[id] = prefabs[i];
+
+                Debug.Log($"📦 엔티티 등록: ID {id} → {prefabs[i].name}");
+            }
+        }
+
+        // 변경사항 저장
+        EditorUtility.SetDirty(this);
+        EditorUtility.SetDirty(gameObject);
+        AssetDatabase.SaveAssets();
+
+        Debug.Log($"✅ 엔티티 데이터 등록 완료! 총 {EntityData.Count}개 엔티티");
+    }
+#endif
 
     // ===== 새 인스턴스 생성해서 반환하는 메서드들 =====
 
@@ -334,7 +491,7 @@ public class DataCenter : SerializedMonoBehaviour
     /// <summary>
     /// 모든 Dictionary 필드의 개수를 리플렉션으로 가져오기
     /// </summary>
-    private Dictionary<string, int> GetAllDictionaryCounts()
+    private Dictionary<string, int> GetAllDataCounts()
     {
         var counts = new Dictionary<string, int>();
         var fields = GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
@@ -362,7 +519,7 @@ public class DataCenter : SerializedMonoBehaviour
     {
         Debug.Log("=== DataCenter 등록 정보 ===");
 
-        var counts = GetAllDictionaryCounts();
+        var counts = GetAllDataCounts();
         foreach (var kvp in counts)
         {
             Debug.Log($"📚 {kvp.Key}: {kvp.Value}개");
@@ -497,7 +654,9 @@ public class DataCenter : SerializedMonoBehaviour
         Debug.Log($"⚔️ EquipableItem: {GetAllIds<EquipableItem>().Count}개");
         Debug.Log($"🎯 ItemAction: {GetAllIds<itemAction>().Count}개");
         Debug.Log($"🗺️ FieldTileData: {GetAllIds<FieldTileData>().Count}개");
-        Debug.Log($"🔢 총 아이템 데이터: {총_SO_개수}개");
+        Debug.Log($"🎲 CubeVisualData: {cubieFaceDataMap.Count}개");
+        Debug.Log($"🎭 EntityData: {EntityData.Count}개");
+        Debug.Log($"🔢 총 데이터: {총_데이터_개수}개");
     }
 
     [Button("🧪 데이터 생성 테스트")]

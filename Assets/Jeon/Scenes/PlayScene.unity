@@ -1243,16 +1243,34 @@ PrefabInstance:
       objectReference: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
     - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: 'serializationData.PrefabModifications.Array.data[0]'
-      value: '"path":"EntityData","add_keys":{"$id":0,"$type":"System.Object[], mscorlib","$rlength":2,"$rcontent":[{"$id":1,"$type":"System.Int32,
-        mscorlib",101},{"$id":2,"$type":"System.Int32, mscorlib",101}]},"remove_keys":null'
+      value: '"path":"cubieFaceDataMap","add_keys":null,"remove_keys":{"$id":0,"$type":"System.Object[],
+        mscorlib","$rlength":1,"$rcontent":[{"$id":1,"$type":"CubieFaceSkillType,
+        Assembly-CSharp",0}]}'
       objectReference: {fileID: 0}
     - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: 'serializationData.PrefabModifications.Array.data[1]'
-      value: '"path":"EntityData.{101si}","value":$eref:0'
+      value: '"path":"cubieFaceDataMap.{0es}","value":{"$id":0,"$type":"CubieFaceVisualData,
+        Assembly-CSharp","FieldMesh":{"$id":1,"$type":"System.Collections.Generic.List`1[[UnityEngine.GameObject,
+        UnityEngine.CoreModule]], mscorlib","$rlength":1,"$rcontent":[$eref:0]},"CubieFaceMaterials":{"$id":2,"$type":"System.Collections.Generic.List`1[[UnityEngine.Material,
+        UnityEngine.CoreModule]], mscorlib","$rlength":0,"$rcontent":[]}}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[2]'
+      value: '"path":"cubieFaceDataMap.{0es}.CubieFaceMaterials","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[UnityEngine.Material,
+        UnityEngine.CoreModule]], mscorlib","$rlength":0,"$rcontent":[]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[3]'
+      value: '"path":"cubieFaceDataMap.{0es}.FieldMesh","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[UnityEngine.GameObject,
+        UnityEngine.CoreModule]], mscorlib","$rlength":1,"$rcontent":[$eref:0]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[4]'
+      value: '"path":"cubieFaceDataMap.{0es}.FieldMesh.[0]","value":$eref:0'
       objectReference: {fileID: 0}
     - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
@@ -1261,7 +1279,7 @@ PrefabInstance:
     - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: 'serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]'
       value: 
-      objectReference: {fileID: 8767409848285342345, guid: 97f979f775fffde45b1b78a053e8ad20, type: 3}
+      objectReference: {fileID: 7682730074218717400, guid: 4efd54472ecc14c40a7cd83c973a0cc3, type: 3}
     - target: {fileID: 5571489857094754299, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: m_Name
       value: DataCenter
