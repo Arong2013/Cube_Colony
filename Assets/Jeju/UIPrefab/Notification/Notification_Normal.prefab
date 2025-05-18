@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 458.24255, y: -99.955}
+  m_AnchoredPosition: {x: 458.24255, y: -96.015}
   m_SizeDelta: {x: 643.5149, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &501273283140271882
@@ -68,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: You successfully read this very important message.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a07fd053aa5734a71a8148ecac13a5d9, type: 2}
-  m_sharedMaterial: {fileID: -1796990805855837696, guid: a07fd053aa5734a71a8148ecac13a5d9, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ce0cdb4a9773d48c486e31d69a0e3c48, type: 2}
+  m_sharedMaterial: {fileID: -4461743736596542180, guid: ce0cdb4a9773d48c486e31d69a0e3c48, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -219,8 +219,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Title
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a07fd053aa5734a71a8148ecac13a5d9, type: 2}
-  m_sharedMaterial: {fileID: -1796990805855837696, guid: a07fd053aa5734a71a8148ecac13a5d9, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ce0cdb4a9773d48c486e31d69a0e3c48, type: 2}
+  m_sharedMaterial: {fileID: -4461743736596542180, guid: ce0cdb4a9773d48c486e31d69a0e3c48, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -376,7 +376,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cc9151669908e4e85837bb4b4e2a3e06, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a7ff66e362dc643b3869a8f8b4a7ab2b, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -421,7 +421,7 @@ GameObject:
   - component: {fileID: 3607773573984527308}
   - component: {fileID: 636987210}
   m_Layer: 5
-  m_Name: Notification - Cutout (Outline)
+  m_Name: Notification_Normal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -580,14 +580,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.41099998, g: 0.318525, b: 0.4012657, a: 1}
+  m_Color: {r: 0.39221558, g: 0.44011977, b: 0.5, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cc9151669908e4e85837bb4b4e2a3e06, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a7ff66e362dc643b3869a8f8b4a7ab2b, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -704,14 +704,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.501, g: 0.426852, b: 0.49570373, a: 1}
+  m_Color: {r: 0.6784314, g: 0.7254902, b: 0.7882353, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4e1443b5fedb04b53b889dc402599498, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 62c460917a57243d38e265f4da8e2c94, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -874,14 +874,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.501, g: 0.426852, b: 0.49570373, a: 1}
+  m_Color: {r: 0.6784314, g: 0.7254902, b: 0.7882353, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4e1443b5fedb04b53b889dc402599498, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 62c460917a57243d38e265f4da8e2c94, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

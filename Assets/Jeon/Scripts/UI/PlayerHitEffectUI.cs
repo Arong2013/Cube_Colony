@@ -123,6 +123,8 @@ public class PlayerHitEffectUI : SerializedMonoBehaviour
         {
             float targetTimeScale = Mathf.Lerp(1f, timeScale, intensity);
             Time.timeScale = targetTimeScale;
+            Debug.Log("11");
+            Debug.Log(targetTimeScale);
         }
 
         // 3. 효과 지속
