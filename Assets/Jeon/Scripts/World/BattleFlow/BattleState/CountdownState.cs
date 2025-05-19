@@ -67,10 +67,7 @@ public class CountdownState : IGameSequenceState
         cube.RotateCube(selectedCubie, axis, isClock);
 
         // 에너지 소모
-        BattleFlowController.Instance.playerData.UpdateEnergy(-rotationEnergyCost);
-
-        // UI 업데이트를 위해 옵저버에게 알림
-        BattleFlowController.Instance.NotifyObservers();
+        BattleFlowController.Instance.TryConsumeEnergy(rotationEnergyCost);
 
         // 에너지가 모두 소진됐는지 확인
         if (!CanRotate())
@@ -90,7 +87,7 @@ public class CountdownState : IGameSequenceState
     public bool CanRotate()
     {
         // 에너지가 회전에 필요한 양보다 많은지 확인
-        return BattleFlowController.Instance.playerData.energy >= rotationEnergyCost;
+        return BattleFlowController.Instance.playerData.HasEnoughEnergy(rotationEnergyCost);
     }
 
     public void Update()
