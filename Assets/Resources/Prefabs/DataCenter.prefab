@@ -68,7 +68,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 24b3b51102c83f8458df265c7b437aab, type: 2}
     - {fileID: 11400000, guid: 828babd4dff9b3948a1dc76cc7d26f04, type: 2}
     - {fileID: 11400000, guid: 6ccc42ead612f8b4883838300a7309c7, type: 2}
-    - {fileID: 7682730074218717400, guid: 4efd54472ecc14c40a7cd83c973a0cc3, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -401,51 +400,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
       Data: 0
-    - Name: $v
-      Entry: 7
-      Data: 7|CubieFaceVisualData, Assembly-CSharp
-    - Name: FieldMesh
-      Entry: 7
-      Data: 8|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 10
-      Data: 20
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: CubieFaceMaterials
-      Entry: 7
-      Data: 9|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -454,11 +409,11 @@ MonoBehaviour:
       Data: 
     - Name: EntityData
       Entry: 7
-      Data: 10|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
+      Data: 7|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 11|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+      Data: 8|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -474,11 +429,11 @@ MonoBehaviour:
       Data: 
     - Name: ExitGateData
       Entry: 7
-      Data: 12|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
+      Data: 9|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 13|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+      Data: 10|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
