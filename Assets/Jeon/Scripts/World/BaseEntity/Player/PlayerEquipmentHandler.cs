@@ -9,17 +9,16 @@ using System;
 public class PlayerEquipmentHandler : IEntityComponent
 {
     private Entity _entity;
-    private Dictionary<EquipmentSlot, EquipableItem> equippedItems;
+    private Dictionary<EquipmentType, EquipableItem> equippedItems;
     private EquipmentEffects totalEffects;
 
-    // 이벤트
     public event Action<EquipableItem> OnItemEquipped;
     public event Action<EquipableItem> OnItemUnequipped;
     public event Action OnEquipmentChanged;
 
     public PlayerEquipmentHandler()
     {
-        equippedItems = new Dictionary<EquipmentSlot, EquipableItem>();
+        equippedItems = new Dictionary<EquipmentType, EquipableItem>();
         totalEffects = new EquipmentEffects();
     }
 
@@ -47,7 +46,7 @@ public class PlayerEquipmentHandler : IEntityComponent
     {
         if (item == null) return false;
 
-        EquipmentSlot slot = item.GetEquipmentSlot();
+        EquipmentType slot = item.GetEquipmentSlot();
 
         // 기존 장비가 있다면 해제
         if (equippedItems.ContainsKey(slot))
@@ -76,7 +75,7 @@ public class PlayerEquipmentHandler : IEntityComponent
     /// <summary>
     /// 아이템 해제
     /// </summary>
-    public bool UnequipItem(EquipmentSlot slot)
+    public bool UnequipItem(EquipmentType slot)
     {
         if (!equippedItems.ContainsKey(slot)) return false;
 
@@ -113,7 +112,7 @@ public class PlayerEquipmentHandler : IEntityComponent
     /// <summary>
     /// 특정 슬롯에 장착된 아이템 반환
     /// </summary>
-    public EquipableItem GetEquippedItem(EquipmentSlot slot)
+    public EquipableItem GetEquippedItem(EquipmentType slot)
     {
         return equippedItems.TryGetValue(slot, out EquipableItem item) ? item : null;
     }
@@ -121,9 +120,9 @@ public class PlayerEquipmentHandler : IEntityComponent
     /// <summary>
     /// 모든 장착된 아이템 반환
     /// </summary>
-    public Dictionary<EquipmentSlot, EquipableItem> GetAllEquippedItems()
+    public Dictionary<EquipmentType, EquipableItem> GetAllEquippedItems()
     {
-        return new Dictionary<EquipmentSlot, EquipableItem>(equippedItems);
+        return new Dictionary<EquipmentType, EquipableItem>(equippedItems);
     }
 
     /// <summary>
@@ -191,7 +190,7 @@ public class PlayerEquipmentHandler : IEntityComponent
     public void RefreshEquipmentEffects()
     {
         // 모든 장비 효과 제거 후 재적용
-        var tempEquipped = new Dictionary<EquipmentSlot, EquipableItem>(equippedItems);
+        var tempEquipped = new Dictionary<EquipmentType, EquipableItem>(equippedItems);
 
         foreach (var item in tempEquipped.Values)
         {

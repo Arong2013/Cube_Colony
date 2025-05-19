@@ -15,7 +15,7 @@ public class InventoryUI : MonoBehaviour, IObserver
 
     [TitleGroup("장비 시스템")]
     [LabelText("장비 현황 UI"), Required]
-    [SerializeField] private EquipmentStatusUI equipmentStatusUI;
+    [SerializeField] private EquipmentUI equipmentStatusUI;
 
     [TitleGroup("아이템 정보")]
     [LabelText("아이템 정보 UI"), Required]
@@ -68,7 +68,7 @@ public class InventoryUI : MonoBehaviour, IObserver
         // 장비 현황 UI 찾기
         if (equipmentStatusUI == null)
         {
-            equipmentStatusUI = GetComponentInChildren<EquipmentStatusUI>(true);
+            equipmentStatusUI = GetComponentInChildren<EquipmentUI>(true);
         }
 
         // 장비 선택 패널 초기화

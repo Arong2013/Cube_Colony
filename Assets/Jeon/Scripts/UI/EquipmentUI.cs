@@ -11,20 +11,17 @@ using System;
 public class EquipmentUI : MonoBehaviour, IObserver
 {
     [TitleGroup("장비 슬롯")]
-    [SerializeField] private EquipmentSlotUI weaponSlot;
-    [SerializeField] private EquipmentSlotUI oxygenTankSlot;
-    [SerializeField] private EquipmentSlotUI batterySlot;
-    [SerializeField] private EquipmentSlotUI backpackSlot;
-    [SerializeField] private EquipmentSlotUI helmetSlot;
-
-    [TitleGroup("강화 UI")]
-    [SerializeField] private ReinforcementUI reinforcementUI;
+    [SerializeField] private EQSlot weaponSlot;
+    [SerializeField] private EQSlot oxygenTankSlot;
+    [SerializeField] private EQSlot batterySlot;
+    [SerializeField] private EQSlot backpackSlot;
+    [SerializeField] private EQSlot helmetSlot;
 
     [TitleGroup("정보 UI")]
     [SerializeField] private TextMeshProUGUI totalEffectsText;
     [SerializeField] private Button closeButton;
 
-    private Dictionary<EquipmentSlot, EquipmentSlotUI> slotUIMap;
+    private Dictionary<EquipmentType, EQSlot> slotUIMap;
     private PlayerEquipmentHandler equipmentHandler;
     private EquipableItem selectedItem;
 
@@ -51,13 +48,13 @@ public class EquipmentUI : MonoBehaviour, IObserver
 
     private void InitializeSlotMap()
     {
-        slotUIMap = new Dictionary<EquipmentSlot, EquipmentSlotUI>
+        slotUIMap = new Dictionary<EquipmentType, EQSlot>
         {
-            { EquipmentSlot.Weapon, weaponSlot },
-            { EquipmentSlot.OxygenTank, oxygenTankSlot },
-            { EquipmentSlot.Battery, batterySlot },
-            { EquipmentSlot.Backpack, backpackSlot },
-            { EquipmentSlot.Helmet, helmetSlot }
+            { EquipmentType.Weapon, weaponSlot },
+            { EquipmentType.OxygenTank, oxygenTankSlot },
+            { EquipmentType.Battery, batterySlot },
+            { EquipmentType.Backpack, backpackSlot },
+            { EquipmentType.Helmet, helmetSlot }
         };
 
         // 각 슬롯에 이벤트 연결
@@ -173,7 +170,7 @@ public class EquipmentUI : MonoBehaviour, IObserver
         totalEffectsText.text = text.TrimEnd('\n');
     }
 
-    private void OnEquipmentSlotClicked(EquipmentSlot slot, EquipableItem item)
+    private void OnEquipmentSlotClicked(EquipmentType slot, EquipableItem item)
     {
         selectedItem = item;
 
@@ -190,7 +187,7 @@ public class EquipmentUI : MonoBehaviour, IObserver
         }
     }
 
-    private void OnEquipmentSlotRightClicked(EquipmentSlot slot, EquipableItem item)
+    private void OnEquipmentSlotRightClicked(EquipmentType slot, EquipableItem item)
     {
         if (item != null && equipmentHandler != null)
         {
@@ -216,131 +213,3 @@ public class EquipmentUI : MonoBehaviour, IObserver
         UpdateUI();
     }
 }
-
-/// <summary>
-/// 개별 장비 슬롯 UI
-/// </summary>
-public class EquipmentSlotUI : MonoBehaviour
-{
-    [SerializeField] private Image itemIcon;
-    [SerializeField] private TextMeshProUGUI itemNameText;
-    [SerializeField] private TextMeshProUGUI reinforcementText;
-    [SerializeField] private Button slotButton;
-    [SerializeField] private Image slotBackground;
-    [SerializeField] private Sprite emptySlotSprite;
-
-    public event Action<EquipmentSlot, EquipableItem> OnItemClicked;
-    public event Action<EquipmentSlot, EquipableItem> OnItemRightClicked;
-
-    private EquipmentSlot equipmentSlot;
-    private EquipableItem equippedItem;
-
-    public void Initialize(EquipmentSlot slot)
-    {
-        equipmentSlot = slot;
-
-        if (slotButton != null)
-        {
-            slotButton.onClick.AddListener(() => OnItemClicked?.Invoke(equipmentSlot, equippedItem));
-        }
-
-        ClearSlot();
-    }
-
-    public void SetEquippedItem(EquipableItem item)
-    {
-        equippedItem = item;
-
-        if (item != null)
-        {
-            if (itemIcon != null)
-            {
-                itemIcon.sprite = item.ItemIcon;
-                itemIcon.color = Color.white;
-            }
-
-            if (itemNameText != null)
-            {
-                itemNameText.text = item.GetDisplayName();
-            }
-
-            if (reinforcementText != null)
-            {
-                if (item.reinforcementLevel > 0)
-                {
-                    reinforcementText.text = $"+{item.reinforcementLevel}";
-                    reinforcementText.gameObject.SetActive(true);
-                }
-                else
-                {
-                    reinforcementText.gameObject.SetActive(false);
-                }
-            }
-
-            if (slotBackground != null)
-            {
-                slotBackground.color = GetGradeColor(item.grade);
-            }
-        }
-        else
-        {
-            ClearSlot();
-        }
-    }
-
-    public void ClearSlot()
-    {
-        equippedItem = null;
-
-        if (itemIcon != null)
-        {
-            itemIcon.sprite = emptySlotSprite;
-            itemIcon.color = Color.gray;
-        }
-
-        if (itemNameText != null)
-        {
-            itemNameText.text = GetSlotName(equipmentSlot);
-        }
-
-        if (reinforcementText != null)
-        {
-            reinforcementText.gameObject.SetActive(false);
-        }
-
-        if (slotBackground != null)
-        {
-            slotBackground.color = Color.white;
-        }
-    }
-
-    private string GetSlotName(EquipmentSlot slot)
-    {
-        return slot switch
-        {
-            EquipmentSlot.Weapon => "무기",
-            EquipmentSlot.OxygenTank => "산소통",
-            EquipmentSlot.Battery => "배터리",
-            EquipmentSlot.Backpack => "가방",
-            EquipmentSlot.Helmet => "헬멧",
-            _ => "빈 슬롯"
-        };
-    }
-
-    private Color GetGradeColor(ItemGrade grade)
-    {
-        return grade switch
-        {
-            ItemGrade.Common => Color.white,
-            ItemGrade.Uncommon => Color.green,
-            ItemGrade.Rare => Color.blue,
-            ItemGrade.Epic => Color.magenta,
-            ItemGrade.Legendary => Color.yellow,
-            _ => Color.white
-        };
-    }
-}
-
-/// <summary>
-/// 강화 UI
-/// </summary>

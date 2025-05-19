@@ -165,11 +165,13 @@ public class EQSlot : MonoBehaviour, IPointerClickHandler
     {
         return slotType switch
         {
-            EquipmentType.Weapon => "무기",
-            EquipmentType.Helmet => "투구",
-            EquipmentType.Armor => "갑옷",
-            EquipmentType.Boots => "신발",
-            EquipmentType.Accessory => "장신구",
+            EquipmentType.Sword => "검",
+            EquipmentType.Gun => "총",
+            EquipmentType.OxygenTank => "산소통",
+            EquipmentType.Battery => "배터리",
+            EquipmentType.Backpack => "가방",
+            EquipmentType.Helmet => "헬멧",
+            EquipmentType.None => "없음",
             _ => "알 수 없음"
         };
     }

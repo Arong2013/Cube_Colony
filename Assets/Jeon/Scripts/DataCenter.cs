@@ -304,8 +304,16 @@ public class DataCenter : SerializedMonoBehaviour
         item.grade = so.grade;
         item.itemIcon = so.itemIcon;
 
+        // 강화 시스템 데이터 복사
+        item.reinforcementLevel = 0; // 항상 0으로 시작
+        item.maxReinforcementLevel = so.maxReinforcementLevel;
+        item.reinforcementCosts = (int[])so.reinforcementCosts.Clone();
+        item.specialEffect1 = so.specialEffect1;
+        item.specialEffect2 = so.specialEffect2;
+
         return item;
     }
+
 
     /// <summary>
     /// 새로운 itemAction 인스턴스를 생성해서 반환

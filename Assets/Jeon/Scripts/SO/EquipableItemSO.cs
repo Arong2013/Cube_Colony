@@ -65,22 +65,6 @@ public class EquipableItemSO : ScriptableObject
     [TitleGroup("디버그 정보")]
     [ShowInInspector, ReadOnly]
     [LabelText("장비 슬롯")]
-    public EquipmentSlot EquipmentSlot
-    {
-        get
-        {
-            return equipmentType switch
-            {
-                EquipmentType.Sword => EquipmentSlot.Weapon,
-                EquipmentType.Gun => EquipmentSlot.Weapon,
-                EquipmentType.OxygenTank => EquipmentSlot.OxygenTank,
-                EquipmentType.Battery => EquipmentSlot.Battery,
-                EquipmentType.Backpack => EquipmentSlot.Backpack,
-                EquipmentType.Helmet => EquipmentSlot.Helmet,
-                _ => EquipmentSlot.Weapon
-            };
-        }
-    }
 
     [TitleGroup("디버그 정보")]
     [Button("강화 효과 미리보기")]

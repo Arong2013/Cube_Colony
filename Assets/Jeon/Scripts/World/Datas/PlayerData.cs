@@ -30,7 +30,7 @@ public class PlayerData
 
     [TitleGroup("장비 시스템", "장착된 장비 정보")]
     [ReadOnly, ShowInInspector]
-    public Dictionary<EquipmentSlot, EquipableItem> equippedItems { get; private set; } = new Dictionary<EquipmentSlot, EquipableItem>();
+    public Dictionary<EquipmentType, EquipableItem> equippedItems { get; private set; } = new Dictionary<EquipmentType, EquipableItem>();
 
     [TitleGroup("게임 화폐", "강화 및 구매용 화폐")]
     [ShowInInspector]
@@ -56,7 +56,7 @@ public class PlayerData
         energy = 100f;
         maxEnergy = 100f;
         gold = 1000;
-        equippedItems = new Dictionary<EquipmentSlot, EquipableItem>();
+        equippedItems = new Dictionary<EquipmentType, EquipableItem>();
     }
 
     // === 에너지 관련 메서드 ===
@@ -163,7 +163,7 @@ public class PlayerData
     /// <summary>
     /// 장비 장착 정보 업데이트
     /// </summary>
-    public void SetEquippedItem(EquipmentSlot slot, EquipableItem item)
+    public void SetEquippedItem(EquipmentType slot, EquipableItem item)
     {
         if (item != null)
         {
@@ -178,7 +178,7 @@ public class PlayerData
     /// <summary>
     /// 장착된 장비 반환
     /// </summary>
-    public EquipableItem GetEquippedItem(EquipmentSlot slot)
+    public EquipableItem GetEquippedItem(EquipmentType slot)
     {
         return equippedItems.TryGetValue(slot, out EquipableItem item) ? item : null;
     }
@@ -186,9 +186,9 @@ public class PlayerData
     /// <summary>
     /// 모든 장착된 장비 반환
     /// </summary>
-    public Dictionary<EquipmentSlot, EquipableItem> GetAllEquippedItems()
+    public Dictionary<EquipmentType, EquipableItem> GetAllEquippedItems()
     {
-        return new Dictionary<EquipmentSlot, EquipableItem>(equippedItems);
+        return new Dictionary<EquipmentType, EquipableItem>(equippedItems);
     }
 
     // === 화폐 관련 메서드 ===
