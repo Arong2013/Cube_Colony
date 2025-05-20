@@ -16,6 +16,9 @@ public class EquipmentComponent : IEntityComponent
     // 장비 효과로 인한 스탯 보너스 저장
     private Dictionary<EntityStatName, float> equipmentBonuses = new Dictionary<EntityStatName, float>();
 
+    [ShowInInspector, ReadOnly]
+    private EquipmentEffects totalEffects; // 장비 효과 합계
+
     public IReadOnlyDictionary<EquipmentType, EquipableItem> EquippedItems => equippedItems;
 
     public void Start(Entity entity)
@@ -38,7 +41,7 @@ public class EquipmentComponent : IEntityComponent
     private void InitializeEquipmentSlots()
     {
         // 모든 장비 타입에 대해 빈 슬롯 생성
-        foreach (EquipmentType type in System.Enum.GetValues<EquipmentType>())
+        foreach (EquipmentType type in System.Enum.GetValues(typeof(EquipmentType)))
         {
             equippedItems[type] = null;
         }
@@ -158,29 +161,167 @@ public class EquipmentComponent : IEntityComponent
     /// </summary>
     private void ApplyEquipmentEffects(EquipableItem item)
     {
-        // 공격력 보너스 적용
-        if (item.attackBonus > 0)
+        if (item == null) return;
+
+        var effects = item.GetCurrentEffects();
+
+        // 공격력 적용
+        if (effects.attackBonus > 0)
         {
-            _owner.AddEntityStatModifier(EntityStatName.ATK, item, item.attackBonus);
-            AddBonusToTracker(EntityStatName.ATK, item.attackBonus);
+            _owner.AddEntityStatModifier(EntityStatName.ATK, item, effects.attackBonus);
+            AddBonusToTracker(EntityStatName.ATK, effects.attackBonus);
         }
 
-        // 방어력 보너스 적용
-        if (item.defenseBonus > 0)
+        // 방어력 적용
+        if (effects.defenseBonus > 0)
         {
-            _owner.AddEntityStatModifier(EntityStatName.DEF, item, item.defenseBonus);
-            AddBonusToTracker(EntityStatName.DEF, item.defenseBonus);
+            _owner.AddEntityStatModifier(EntityStatName.DEF, item, effects.defenseBonus);
+            AddBonusToTracker(EntityStatName.DEF, effects.defenseBonus);
         }
 
         // 체력 보너스 적용
-        if (item.healthBonus > 0)
+        if (effects.healthBonus > 0)
         {
-            _owner.AddEntityStatModifier(EntityStatName.MaxHP, item, item.healthBonus);
-            AddBonusToTracker(EntityStatName.MaxHP, item.healthBonus);
+            _owner.AddEntityStatModifier(EntityStatName.MaxHP, item, effects.healthBonus);
+            AddBonusToTracker(EntityStatName.MaxHP, effects.healthBonus);
         }
 
-        // 강화 효과 적용
-        ApplyReinforcementEffects(item);
+        // 산소 보너스 적용
+        if (effects.maxOxygenBonus > 0)
+        {
+            _owner.AddEntityStatModifier(EntityStatName.MaxO2, item, effects.maxOxygenBonus);
+            AddBonusToTracker(EntityStatName.MaxO2, effects.maxOxygenBonus);
+        }
+
+        // 에너지 보너스 적용
+        if (effects.maxEnergyBonus > 0)
+        {
+            ApplyEnergyBonus(effects.maxEnergyBonus);
+        }
+
+        // 특수 효과 적용 (장비 타입별)
+        ApplySpecialEffects(item, effects);
+
+        // 총 효과 업데이트
+        totalEffects = GetTotalEquipmentEffects();
+    }
+
+    /// <summary>
+    /// 모든 장비 효과의 합계 계산
+    /// </summary>
+    private EquipmentEffects GetTotalEquipmentEffects()
+    {
+        EquipmentEffects total = new EquipmentEffects();
+        
+        foreach (var item in equippedItems.Values)
+        {
+            if (item != null)
+            {
+                var effects = item.GetCurrentEffects();
+                total.attackBonus += effects.attackBonus;
+                total.defenseBonus += effects.defenseBonus;
+                total.healthBonus += effects.healthBonus;
+                total.maxOxygenBonus += effects.maxOxygenBonus;
+                total.maxEnergyBonus += effects.maxEnergyBonus;
+                total.extraHitCount += effects.extraHitCount;
+                total.fireRateBonus += effects.fireRateBonus;
+                total.oxygenConsumptionReduction += effects.oxygenConsumptionReduction;
+                total.energyConsumptionReduction += effects.energyConsumptionReduction;
+                total.inventorySlotBonus += effects.inventorySlotBonus;
+                total.damageReduction += effects.damageReduction;
+            }
+        }
+        
+        return total;
+    }
+
+    /// <summary>
+    /// 특수 효과 적용 (장비 타입별)
+    /// </summary>
+    private void ApplySpecialEffects(EquipableItem item, EquipmentEffects effects)
+    {
+        switch (item.equipmentType)
+        {
+            case EquipmentType.Sword:
+                // 추가 타격 횟수
+                if (effects.extraHitCount > 0)
+                {
+                    // 직접 효과를 저장 (totalEffects는 나중에 GetTotalEquipmentEffects에서 계산됨)
+                    // 별도의 PlayerEntity 메서드 호출 없음
+                }
+                break;
+
+            case EquipmentType.Gun:
+                // 연사 속도 증가
+                if (effects.fireRateBonus > 0)
+                {
+                    // 직접 효과를 저장 (totalEffects는 나중에 GetTotalEquipmentEffects에서 계산됨)
+                    // 별도의 PlayerEntity 메서드 호출 없음
+                }
+                break;
+
+            case EquipmentType.OxygenTank:
+                // 산소통 효과
+                if (effects.maxOxygenBonus > 0)
+                {
+                    _owner.AddEntityStatModifier(EntityStatName.MaxO2, item, effects.maxOxygenBonus);
+                    AddBonusToTracker(EntityStatName.MaxO2, effects.maxOxygenBonus);
+                }
+
+                if (effects.oxygenConsumptionReduction > 0)
+                {
+                    // 직접 효과를 저장 (totalEffects는 나중에 GetTotalEquipmentEffects에서 계산됨)
+                    // 별도의 PlayerEntity 메서드 호출 없음
+                }
+                break;
+
+            case EquipmentType.Battery:
+                // 배터리 효과
+                if (effects.maxEnergyBonus > 0)
+                {
+                    _owner.AddEntityStatModifier(EntityStatName.MaxEng, item, effects.maxEnergyBonus);
+                    AddBonusToTracker(EntityStatName.MaxEng, effects.maxEnergyBonus);
+                }
+
+                if (effects.energyConsumptionReduction > 0)
+                {
+                    // 직접 효과를 저장 (totalEffects는 나중에 GetTotalEquipmentEffects에서 계산됨)
+                    // 별도의 PlayerEntity 메서드 호출 없음
+                }
+                break;
+
+            case EquipmentType.Backpack:
+                // 인벤토리 슬롯 증가
+                if (effects.inventorySlotBonus > 0)
+                {
+                    if (_owner is PlayerEntity playerEntity)
+                    {
+                        var inventoryComponent = playerEntity.GetEntityComponent<ExpandedInventoryComponent>();
+                        if (inventoryComponent != null)
+                        {
+                            inventoryComponent.AddSlotBonus(effects.inventorySlotBonus);
+                        }
+                        else
+                        {
+                            Debug.LogWarning("ExpandedInventoryComponent를 찾을 수 없습니다.");
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogWarning("PlayerEntity가 아닌 엔티티에 인벤토리 확장을 시도했습니다.");
+                    }
+                }
+                break;
+
+            case EquipmentType.Helmet:
+                // 피해 감소
+                if (effects.damageReduction > 0)
+                {
+                    // 직접 효과를 저장 (totalEffects는 나중에 GetTotalEquipmentEffects에서 계산됨)
+                    // 별도의 PlayerEntity 메서드 호출 없음
+                }
+                break;
+        }
     }
 
     /// <summary>
@@ -209,8 +350,49 @@ public class EquipmentComponent : IEntityComponent
             RemoveBonusFromTracker(EntityStatName.MaxHP, item.healthBonus);
         }
 
+        // 산소 보너스 제거
+        if (item.maxOxygenBonus > 0)
+        {
+            _owner.SetEntityStatModifier(EntityStatName.MaxO2, item, 0);
+            RemoveBonusFromTracker(EntityStatName.MaxO2, item.maxOxygenBonus);
+        }
+
+        // 에너지 보너스 제거
+        if (item.maxEnergyBonus > 0)
+        {
+            RemoveEnergyBonus(item.maxEnergyBonus);
+        }
+
+        // 특수 효과 제거
+        RemoveSpecialEffects(item);
+
         // 강화 효과 제거
         RemoveReinforcementEffects(item);
+
+        // 총 효과 업데이트
+        totalEffects = GetTotalEquipmentEffects();
+    }
+
+    /// <summary>
+    /// 특수 효과 제거
+    /// </summary>
+    private void RemoveSpecialEffects(EquipableItem item)
+    {
+        // 특수 효과들은 GetTotalEquipmentEffects()에서 계산되므로
+        // 아이템을 제거하면 자동으로 totalEffects에서 제외됩니다.
+        // ExpandInventory는 예외적으로 직접 호출합니다.
+        if (_owner is PlayerEntity playerEntity && item.equipmentType == EquipmentType.Backpack && item.inventorySlotBonus > 0)
+        {
+            var inventoryComponent = playerEntity.GetEntityComponent<ExpandedInventoryComponent>();
+            if (inventoryComponent != null)
+            {
+                inventoryComponent.RemoveSlotBonus(item.inventorySlotBonus);
+            }
+            else
+            {
+                Debug.LogWarning("ExpandedInventoryComponent를 찾을 수 없습니다.");
+            }
+        }
     }
 
     /// <summary>
@@ -308,6 +490,75 @@ public class EquipmentComponent : IEntityComponent
     }
 
     /// <summary>
+    /// 에너지 보너스 적용
+    /// </summary>
+    private void ApplyEnergyBonus(float bonus)
+    {
+        if (BattleFlowController.Instance?.playerData != null)
+        {
+            try
+            {
+                float currentMaxEnergy = BattleFlowController.Instance.playerData.maxEnergy;
+                BattleFlowController.Instance.playerData.SetMaxEnergy(currentMaxEnergy + bonus);
+                BattleFlowController.Instance.NotifyObservers();
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"에너지 보너스 적용 중 오류 발생: {e.Message}");
+                
+                // 대체 구현: playerData 클래스에 올바른 접근자/프로퍼티 사용
+                BattleFlowController.Instance.playerData.SetMaxEnergy(
+                    BattleFlowController.Instance.playerData.maxEnergy + bonus);
+                BattleFlowController.Instance.NotifyObservers();
+            }
+        }
+    }
+    
+    /// <summary>
+    /// 에너지 보너스 제거
+    /// </summary>
+    private void RemoveEnergyBonus(float bonus)
+    {
+        if (BattleFlowController.Instance?.playerData != null)
+        {
+            try
+            {
+                float currentMaxEnergy = BattleFlowController.Instance.playerData.maxEnergy;
+                BattleFlowController.Instance.playerData.SetMaxEnergy(currentMaxEnergy - bonus);
+                BattleFlowController.Instance.NotifyObservers();
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"에너지 보너스 제거 중 오류 발생: {e.Message}");
+                
+                // 대체 구현: playerData 클래스에 올바른 접근자/프로퍼티 사용
+                BattleFlowController.Instance.playerData.SetMaxEnergy(
+                    BattleFlowController.Instance.playerData.maxEnergy - bonus);
+                BattleFlowController.Instance.NotifyObservers();
+            }
+        }
+    }
+
+    /// <summary>
+    /// 인벤토리 확장 적용
+    /// </summary>
+    private void ApplyInventoryExpansion(int slotBonus)
+    {
+        if (_owner is PlayerEntity playerEntity)
+        {
+            var inventoryComponent = playerEntity.GetEntityComponent<ExpandedInventoryComponent>();
+            if (inventoryComponent != null)
+            {
+                inventoryComponent.AddSlotBonus(slotBonus);
+            }
+            else
+            {
+                Debug.LogWarning("ExpandedInventoryComponent를 찾을 수 없습니다.");
+            }
+        }
+    }
+
+    /// <summary>
     /// 모든 장비 효과 제거
     /// </summary>
     private void RemoveAllEquipmentEffects()
@@ -364,5 +615,13 @@ public class EquipmentComponent : IEntityComponent
         {
             Debug.Log($"{kvp.Key}: +{kvp.Value}");
         }
+    }
+
+    /// <summary>
+    /// 총 효과 가져오기
+    /// </summary>
+    public EquipmentEffects GetTotalEffects()
+    {
+        return totalEffects;
     }
 }

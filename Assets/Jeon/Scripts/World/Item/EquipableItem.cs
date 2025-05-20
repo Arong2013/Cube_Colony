@@ -26,6 +26,17 @@ public class EquipableItem : Item
     [ShowInInspector] public ItemGrade grade;
     [ShowInInspector] public Sprite itemIcon;
 
+    // 추가 필요한 필드들
+    [TitleGroup("추가 효과")]
+    [ShowInInspector] public float maxOxygenBonus = 0f;
+    [ShowInInspector] public float maxEnergyBonus = 0f;
+    [ShowInInspector] public int extraHitCount = 0;
+    [ShowInInspector] public float fireRateBonus = 0f;
+    [ShowInInspector] public float oxygenConsumptionReduction = 0f;
+    [ShowInInspector] public float energyConsumptionReduction = 0f;
+    [ShowInInspector] public int inventorySlotBonus = 0;
+    [ShowInInspector] public float damageReduction = 0f;
+
     // 강화 관련 필드들
     [TitleGroup("강화 시스템")]
     [ShowInInspector]
@@ -121,7 +132,7 @@ public class EquipableItem : Item
     /// </summary>
     public float GetTotalAttackBonus()
     {
-        return GetTotalAttackBonusAtLevel(currentReinforcementLevel);
+        return GetCurrentEffects().attackBonus;
     }
 
     /// <summary>
@@ -129,8 +140,19 @@ public class EquipableItem : Item
     /// </summary>
     public float GetTotalAttackBonusAtLevel(int level)
     {
-        float reinforcementMultiplier = level * 0.1f; // 10% per level
-        return attackBonus + (attackBonus * reinforcementMultiplier);
+        // 현재 레벨 저장
+        int currentLevel = currentReinforcementLevel;
+        
+        // 임시로 레벨 변경
+        currentReinforcementLevel = level;
+        
+        // 효과 계산
+        float result = GetCurrentEffects().attackBonus;
+        
+        // 원래 레벨로 복원
+        currentReinforcementLevel = currentLevel;
+        
+        return result;
     }
 
     /// <summary>
@@ -138,7 +160,7 @@ public class EquipableItem : Item
     /// </summary>
     public float GetTotalDefenseBonus()
     {
-        return GetTotalDefenseBonusAtLevel(currentReinforcementLevel);
+        return GetCurrentEffects().defenseBonus;
     }
 
     /// <summary>
@@ -146,8 +168,19 @@ public class EquipableItem : Item
     /// </summary>
     public float GetTotalDefenseBonusAtLevel(int level)
     {
-        float reinforcementMultiplier = level * 0.1f; // 10% per level
-        return defenseBonus + (defenseBonus * reinforcementMultiplier);
+        // 현재 레벨 저장
+        int currentLevel = currentReinforcementLevel;
+        
+        // 임시로 레벨 변경
+        currentReinforcementLevel = level;
+        
+        // 효과 계산
+        float result = GetCurrentEffects().defenseBonus;
+        
+        // 원래 레벨로 복원
+        currentReinforcementLevel = currentLevel;
+        
+        return result;
     }
 
     /// <summary>
@@ -155,7 +188,7 @@ public class EquipableItem : Item
     /// </summary>
     public float GetTotalHealthBonus()
     {
-        return GetTotalHealthBonusAtLevel(currentReinforcementLevel);
+        return GetCurrentEffects().healthBonus;
     }
 
     /// <summary>
@@ -163,8 +196,19 @@ public class EquipableItem : Item
     /// </summary>
     public float GetTotalHealthBonusAtLevel(int level)
     {
-        float reinforcementMultiplier = level * 0.1f; // 10% per level
-        return healthBonus + (healthBonus * reinforcementMultiplier);
+        // 현재 레벨 저장
+        int currentLevel = currentReinforcementLevel;
+        
+        // 임시로 레벨 변경
+        currentReinforcementLevel = level;
+        
+        // 효과 계산
+        float result = GetCurrentEffects().healthBonus;
+        
+        // 원래 레벨로 복원
+        currentReinforcementLevel = currentLevel;
+        
+        return result;
     }
 
     /// <summary>
@@ -173,7 +217,7 @@ public class EquipableItem : Item
     public float GetReinforcementAttackBonus()
     {
         if (currentReinforcementLevel <= 0) return 0f;
-        return GetTotalAttackBonus() - attackBonus;
+        return GetCurrentEffects().attackBonus - attackBonus;
     }
 
     /// <summary>
@@ -182,7 +226,7 @@ public class EquipableItem : Item
     public float GetReinforcementDefenseBonus()
     {
         if (currentReinforcementLevel <= 0) return 0f;
-        return GetTotalDefenseBonus() - defenseBonus;
+        return GetCurrentEffects().defenseBonus - defenseBonus;
     }
 
     /// <summary>
@@ -191,7 +235,7 @@ public class EquipableItem : Item
     public float GetReinforcementHealthBonus()
     {
         if (currentReinforcementLevel <= 0) return 0f;
-        return GetTotalHealthBonus() - healthBonus;
+        return GetCurrentEffects().healthBonus - healthBonus;
     }
 
     /// <summary>
@@ -215,6 +259,7 @@ public class EquipableItem : Item
     public string GetDetailedDescription()
     {
         string details = description + "\n\n";
+        var currentEffects = GetCurrentEffects();
 
         // 기본 스탯
         details += "=== 기본 능력치 ===\n";
@@ -224,6 +269,29 @@ public class EquipableItem : Item
             details += $"방어력: +{defenseBonus}\n";
         if (healthBonus > 0)
             details += $"체력: +{healthBonus}\n";
+        if (maxOxygenBonus > 0)
+            details += $"최대 산소: +{maxOxygenBonus}\n";
+        if (maxEnergyBonus > 0)
+            details += $"최대 에너지: +{maxEnergyBonus}\n";
+
+        // 특수 효과
+        if (extraHitCount > 0 || fireRateBonus > 0 || oxygenConsumptionReduction > 0 ||
+            energyConsumptionReduction > 0 || inventorySlotBonus > 0 || damageReduction > 0)
+        {
+            details += "\n=== 특수 효과 ===\n";
+            if (extraHitCount > 0)
+                details += $"추가 타격 횟수: +{extraHitCount}\n";
+            if (fireRateBonus > 0)
+                details += $"연사 속도: +{fireRateBonus:P0}\n";
+            if (oxygenConsumptionReduction > 0)
+                details += $"산소 소모 감소: {oxygenConsumptionReduction:P0}\n";
+            if (energyConsumptionReduction > 0)
+                details += $"에너지 소모 감소: {energyConsumptionReduction:P0}\n";
+            if (inventorySlotBonus > 0)
+                details += $"인벤토리 슬롯: +{inventorySlotBonus}칸\n";
+            if (damageReduction > 0)
+                details += $"피해 감소: {damageReduction:P0}\n";
+        }
 
         // 강화 정보
         if (currentReinforcementLevel > 0)
@@ -235,16 +303,28 @@ public class EquipableItem : Item
                 details += $"강화 방어력: +{GetReinforcementDefenseBonus():F1}\n";
             if (healthBonus > 0)
                 details += $"강화 체력: +{GetReinforcementHealthBonus():F1}\n";
+            
+            // 특수 효과 강화 정보도 추가
+            if (extraHitCount > 0)
+                details += $"강화 추가 타격: +{currentEffects.extraHitCount - extraHitCount}\n";
+            if (fireRateBonus > 0)
+                details += $"강화 연사 속도: +{currentEffects.fireRateBonus - fireRateBonus:P0}\n";
+            if (oxygenConsumptionReduction > 0)
+                details += $"강화 산소 소모 감소: +{currentEffects.oxygenConsumptionReduction - oxygenConsumptionReduction:P0}\n";
         }
 
         // 총합
         details += "\n=== 총 능력치 ===\n";
         if (attackBonus > 0)
-            details += $"총 공격력: +{GetTotalAttackBonus():F1}\n";
+            details += $"총 공격력: +{currentEffects.attackBonus:F1}\n";
         if (defenseBonus > 0)
-            details += $"총 방어력: +{GetTotalDefenseBonus():F1}\n";
+            details += $"총 방어력: +{currentEffects.defenseBonus:F1}\n";
         if (healthBonus > 0)
-            details += $"총 체력: +{GetTotalHealthBonus():F1}\n";
+            details += $"총 체력: +{currentEffects.healthBonus:F1}\n";
+        if (maxOxygenBonus > 0)
+            details += $"총 최대 산소: +{currentEffects.maxOxygenBonus:F1}\n";
+        if (maxEnergyBonus > 0)
+            details += $"총 최대 에너지: +{currentEffects.maxEnergyBonus:F1}\n";
 
         return details;
     }
@@ -313,5 +393,47 @@ public class EquipableItem : Item
         Debug.Log($"총 공격력: +{GetTotalAttackBonus():F1} (기본 {attackBonus} + 강화 {GetReinforcementAttackBonus():F1})");
         Debug.Log($"총 방어력: +{GetTotalDefenseBonus():F1} (기본 {defenseBonus} + 강화 {GetReinforcementDefenseBonus():F1})");
         Debug.Log($"총 체력: +{GetTotalHealthBonus():F1} (기본 {healthBonus} + 강화 {GetReinforcementHealthBonus():F1})");
+    }
+
+    public EquipmentEffects GetCurrentEffects()
+    {
+        // 기본 효과 생성
+        EquipmentEffects effects = new EquipmentEffects
+        {
+            attackBonus = this.attackBonus,
+            defenseBonus = this.defenseBonus,
+            healthBonus = this.healthBonus,
+            maxOxygenBonus = this.maxOxygenBonus,
+            maxEnergyBonus = this.maxEnergyBonus,
+            extraHitCount = this.extraHitCount,
+            fireRateBonus = this.fireRateBonus,
+            oxygenConsumptionReduction = this.oxygenConsumptionReduction,
+            energyConsumptionReduction = this.energyConsumptionReduction,
+            inventorySlotBonus = this.inventorySlotBonus,
+            damageReduction = this.damageReduction
+        };
+        
+        // 강화 레벨에 따른 추가 효과 계산
+        if (currentReinforcementLevel > 0)
+        {
+            // 강화 레벨에 비례해 효과 증가 (10% 씩)
+            float bonus = 0.1f * currentReinforcementLevel;
+            
+            effects.attackBonus *= (1 + bonus);
+            effects.defenseBonus *= (1 + bonus);
+            effects.healthBonus *= (1 + bonus);
+            effects.maxOxygenBonus *= (1 + bonus);
+            effects.maxEnergyBonus *= (1 + bonus);
+            
+            // 강화에 따라 특수 효과도 증가
+            effects.extraHitCount += Mathf.RoundToInt(effects.extraHitCount * bonus);
+            effects.fireRateBonus *= (1 + bonus);
+            effects.oxygenConsumptionReduction *= (1 + bonus);
+            effects.energyConsumptionReduction *= (1 + bonus);
+            effects.inventorySlotBonus += Mathf.RoundToInt(effects.inventorySlotBonus * bonus);
+            effects.damageReduction *= (1 + bonus);
+        }
+        
+        return effects;
     }
 }

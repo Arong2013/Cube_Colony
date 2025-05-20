@@ -215,11 +215,25 @@ public class PlayerEntity : Entity, ISubject
     /// </summary>
     public float GetTotalEquipmentBonus(EntityStatName stat)
     {
+        // EquipmentComponent에서 보너스 값 가져오기
         var equipmentComponent = GetEntityComponent<EquipmentComponent>();
         if (equipmentComponent != null)
         {
             return equipmentComponent.GetTotalEquipmentBonus(stat);
         }
+
+        // PlayerEquipmentHandler도 확인
+        var playerEquipmentHandler = GetEntityComponent<PlayerEquipmentHandler>();
+        if (playerEquipmentHandler != null)
+        {
+            // statBonuses 딕셔너리에서 값을 반환하는 메서드 호출
+            // PlayerEquipmentHandler에 GetStatBonus 메서드가 있다고 가정
+            if (playerEquipmentHandler.GetStatBonuses().TryGetValue(stat, out float bonus))
+            {
+                return bonus;
+            }
+        }
+
         return 0f;
     }
 
@@ -250,11 +264,17 @@ public class PlayerEntity : Entity, ISubject
     /// </summary>
     public void OnEquipmentReinforced(EquipableItem item)
     {
-        // 장비 효과 재적용
+        // 장비 효과 재적용 - EquipmentComponent 또는 PlayerEquipmentHandler 모두 확인
         var equipmentComponent = GetEntityComponent<EquipmentComponent>();
         if (equipmentComponent != null)
         {
             equipmentComponent.RefreshAllEquipmentEffects();
+        }
+
+        var playerEquipmentHandler = GetEntityComponent<PlayerEquipmentHandler>();
+        if (playerEquipmentHandler != null)
+        {
+            playerEquipmentHandler.RefreshEquipmentEffects();
         }
 
         NotifyObservers();
@@ -269,14 +289,42 @@ public class PlayerEntity : Entity, ISubject
         Debug.Log("=== 플레이어 상태 ===");
         Debug.Log($"레벨: {Stats.Level}");
         Debug.Log($"체력: {GetEntityStat(EntityStatName.HP)}/{GetEntityStat(EntityStatName.MaxHP)}");
+
+        // EntityStatName.ATK와 Attack은 동일하므로 어느 것을 사용해도 됩니다
         Debug.Log($"공격력: {GetEntityStat(EntityStatName.ATK)} (기본: {Stats.GetStat(EntityStatName.ATK)}, 장비: +{GetTotalEquipmentBonus(EntityStatName.ATK)})");
         Debug.Log($"방어력: {GetEntityStat(EntityStatName.DEF)} (기본: {Stats.GetStat(EntityStatName.DEF)}, 장비: +{GetTotalEquipmentBonus(EntityStatName.DEF)})");
         Debug.Log($"속도: {GetEntityStat(EntityStatName.SPD)}");
 
+        // 산소 및 에너지 정보 추가
+        Debug.Log($"산소: {GetEntityStat(EntityStatName.O2)}/{GetEntityStat(EntityStatName.MaxO2)}");
+        Debug.Log($"에너지: {GetEntityStat(EntityStatName.Eng)}/{GetEntityStat(EntityStatName.MaxEng)}");
+
+        // 장비 정보 출력
         var equipmentComponent = GetEntityComponent<EquipmentComponent>();
         if (equipmentComponent != null)
         {
             equipmentComponent.PrintEquipmentStatus();
         }
+
+        var playerEquipmentHandler = GetEntityComponent<PlayerEquipmentHandler>();
+        if (playerEquipmentHandler != null)
+        {
+            Debug.Log("=== 장비 효과 ===");
+            var effects = playerEquipmentHandler.GetTotalEffects();
+            if (effects.attackBonus > 0) Debug.Log($"공격력 보너스: +{effects.attackBonus}");
+            if (effects.defenseBonus > 0) Debug.Log($"방어력 보너스: +{effects.defenseBonus}");
+            if (effects.healthBonus > 0) Debug.Log($"체력 보너스: +{effects.healthBonus}");
+            if (effects.maxOxygenBonus > 0) Debug.Log($"최대 산소 보너스: +{effects.maxOxygenBonus}");
+            if (effects.maxEnergyBonus > 0) Debug.Log($"최대 에너지 보너스: +{effects.maxEnergyBonus}");
+
+            // 특수 효과 출력
+            if (effects.extraHitCount > 0) Debug.Log($"추가 타격: +{effects.extraHitCount}회");
+            if (effects.fireRateBonus > 0) Debug.Log($"연사 속도: +{effects.fireRateBonus * 100}%");
+            if (effects.oxygenConsumptionReduction > 0) Debug.Log($"산소 소모 감소: {effects.oxygenConsumptionReduction * 100}%");
+            if (effects.energyConsumptionReduction > 0) Debug.Log($"에너지 소모 감소: {effects.energyConsumptionReduction * 100}%");
+            if (effects.inventorySlotBonus > 0) Debug.Log($"인벤토리 슬롯: +{effects.inventorySlotBonus}칸");
+            if (effects.damageReduction > 0) Debug.Log($"피해 감소: {effects.damageReduction * 100}%");
+        }
     }
+
 }

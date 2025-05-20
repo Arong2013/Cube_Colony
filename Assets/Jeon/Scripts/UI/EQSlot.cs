@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 using Sirenix.OdinInspector;
 
 /// <summary>
@@ -18,11 +19,11 @@ public class EQSlot : MonoBehaviour, IPointerClickHandler
 
     [TitleGroup("슬롯 UI")]
     [LabelText("장비 이름 텍스트")]
-    [SerializeField] private TMPro.TextMeshProUGUI equipmentNameText;
+    [SerializeField] private TextMeshProUGUI equipmentNameText;
 
     [TitleGroup("슬롯 UI")]
     [LabelText("강화 레벨 표시")]
-    [SerializeField] private TMPro.TextMeshProUGUI reinforcementLevelText;
+    [SerializeField] private TextMeshProUGUI reinforcementLevelText;
 
     [TitleGroup("슬롯 UI")]
     [LabelText("빈 슬롯 표시 이미지")]
@@ -143,7 +144,8 @@ public class EQSlot : MonoBehaviour, IPointerClickHandler
 
             if (equipmentNameText != null)
             {
-                equipmentNameText.gameObject.SetActive(false);
+                equipmentNameText.text = GetSlotTypeName();
+                equipmentNameText.gameObject.SetActive(true);
             }
 
             if (reinforcementLevelText != null)
@@ -171,8 +173,7 @@ public class EQSlot : MonoBehaviour, IPointerClickHandler
             EquipmentType.Battery => "배터리",
             EquipmentType.Backpack => "가방",
             EquipmentType.Helmet => "헬멧",
-            EquipmentType.None => "없음",
-            _ => "알 수 없음"
+            _ => "장비 슬롯"
         };
     }
 }

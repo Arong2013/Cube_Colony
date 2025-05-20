@@ -85,14 +85,22 @@ public enum EntityAnimFloat
 
 public enum EntityStatName
 {
-    HP, MaxHP,
-    O2, MaxO2,
-    Eng, MaxEng,    
-    ATK,
-    DEF,
-    SPD,
-}
-public enum InteractionType
+    HP,             // 현재 체력
+    MaxHP,          // 최대 체력
+    O2,             // 현재 산소량
+    MaxOxygen,      // 최대 산소량 (MaxO2를 MaxOxygen으로 변경)
+    Eng,            // 현재 에너지
+    MaxEnergy,      // 최대 에너지량 (MaxEng를 MaxEnergy로 변경)
+    Attack,         // 공격력 (ATK를 Attack으로 변경)
+    Defense,        // 방어력 (DEF를 Defense로 변경)
+    SPD,            // 이동 속도
+    
+    // 새로 추가된 필드들
+    MaxO2 = MaxOxygen,       // 이전 코드와의 호환성을 위해 별칭 제공
+    MaxEng = MaxEnergy,      // 이전 코드와의 호환성을 위해 별칭 제공
+    ATK = Attack,            // 이전 코드와의 호환성을 위해 별칭 제공
+    DEF = Defense            // 이전 코드와의 호환성을 위해 별칭 제공
+}public enum InteractionType
 {
     Attack,
     Chop,
