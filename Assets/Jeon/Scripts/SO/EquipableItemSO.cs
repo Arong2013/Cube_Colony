@@ -75,7 +75,7 @@ public class EquipableItemSO : ScriptableObject
         for (int level = 0; level <= maxReinforcementLevel; level++)
         {
             var tempItem = CreateTempItem();
-            tempItem.reinforcementLevel = level;
+            tempItem.currentReinforcementLevel = level;
             var effects = tempItem.GetCurrentEffects();
 
             Debug.Log($"레벨 {level}: {GetEffectsPreview(effects)}");

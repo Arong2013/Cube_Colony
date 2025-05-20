@@ -46,7 +46,7 @@ public class PlayerEquipmentHandler : IEntityComponent
     {
         if (item == null) return false;
 
-        EquipmentType slot = item.GetEquipmentSlot();
+        EquipmentType slot = item.equipmentType;
 
         // 기존 장비가 있다면 해제
         if (equippedItems.ContainsKey(slot))
@@ -130,16 +130,41 @@ public class PlayerEquipmentHandler : IEntityComponent
     /// </summary>
     private void ApplyEquipmentEffects(EquipableItem item)
     {
+        if (item == null) return;
+
+        // 아이템의 현재 효과 가져오기
         var effects = item.GetCurrentEffects();
 
-        // 스탯 보너스 적용
-        _entity.AddEntityStatModifier(EntityStatName.ATK, item, effects.attackBonus);
-        _entity.AddEntityStatModifier(EntityStatName.DEF, item, effects.defenseBonus);
-        _entity.AddEntityStatModifier(EntityStatName.MaxHP, item, effects.healthBonus);
-        _entity.AddEntityStatModifier(EntityStatName.MaxO2, item, effects.maxOxygenBonus);
+        // 공격력 보너스 적용
+        if (effects.attackBonus > 0)
+        {
+            _entity.AddEntityStatModifier(EntityStatName.ATK, item, effects.attackBonus);
+            AddStatBonus(EntityStatName.ATK, effects.attackBonus);
+        }
 
-        // PlayerEntity라면 에너지 보너스도 적용
-        if (_entity is PlayerEntity player)
+        // 방어력 보너스 적용
+        if (effects.defenseBonus > 0)
+        {
+            _entity.AddEntityStatModifier(EntityStatName.DEF, item, effects.defenseBonus);
+            AddStatBonus(EntityStatName.DEF, effects.defenseBonus);
+        }
+
+        // 체력 보너스 적용
+        if (effects.healthBonus > 0)
+        {
+            _entity.AddEntityStatModifier(EntityStatName.MaxHP, item, effects.healthBonus);
+            AddStatBonus(EntityStatName.MaxHP, effects.healthBonus);
+        }
+
+        // 산소 보너스 적용
+        if (effects.maxOxygenBonus > 0)
+        {
+            _entity.AddEntityStatModifier(EntityStatName.MaxO2, item, effects.maxOxygenBonus);
+            AddStatBonus(EntityStatName.MaxO2, effects.maxOxygenBonus);
+        }
+
+        // 에너지 보너스 적용
+        if (effects.maxEnergyBonus > 0)
         {
             // 에너지는 PlayerData에서 관리하므로 별도 처리 필요
             ApplyEnergyBonus(effects.maxEnergyBonus);
@@ -212,7 +237,10 @@ public class PlayerEquipmentHandler : IEntityComponent
 
         foreach (var item in equippedItems.Values)
         {
-            totalEffects += item.GetCurrentEffects();
+            if (item != null)
+            {
+                totalEffects += item.GetCurrentEffects();
+            }
         }
     }
 
@@ -316,5 +344,34 @@ public class PlayerEquipmentHandler : IEntityComponent
     public int GetInventorySlotBonus()
     {
         return totalEffects.inventorySlotBonus;
+    }
+
+    /// <summary>
+    /// 스탯 보너스 딕셔너리 반환
+    /// </summary>
+    public Dictionary<EntityStatName, float> GetStatBonuses()
+    {
+        return new Dictionary<EntityStatName, float>(statBonuses);
+    }
+
+    // 스탯 보너스 추가를 위한 helper 메서드 (클래스 내에 추가 필요)
+    private Dictionary<EntityStatName, float> statBonuses = new Dictionary<EntityStatName, float>();
+
+    private void AddStatBonus(EntityStatName stat, float bonus)
+    {
+        if (!statBonuses.ContainsKey(stat))
+            statBonuses[stat] = 0;
+
+        statBonuses[stat] += bonus;
+    }
+
+    private void RemoveStatBonus(EntityStatName stat, float bonus)
+    {
+        if (statBonuses.ContainsKey(stat))
+        {
+            statBonuses[stat] -= bonus;
+            if (statBonuses[stat] <= 0)
+                statBonuses.Remove(stat);
+        }
     }
 }

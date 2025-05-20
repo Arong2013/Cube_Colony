@@ -26,7 +26,7 @@ public class BattleFlowController : SerializedMonoBehaviour
 
     [TitleGroup("플레이어 데이터", "플레이어 관련 정보")]
     [ShowInInspector, HideLabel]
-    public PlayerData playerData { get; private set; }
+    public PlayerData playerData;
 
     [TitleGroup("큐브 상태 관리", "큐브 지속성 관리")]
     [LabelText("큐브 사용 횟수"), ReadOnly]

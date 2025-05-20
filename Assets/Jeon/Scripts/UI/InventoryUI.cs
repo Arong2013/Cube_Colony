@@ -2,6 +2,7 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Linq;
+using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour, IObserver
 {
@@ -396,23 +397,57 @@ public class InventoryUI : MonoBehaviour, IObserver
     public void PrintEquipmentStatus()
     {
         var player = Utils.GetPlayer();
-        if (player == null) return;
+        if (player == null)
+        {
+            Debug.LogWarning("플레이어를 찾을 수 없습니다.");
+            return;
+        }
 
         var equipmentComponent = player.GetEntityComponent<EquipmentComponent>();
-        if (equipmentComponent == null) return;
+        if (equipmentComponent == null)
+        {
+            Debug.LogWarning("장비 컴포넌트를 찾을 수 없습니다.");
+            return;
+        }
 
-        Debug.Log("=== 현재 장착 상태 ===");
-        foreach (EquipmentType type in System.Enum.GetValues<EquipmentType>())
+        // 장비 상태 출력
+        Debug.Log("<color=yellow>=== 현재 장착 상태 ===</color>");
+        foreach (EquipmentType type in System.Enum.GetValues(typeof(EquipmentType)))
         {
             var item = equipmentComponent.GetEquippedItem(type);
             if (item != null)
             {
-                Debug.Log($"{type}: {item.GetDisplayName()}");
+                string reinforcementInfo = item.currentReinforcementLevel > 0 ? $" <color=cyan>(+{item.currentReinforcementLevel})</color>" : "";
+                Debug.Log($"{type}: <color=green>{item.GetDisplayName()}</color>{reinforcementInfo}");
             }
             else
             {
-                Debug.Log($"{type}: 비어있음");
+                Debug.Log($"{type}: <color=red>비어있음</color>");
             }
+        }
+        
+        // 총 효과 출력
+        var totalEffects = equipmentComponent.GetTotalEffects();
+        Debug.Log("<color=yellow>=== 총 장비 효과 ===</color>");
+        
+        if (totalEffects.attackBonus > 0) Debug.Log($"공격력: <color=green>+{totalEffects.attackBonus}</color>");
+        if (totalEffects.defenseBonus > 0) Debug.Log($"방어력: <color=green>+{totalEffects.defenseBonus}</color>");
+        if (totalEffects.healthBonus > 0) Debug.Log($"체력: <color=green>+{totalEffects.healthBonus}</color>");
+        if (totalEffects.maxOxygenBonus > 0) Debug.Log($"최대 산소: <color=green>+{totalEffects.maxOxygenBonus}</color>");
+        if (totalEffects.maxEnergyBonus > 0) Debug.Log($"최대 에너지: <color=green>+{totalEffects.maxEnergyBonus}</color>");
+        if (totalEffects.extraHitCount > 0) Debug.Log($"추가 타격: <color=green>+{totalEffects.extraHitCount}회</color>");
+        if (totalEffects.fireRateBonus > 0) Debug.Log($"연사 속도: <color=green>+{totalEffects.fireRateBonus}</color>");
+        if (totalEffects.oxygenConsumptionReduction > 0) Debug.Log($"산소 소모 감소: <color=green>{totalEffects.oxygenConsumptionReduction * 100}%</color>");
+        if (totalEffects.energyConsumptionReduction > 0) Debug.Log($"에너지 소모 감소: <color=green>{totalEffects.energyConsumptionReduction * 100}%</color>");
+        if (totalEffects.inventorySlotBonus > 0) Debug.Log($"인벤토리 슬롯: <color=green>+{totalEffects.inventorySlotBonus}</color>");
+        if (totalEffects.damageReduction > 0) Debug.Log($"피해 감소: <color=green>{totalEffects.damageReduction * 100}%</color>");
+        
+        // 인벤토리 정보 출력
+        var inventoryComponent = player.GetEntityComponent<ExpandedInventoryComponent>();
+        if (inventoryComponent != null)
+        {
+            Debug.Log("<color=yellow>=== 인벤토리 정보 ===</color>");
+            Debug.Log(inventoryComponent.GetInventoryInfo());
         }
     }
 }
