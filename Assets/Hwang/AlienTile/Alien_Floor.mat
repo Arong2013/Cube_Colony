@@ -31,6 +31,7 @@ Material:
   - _MK_DISSOLVE_BORDER_COLOR
   - _MK_ENVIRONMENT_REFLECTIONS_AMBIENT
   - _MK_LIGHT_BANDED
+  - _MK_NORMAL_MAP
   - _MK_OUTLINE_HULL_CLIP
   - _MK_RECEIVE_SHADOWS
   - _MK_SPECULAR_ISOTROPIC
@@ -149,7 +150,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 6fa3d451d03d5da43bcf8cb70ce40412, type: 3}
+        m_Texture: {fileID: 2800000, guid: f5f4e435f40aef3478f485937d32d336, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
