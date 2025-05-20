@@ -26,7 +26,7 @@ public class BattleFlowController : SerializedMonoBehaviour
 
     [TitleGroup("플레이어 데이터", "플레이어 관련 정보")]
     [ShowInInspector, HideLabel]
-    public PlayerData playerData { get; private set; }
+    public PlayerData playerData;
 
     [TitleGroup("큐브 상태 관리", "큐브 지속성 관리")]
     [LabelText("큐브 사용 횟수"), ReadOnly]
@@ -43,6 +43,14 @@ public class BattleFlowController : SerializedMonoBehaviour
     [TitleGroup("큐브 상태 관리")]
     [LabelText("사용된 페이스 목록"), ReadOnly]
     [SerializeField] private List<Vector3> usedFacePositions = new List<Vector3>();
+
+    [TitleGroup("에너지 설정", "에너지 관련 설정")]
+    [LabelText("에너지 회복 속도")]
+    [SerializeField] private float energyRegenRate = 1f; // 초당 회복량
+
+    [TitleGroup("에너지 설정")]
+    [LabelText("에너지 자동 회복 사용")]
+    [SerializeField] private bool useEnergyRegen = true;
 
     [TitleGroup("디버그 정보")]
     [ReadOnly, ShowInInspector]
@@ -85,6 +93,12 @@ public class BattleFlowController : SerializedMonoBehaviour
     private void Update()
     {
         currentState?.Update();
+
+        // 에너지 자동 회복
+        if (useEnergyRegen && playerData != null)
+        {
+            playerData.RegenerateEnergy(Time.deltaTime);
+        }
     }
 
     /// <summary>
@@ -226,6 +240,45 @@ public class BattleFlowController : SerializedMonoBehaviour
     public int GetMaxCubeUsage()
     {
         return maxCubeUsage;
+    }
+
+    /// <summary>
+    /// 에너지 소모 (큐브 회전 등)
+    /// </summary>
+    public bool TryConsumeEnergy(float amount)
+    {
+        if (playerData != null && playerData.TryConsumeEnergy(amount))
+        {
+            NotifyObservers();
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 골드 소모 (강화 등)
+    /// </summary>
+    public bool TrySpendGold(int amount)
+    {
+        if (playerData != null && playerData.TrySpendGold(amount))
+        {
+            NotifyObservers();
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 골드 획득
+    /// </summary>
+    public void AddGold(int amount)
+    {
+        if (playerData != null)
+        {
+            playerData.AddGold(amount);
+            NotifyObservers();
+            Debug.Log($"골드 {amount} 획득! 현재: {playerData.gold}");
+        }
     }
 
     /// <summary>

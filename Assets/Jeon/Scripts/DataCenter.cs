@@ -304,8 +304,42 @@ public class DataCenter : SerializedMonoBehaviour
         item.grade = so.grade;
         item.itemIcon = so.itemIcon;
 
+        // 강화 시스템 데이터 복사
+        item.currentReinforcementLevel = 0; // 항상 0으로 시작
+        item.maxReinforcementLevel = so.maxReinforcementLevel;
+        item.reinforcementCosts = (int[])so.reinforcementCosts.Clone();
+        item.specialEffect1 = so.specialEffect1;
+        item.specialEffect2 = so.specialEffect2;
+        
+        // 특수 효과 설정 (장비 타입에 따라)
+        switch (item.equipmentType)
+        {
+            case EquipmentType.Sword:
+                item.extraHitCount = (int)so.specialEffect1;
+                break;
+            case EquipmentType.Gun:
+                item.fireRateBonus = so.specialEffect1;
+                break;
+            case EquipmentType.OxygenTank:
+                item.maxOxygenBonus = so.specialEffect1;
+                item.oxygenConsumptionReduction = so.specialEffect2;
+                break;
+            case EquipmentType.Battery:
+                item.maxEnergyBonus = so.specialEffect1;
+                item.energyConsumptionReduction = so.specialEffect2;
+                break;
+            case EquipmentType.Backpack:
+                item.inventorySlotBonus = (int)so.specialEffect1;
+                break;
+            case EquipmentType.Helmet:
+                item.healthBonus += so.specialEffect1; // 추가 체력
+                item.damageReduction = so.specialEffect2;
+                break;
+        }
+
         return item;
     }
+
 
     /// <summary>
     /// 새로운 itemAction 인스턴스를 생성해서 반환

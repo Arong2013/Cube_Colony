@@ -16,8 +16,8 @@ public class EntityHealthHandler
     public void TakeDamage(float amount)
     {
         float hp = _entity.GetEntityStat(EntityStatName.HP);
-        float newHp = MathF.Max(0, hp - amount);
-        _entity.SetEntityBaseStat(EntityStatName.HP, newHp);
+        float newHp = Mathf.Max(0, hp - amount);
+        _entity.SetEntityStatModifier(EntityStatName.HP, this, newHp);
         _entity.SetAnimatorValue(EntityAnimTrigger.HitTrigger, null);
         onDamaged?.Invoke((int)amount); 
         if (IsDead)
@@ -29,8 +29,8 @@ public class EntityHealthHandler
     {
         float hp = _entity.GetEntityStat(EntityStatName.HP);
         float maxHp = _entity.GetEntityStat(EntityStatName.MaxHP);
-        float healed = MathF.Min(hp + amount, maxHp);
-        _entity.SetEntityBaseStat(EntityStatName.HP, healed);
+        float healed = Mathf.Min(hp + amount, maxHp);
+        _entity.SetEntityStatModifier(EntityStatName.HP, this, healed);
     }
     public bool IsDead => _entity.GetEntityStat(EntityStatName.HP) <= 0;
 }
