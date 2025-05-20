@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85f8fc003da09ad43b835fbf07ad91de, type: 3}
   m_Name: "\uACE0\uAE09\uC0B0\uC18C\uD1B5"
   m_EditorClassIdentifier: 
-  ID: 0
+  ID: 1003
   ItemName: "\uACE0\uAE09\uC0B0\uC18C\uD1B5"
   equipmentType: 2
   requiredLevel: 1

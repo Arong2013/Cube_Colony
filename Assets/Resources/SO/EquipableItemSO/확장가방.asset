@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85f8fc003da09ad43b835fbf07ad91de, type: 3}
   m_Name: "\uD655\uC7A5\uAC00\uBC29"
   m_EditorClassIdentifier: 
-  ID: 0
+  ID: 1005
   ItemName: "\uD655\uC7A5\uAC00\uBC29"
-  equipmentType: 3
+  equipmentType: 4
   requiredLevel: 1
   attackBonus: 0
   defenseBonus: 0

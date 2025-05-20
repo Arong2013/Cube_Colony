@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85f8fc003da09ad43b835fbf07ad91de, type: 3}
   m_Name: "\uAC15\uCCA0\uCD1D"
   m_EditorClassIdentifier: 
-  ID: 0
+  ID: 1002
   ItemName: "\uAC15\uCCA0\uCD1D"
   equipmentType: 1
   requiredLevel: 1

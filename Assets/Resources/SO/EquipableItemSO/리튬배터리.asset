@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85f8fc003da09ad43b835fbf07ad91de, type: 3}
   m_Name: "\uB9AC\uD2AC\uBC30\uD130\uB9AC"
   m_EditorClassIdentifier: 
-  ID: 0
+  ID: 1004
   ItemName: "\uB9AC\uD2AC\uBC30\uD130\uB9AC"
   equipmentType: 3
   requiredLevel: 1
