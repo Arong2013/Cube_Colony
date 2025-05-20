@@ -2,12 +2,12 @@
 using UnityEngine.UI;
 using TMPro;
 using Sirenix.OdinInspector;
+using UnityEngine.EventSystems;
 
-public class ItemSlot : MonoBehaviour
+public class ItemSlot : MonoBehaviour, IPointerClickHandler
 {
     [TitleGroup("슬롯 UI")]
     [LabelText("아이콘 이미지"), Required]
-    [PreviewField(50)]
     [SerializeField] private Image _icon;
 
     [TitleGroup("슬롯 UI")]
@@ -59,18 +59,33 @@ public class ItemSlot : MonoBehaviour
         }
     }
 
-    public void ShowItemInfo()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        // 아이템 정보 표시 로직 추가
+        if (_item != null)
+        {
+            ShowItemInfo();
+        }
     }
 
-    public void UseItem()
+    public void ShowItemInfo()
     {
-        if (_item == null)
+        if (_item == null) return;
+
+        // 아이템 정보 UI 가져오기
+        ItemInfoUI infoUI = Utils.GetUI<ItemInfoUI>();
+        if (infoUI == null)
         {
-            Debug.LogWarning("아이템이 없습니다.");
+            Debug.LogWarning("ItemInfoUI를 찾을 수 없습니다.");
             return;
         }
+
+        // 아이템 정보 UI 표시
+        infoUI.Show(_item, UseItemCallback);
+    }
+
+    private void UseItemCallback(Item item)
+    {
+        if (item == null) return;
 
         if (BattleFlowController.Instance == null ||
             BattleFlowController.Instance.GetPlayerEntity() == null)
@@ -79,14 +94,14 @@ public class ItemSlot : MonoBehaviour
             return;
         }
 
-        Debug.Log("아이템 사용");
-        _item.Use(BattleFlowController.Instance.GetPlayerEntity());
+        Debug.Log($"아이템 사용: {item.ItemName}");
+        item.Use(BattleFlowController.Instance.GetPlayerEntity());
 
         // 소모품이 모두 소진되었는지 확인
-        if (_item is ConsumableItem consumable && consumable.cunamount <= 0)
+        if (item is ConsumableItem consumable && consumable.cunamount <= 0)
         {
             // 인벤토리에서 제거
-            BattleFlowController.Instance.playerData.RemoveItem(_item);
+            BattleFlowController.Instance.playerData.RemoveItem(item);
             BattleFlowController.Instance.NotifyObservers();
         }
         else

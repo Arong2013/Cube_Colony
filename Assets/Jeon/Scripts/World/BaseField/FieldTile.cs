@@ -15,19 +15,17 @@ public class FieldTile : SerializedMonoBehaviour
     [LabelText("스폰 포인트들"), Tooltip("몬스터가 생성될 위치")]
     [SerializeField] private List<Transform> spawnPoints = new List<Transform>();
 
-    [TitleGroup("스폰 설정")]
-    [LabelText("최소 몬스터 수"), Range(0, 10), Tooltip("생성될 최소 몬스터 수")]
-    [SerializeField] private int minMonsterCount = 0;
-
-    [TitleGroup("스폰 설정")]
-    [LabelText("최대 몬스터 수"), Range(0, 20), Tooltip("생성될 최대 몬스터 수")]
-    [SerializeField] private int maxMonsterCount = 5;
-
     [TitleGroup("디버그")]
     [ReadOnly, ShowInInspector] private FieldTileData tileData;
 
     [TitleGroup("디버그")]
     [ReadOnly, ShowInInspector] private List<GameObject> spawnedObjects = new List<GameObject>();
+
+    [TitleGroup("디버그")]
+    [ReadOnly, ShowInInspector] private int minMonsterCount => tileData?.minCount ?? 0;
+
+    [TitleGroup("디버그")]
+    [ReadOnly, ShowInInspector] private int maxMonsterCount => tileData?.maxCount ?? 0;
 
     public CubieFaceSkillType Type => faceInfo.Type;
     public int MaxLevel => faceInfo.MaxLevel;
@@ -37,7 +35,7 @@ public class FieldTile : SerializedMonoBehaviour
     {
         this.currentStageLevel = currentStageLevel;
         faceInfo = info;
-        tileData = ItemDataCenter.GetRealData<FieldTileData>(CombinedTypeCode);
+        tileData = DataCenter.Instance.GetCloneData<FieldTileData>(CombinedTypeCode);
 
         // 이전에 스폰된 오브젝트 모두 제거
         ClearSpawnedObjects();
@@ -65,15 +63,18 @@ public class FieldTile : SerializedMonoBehaviour
             return;
         }
 
-        // 몬스터 개수 결정 (스폰 포인트 수를 최대로 함)
+        // 몬스터 개수 결정 (데이터의 최소/최대 값 사용, 스폰 포인트 수를 최대로 제한)
         int spawnCount = Mathf.Min(
-            Random.Range(minMonsterCount, maxMonsterCount + 1),
+            Random.Range(tileData.minCount, tileData.maxCount + 1),
             spawnPoints.Count
         );
 
         // 사용할 스폰 포인트 선택 (랜덤하게 섞음)
         List<Transform> shuffledSpawnPoints = new List<Transform>(spawnPoints);
         ShuffleList(shuffledSpawnPoints);
+
+        // 디버그 로그
+        Debug.Log($"<color=cyan>몬스터 생성: {spawnCount}개 (최소: {tileData.minCount}, 최대: {tileData.maxCount}, 스폰포인트: {spawnPoints.Count})</color>");
 
         // 지정된 개수만큼 오브젝트 스폰
         for (int i = 0; i < spawnCount; i++)

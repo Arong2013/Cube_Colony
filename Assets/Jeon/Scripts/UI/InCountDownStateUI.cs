@@ -18,8 +18,8 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
     [SerializeField] private BarUI engBar;
 
     [TitleGroup("게임 진행 UI")]
-    [LabelText("진행 바"), Required]
-    [SerializeField] private BarUI explorationBar;
+    [LabelText("큐브 사용 진행 바"), Required, Tooltip("현재 큐브의 사용 횟수를 표시")]
+    [SerializeField] private BarUI cubeUsageBar;
 
     [TitleGroup("게임 진행 UI")]
     [LabelText("생존 시작 버튼"), Required]
@@ -28,6 +28,10 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
     [TitleGroup("게임 진행 UI")]
     [LabelText("큐브 컨트롤러"), Required]
     [SerializeField] private CubeControllerUI cubeControllerUI;
+
+    [TitleGroup("진행 상태 UI")]
+    [LabelText("사용 횟수 텍스트"), Required, Tooltip("현재/최대 사용 횟수 표시")]
+    [SerializeField] private TMPro.TextMeshProUGUI usageCountText;
 
     [ShowInInspector, ReadOnly]
     [TitleGroup("디버그 정보")]
@@ -50,9 +54,9 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
         }
 
         // BarUI 컴포넌트 초기화 확인
-        if (hpBar == null || o2Bar == null || engBar == null || explorationBar == null)
+        if (hpBar == null || o2Bar == null || engBar == null)
         {
-            Debug.LogError("InCountDownStateUI: BarUI 컴포넌트가 할당되지 않았습니다.");
+            Debug.LogError("InCountDownStateUI: 필수 BarUI 컴포넌트가 할당되지 않았습니다.");
         }
         else
         {
@@ -60,7 +64,18 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
             hpBar.SetBarType(BarUI.BarType.Health);
             o2Bar.SetBarType(BarUI.BarType.Oxygen);
             engBar.SetBarType(BarUI.BarType.Energy);
-            explorationBar.SetBarType(BarUI.BarType.Custom);
+
+            // 큐브 사용 진행 바 설정
+            if (cubeUsageBar != null)
+            {
+                cubeUsageBar.SetBarType(BarUI.BarType.Custom);
+            }
+        }
+
+        // 생존 시작 버튼 이벤트 연결
+        if (survivalStartBtn != null)
+        {
+            survivalStartBtn.onClick.AddListener(SurvivalStartAction);
         }
     }
 
@@ -91,18 +106,15 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
         // 게임 오브젝트가 활성화된 후에 상태 업데이트
         UpdateStatUI();
 
-        // 진행 바 초기화 (참조가 유효할 때만)
-        if (explorationBar != null && explorationBar.gameObject.activeInHierarchy)
-        {
-            explorationBar.SetValue(0, 100);
-        }
+        // 큐브 사용 진행률 업데이트
+        UpdateCubeUsageProgress();
     }
 
     public void Disable()
     {
         if (cubeControllerUI != null)
         {
-            cubeControllerUI.gameObject.SetActive(true);
+            cubeControllerUI.gameObject.SetActive(false);
         }
         gameObject.SetActive(false);
     }
@@ -110,6 +122,7 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
     public void UpdateObserver()
     {
         UpdateStatUI();
+        UpdateCubeUsageProgress();
     }
 
     private void UpdateStatUI()
@@ -125,12 +138,47 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
             engBar.UpdateValueFromPlayerData();
     }
 
+    /// <summary>
+    /// 큐브 사용 진행률 업데이트
+    /// </summary>
+    private void UpdateCubeUsageProgress()
+    {
+        if (BattleFlowController.Instance == null) return;
+
+        int currentUsage = BattleFlowController.Instance.GetCubeUsageCount();
+        int maxUsage = BattleFlowController.Instance.GetMaxCubeUsage();
+
+        // 진행 바 업데이트
+        if (cubeUsageBar != null && cubeUsageBar.gameObject.activeInHierarchy)
+        {
+            cubeUsageBar.SetValue(currentUsage, maxUsage);
+        }
+
+        // 사용 횟수 텍스트 업데이트
+        if (usageCountText != null)
+        {
+            usageCountText.text = $"큐브 사용: {currentUsage}/{maxUsage}";
+
+            // 사용 횟수에 따라 텍스트 색상 변경
+            if (currentUsage >= maxUsage)
+            {
+                usageCountText.color = Color.red; // 완료
+            }
+            else if (currentUsage > 0)
+            {
+                usageCountText.color = Color.yellow; // 진행 중
+            }
+            else
+            {
+                usageCountText.color = Color.white; // 시작 전
+            }
+        }
+    }
+
     public void UpdateExplorationProgress(float progress)
     {
-        if (explorationBar != null && explorationBar.gameObject.activeInHierarchy)
-        {
-            explorationBar.SetValue(progress * 100, 100);
-        }
+        // 이 메서드는 이제 UpdateCubeUsageProgress로 대체됨
+        UpdateCubeUsageProgress();
     }
 
     public void DisableCubeController()

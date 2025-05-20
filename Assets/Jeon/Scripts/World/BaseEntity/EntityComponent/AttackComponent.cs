@@ -4,13 +4,16 @@ public class AttackComponent : IEntityComponent
 {
     private Entity _entity;
     private float _attackRange = 3f;
+
     public AttackComponent(float attackRange)
     {
         _attackRange = attackRange;
-    }   
+    }
+
     public void Start(Entity entity) => _entity = entity;
     public void Update(Entity entity) { }
     public void Exit(Entity entity) { }
+
     public void Attack(Entity target)
     {
         if (target == null) return;
@@ -19,16 +22,30 @@ public class AttackComponent : IEntityComponent
         FaceTarget(target.transform.position);
         _entity.SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Attack);
     }
+
     public void DoHit()
     {
-        var target = _entity.CurrentTarget; 
+        var target = _entity.CurrentTarget;
         if (target == null || !HasValidTarget(_attackRange)) return;
+
         float atk = _entity.GetEntityStat(EntityStatName.ATK);
         target.TakeDamage(atk);
 
-        Debug.Log($"[{_entity.name}] hit {target.name} for {atk} damage");
-        _entity.ClearTarget(); 
+       Debug.Log($"[{_entity.name}] hit {target.name} for {atk} damage");
+
+        // 플레이어이고 검을 장착했다면 추가 타격 적용
+        if (_entity is PlayerEntity player)
+        {
+            var equipmentHandler = player.GetEntityComponent<PlayerEquipmentHandler>();
+            if (equipmentHandler != null)
+            {
+                equipmentHandler.ProcessExtraHits(target);
+            }
+        }
+
+        _entity.ClearTarget();
     }
+
     public bool HasValidTarget(float maxDistance)
     {
         if (_entity.CurrentTarget == null) return false;

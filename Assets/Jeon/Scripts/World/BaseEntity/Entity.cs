@@ -47,70 +47,53 @@ public abstract class Entity : SerializedMonoBehaviour
 
     public void RemoveEntityComponent<T>() where T : class, IEntityComponent => _components.Remove<T>();
 
+    /// <summary>
+    /// 엔티티 스탯에 모디파이어 추가
+    /// </summary>
+    public void AddEntityStatModifier(EntityStatName statName, object source, float value)
+    {
+        // Stats 프로퍼티 사용
+        if (Stats != null)
+        {
+            Stats.UpdateStat(statName, source, value);
+        }
+        else
+        {
+            Debug.LogWarning("엔티티 스탯이 초기화되지 않았습니다.");
+        }
+    }
+
+    /// <summary>
+    /// 엔티티 스탯 모디파이어 설정 (이전 값 덮어쓰기)
+    /// </summary>
+    public void SetEntityStatModifier(EntityStatName statName, object source, float value)
+    {
+        // Stats 프로퍼티 사용
+        if (Stats != null)
+        {
+            Stats.ChangeStat(statName, source, value);
+        }
+        else
+        {
+            Debug.LogWarning("엔티티 스탯이 초기화되지 않았습니다.");
+        }
+    }
+
+    /// <summary>
+    /// 엔티티 스탯 가져오기 (최종 계산값)
+    /// </summary>
     public virtual float GetEntityStat(EntityStatName stat)
     {
-        // 플레이어 엔티티인 경우 에너지는 PlayerData에서 가져오기
-        if (stat == EntityStatName.Eng && this is PlayerEntity)
+        // Stats 프로퍼티 사용
+        if (Stats != null)
         {
-            return BattleFlowController.Instance?.playerData?.energy ?? 0f;
+            return Stats.GetStat(stat);
         }
-        return Stats?.GetStat(stat) ?? 0f;
-    }
-
-    public virtual void SetEntityBaseStat(EntityStatName stat, float val)
-    {
-        // 플레이어 엔티티인 경우 에너지는 PlayerData에 설정
-        if (stat == EntityStatName.Eng && this is PlayerEntity)
+        else
         {
-            if (BattleFlowController.Instance?.playerData != null)
-            {
-                BattleFlowController.Instance.playerData.SetEnergy(val);
-            }
-            return;
+            Debug.LogWarning("엔티티 스탯이 초기화되지 않았습니다.");
+            return 0f;
         }
-        Stats?.SetBaseStat(stat, val);
-    }
-
-    public virtual void UpdateEntityBaseStat(EntityStatName stat, float delta)
-    {
-        // 플레이어 엔티티인 경우 에너지는 PlayerData에서 업데이트
-        if (stat == EntityStatName.Eng && this is PlayerEntity)
-        {
-            if (BattleFlowController.Instance?.playerData != null)
-            {
-                BattleFlowController.Instance.playerData.UpdateEnergy(delta);
-            }
-            return;
-        }
-        Stats?.UpdateBaseStat(stat, delta);
-    }
-
-    public virtual void AddEntityStatModifier(EntityStatName stat, object source, float val)
-    {
-        // 플레이어 엔티티인 경우 에너지는 PlayerData에서 관리
-        if (stat == EntityStatName.Eng && this is PlayerEntity)
-        {
-            if (BattleFlowController.Instance?.playerData != null)
-            {
-                BattleFlowController.Instance.playerData.UpdateEnergy(val);
-            }
-            return;
-        }
-        Stats?.UpdateStat(stat, source, val);
-    }
-
-    public virtual void SetEntityStatModifier(EntityStatName stat, object source, float val)
-    {
-        // 플레이어 엔티티인 경우 에너지는 PlayerData에서 관리
-        if (stat == EntityStatName.Eng && this is PlayerEntity)
-        {
-            if (BattleFlowController.Instance?.playerData != null)
-            {
-                BattleFlowController.Instance.playerData.SetEnergy(val);
-            }
-            return;
-        }
-        Stats?.ChangeStat(stat, source, val);
     }
 
     public void SetAnimatorValue<T>(T param, object val) where T : Enum => _animatorHandler.SetAnimatorValue(param, val);
@@ -121,7 +104,11 @@ public abstract class Entity : SerializedMonoBehaviour
 
     public void ClearTarget() => CurrentTarget = null;
 
-    public virtual void TakeDamage(float dmg) => _healthHandler?.TakeDamage(dmg);
+    public virtual void TakeDamage(float dmg)
+    {
+        _healthHandler?.TakeDamage(dmg);
+        SetAnimatorValue(EntityAnimTrigger.HitTrigger, null);
+    }
 
     public void Heal(float amount) => _healthHandler?.Heal(amount);
 

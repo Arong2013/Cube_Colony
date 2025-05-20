@@ -76,7 +76,7 @@ public class ItemEntity : Entity, IInteractable
 
     public void SetItem(int itemId)
     {
-        _item = ItemDataCenter.GetCloneData<Item>(itemId);
+        _item = DataCenter.Instance.GetCloneData<Item>(itemId);
         itemSprite.sprite = _item.ItemIcon;
         Init();
     }

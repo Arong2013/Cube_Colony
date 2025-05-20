@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Feel/FeelDemos/Barbarians.meta
 guid: fdf4a6a52321ecd40ad61db85244fb08
+========
+guid: d79c8aed1e201ce4a8b83adcf5232a43
+>>>>>>>> main_jin:Assets/Feel/FeelDemos.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

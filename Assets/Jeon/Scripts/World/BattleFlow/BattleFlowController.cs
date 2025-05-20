@@ -26,7 +26,31 @@ public class BattleFlowController : SerializedMonoBehaviour
 
     [TitleGroup("플레이어 데이터", "플레이어 관련 정보")]
     [ShowInInspector, HideLabel]
-    public PlayerData playerData { get; private set; }
+    public PlayerData playerData;
+
+    [TitleGroup("큐브 상태 관리", "큐브 지속성 관리")]
+    [LabelText("큐브 사용 횟수"), ReadOnly]
+    [SerializeField] private int cubeUsageCount = 0;
+
+    [TitleGroup("큐브 상태 관리")]
+    [LabelText("최대 사용 횟수")]
+    [SerializeField] private int maxCubeUsage = 3;
+
+    [TitleGroup("큐브 상태 관리")]
+    [LabelText("현재 큐브 데이터"), ReadOnly]
+    [SerializeField] private CubeData currentCubeData;
+
+    [TitleGroup("큐브 상태 관리")]
+    [LabelText("사용된 페이스 목록"), ReadOnly]
+    [SerializeField] private List<Vector3> usedFacePositions = new List<Vector3>();
+
+    [TitleGroup("에너지 설정", "에너지 관련 설정")]
+    [LabelText("에너지 회복 속도")]
+    [SerializeField] private float energyRegenRate = 1f; // 초당 회복량
+
+    [TitleGroup("에너지 설정")]
+    [LabelText("에너지 자동 회복 사용")]
+    [SerializeField] private bool useEnergyRegen = true;
 
     [TitleGroup("디버그 정보")]
     [ReadOnly, ShowInInspector]
@@ -56,8 +80,9 @@ public class BattleFlowController : SerializedMonoBehaviour
         // 플레이어 데이터 초기화
         playerData = new PlayerData();
 
-        // 씬 전환 시에도 BattleFlowController를 유지하려면 아래 라인 추가
-        // DontDestroyOnLoad(gameObject);
+        // 큐브 상태 초기화
+        cubeUsageCount = 0;
+        usedFacePositions = new List<Vector3>();
     }
 
     private void Start()
@@ -68,6 +93,12 @@ public class BattleFlowController : SerializedMonoBehaviour
     private void Update()
     {
         currentState?.Update();
+
+        // 에너지 자동 회복
+        if (useEnergyRegen && playerData != null)
+        {
+            playerData.RegenerateEnergy(Time.deltaTime);
+        }
     }
 
     /// <summary>
@@ -77,7 +108,12 @@ public class BattleFlowController : SerializedMonoBehaviour
     {
         if (stageCubeDataMap.ContainsKey(currentStage))
         {
-            ChangeState(new CountdownState(cube, stageCubeDataMap[currentStage]));
+            // 첫 번째 스테이지에서는 새로운 큐브 생성
+            currentCubeData = stageCubeDataMap[currentStage];
+            cubeUsageCount = 0;
+            usedFacePositions.Clear();
+
+            ChangeState(new CountdownState(cube, currentCubeData));
         }
         else
         {
@@ -110,15 +146,25 @@ public class BattleFlowController : SerializedMonoBehaviour
     }
 
     /// <summary>
-    /// 생존 상태로 설정합니다.
+    /// 생존 상태로 설정하고 사용된 페이스를 기록합니다.
     /// </summary>
     public void SetInSurvivalState()
     {
-        // 생존 상태로 전환하는 로직 추가 필요
-        if (stageCubeDataMap.ContainsKey(currentStage))
+        var topFaces = cube.GetTopCubieFace();
+
+        // 현재 TOP 페이스 위치들을 사용된 페이스로 기록
+        foreach (var faceInfo in topFaces)
         {
-            ChangeState(new InSurvivalState(this, stageCubeDataMap[currentStage], cube.GetTopCubieFace()));
+            if (!usedFacePositions.Contains(faceInfo.Position))
+            {
+                usedFacePositions.Add(faceInfo.Position);
+            }
         }
+
+        cubeUsageCount++;
+        Debug.Log($"큐브 사용 횟수: {cubeUsageCount}/{maxCubeUsage}");
+
+        ChangeState(new InSurvivalState(this, currentCubeData, topFaces));
     }
 
     /// <summary>
@@ -126,17 +172,30 @@ public class BattleFlowController : SerializedMonoBehaviour
     /// </summary>
     public void SetCountDownState()
     {
-        currentStage++;
-
-        if (stageCubeDataMap.ContainsKey(currentStage))
+        // 큐브를 3번 사용했다면 다음 스테이지로
+        if (cubeUsageCount >= maxCubeUsage)
         {
-            ChangeState(new CountdownState(cube, stageCubeDataMap[currentStage]));
+            currentStage++;
+
+            if (stageCubeDataMap.ContainsKey(currentStage))
+            {
+                // 새로운 스테이지: 새로운 큐브 데이터와 상태 초기화
+                currentCubeData = stageCubeDataMap[currentStage];
+                cubeUsageCount = 0;
+                usedFacePositions.Clear();
+
+                ChangeState(new CountdownState(cube, currentCubeData));
+            }
+            else
+            {
+                Debug.LogWarning($"스테이지 {currentStage}에 대한 데이터가 없습니다. 게임 종료 상태로 전환합니다.");
+                ChangeState(new CompleteState(this));
+            }
         }
         else
         {
-            Debug.LogWarning($"스테이지 {currentStage}에 대한 데이터가 없습니다. 게임 종료 상태로 전환합니다.");
-            // 게임 완료 상태로 전환하는 로직 추가 필요
-          //  ChangeState(new CompleteState());
+            // 같은 스테이지에서 계속: 기존 큐브 데이터 유지하고 사용된 페이스는 몬스터 타일로 변경
+            ChangeState(new CountdownState(cube, currentCubeData, usedFacePositions));
         }
     }
 
@@ -148,9 +207,77 @@ public class BattleFlowController : SerializedMonoBehaviour
         currentStage = 1;
         playerData.Reset(); // 플레이어 데이터 초기화
 
+        // 큐브 상태도 초기화
+        cubeUsageCount = 0;
+        usedFacePositions.Clear();
+
         if (stageCubeDataMap.ContainsKey(currentStage))
         {
-            ChangeState(new CountdownState(cube, stageCubeDataMap[currentStage]));
+            currentCubeData = stageCubeDataMap[currentStage];
+            ChangeState(new CountdownState(cube, currentCubeData));
+        }
+    }
+
+    /// <summary>
+    /// 사용된 페이스 위치 목록을 반환합니다.
+    /// </summary>
+    public List<Vector3> GetUsedFacePositions()
+    {
+        return new List<Vector3>(usedFacePositions);
+    }
+
+    /// <summary>
+    /// 큐브 사용 횟수를 반환합니다.
+    /// </summary>
+    public int GetCubeUsageCount()
+    {
+        return cubeUsageCount;
+    }
+
+    /// <summary>
+    /// 최대 큐브 사용 횟수를 반환합니다.
+    /// </summary>
+    public int GetMaxCubeUsage()
+    {
+        return maxCubeUsage;
+    }
+
+    /// <summary>
+    /// 에너지 소모 (큐브 회전 등)
+    /// </summary>
+    public bool TryConsumeEnergy(float amount)
+    {
+        if (playerData != null && playerData.TryConsumeEnergy(amount))
+        {
+            NotifyObservers();
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 골드 소모 (강화 등)
+    /// </summary>
+    public bool TrySpendGold(int amount)
+    {
+        if (playerData != null && playerData.TrySpendGold(amount))
+        {
+            NotifyObservers();
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 골드 획득
+    /// </summary>
+    public void AddGold(int amount)
+    {
+        if (playerData != null)
+        {
+            playerData.AddGold(amount);
+            NotifyObservers();
+            Debug.Log($"골드 {amount} 획득! 현재: {playerData.gold}");
         }
     }
 
