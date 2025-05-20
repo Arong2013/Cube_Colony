@@ -1,18 +1,9 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Feel/FeelDemos/SquashAndStretch/Prefabs/FeelSquashAndStretchChalet.fbx.meta
 guid: a91729ce0c49b854f952180202ee6a72
-========
-guid: 281037748359e924fbfb3796bb39143d
->>>>>>>> c313270e0efa3a747f8cf4bb750fba43bb009343:Assets/Feel/FeelDemos/SquashAndStretch/Prefabs/Alientile_obj_B.fbx.meta
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Alien_obj_B
-    second: {fileID: 2100000, guid: d0fb2c5e95d39ea46aff1d5450893c4c, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0

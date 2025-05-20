@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Feel/FeelDemos/Barbarians/Lighting/ReflectionProbe-0.exr.meta
 guid: af71d4465ebfa49499ab772dfe48c67b
-========
-guid: d305d8f042c2fa74aadcc8a9d422df67
->>>>>>>> c313270e0efa3a747f8cf4bb750fba43bb009343:Assets/POLYGON - Particle FX v1.0/PolygonParticles/Scenes/Demo_01/ReflectionProbe-0.exr.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

@@ -1,15 +1,20 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Feel/FeelDemos/Tactical/Models/FeelTacticalAssaultRifle.fbx.meta
-guid: 29093db279d5d0540b9a25a9d7355362
+<<<<<<<< HEAD:Assets/Hwang/MetalTile/Metal_obj_1.fbx.meta
+guid: 41b14118766486a418cc5b7a45d5f384
 ========
 guid: cf62d98e3339d6e4594a8385f3ddc308
->>>>>>>> c313270e0efa3a747f8cf4bb750fba43bb009343:Assets/Hwang/PlantTile/Plant_obj_light1.fbx.meta
+>>>>>>>> main_jin:Assets/Hwang/PlantTile/Plant_obj_light1.fbx.meta
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal_obj_1
+    second: {fileID: 2100000, guid: 3ac51f010e40e8144abf39399ce529d7, type: 2}
   materials:
-    materialImportMode: 1
+    materialImportMode: 2
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -47,8 +52,8 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
-    nodeNameCollisionStrategy: 0
-    fileIdsGeneration: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -65,7 +70,7 @@ ModelImporter:
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
-    secondaryUVMarginMethod: 0
+    secondaryUVMarginMethod: 1
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
@@ -102,9 +107,9 @@ ModelImporter:
   animationType: 2
   humanoidOversampling: 1
   avatarSetup: 0
-  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
-  importBlendShapeDeformPercent: 0
-  remapMaterialsIfMaterialImportModeIsNone: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
   assetBundleName: 

@@ -1,12 +1,8 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Feel/FeelDemos/Barbarians/Lighting/LightingData.asset.meta
-guid: 2b540936da83a594695cf9f7b31ea045
-========
 guid: 1549ce6eae3b775469134fe3df2b4efa
->>>>>>>> c313270e0efa3a747f8cf4bb750fba43bb009343:Assets/Feel/MMTools/Demos/MMPrototypeTextures/MMPrototypeTexturesDemo/LightingData.asset.meta
 NativeFormatImporter:
   externalObjects: {}
-  mainObjectFileID: 0
+  mainObjectFileID: 112000000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

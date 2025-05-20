@@ -1,18 +1,9 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Feel/FeelDemos/SquashAndStretch/Prefabs/FeelSquashAndStretchCar.fbx.meta
 guid: 4f428a8918c559c44b229715a237c4cc
-========
-guid: 0e8a1a73bbbd2ba4ab86f797d8af92a0
->>>>>>>> c313270e0efa3a747f8cf4bb750fba43bb009343:Assets/Feel/FeelDemos/SquashAndStretch/Prefabs/Alientile_Floor.fbx.meta
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Floor
-    second: {fileID: 2100000, guid: c1f03b63d41156543a05f8fd4d3317b5, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0

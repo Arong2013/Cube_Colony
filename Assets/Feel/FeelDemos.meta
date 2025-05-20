@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Feel/FeelDemos.meta
 guid: d79c8aed1e201ce4a8b83adcf5232a43
+========
+guid: e5594e1e7ea598d409319855db3fd1f5
+>>>>>>>> main_jin:Assets/Feel.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
