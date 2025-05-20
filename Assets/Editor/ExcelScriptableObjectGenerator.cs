@@ -10,12 +10,280 @@ using System.Reflection;
 using System.Data;
 using ExcelDataReader;
 
+/// <summary>
+/// 통합된 ExcelScriptableObjectGenerator
+/// 범용 리플렉션 기반 처리 + 특정 타입별 특화 처리를 모두 지원합니다.
+/// </summary>
 public static class ExcelScriptableObjectGenerator
 {
+    // === 메인 진입점 ===
+
+    /// <summary>
+    /// 범용 Excel → ScriptableObject 생성 메서드 (기존 메서드)
+    /// </summary>
     public static void GenerateFromExcel<T>(DataTable sheet, string outputFolder) where T : ScriptableObject
     {
-        Debug.Log($"\n=== {typeof(T).Name} 처리 시작 ===");
+        Debug.Log($"\n=== {typeof(T).Name} 처리 시작 (범용 모드) ===");
 
+        // 특화 메서드가 있는 타입인지 확인하고 있다면 특화 메서드 사용
+        if (typeof(T) == typeof(EquipableItemSO))
+        {
+            GenerateEquipableItemFromExcel(sheet, outputFolder);
+            return;
+        }
+        if (typeof(T) == typeof(ConsumableItemSO))
+        {
+            GenerateConsumableItemFromExcel(sheet, outputFolder);
+            return;
+        }
+        if (typeof(T) == typeof(FieldTileDataSO))
+        {
+            GenerateFieldTileDataFromExcel(sheet, outputFolder);
+            return;
+        }
+        if (typeof(T) == typeof(ItemActionSO))
+        {
+            GenerateItemActionFromExcel(sheet, outputFolder);
+            return;
+        }
+
+        // 특화 메서드가 없는 타입은 범용 처리
+        ProcessGenericType<T>(sheet, outputFolder);
+    }
+
+    // === 특화 타입별 메서드들 ===
+
+    /// <summary>
+    /// EquipableItemSO 전용 생성 메서드
+    /// </summary>
+    public static void GenerateEquipableItemFromExcel(DataTable sheet, string outputFolder)
+    {
+        Debug.Log($"\n=== EquipableItemSO 처리 시작 (특화 모드) ===");
+
+        if (sheet.Rows.Count < 2)
+        {
+            Debug.LogWarning($"[ExcelParser] {sheet.TableName} 시트에 유효한 데이터가 없습니다.");
+            return;
+        }
+
+        var headers = ExtractHeaders(sheet);
+        string typeFolder = EnsureOutputFolderExists(outputFolder, typeof(EquipableItemSO));
+
+        int createdCount = 0;
+        int skippedCount = 0;
+
+        for (int i = 1; i < sheet.Rows.Count; i++)
+        {
+            try
+            {
+                var values = sheet.Rows[i].ItemArray;
+
+                // 빈 행 체크
+                bool isEmptyRow = values.All(v => string.IsNullOrWhiteSpace(v?.ToString()));
+                if (isEmptyRow)
+                {
+                    skippedCount++;
+                    continue;
+                }
+
+                var so = ScriptableObject.CreateInstance<EquipableItemSO>();
+                string nameValue = ProcessEquipableItemRow(so, headers, values, i);
+
+                if (!string.IsNullOrEmpty(nameValue) && ValidateAndCreateAsset(so, nameValue, typeFolder, i))
+                {
+                    createdCount++;
+                }
+                else
+                {
+                    skippedCount++;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[ExcelParser] 행 {i + 1} 처리 중 오류: {e.Message}");
+                skippedCount++;
+            }
+        }
+
+        FinalizeAssetCreation(typeof(EquipableItemSO), createdCount, skippedCount);
+        AutoRegisterToDataCenterIfExists();
+    }
+
+    /// <summary>
+    /// ConsumableItemSO 전용 생성 메서드
+    /// </summary>
+    public static void GenerateConsumableItemFromExcel(DataTable sheet, string outputFolder)
+    {
+        Debug.Log($"\n=== ConsumableItemSO 처리 시작 (특화 모드) ===");
+
+        if (sheet.Rows.Count < 2)
+        {
+            Debug.LogWarning($"[ExcelParser] {sheet.TableName} 시트에 유효한 데이터가 없습니다.");
+            return;
+        }
+
+        var headers = ExtractHeaders(sheet);
+        string typeFolder = EnsureOutputFolderExists(outputFolder, typeof(ConsumableItemSO));
+
+        int createdCount = 0;
+        int skippedCount = 0;
+
+        for (int i = 1; i < sheet.Rows.Count; i++)
+        {
+            try
+            {
+                var values = sheet.Rows[i].ItemArray;
+
+                // 빈 행 체크
+                bool isEmptyRow = values.All(v => string.IsNullOrWhiteSpace(v?.ToString()));
+                if (isEmptyRow)
+                {
+                    skippedCount++;
+                    continue;
+                }
+
+                var so = ScriptableObject.CreateInstance<ConsumableItemSO>();
+                string nameValue = ProcessConsumableItemRow(so, headers, values, i);
+
+                if (!string.IsNullOrEmpty(nameValue) && ValidateAndCreateAsset(so, nameValue, typeFolder, i))
+                {
+                    createdCount++;
+                }
+                else
+                {
+                    skippedCount++;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[ExcelParser] 행 {i + 1} 처리 중 오류: {e.Message}");
+                skippedCount++;
+            }
+        }
+
+        FinalizeAssetCreation(typeof(ConsumableItemSO), createdCount, skippedCount);
+        AutoRegisterToDataCenterIfExists();
+    }
+
+    /// <summary>
+    /// FieldTileDataSO 전용 생성 메서드
+    /// </summary>
+    public static void GenerateFieldTileDataFromExcel(DataTable sheet, string outputFolder)
+    {
+        Debug.Log($"\n=== FieldTileDataSO 처리 시작 (특화 모드) ===");
+
+        if (sheet.Rows.Count < 2)
+        {
+            Debug.LogWarning($"[ExcelParser] {sheet.TableName} 시트에 유효한 데이터가 없습니다.");
+            return;
+        }
+
+        var headers = ExtractHeaders(sheet);
+        string typeFolder = EnsureOutputFolderExists(outputFolder, typeof(FieldTileDataSO));
+
+        int createdCount = 0;
+        int skippedCount = 0;
+
+        for (int i = 1; i < sheet.Rows.Count; i++)
+        {
+            try
+            {
+                var values = sheet.Rows[i].ItemArray;
+
+                // 빈 행 체크
+                bool isEmptyRow = values.All(v => string.IsNullOrWhiteSpace(v?.ToString()));
+                if (isEmptyRow)
+                {
+                    skippedCount++;
+                    continue;
+                }
+
+                var so = ScriptableObject.CreateInstance<FieldTileDataSO>();
+                string nameValue = ProcessFieldTileDataRow(so, headers, values, i);
+
+                if (!string.IsNullOrEmpty(nameValue) && ValidateAndCreateAsset(so, nameValue, typeFolder, i))
+                {
+                    createdCount++;
+                }
+                else
+                {
+                    skippedCount++;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[ExcelParser] 행 {i + 1} 처리 중 오류: {e.Message}");
+                skippedCount++;
+            }
+        }
+
+        FinalizeAssetCreation(typeof(FieldTileDataSO), createdCount, skippedCount);
+        AutoRegisterToDataCenterIfExists();
+    }
+
+    /// <summary>
+    /// ItemActionSO 전용 생성 메서드
+    /// </summary>
+    public static void GenerateItemActionFromExcel(DataTable sheet, string outputFolder)
+    {
+        Debug.Log($"\n=== ItemActionSO 처리 시작 (특화 모드) ===");
+
+        if (sheet.Rows.Count < 2)
+        {
+            Debug.LogWarning($"[ExcelParser] {sheet.TableName} 시트에 유효한 데이터가 없습니다.");
+            return;
+        }
+
+        var headers = ExtractHeaders(sheet);
+        string typeFolder = EnsureOutputFolderExists(outputFolder, typeof(ItemActionSO));
+
+        int createdCount = 0;
+        int skippedCount = 0;
+
+        for (int i = 1; i < sheet.Rows.Count; i++)
+        {
+            try
+            {
+                var values = sheet.Rows[i].ItemArray;
+
+                // 빈 행 체크
+                bool isEmptyRow = values.All(v => string.IsNullOrWhiteSpace(v?.ToString()));
+                if (isEmptyRow)
+                {
+                    skippedCount++;
+                    continue;
+                }
+
+                var so = ScriptableObject.CreateInstance<ItemActionSO>();
+                string nameValue = ProcessItemActionRow(so, headers, values, i);
+
+                if (!string.IsNullOrEmpty(nameValue) && ValidateAndCreateAsset(so, nameValue, typeFolder, i))
+                {
+                    createdCount++;
+                }
+                else
+                {
+                    skippedCount++;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[ExcelParser] 행 {i + 1} 처리 중 오류: {e.Message}");
+                skippedCount++;
+            }
+        }
+
+        FinalizeAssetCreation(typeof(ItemActionSO), createdCount, skippedCount);
+        AutoRegisterToDataCenterIfExists();
+    }
+
+    // === 범용 처리 메서드 ===
+
+    /// <summary>
+    /// 범용 타입 처리 (기존 로직 유지)
+    /// </summary>
+    private static void ProcessGenericType<T>(DataTable sheet, string outputFolder) where T : ScriptableObject
+    {
         if (sheet.Rows.Count < 2)
         {
             Debug.LogWarning($"[ExcelParser] {sheet.TableName} 시트에 유효한 데이터가 없습니다.");
@@ -87,6 +355,236 @@ public static class ExcelScriptableObjectGenerator
         AutoRegisterToDataCenterIfExists();
     }
 
+    // === 특화 타입별 행 처리 메서드들 ===
+
+    /// <summary>
+    /// EquipableItemSO 행 데이터 처리
+    /// </summary>
+    private static string ProcessEquipableItemRow(EquipableItemSO so, string[] headers, object[] values, int rowIndex)
+    {
+        string nameValue = null;
+
+        for (int j = 0; j < headers.Length && j < values.Length; j++)
+        {
+            string header = headers[j].Trim();
+            string rawValue = values[j]?.ToString()?.Trim();
+
+            if (string.IsNullOrEmpty(header)) continue;
+
+            try
+            {
+                switch (header.ToLower().Replace(" ", "").Replace("_", ""))
+                {
+                    case "id":
+                        so.ID = ParseInt(rawValue);
+                        break;
+                    case "itemname":
+                    case "name":
+                        so.ItemName = rawValue ?? "";
+                        nameValue = so.ItemName;
+                        break;
+                    case "equipmenttype":
+                        so.equipmentType = ParseEquipmentType(rawValue);
+                        break;
+                    case "requiredlevel":
+                        so.requiredLevel = ParseInt(rawValue);
+                        break;
+                    case "attackbonus":
+                        so.attackBonus = ParseFloat(rawValue);
+                        break;
+                    case "defensebonus":
+                        so.defenseBonus = ParseFloat(rawValue);
+                        break;
+                    case "healthbonus":
+                        so.healthBonus = ParseFloat(rawValue);
+                        break;
+                    case "description":
+                        so.description = rawValue ?? "";
+                        break;
+                    case "grade":
+                        so.grade = ParseItemGrade(rawValue);
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"[ExcelParser] 필드 {header} 파싱 실패 (행 {rowIndex + 1}): {e.Message}");
+            }
+        }
+
+        // name이 없다면 ID로 생성
+        if (string.IsNullOrEmpty(nameValue))
+        {
+            nameValue = $"Equipment_{so.ID}";
+            so.ItemName = nameValue;
+        }
+
+        return nameValue;
+    }
+
+    /// <summary>
+    /// ConsumableItemSO 행 데이터 처리
+    /// </summary>
+    private static string ProcessConsumableItemRow(ConsumableItemSO so, string[] headers, object[] values, int rowIndex)
+    {
+        string nameValue = null;
+
+        for (int j = 0; j < headers.Length && j < values.Length; j++)
+        {
+            string header = headers[j].Trim();
+            string rawValue = values[j]?.ToString()?.Trim();
+
+            if (string.IsNullOrEmpty(header)) continue;
+
+            try
+            {
+                switch (header.ToLower().Replace(" ", "").Replace("_", ""))
+                {
+                    case "id":
+                        so.ID = ParseInt(rawValue);
+                        break;
+                    case "itemname":
+                    case "name":
+                        so.ItemName = rawValue ?? "";
+                        nameValue = so.ItemName;
+                        break;
+                    case "maxamount":
+                        so.maxamount = ParseInt(rawValue);
+                        break;
+                    case "ids":
+                    case "actionids":
+                        so.ids = ParseIntList(rawValue);
+                        break;
+                    case "description":
+                        so.description = rawValue ?? "";
+                        break;
+                    case "grade":
+                        so.grade = ParseItemGrade(rawValue);
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"[ExcelParser] 필드 {header} 파싱 실패 (행 {rowIndex + 1}): {e.Message}");
+            }
+        }
+
+        // name이 없다면 ID로 생성
+        if (string.IsNullOrEmpty(nameValue))
+        {
+            nameValue = $"Consumable_{so.ID}";
+            so.ItemName = nameValue;
+        }
+
+        return nameValue;
+    }
+
+    /// <summary>
+    /// FieldTileDataSO 행 데이터 처리
+    /// </summary>
+    private static string ProcessFieldTileDataRow(FieldTileDataSO so, string[] headers, object[] values, int rowIndex)
+    {
+        string nameValue = null;
+
+        for (int j = 0; j < headers.Length && j < values.Length; j++)
+        {
+            string header = headers[j].Trim();
+            string rawValue = values[j]?.ToString()?.Trim();
+
+            if (string.IsNullOrEmpty(header)) continue;
+
+            try
+            {
+                switch (header.ToLower().Replace(" ", "").Replace("_", ""))
+                {
+                    case "id":
+                        so.ID = ParseInt(rawValue);
+                        break;
+                    case "stagelevel":
+                        so.StageLevel = ParseInt(rawValue);
+                        break;
+                    case "mincount":
+                        so.minCount = ParseInt(rawValue);
+                        break;
+                    case "maxcount":
+                        so.maxCount = ParseInt(rawValue);
+                        break;
+                    case "objectid":
+                        so.ObjectID = ParseIntList(rawValue);
+                        break;
+                    case "objectvalue":
+                        so.ObjectValue = ParseFloatList(rawValue);
+                        break;
+                    case "description":
+                        so.description = rawValue ?? "";
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"[ExcelParser] 필드 {header} 파싱 실패 (행 {rowIndex + 1}): {e.Message}");
+            }
+        }
+
+        // name 생성
+        nameValue = $"Stage{so.StageLevel}_Tile{so.ID}";
+
+        return nameValue;
+    }
+
+    /// <summary>
+    /// ItemActionSO 행 데이터 처리
+    /// </summary>
+    private static string ProcessItemActionRow(ItemActionSO so, string[] headers, object[] values, int rowIndex)
+    {
+        string nameValue = null;
+
+        for (int j = 0; j < headers.Length && j < values.Length; j++)
+        {
+            string header = headers[j].Trim();
+            string rawValue = values[j]?.ToString()?.Trim();
+
+            if (string.IsNullOrEmpty(header)) continue;
+
+            try
+            {
+                switch (header.ToLower().Replace(" ", "").Replace("_", ""))
+                {
+                    case "id":
+                        so.ID = ParseInt(rawValue);
+                        break;
+                    case "actionname":
+                        so.ActionName = rawValue ?? "";
+                        break;
+                    case "data":
+                        so.Data = rawValue ?? "";
+                        break;
+                    case "description":
+                        so.description = rawValue ?? "";
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"[ExcelParser] 필드 {header} 파싱 실패 (행 {rowIndex + 1}): {e.Message}");
+            }
+        }
+
+        // name 생성
+        if (!string.IsNullOrEmpty(so.ActionName))
+        {
+            nameValue = $"{so.ActionName}_{so.ID}";
+        }
+        else
+        {
+            nameValue = $"Action_{so.ID}";
+        }
+
+        return nameValue;
+    }
+
+    // === 범용 리플렉션 기반 처리 메서드 (기존 유지) ===
+
     /// <summary>
     /// 시트에서 헤더 추출 (디버깅 강화)
     /// </summary>
@@ -96,12 +594,7 @@ public static class ExcelScriptableObjectGenerator
             .Select(h => h?.ToString()?.Trim() ?? string.Empty)
             .ToArray();
 
-        Debug.Log($"[ExcelParser] 추출된 헤더들:");
-        for (int i = 0; i < headers.Length; i++)
-        {
-            Debug.Log($"  [{i}] '{headers[i]}'");
-        }
-
+        Debug.Log($"[ExcelParser] 추출된 헤더들: [{string.Join(", ", headers.Select(h => $"'{h}'"))}]");
         return headers;
     }
 
@@ -124,19 +617,6 @@ public static class ExcelScriptableObjectGenerator
             .GroupBy(f => f.Name)
             .Select(g => g.First())
             .ToArray();
-    }
-
-    /// <summary>
-    /// 출력 폴더 확인 및 생성
-    /// </summary>
-    private static string EnsureOutputFolderExists(string outputFolder, Type type)
-    {
-        string typeFolder = Path.Combine(outputFolder, type.Name);
-        if (!Directory.Exists(typeFolder))
-        {
-            Directory.CreateDirectory(typeFolder);
-        }
-        return typeFolder;
     }
 
     /// <summary>
@@ -386,6 +866,131 @@ public static class ExcelScriptableObjectGenerator
         // ID도 없으면 행 번호로
         return $"{soType.Name.Replace("SO", "")}_{rowIndex}";
     }
+
+    // === 간단한 파싱 헬퍼 메서드들 (특화 처리용) ===
+
+    /// <summary>
+    /// 정수 파싱
+    /// </summary>
+    private static int ParseInt(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return 0;
+        if (int.TryParse(value, out int result))
+            return result;
+        return 0;
+    }
+
+    /// <summary>
+    /// 실수 파싱
+    /// </summary>
+    private static float ParseFloat(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return 0f;
+        if (float.TryParse(value, out float result))
+            return result;
+        return 0f;
+    }
+
+    /// <summary>
+    /// EquipmentType 파싱
+    /// </summary>
+    private static EquipmentType ParseEquipmentType(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return EquipmentType.None;
+
+        // 숫자로 입력된 경우
+        if (int.TryParse(value, out int intValue))
+        {
+            if (Enum.IsDefined(typeof(EquipmentType), intValue))
+                return (EquipmentType)intValue;
+        }
+
+        // 문자열로 입력된 경우
+        if (Enum.TryParse<EquipmentType>(value, true, out EquipmentType result))
+            return result;
+
+        return EquipmentType.None; // 기본값
+    }
+
+    /// <summary>
+    /// ItemGrade 파싱
+    /// </summary>
+    private static ItemGrade ParseItemGrade(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return ItemGrade.Common;
+
+        // 숫자로 입력된 경우
+        if (int.TryParse(value, out int intValue))
+        {
+            if (Enum.IsDefined(typeof(ItemGrade), intValue))
+                return (ItemGrade)intValue;
+        }
+
+        // 문자열로 입력된 경우
+        if (Enum.TryParse<ItemGrade>(value, true, out ItemGrade result))
+            return result;
+
+        return ItemGrade.Common; // 기본값
+    }
+
+    /// <summary>
+    /// 정수 리스트 파싱 (쉼표로 구분)
+    /// </summary>
+    private static List<int> ParseIntList(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return new List<int>();
+
+        try
+        {
+            var parts = value.Split(',', ';', '|');
+            var result = new List<int>();
+
+            for (int i = 0; i < parts.Length; i++)
+            {
+                int parsed = ParseInt(parts[i].Trim());
+                if (parsed > 0 || parts[i].Trim() == "0") // 0도 유효값으로 처리
+                {
+                    result.Add(parsed);
+                }
+            }
+
+            return result;
+        }
+        catch
+        {
+            return new List<int>();
+        }
+    }
+
+    /// <summary>
+    /// 실수 리스트 파싱 (쉼표로 구분)
+    /// </summary>
+    private static List<float> ParseFloatList(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return new List<float>();
+
+        try
+        {
+            var parts = value.Split(',', ';', '|');
+            var result = new List<float>();
+
+            for (int i = 0; i < parts.Length; i++)
+            {
+                float parsed = ParseFloat(parts[i].Trim());
+                result.Add(parsed);
+            }
+
+            return result;
+        }
+        catch
+        {
+            return new List<float>();
+        }
+    }
+
+    // === 고급 변환 메서드들 (범용 처리용, 기존 유지) ===
 
     /// <summary>
     /// 리플렉션을 사용한 고급 값 변환
@@ -682,6 +1287,21 @@ public static class ExcelScriptableObjectGenerator
     private static bool IsListType(Type type)
     {
         return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>);
+    }
+
+    // === 공통 유틸리티 메서드들 ===
+
+    /// <summary>
+    /// 출력 폴더 확인 및 생성
+    /// </summary>
+    private static string EnsureOutputFolderExists(string outputFolder, Type type)
+    {
+        string typeFolder = Path.Combine(outputFolder, type.Name);
+        if (!Directory.Exists(typeFolder))
+        {
+            Directory.CreateDirectory(typeFolder);
+        }
+        return typeFolder;
     }
 
     /// <summary>

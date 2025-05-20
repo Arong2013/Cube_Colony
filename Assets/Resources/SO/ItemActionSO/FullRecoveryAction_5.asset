@@ -17,4 +17,4 @@ MonoBehaviour:
   Data: 100
   description: "\uBAA8\uB4E0 \uC2A4\uD0EF\uC744 \uC644\uC804 \uD68C\uBCF5\uC2DC\uD0B5\uB2C8\uB2E4."
   actionIcon: {fileID: 0}
-  effectColor: {r: 1, g: 0.4117647, b: 0.7058824, a: 1}
+  effectColor: {r: 1, g: 1, b: 1, a: 1}
