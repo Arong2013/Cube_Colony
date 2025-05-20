@@ -419,9 +419,9 @@ RectTransform:
   - {fileID: 375894607}
   m_Father: {fileID: 1594921167}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 80, y: -50}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &146593151
@@ -1072,6 +1072,10 @@ PrefabInstance:
     - target: {fileID: 2687090996866741495, guid: 5a5b397fd4e8d6d4980399c6a3ef9038, type: 3}
       propertyPath: m_Name
       value: ExplorationBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687090996866741495, guid: 5a5b397fd4e8d6d4980399c6a3ef9038, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1807,6 +1811,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CubeStage
       objectReference: {fileID: 0}
+    - target: {fileID: 1711035944596015132, guid: 027dc3f27262f7e4ea029fc2944574d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2572143674948695669, guid: 027dc3f27262f7e4ea029fc2944574d7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2239,7 +2247,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &600535182
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4788,7 +4796,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1349285591
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5641,9 +5649,9 @@ RectTransform:
   - {fileID: 1104614998}
   m_Father: {fileID: 1594921167}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 210, y: -50}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1519334025
@@ -6547,7 +6555,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1620063468
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6874,6 +6882,10 @@ PrefabInstance:
     - target: {fileID: 6078471538920285580, guid: bef3b8161bf82468e90aa07a0e5caba7, type: 3}
       propertyPath: m_Name
       value: SurvalStartButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 6078471538920285580, guid: bef3b8161bf82468e90aa07a0e5caba7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6078471538920285581, guid: bef3b8161bf82468e90aa07a0e5caba7, type: 3}
       propertyPath: m_Pivot.x
