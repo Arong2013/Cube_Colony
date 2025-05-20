@@ -14,15 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 0
   ItemName: "\uC804\uD22C\uD5EC\uBA67"
-  equipmentType: 5
+  equipmentType: 1
   requiredLevel: 1
   attackBonus: 0
   defenseBonus: 5
   healthBonus: 20
-  maxReinforcementLevel: 3
-  reinforcementCosts: 64000000c800000090010000
-  specialEffect1: 0
-  specialEffect2: 0
   description: "\uACAC\uACE0\uD55C \uD5EC\uBA67. \uCCB4\uB825\uACFC \uBC29\uC5B4\uB825\uC744
     \uB192\uC5EC\uC90D\uB2C8\uB2E4."
   itemIcon: {fileID: 0}
