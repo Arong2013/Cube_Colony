@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -8085585104218984934}
   - component: {fileID: -8187922272064139834}
   - component: {fileID: 159670133154670747}
+  - component: {fileID: 9217461354105463842}
   m_Layer: 0
   m_Name: Robottile_1
   m_TagString: Untagged
@@ -118,11 +119,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4c6d5719f04b814b8a28d168b5a9993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   faceInfo:
     type: 0
     level: 0
     maxLevel: 3
     position: {x: 0, y: 0, z: 0}
+  currentStageLevel: 0
+  spawnPoints: []
+--- !u!95 &9217461354105463842
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6489030815539060485}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f779117b0464f66418e0819c27b8ab29, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &448945457983072849
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -236,7 +270,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: afcc9d36d36de8b41a23bbfb06bec0e8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: afcc9d36d36de8b41a23bbfb06bec0e8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -244,7 +278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: afcc9d36d36de8b41a23bbfb06bec0e8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.09
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: afcc9d36d36de8b41a23bbfb06bec0e8, type: 3}
       propertyPath: m_LocalRotation.w

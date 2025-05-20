@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5716416849686116924}
   - component: {fileID: 426094593863772426}
   - component: {fileID: 5822730705242528272}
+  - component: {fileID: 797470652896508700}
   m_Layer: 0
   m_Name: Portal
   m_TagString: Untagged
@@ -100,12 +101,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e036109f5c22ce4f8f2e7eef5106afb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: DropChances
+      Entry: 6
+      Data: 
   behaviorSequencesSO: []
   strategyAsset: {fileID: 11400000, guid: 2d06b9c6ab3c1ff43b56f3fb50b04f68, type: 2}
-  dropEntry:
-    MinDropItem: 0
-    MaxDropItem: 0
   interactionDistance: 0.4
+  MinDropItem: 0
+  MaxDropItem: 0
 --- !u!65 &5822730705242528272
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -127,3 +139,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &797470652896508700
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8801919154504347949}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 52938dd5a758892479f88fe3a3c3b168, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

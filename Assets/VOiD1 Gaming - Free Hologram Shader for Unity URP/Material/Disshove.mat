@@ -26,6 +26,14 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _SampleTexture2D_8982569592ab4019bb6de100e4fd9f62_Texture_1_Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2D:
+        m_Texture: {fileID: 2800000, guid: 0d49942ff727b7c4b98ef8d164949204, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -45,8 +53,8 @@ Material:
     - Boolean_7BA77F51: 0
     - ENUM_A9F6D788: 0
     - ENUM_BED51E75: 2
-    - Vector1_36B9162F: 50
-    - Vector1_5C4FEA22: 0.05
+    - Vector1_36B9162F: 48.78
+    - Vector1_5C4FEA22: 0.2
     - Vector1_98FB0F60: 0
     - Vector1_9C074DA1: 1
     - Vector1_A2ECFC7B: 0.05
@@ -58,7 +66,7 @@ Material:
     - _QueueOffset: 0
     m_Colors:
     - Color_7E097FF4: {r: 11.6705885, g: 20.078432, b: 23.968628, a: 1}
-    - Color_87DA54D1: {r: 1, g: 0.2, b: 0.2, a: 1}
+    - Color_87DA54D1: {r: 1, g: 1, b: 1, a: 0}
     - Color_C164A306: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
