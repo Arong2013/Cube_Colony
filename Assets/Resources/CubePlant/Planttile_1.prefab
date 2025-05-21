@@ -199,6 +199,7 @@ MonoBehaviour:
     maxLevel: 3
     position: {x: 0, y: 0, z: 0}
   currentStageLevel: 0
+  AnimeMeshRender: {fileID: 8850688958085059616}
   spawnPoints:
   - {fileID: 990985189920898843}
   - {fileID: 9044430789173439982}
@@ -568,5 +569,10 @@ PrefabInstance:
 --- !u!4 &7681129314493804367 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4a6f98cdd701fec46b22536c98e1887b, type: 3}
+  m_PrefabInstance: {fileID: 7859453251064907940}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8850688958085059616 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 4a6f98cdd701fec46b22536c98e1887b, type: 3}
   m_PrefabInstance: {fileID: 7859453251064907940}
   m_PrefabAsset: {fileID: 0}
