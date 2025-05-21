@@ -204,12 +204,6 @@ MonoBehaviour:
   - {fileID: 5486397842269480264}
   - {fileID: 433815115132012129}
   - {fileID: 1582377730283053176}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!95 &9217461354105463842
 Animator:
   serializedVersion: 7
