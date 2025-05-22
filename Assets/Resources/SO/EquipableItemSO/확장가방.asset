@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85f8fc003da09ad43b835fbf07ad91de, type: 3}
+  m_Name: "\uD655\uC7A5\uAC00\uBC29"
+  m_EditorClassIdentifier: 
+  ID: 1005
+  ItemName: "\uD655\uC7A5\uAC00\uBC29"
+  equipmentType: 4
+  requiredLevel: 1
+  attackBonus: 0
+  defenseBonus: 0
+  healthBonus: 0
+  maxReinforcementLevel: 3
+  reinforcementCosts: 64000000c800000090010000
+  specialEffect1: 0
+  specialEffect2: 0
+  description: "\uB113\uC740 \uAC00\uBC29. \uC778\uBCA4\uD1A0\uB9AC \uACF5\uAC04\uC744
+    \uD655\uC7A5\uD574\uC90D\uB2C8\uB2E4."
+  itemIcon: {fileID: 0}
+  grade: 0

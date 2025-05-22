@@ -28,8 +28,10 @@ Material:
   - _MK_ALBEDO_MAP
   - _MK_ARTISTIC_ANIMATION_STUTTER
   - _MK_DETAIL_BLEND_MIX
+  - _MK_DISSOLVE_BORDER_COLOR
   - _MK_ENVIRONMENT_REFLECTIONS_AMBIENT
   - _MK_LIGHT_BANDED
+  - _MK_NORMAL_MAP
   - _MK_OUTLINE_HULL_CLIP
   - _MK_RECEIVE_SHADOWS
   - _MK_SPECULAR_ISOTROPIC
@@ -41,7 +43,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: 1999
   stringTagMap:
     IGNOREPROJECTOR: False
     RenderType: Opaque
@@ -88,7 +90,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DissolveMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 429ec31e89227a843b7b0e6e5047b82d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DrawnMap:
@@ -148,7 +150,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: f5f4e435f40aef3478f485937d32d336, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -214,7 +216,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AddPrecomputedVelocity: 0
-    - _AdvancedTab: 0
+    - _AdvancedTab: 1
     - _AlbedoMapIntensity: 1
     - _AlphaClip: 0
     - _AlphaClipping: 0
@@ -246,10 +248,10 @@ Material:
     - _Diffuse: 0
     - _DiffuseSmoothness: 0.2
     - _DiffuseThresholdOffset: 1
-    - _Dissolve: 0
-    - _DissolveAmount: 0.5
-    - _DissolveBorderSize: 0.25
-    - _DissolveMapScale: 1
+    - _Dissolve: 2
+    - _DissolveAmount: 0
+    - _DissolveBorderSize: 0.1
+    - _DissolveMapScale: 10
     - _DrawnClampMax: 1
     - _DrawnClampMin: 0
     - _DrawnMapScale: 1
@@ -281,7 +283,7 @@ Material:
     - _LightTransmissionSmoothness: 0.5
     - _LightTransmissionThresholdOffset: 0.25
     - _Metallic: 0
-    - _NormalMapIntensity: 1
+    - _NormalMapIntensity: 1.5
     - _OcclusionMapIntensity: 1
     - _OcclusionStrength: 1
     - _OptionsTab: 1
@@ -296,7 +298,7 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RenderFace: 2
-    - _RenderPriority: 0
+    - _RenderPriority: 1
     - _Rim: 0
     - _RimSize: 1
     - _RimSmoothness: 0.5
@@ -339,7 +341,7 @@ Material:
     - _Color0: {r: 1, g: 0, b: 0, a: 1}
     - _Color1: {r: 0, g: 1, b: 0, a: 1}
     - _DetailColor: {r: 1, g: 1, b: 1, a: 1}
-    - _DissolveBorderColor: {r: 1, g: 1, b: 1, a: 1}
+    - _DissolveBorderColor: {r: 0, g: 0.79910296, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _GoochBrightColor: {r: 1, g: 1, b: 1, a: 1}
     - _GoochDarkColor: {r: 0, g: 0, b: 0, a: 1}

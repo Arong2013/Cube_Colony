@@ -1,13 +1,12 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.EventSystems; // 반드시 필요
+using UnityEngine.EventSystems;
+using Sirenix.OdinInspector;
 
 public class PCController : IEntityController
 {
     private readonly Action<Vector3> _onMoveInput;
-    private IInteractable _currentTarget = null;
     private bool _wasMoving = false;
-    private InteractTask _currentTask = null;
 
     public PCController(Action<Vector3> onMoveInput)
     {
@@ -18,23 +17,7 @@ public class PCController : IEntityController
     {
         HandleMovementInput(entity);
 
-        // Space키를 누르면 상호작용 시도
-        if (Input.GetKey(KeyCode.Space))
-        {
-            if (_currentTask == null || _currentTask.IsComplete)
-            {
-                TryStartInteractTask(entity);
-            }
-        }
-
-        if (_currentTask?.IsComplete == true)
-        {
-            _currentTask = null;
-        }
-
-        _currentTask?.Update(entity, _onMoveInput);
-
-        // ✅ 좌클릭 시 공격 애니메이션 실행
+        // 좌클릭 시 공격 애니메이션 실행
         if (Input.GetMouseButtonDown(0))
         {
             if (!EventSystem.current.IsPointerOverGameObject())
@@ -42,6 +25,16 @@ public class PCController : IEntityController
                 entity.OnAttackAnime(); // UI를 클릭한 게 아니라면 공격 수행
             }
         }
+
+        // 우클릭 시 즉시 상호작용
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                InteractWithClosestEntity(entity);
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.I))
         {
             ToggleInventory(entity);
@@ -57,7 +50,6 @@ public class PCController : IEntityController
         {
             _onMoveInput?.Invoke(new Vector3(input.x, 0f, input.y).normalized);
             _wasMoving = true;
-            _currentTask = null;
         }
         else if (_wasMoving)
         {
@@ -66,19 +58,10 @@ public class PCController : IEntityController
         }
     }
 
-    private void TryStartInteractTask(Entity entity)
-    {
-        IInteractable target = FindClosestInteractable(entity, maxDistance: 10f);
-        if (target != null)
-        {
-            _currentTask = new InteractTask(target);
-        }
-    }
-
-    private IInteractable FindClosestInteractable(Entity entity, float maxDistance)
+    private void InteractWithClosestEntity(Entity entity)
     {
         Vector3 origin = entity.transform.position;
-        Collider[] colliders = Physics.OverlapSphere(origin, maxDistance);
+        Collider[] colliders = Physics.OverlapSphere(origin, 10f);
 
         IInteractable closest = null;
         float closestDist = float.MaxValue;
@@ -89,6 +72,11 @@ public class PCController : IEntityController
             if (interactable == null || !interactable.CanInteract(entity))
                 continue;
 
+            // 상대방이 InteractableEntity이고 AttackComponent를 가진 경우 제외
+            InteractableEntity interactableEntity = col.GetComponent<InteractableEntity>();
+            if (interactableEntity != null && interactableEntity.HasEntityComponent<AttackComponent>())
+                continue;
+
             Vector3 offset = col.transform.position - origin;
             float dist = new Vector2(offset.x, offset.z).magnitude;
             if (dist < closestDist)
@@ -97,7 +85,12 @@ public class PCController : IEntityController
                 closest = interactable;
             }
         }
-        return closest;
+
+        // 가장 가까운 상호작용 대상을 즉시 상호작용
+        if (closest != null && closestDist <= closest.GetInteractionDistance())
+        {
+            closest.Interact(entity);
+        }
     }
 
     private void ToggleInventory(Entity entity)
