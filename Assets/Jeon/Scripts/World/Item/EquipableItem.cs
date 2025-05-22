@@ -24,8 +24,6 @@ public class EquipableItem : Item
     [ShowInInspector] public float healthBonus;
     [ShowInInspector] public string description;
     [ShowInInspector] public ItemGrade grade;
-    [ShowInInspector] public Sprite itemIcon;
-
     // 추가 필요한 필드들
     [TitleGroup("추가 효과")]
     [ShowInInspector] public float maxOxygenBonus = 0f;

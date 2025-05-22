@@ -56,13 +56,19 @@ public class EQSlot : MonoBehaviour, IPointerClickHandler
     {
         if (equippedItem != null)
         {
-            // 장착된 아이템이 있으면 장비 현황 UI 열기
-            parentInventoryUI?.OpenEquipmentStatus(slotType);
+            // 장착된 아이템이 있으면 아이템 정보 UI 표시
+            if (parentInventoryUI != null)
+            {
+                parentInventoryUI.ShowItemInfo(equippedItem);
+            }
         }
         else
         {
-            // 빈 슬롯이면 인벤토리에서 해당 타입 아이템 보여주기
-            parentInventoryUI?.ShowEquipableItemsForSlot(slotType);
+            // 빈 슬롯이면 인벤토리에서 해당 타입 아이템 강조 표시
+            Debug.Log($"{slotType} 슬롯이 비어있습니다. 인벤토리에서 해당 타입의 장비를 장착하세요.");
+            
+            // 여기서는 단순히 로그 메시지만 표시
+            // 필요한 경우 InventoryUI에 슬롯 타입에 맞는 아이템을 강조하는 메서드를 추가할 수 있음
         }
     }
 

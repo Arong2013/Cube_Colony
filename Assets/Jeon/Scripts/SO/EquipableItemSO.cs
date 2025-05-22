@@ -109,7 +109,6 @@ public class EquipableItemSO : ScriptableObject
         item.specialEffect2 = this.specialEffect2;
         item.description = this.description;
         item.grade = this.grade;
-        item.itemIcon = this.itemIcon;
         return item;
     }
 

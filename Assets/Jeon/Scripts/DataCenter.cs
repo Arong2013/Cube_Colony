@@ -278,8 +278,7 @@ public class DataCenter : SerializedMonoBehaviour
 
         // SO에서 추가 정보도 복사
         item.description = so.description;
-        item.grade = so.grade;
-        item.itemIcon = so.itemIcon;
+        item.grade = so.grade;;
 
         return item;
     }
@@ -302,7 +301,6 @@ public class DataCenter : SerializedMonoBehaviour
         item.healthBonus = so.healthBonus;
         item.description = so.description;
         item.grade = so.grade;
-        item.itemIcon = so.itemIcon;
 
         // 강화 시스템 데이터 복사
         item.currentReinforcementLevel = 0; // 항상 0으로 시작

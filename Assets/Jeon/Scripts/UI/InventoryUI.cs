@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using System.Linq;
 using UnityEngine.UI;
 
-public class InventoryUI : MonoBehaviour, IObserver
+public class InventoryUI : SerializedMonoBehaviour, IObserver
 {
     [TitleGroup("인벤토리 UI")]
     [LabelText("슬롯 컨테이너"), Required]
@@ -18,10 +18,6 @@ public class InventoryUI : MonoBehaviour, IObserver
     [TitleGroup("아이템 정보")]
     [LabelText("아이템 정보 UI"), Required]
     [SerializeField] private ItemInfoUI _itemInfoUI;
-
-    [TitleGroup("UI 상태")]
-    [LabelText("인벤토리 상태 텍스트")]
-    [SerializeField] private TMPro.TextMeshProUGUI inventoryStatusText;
 
     [TitleGroup("디버그 정보")]
     [ReadOnly, ShowInInspector]
@@ -73,7 +69,7 @@ public class InventoryUI : MonoBehaviour, IObserver
         InitializeEquipmentSlots();
         UpdateSlots();
         UpdateEquipmentSlots();
-        UpdateInventoryStatus();
+
     }
 
     /// <summary>
@@ -202,7 +198,7 @@ public class InventoryUI : MonoBehaviour, IObserver
         gameObject.SetActive(true);
         UpdateSlots();
         UpdateEquipmentSlots();
-        UpdateInventoryStatus();
+
 
         // 열 때 아이템 정보 UI 닫기
         if (_itemInfoUI != null)
@@ -276,7 +272,7 @@ public class InventoryUI : MonoBehaviour, IObserver
         // UI 업데이트
         UpdateSlots();
         UpdateEquipmentSlots();
-        UpdateInventoryStatus();
+
         
         // 옵저버 알림
         BattleFlowController.Instance.NotifyObservers();
@@ -320,33 +316,6 @@ public class InventoryUI : MonoBehaviour, IObserver
             var slot = curSlot.GetComponent<ItemSlot>();
             slot.SetItem(item);
             _slots.Add(slot);
-        }
-    }
-
-    /// <summary>
-    /// 인벤토리 상태 업데이트
-    /// </summary>
-    private void UpdateInventoryStatus()
-    {
-        if (inventoryStatusText == null) return;
-
-        int usedSlots = GetUsedInventorySlots();
-        int maxSlots = GetTotalInventorySlots();
-
-        inventoryStatusText.text = $"인벤토리: {usedSlots}/{maxSlots}";
-
-        // 용량에 따라 색상 변경
-        if (usedSlots >= maxSlots)
-        {
-            inventoryStatusText.color = Color.red;
-        }
-        else if (usedSlots >= maxSlots * 0.8f)
-        {
-            inventoryStatusText.color = Color.yellow;
-        }
-        else
-        {
-            inventoryStatusText.color = Color.white;
         }
     }
 
@@ -406,7 +375,6 @@ public class InventoryUI : MonoBehaviour, IObserver
     {
         UpdateSlots();
         UpdateEquipmentSlots();
-        UpdateInventoryStatus();
     }
 
     /// <summary>
@@ -458,7 +426,6 @@ public class InventoryUI : MonoBehaviour, IObserver
         // UI 업데이트
         UpdateSlots();
         UpdateEquipmentSlots();
-        UpdateInventoryStatus();
         
         return true;
     }
@@ -480,7 +447,7 @@ public class InventoryUI : MonoBehaviour, IObserver
             // UI 업데이트
             UpdateSlots();
             UpdateEquipmentSlots();
-            UpdateInventoryStatus();
+
             return true;
         }
 
