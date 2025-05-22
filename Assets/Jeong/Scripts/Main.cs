@@ -5,6 +5,7 @@ public class Main : MonoBehaviour
 {
     // 인스펙터 창에서 이 Panel 변수에 실제 Panel 게임 오브젝트를 연결해야 합니다.
     public GameObject optionsPanel; // 옵션 패널을 참조할 변수
+    public GameObject MainPanel;
 
     void Start()
     {
@@ -16,6 +17,10 @@ public class Main : MonoBehaviour
         else
         {
             Debug.LogError("Options Panel이 Main 스크립트에 할당되지 않았습니다!");
+        }
+        if (MainPanel != null)
+        {
+            MainPanel.SetActive(true);
         }
     }
 
@@ -31,6 +36,7 @@ public class Main : MonoBehaviour
             // 패널의 현재 활성화 상태를 가져와서 반대로 설정합니다.
             // 즉, 켜져 있으면 끄고, 꺼져 있으면 켭니다.
             optionsPanel.SetActive(!optionsPanel.activeSelf);
+            MainPanel.SetActive(!MainPanel.activeSelf);
         }
         else
         {
