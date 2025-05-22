@@ -172,5 +172,5 @@ public abstract class Entity : SerializedMonoBehaviour
             SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Move);
     }
 
-    private void OnDestroy() => _components.ExitAll();
+  //  private void OnDestroy() => _components.ExitAll();
 }
