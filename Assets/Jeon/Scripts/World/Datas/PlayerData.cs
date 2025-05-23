@@ -84,8 +84,6 @@ public class PlayerData
                 {
                     // 아이템 장착 및 인벤토리에 추가
                     equippedItems[type] = firstItemId;
-                    inventory.Add(firstItemId);
-
                     Debug.Log($"기본 장비 장착: {type} - {firstItemId.ItemName}");
                 }
             }

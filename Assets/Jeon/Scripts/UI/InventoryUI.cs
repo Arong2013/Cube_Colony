@@ -166,28 +166,28 @@ public class InventoryUI : SerializedMonoBehaviour, IObserver
     /// </summary>
     private void UpdateEquipmentSlots()
     {
-        var player = Utils.GetPlayer();
-        if (player == null) return;
+         var player = Utils.GetPlayer();
+    if (player == null) return;
 
-        var equipmentComponent = player.GetEntityComponent<EquipmentComponent>();
-        if (equipmentComponent == null) return;
+    var equipmentComponent = player.GetEntityComponent<EquipmentComponent>();
+    if (equipmentComponent == null) return;
 
-        // 각 장비 슬롯 업데이트
-        foreach (var kvp in equipmentSlots)
+    // 각 장비 슬롯 업데이트
+    foreach (var kvp in equipmentSlots)
+    {
+        if (kvp.Value != null)
         {
-            if (kvp.Value != null)
+            var equippedItem = equipmentComponent.GetEquippedItem(kvp.Key);
+            if (equippedItem != null)
             {
-                var equippedItem = equipmentComponent.GetEquippedItem(kvp.Key);
-                if (equippedItem != null)
-                {
-                    kvp.Value.EquipItem(equippedItem);
-                }
-                else
-                {
-                    kvp.Value.UnequipItem();
-                }
+                kvp.Value.EquipItem(equippedItem);
+            }
+            else
+            {
+                kvp.Value.UnequipItem();
             }
         }
+    }
     }
 
     /// <summary>
@@ -297,26 +297,26 @@ public class InventoryUI : SerializedMonoBehaviour, IObserver
         _slots.Clear();
 
         // 일반 아이템들만 슬롯 생성 (장착되지 않은 아이템들)
-        foreach (var item in BattleFlowController.Instance.playerData.inventory)
+          foreach (var item in BattleFlowController.Instance.playerData.inventory)
+    {
+        if (item is EquipableItem equipable)
         {
-            // 장비 아이템이면서 이미 장착된 경우 제외
-            if (item is EquipableItem equipable)
+            var player = Utils.GetPlayer();
+            var equipmentComponent = player?.GetEntityComponent<EquipmentComponent>();
+
+            if (equipmentComponent != null &&
+                equipmentComponent.GetEquippedItem(equipable.equipmentType) == equipable)
             {
-                var player = Utils.GetPlayer();
-                var equipmentComponent = player?.GetEntityComponent<EquipmentComponent>();
-
-                if (equipmentComponent != null &&
-                    equipmentComponent.GetEquippedItem(equipable.equipmentType) == equipable)
-                {
-                    continue; // 이미 장착된 아이템은 일반 슬롯에 표시하지 않음
-                }
+                continue; // 이미 장착된 아이템은 일반 슬롯에 표시하지 않음
             }
-
-            var curSlot = Instantiate(DataCenter.Instance.GetItemSlotPrefab().gameObject, _slotContainer);
-            var slot = curSlot.GetComponent<ItemSlot>();
-            slot.SetItem(item);
-            _slots.Add(slot);
         }
+        
+        // 나머지 아이템들은 슬롯에 추가
+        var curSlot = Instantiate(DataCenter.Instance.GetItemSlotPrefab().gameObject, _slotContainer);
+        var slot = curSlot.GetComponent<ItemSlot>();
+        slot.SetItem(item);
+        _slots.Add(slot);
+    }
     }
 
     /// <summary>

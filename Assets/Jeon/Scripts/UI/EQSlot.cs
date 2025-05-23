@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using TMPro;
 using Sirenix.OdinInspector;
 
 /// <summary>
@@ -17,18 +16,6 @@ public class EQSlot : MonoBehaviour, IPointerClickHandler
     [LabelText("장비 아이콘"), Required]
     [SerializeField] private Image equipmentIcon;
 
-    [TitleGroup("슬롯 UI")]
-    [LabelText("장비 이름 텍스트")]
-    [SerializeField] private TextMeshProUGUI equipmentNameText;
-
-    [TitleGroup("슬롯 UI")]
-    [LabelText("강화 레벨 표시")]
-    [SerializeField] private TextMeshProUGUI reinforcementLevelText;
-
-    [TitleGroup("슬롯 UI")]
-    [LabelText("빈 슬롯 표시 이미지")]
-    [SerializeField] private Image emptySlotImage;
-
     [TitleGroup("디버그 정보")]
     [ReadOnly, ShowInInspector]
     private EquipableItem equippedItem;
@@ -36,8 +23,11 @@ public class EQSlot : MonoBehaviour, IPointerClickHandler
     [TitleGroup("디버그 정보")]
     [ReadOnly, ShowInInspector]
     private InventoryUI parentInventoryUI;
-
+ [TitleGroup("디버그 정보")]
+    [ReadOnly, ShowInInspector]
     public EquipmentType SlotType => slotType;
+     [TitleGroup("디버그 정보")]
+    [ReadOnly, ShowInInspector]
     public EquipableItem EquippedItem => equippedItem;
 
     /// <summary>
@@ -64,11 +54,7 @@ public class EQSlot : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            // 빈 슬롯이면 인벤토리에서 해당 타입 아이템 강조 표시
             Debug.Log($"{slotType} 슬롯이 비어있습니다. 인벤토리에서 해당 타입의 장비를 장착하세요.");
-            
-            // 여기서는 단순히 로그 메시지만 표시
-            // 필요한 경우 InventoryUI에 슬롯 타입에 맞는 아이템을 강조하는 메서드를 추가할 수 있음
         }
     }
 
@@ -115,30 +101,6 @@ public class EQSlot : MonoBehaviour, IPointerClickHandler
                 equipmentIcon.sprite = equippedItem.ItemIcon;
                 equipmentIcon.gameObject.SetActive(true);
             }
-
-            if (equipmentNameText != null)
-            {
-                equipmentNameText.text = equippedItem.ItemName;
-                equipmentNameText.gameObject.SetActive(true);
-            }
-
-            if (reinforcementLevelText != null)
-            {
-                if (equippedItem.currentReinforcementLevel > 0)
-                {
-                    reinforcementLevelText.text = $"+{equippedItem.currentReinforcementLevel}";
-                    reinforcementLevelText.gameObject.SetActive(true);
-                }
-                else
-                {
-                    reinforcementLevelText.gameObject.SetActive(false);
-                }
-            }
-
-            if (emptySlotImage != null)
-            {
-                emptySlotImage.gameObject.SetActive(false);
-            }
         }
         else
         {
@@ -147,39 +109,6 @@ public class EQSlot : MonoBehaviour, IPointerClickHandler
             {
                 equipmentIcon.gameObject.SetActive(false);
             }
-
-            if (equipmentNameText != null)
-            {
-                equipmentNameText.text = GetSlotTypeName();
-                equipmentNameText.gameObject.SetActive(true);
-            }
-
-            if (reinforcementLevelText != null)
-            {
-                reinforcementLevelText.gameObject.SetActive(false);
-            }
-
-            if (emptySlotImage != null)
-            {
-                emptySlotImage.gameObject.SetActive(true);
-            }
         }
-    }
-
-    /// <summary>
-    /// 슬롯 타입에 따른 이름 반환
-    /// </summary>
-    public string GetSlotTypeName()
-    {
-        return slotType switch
-        {
-            EquipmentType.Sword => "검",
-            EquipmentType.Gun => "총",
-            EquipmentType.OxygenTank => "산소통",
-            EquipmentType.Battery => "배터리",
-            EquipmentType.Backpack => "가방",
-            EquipmentType.Helmet => "헬멧",
-            _ => "장비 슬롯"
-        };
     }
 }
