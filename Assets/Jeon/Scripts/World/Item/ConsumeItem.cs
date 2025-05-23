@@ -13,7 +13,6 @@ public class ConsumableItem : Item
     // SO에서 추가로 가져온 정보들
     [ShowInInspector] public string description;
     [ShowInInspector] public ItemGrade grade;
-    [ShowInInspector] public Sprite itemIcon;
 
     [ShowInInspector, ReadOnly]
     public List<itemAction> actions => ids

@@ -35,38 +35,39 @@ public static class Utils
         }
         return closestCubieFace;
     }
-    public static T GetUI<T>(string _name = null) where T : MonoBehaviour
+   public static T GetUI<T>(string _name = null) where T : Component
+{
+    T component = null;
+    if (_name != null)
     {
-        T component = null;
-        if (_name != null)
+        GameObject go = GameObject.Find(_name);
+        if (go != null)
         {
-            GameObject go = GameObject.Find(_name);
-            if (go != null)
-            {
-                component = go.GetComponent<T>();
-            }
+            component = go.GetComponent<T>();
         }
-
-        if (component == null)
-        {
-            component = FindInCanvasChildren<T>();
-        }
-
-        return component;
     }
 
-    private static T FindInCanvasChildren<T>() where T : MonoBehaviour
+    if (component == null)
     {
-        T component = null;
-        GameObject canvas = GameObject.Find("Canvas");
-
-        if (canvas != null)
-        {
-            component = canvas.GetComponentInChildren<T>(true);
-        }
-
-        return component;
+        component = FindInCanvasChildren<T>();
     }
+
+    return component;
+}
+
+private static T FindInCanvasChildren<T>() where T : Component
+{
+    T component = null;
+    GameObject canvas = GameObject.Find("Canvas");
+
+    if (canvas != null)
+    {
+        component = canvas.GetComponentInChildren<T>(true);
+    }
+
+    return component;
+}
+
     public static Vector3 GetCentroid(List<Vector3> points)
     {
         if (points == null || points.Count == 0)

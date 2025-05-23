@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
-  m_Name: CHA3_SkeletonData
+  m_Name: "\uCE90\uB9AD\uD130\uACF5\uACA92_SkeletonData"
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: 71c762d67a658664999ff9ed8bc67d4b, type: 2}
+  - {fileID: 11400000, guid: 1f3bfef4d3f2f7e41b0bed021d09b280, type: 2}
   scale: 0.01
-  skeletonJSON: {fileID: 4900000, guid: 9ebb4aece3e081040bc4bb237de2ccd0, type: 3}
+  skeletonJSON: {fileID: 4900000, guid: 5d591844533a59d42b517b2aa3ada67c, type: 3}
   isUpgradingBlendModeMaterials: 0
   blendModeMaterials:
     requiresBlendModeMaterials: 0
@@ -28,4 +28,4 @@ MonoBehaviour:
   toAnimation: []
   duration: []
   defaultMix: 0.2
-  controller: {fileID: 9100000, guid: 4d77aa377f49b49e9bd2e7c1b7beff41, type: 2}
+  controller: {fileID: 9100000, guid: 9daf16bb68edb1e4ba07ecbbdf41bee5, type: 2}

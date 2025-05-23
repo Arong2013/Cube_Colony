@@ -4,31 +4,20 @@ using Sirenix.OdinInspector;
 using System.Linq;
 using UnityEngine.UI;
 
-public class InventoryUI : MonoBehaviour, IObserver
+public class InventoryUI : SerializedMonoBehaviour, IObserver
 {
     [TitleGroup("인벤토리 UI")]
     [LabelText("슬롯 컨테이너"), Required]
     [SerializeField] private Transform _slotContainer;
 
-    [TitleGroup("장비 시스템")]
+    [TitleGroup("고정 장비 슬롯")]
     [LabelText("장비 슬롯들"), Required]
-    [SerializeField] private List<EQSlot> equipmentSlots = new List<EQSlot>();
-
-    [TitleGroup("장비 시스템")]
-    [LabelText("장비 현황 UI"), Required]
-    [SerializeField] private EquipmentUI equipmentStatusUI;
+    [DictionaryDrawerSettings(KeyLabel = "장비 타입", ValueLabel = "슬롯")]
+    [SerializeField] private Dictionary<EquipmentType, EQSlot> equipmentSlots = new Dictionary<EquipmentType, EQSlot>();
 
     [TitleGroup("아이템 정보")]
     [LabelText("아이템 정보 UI"), Required]
     [SerializeField] private ItemInfoUI _itemInfoUI;
-
-    [TitleGroup("장비 선택 UI")]
-    [LabelText("장비 선택 패널")]
-    [SerializeField] private GameObject equipmentSelectionPanel;
-
-    [TitleGroup("장비 선택 UI")]
-    [LabelText("장비 선택 슬롯 컨테이너")]
-    [SerializeField] private Transform equipmentSelectionContainer;
 
     [TitleGroup("디버그 정보")]
     [ReadOnly, ShowInInspector]
@@ -40,7 +29,7 @@ public class InventoryUI : MonoBehaviour, IObserver
 
     [TitleGroup("디버그 정보")]
     [ReadOnly, ShowInInspector]
-    private EquipmentType currentSelectingSlotType;
+    private int totalSlots => GetTotalInventorySlots();
 
     private void Start()
     {
@@ -65,18 +54,6 @@ public class InventoryUI : MonoBehaviour, IObserver
         {
             _itemInfoUI.Initialize();
         }
-
-        // 장비 현황 UI 찾기
-        if (equipmentStatusUI == null)
-        {
-            equipmentStatusUI = GetComponentInChildren<EquipmentUI>(true);
-        }
-
-        // 장비 선택 패널 초기화
-        if (equipmentSelectionPanel != null)
-        {
-            equipmentSelectionPanel.SetActive(false);
-        }
     }
 
     private void OnDestroy()
@@ -92,6 +69,7 @@ public class InventoryUI : MonoBehaviour, IObserver
         InitializeEquipmentSlots();
         UpdateSlots();
         UpdateEquipmentSlots();
+
     }
 
     /// <summary>
@@ -99,13 +77,88 @@ public class InventoryUI : MonoBehaviour, IObserver
     /// </summary>
     private void InitializeEquipmentSlots()
     {
-        foreach (var eqSlot in equipmentSlots)
+        foreach (var kvp in equipmentSlots)
         {
-            if (eqSlot != null)
+            if (kvp.Value != null)
             {
-                eqSlot.Initialize(this);
+                kvp.Value.Initialize(this);
+                
+                // 장비 슬롯 클릭 이벤트 추가
+                var slotType = kvp.Key;
+                var slot = kvp.Value;
+                
+                // 기존 이벤트 제거 후 새로 추가
+                var button = slot.GetComponent<Button>();
+                if (button != null)
+                {
+                    button.onClick.RemoveAllListeners();
+                    button.onClick.AddListener(() => OnEquipmentSlotClicked(slotType));
+                }
             }
         }
+    }
+
+    /// <summary>
+    /// 장비 슬롯 클릭 처리
+    /// </summary>
+    private void OnEquipmentSlotClicked(EquipmentType slotType)
+    {
+        var equippedItem = GetEquippedItem(slotType);
+        
+        if (equippedItem != null)
+        {
+            // 장착된 아이템이 있으면 아이템 정보 UI 표시
+            ShowItemInfo(equippedItem);
+        }
+        else
+        {
+            // 빈 슬롯이면 해당 타입의 장비 아이템 강조 표시
+            Debug.Log($"{slotType} 슬롯이 비어있습니다. 인벤토리에서 해당 타입의 장비를 확인하세요.");
+            HighlightEquipableItems(slotType);
+        }
+    }
+
+    /// <summary>
+    /// 특정 타입의 장비 아이템들 강조 표시
+    /// </summary>
+    private void HighlightEquipableItems(EquipmentType targetType)
+    {
+        foreach (var slot in _slots)
+        {
+            var item = slot.GetComponent<ItemSlot>(); // 실제 ItemSlot 컴포넌트에서 아이템 가져오기
+            
+            // 이 부분은 ItemSlot에 public 프로퍼티나 메서드가 필요할 수 있습니다.
+            // 예시로 코메ント 처리
+            /*
+            if (item != null && item.CurrentItem is EquipableItem equipable)
+            {
+                if (equipable.equipmentType == targetType)
+                {
+                    // 해당 타입 아이템 강조
+                    HighlightSlot(slot, true);
+                }
+                else
+                {
+                    // 다른 타입 아이템 흐리게
+                    HighlightSlot(slot, false);
+                }
+            }
+            */
+        }
+    }
+
+    /// <summary>
+    /// 슬롯 강조 표시
+    /// </summary>
+    private void HighlightSlot(ItemSlot slot, bool highlight)
+    {
+        var canvasGroup = slot.GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+        {
+            canvasGroup = slot.gameObject.AddComponent<CanvasGroup>();
+        }
+        
+        canvasGroup.alpha = highlight ? 1f : 0.5f;
     }
 
     /// <summary>
@@ -120,18 +173,18 @@ public class InventoryUI : MonoBehaviour, IObserver
         if (equipmentComponent == null) return;
 
         // 각 장비 슬롯 업데이트
-        foreach (var eqSlot in equipmentSlots)
+        foreach (var kvp in equipmentSlots)
         {
-            if (eqSlot != null)
+            if (kvp.Value != null)
             {
-                var equippedItem = equipmentComponent.GetEquippedItem(eqSlot.SlotType);
+                var equippedItem = equipmentComponent.GetEquippedItem(kvp.Key);
                 if (equippedItem != null)
                 {
-                    eqSlot.EquipItem(equippedItem);
+                    kvp.Value.EquipItem(equippedItem);
                 }
                 else
                 {
-                    eqSlot.UnequipItem();
+                    kvp.Value.UnequipItem();
                 }
             }
         }
@@ -145,6 +198,7 @@ public class InventoryUI : MonoBehaviour, IObserver
         gameObject.SetActive(true);
         UpdateSlots();
         UpdateEquipmentSlots();
+
 
         // 열 때 아이템 정보 UI 닫기
         if (_itemInfoUI != null)
@@ -161,8 +215,6 @@ public class InventoryUI : MonoBehaviour, IObserver
         if (gameObject.activeSelf)
         {
             gameObject.SetActive(false);
-
-            // 닫을 때 모든 관련 UI 닫기
             CloseAllRelatedUIs();
         }
         else
@@ -180,128 +232,54 @@ public class InventoryUI : MonoBehaviour, IObserver
         {
             _itemInfoUI.Hide();
         }
+    }
 
-        if (equipmentStatusUI != null)
+    /// <summary>
+    /// 아이템 정보 UI 표시
+    /// </summary>
+    public void ShowItemInfo(Item item)
+    {
+        if (_itemInfoUI != null && item != null)
         {
-            equipmentStatusUI.Hide();
-        }
-
-        if (equipmentSelectionPanel != null)
-        {
-            equipmentSelectionPanel.SetActive(false);
+            _itemInfoUI.Show(item, UseItemCallback);
         }
     }
 
     /// <summary>
-    /// 장비 현황 UI 열기
+    /// 아이템 사용 콜백
     /// </summary>
-    public void OpenEquipmentStatus(EquipmentType type)
+    private void UseItemCallback(Item item)
     {
-        var player = Utils.GetPlayer();
-        if (player == null) return;
+        if (item == null) return;
 
-        var equipmentComponent = player.GetEntityComponent<EquipmentComponent>();
-        if (equipmentComponent == null) return;
-
-        var equippedItem = equipmentComponent.GetEquippedItem(type);
-        if (equippedItem != null && equipmentStatusUI != null)
+        if (BattleFlowController.Instance == null ||
+            BattleFlowController.Instance.GetPlayerEntity() == null)
         {
-            equipmentStatusUI.ShowEquipmentStatus(equippedItem);
-        }
-    }
-
-    /// <summary>
-    /// 특정 타입의 장비 아이템들 보여주기
-    /// </summary>
-    public void ShowEquipableItemsForSlot(EquipmentType type)
-    {
-        if (equipmentSelectionPanel == null || equipmentSelectionContainer == null)
-        {
-            Debug.LogWarning("장비 선택 UI가 설정되지 않았습니다.");
+            Debug.LogWarning("플레이어 엔티티를 찾을 수 없습니다.");
             return;
         }
 
-        currentSelectingSlotType = type;
+        Debug.Log($"아이템 사용: {item.ItemName}");
+        item.Use(BattleFlowController.Instance.GetPlayerEntity());
 
-        // 기존 선택 슬롯들 제거
-        foreach (Transform child in equipmentSelectionContainer)
+        // 소모품이 모두 소진되었는지 확인
+        if (item is ConsumableItem consumable && consumable.cunamount <= 0)
         {
-            Destroy(child.gameObject);
-        }
-
-        // 해당 타입의 장비 아이템들 찾기
-        var availableItems = GetAvailableEquipableItems(type);
-
-        // 각 아이템에 대한 선택 슬롯 생성
-        foreach (var item in availableItems)
-        {
-            var slotObj = Instantiate(DataCenter.Instance.GetItemSlotPrefab(), equipmentSelectionContainer);
-            var itemSlot = slotObj.GetComponent<ItemSlot>();
-
-            if (itemSlot != null)
-            {
-                itemSlot.SetItem(item);
-
-                // 클릭 이벤트 오버라이드
-                var button = slotObj.GetComponent<Button>();
-                if (button == null)
-                {
-                    button = slotObj.AddComponent<Button>();
-                }
-
-                button.onClick.RemoveAllListeners();
-                button.onClick.AddListener(() => OnEquipmentSelected(item));
-            }
-        }
-
-        // 선택 패널 활성화
-        equipmentSelectionPanel.SetActive(true);
-    }
-
-    /// <summary>
-    /// 사용 가능한 장비 아이템들 가져오기
-    /// </summary>
-    private List<EquipableItem> GetAvailableEquipableItems(EquipmentType type)
-    {
-        var availableItems = new List<EquipableItem>();
-
-        if (BattleFlowController.Instance?.playerData?.inventory != null)
-        {
-            foreach (var item in BattleFlowController.Instance.playerData.inventory)
-            {
-                if (item is EquipableItem equipableItem && equipableItem.equipmentType == type)
-                {
-                    availableItems.Add(equipableItem);
-                }
-            }
-        }
-
-        return availableItems;
-    }
-
-    /// <summary>
-    /// 장비 선택 시 호출
-    /// </summary>
-    private void OnEquipmentSelected(EquipableItem selectedItem)
-    {
-        if (selectedItem == null) return;
-
-        // 아이템 사용 (장착)
-        selectedItem.Use(Utils.GetPlayer());
-
-        // 선택 패널 닫기
-        if (equipmentSelectionPanel != null)
-        {
-            equipmentSelectionPanel.SetActive(false);
+            // 인벤토리에서 제거
+            BattleFlowController.Instance.playerData.RemoveItem(item);
         }
 
         // UI 업데이트
         UpdateSlots();
         UpdateEquipmentSlots();
+
+        
+        // 옵저버 알림
+        BattleFlowController.Instance.NotifyObservers();
     }
 
     /// <summary>
-    /// 기존 슬롯 업데이트 메서드
+    /// 일반 아이템 슬롯 업데이트 (장비 아이템 제외)
     /// </summary>
     public void UpdateSlots()
     {
@@ -342,6 +320,55 @@ public class InventoryUI : MonoBehaviour, IObserver
     }
 
     /// <summary>
+    /// 사용 중인 인벤토리 슬롯 수 계산
+    /// </summary>
+    private int GetUsedInventorySlots()
+    {
+        if (BattleFlowController.Instance?.playerData?.inventory == null)
+            return 0;
+
+        int count = 0;
+        var player = Utils.GetPlayer();
+        var equipmentComponent = player?.GetEntityComponent<EquipmentComponent>();
+
+        foreach (var item in BattleFlowController.Instance.playerData.inventory)
+        {
+            // 장착된 장비 아이템은 제외
+            if (item is EquipableItem equipable && equipmentComponent != null)
+            {
+                if (equipmentComponent.GetEquippedItem(equipable.equipmentType) == equipable)
+                {
+                    continue;
+                }
+            }
+            count++;
+        }
+
+        return count;
+    }
+
+    /// <summary>
+    /// 총 인벤토리 슬롯 수 계산 (장비 효과 포함)
+    /// </summary>
+    private int GetTotalInventorySlots()
+    {
+        int baseSlots = 10; // 기본 슬롯 수
+        var player = Utils.GetPlayer();
+        
+        if (player != null)
+        {
+            var equipmentComponent = player.GetEntityComponent<EquipmentComponent>();
+            if (equipmentComponent != null)
+            {
+                var totalEffects = equipmentComponent.GetTotalEffects();
+                baseSlots += totalEffects.inventorySlotBonus;
+            }
+        }
+
+        return baseSlots;
+    }
+
+    /// <summary>
     /// 옵저버 업데이트
     /// </summary>
     public void UpdateObserver()
@@ -364,7 +391,7 @@ public class InventoryUI : MonoBehaviour, IObserver
     /// </summary>
     public EQSlot GetEquipmentSlot(EquipmentType type)
     {
-        return equipmentSlots.FirstOrDefault(slot => slot != null && slot.SlotType == type);
+        return equipmentSlots.TryGetValue(type, out EQSlot slot) ? slot : null;
     }
 
     /// <summary>
@@ -380,14 +407,51 @@ public class InventoryUI : MonoBehaviour, IObserver
     }
 
     /// <summary>
-    /// 장비 선택 패널 닫기
+    /// 특정 장비 슬롯에 아이템 장착 (드래그앤드롭 등에서 사용)
     /// </summary>
-    public void CloseEquipmentSelection()
+    public bool EquipItemToSlot(EquipmentType slotType, EquipableItem item)
     {
-        if (equipmentSelectionPanel != null)
+        if (item == null || item.equipmentType != slotType)
         {
-            equipmentSelectionPanel.SetActive(false);
+            Debug.LogWarning($"잘못된 아이템 타입입니다. 슬롯: {slotType}, 아이템: {item?.equipmentType}");
+            return false;
         }
+
+        var player = Utils.GetPlayer();
+        if (player == null) return false;
+
+        // 아이템 사용 (장착)
+        item.Use(player);
+        
+        // UI 업데이트
+        UpdateSlots();
+        UpdateEquipmentSlots();
+        
+        return true;
+    }
+
+    /// <summary>
+    /// 특정 장비 슬롯에서 아이템 해제
+    /// </summary>
+    public bool UnequipItemFromSlot(EquipmentType slotType)
+    {
+        var player = Utils.GetPlayer();
+        if (player == null) return false;
+
+        var equipmentComponent = player.GetEntityComponent<EquipmentComponent>();
+        if (equipmentComponent == null) return false;
+
+        var unequippedItem = equipmentComponent.UnequipItem(slotType);
+        if (unequippedItem != null)
+        {
+            // UI 업데이트
+            UpdateSlots();
+            UpdateEquipmentSlots();
+
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -414,6 +478,8 @@ public class InventoryUI : MonoBehaviour, IObserver
         Debug.Log("<color=yellow>=== 현재 장착 상태 ===</color>");
         foreach (EquipmentType type in System.Enum.GetValues(typeof(EquipmentType)))
         {
+            if (type == EquipmentType.None) continue;
+
             var item = equipmentComponent.GetEquippedItem(type);
             if (item != null)
             {
@@ -443,11 +509,21 @@ public class InventoryUI : MonoBehaviour, IObserver
         if (totalEffects.damageReduction > 0) Debug.Log($"피해 감소: <color=green>{totalEffects.damageReduction * 100}%</color>");
         
         // 인벤토리 정보 출력
-        var inventoryComponent = player.GetEntityComponent<ExpandedInventoryComponent>();
-        if (inventoryComponent != null)
+        Debug.Log("<color=yellow>=== 인벤토리 정보 ===</color>");
+        Debug.Log($"사용 중인 슬롯: {GetUsedInventorySlots()}/{GetTotalInventorySlots()}");
+    }
+
+    /// <summary>
+    /// 장비 슬롯 딕셔너리 정보 출력 (디버그용)
+    /// </summary>
+    [Button("장비 슬롯 정보 출력")]
+    public void PrintEquipmentSlotInfo()
+    {
+        Debug.Log("<color=cyan>=== 장비 슬롯 딕셔너리 정보 ===</color>");
+        foreach (var kvp in equipmentSlots)
         {
-            Debug.Log("<color=yellow>=== 인벤토리 정보 ===</color>");
-            Debug.Log(inventoryComponent.GetInventoryInfo());
+            string slotStatus = kvp.Value != null ? "할당됨" : "null";
+            Debug.Log($"{kvp.Key}: {slotStatus}");
         }
     }
 }

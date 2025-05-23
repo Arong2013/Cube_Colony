@@ -66,6 +66,10 @@ public class DataCenter : SerializedMonoBehaviour
     [DictionaryDrawerSettings(KeyLabel = "ID", ValueLabel = "SO")]
     [SerializeField] private Dictionary<int, FieldTileDataSO> fieldTileDatas = new();
 
+    [FoldoutGroup("🛠️ 강화 레시피", expanded: false)]
+[DictionaryDrawerSettings(KeyLabel = "ID", ValueLabel = "SO")]
+[SerializeField] private Dictionary<int, ReinforcementRecipeSO> reinforcementRecipes = new();
+
     // ===== 기존 수동 등록 데이터들 =====
     [FoldoutGroup("🎲 큐브 데이터", expanded: true)]
     [LabelText("스킬별 시각 데이터")]
@@ -278,8 +282,7 @@ public class DataCenter : SerializedMonoBehaviour
 
         // SO에서 추가 정보도 복사
         item.description = so.description;
-        item.grade = so.grade;
-        item.itemIcon = so.itemIcon;
+        item.grade = so.grade;;
 
         return item;
     }
@@ -302,12 +305,10 @@ public class DataCenter : SerializedMonoBehaviour
         item.healthBonus = so.healthBonus;
         item.description = so.description;
         item.grade = so.grade;
-        item.itemIcon = so.itemIcon;
 
         // 강화 시스템 데이터 복사
         item.currentReinforcementLevel = 0; // 항상 0으로 시작
         item.maxReinforcementLevel = so.maxReinforcementLevel;
-        item.reinforcementCosts = (int[])so.reinforcementCosts.Clone();
         item.specialEffect1 = so.specialEffect1;
         item.specialEffect2 = so.specialEffect2;
         
@@ -453,6 +454,12 @@ public class DataCenter : SerializedMonoBehaviour
         Debug.LogWarning($"[DataCenter] {typeof(T).Name}을 위한 Create 메서드를 찾을 수 없습니다. ID: {id}");
         return default;
     }
+
+    public ReinforcementRecipeSO GetReinforcementRecipeSO(int id) 
+{
+    // ReinforcementRecipeSO를 저장할 Dictionary 추가 필요
+    return reinforcementRecipes.TryGetValue(id, out var recipe) ? recipe : null;
+}
 
     /// <summary>
     /// Item 타입으로 요청시 모든 아이템 타입 시도

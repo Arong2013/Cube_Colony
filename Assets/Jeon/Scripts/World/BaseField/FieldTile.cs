@@ -11,6 +11,14 @@ public class FieldTile : SerializedMonoBehaviour
     [LabelText("스테이지 레벨"), ReadOnly]
     [SerializeField] private int currentStageLevel;
 
+    [TitleGroup("기본 정보")]
+    [LabelText("에니메이션 정보"), ReadOnly]
+    [SerializeField] Material AnimeMaterial => DataCenter.Instance.GetFaceData(faceInfo.Type).CubieFaceMaterials[faceInfo.Level];
+
+    [TitleGroup("기본 정보")]
+    [LabelText("에니메이션 정보")]
+    [SerializeField] MeshRenderer AnimeMeshRender;    
+
     [TitleGroup("스폰 설정")]
     [LabelText("스폰 포인트들"), Tooltip("몬스터가 생성될 위치")]
     [SerializeField] private List<Transform> spawnPoints = new List<Transform>();
@@ -42,6 +50,8 @@ public class FieldTile : SerializedMonoBehaviour
 
         // 새로운 오브젝트 스폰
         SpawnObjects();
+
+        AnimeMeshRender.material = AnimeMaterial;   
     }
 
     [Button("오브젝트 스폰"), GUIColor(0.3f, 0.8f, 0.3f)]

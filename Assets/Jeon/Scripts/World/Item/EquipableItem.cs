@@ -1,6 +1,8 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 // 확장된 장비 타입
 public enum EquipmentType
@@ -17,15 +19,13 @@ public enum EquipmentType
 public class EquipableItem : Item
 {
     // SO에서 가져온 기본 정보들
-    [ShowInInspector] public EquipmentType equipmentType;
+  [ShowInInspector] public EquipmentType equipmentType;
     [ShowInInspector] public int requiredLevel;
     [ShowInInspector] public float attackBonus;
     [ShowInInspector] public float defenseBonus;
     [ShowInInspector] public float healthBonus;
     [ShowInInspector] public string description;
     [ShowInInspector] public ItemGrade grade;
-    [ShowInInspector] public Sprite itemIcon;
-
     // 추가 필요한 필드들
     [TitleGroup("추가 효과")]
     [ShowInInspector] public float maxOxygenBonus = 0f;
@@ -50,12 +50,6 @@ public class EquipableItem : Item
 
     [TitleGroup("강화 시스템")]
     [ShowInInspector]
-    [LabelText("강화 비용 배열")]
-    [Tooltip("각 강화 레벨별 필요한 비용")]
-    public int[] reinforcementCosts = { 100, 200, 400, 800, 1600, 3200, 6400, 12800, 25600, 51200 };
-
-    [TitleGroup("강화 시스템")]
-    [ShowInInspector]
     [LabelText("특수 효과 1")]
     [Tooltip("아이템별 특수 효과 (추후 확장 가능)")]
     public float specialEffect1 = 0f;
@@ -65,6 +59,18 @@ public class EquipableItem : Item
     [LabelText("특수 효과 2")]
     [Tooltip("아이템별 특수 효과 (추후 확장 가능)")]
     public float specialEffect2 = 0f;
+
+
+    [TitleGroup("강화 시스템")]
+    [ShowInInspector]
+    [LabelText("강화 레시피 ID")]
+    public int reinforcementRecipeId; // 강화 테이블 ID 추가
+
+        private ReinforcementRecipeSO GetReinforcementRecipe()
+    {
+        return DataCenter.Instance.GetReinforcementRecipeSO(reinforcementRecipeId);
+    }
+
 
     /// <summary>
     /// 아이템이 강화 가능한지 확인
@@ -88,25 +94,6 @@ public class EquipableItem : Item
         currentReinforcementLevel++;
         Debug.Log($"{ItemName} 강화 완료! 현재 레벨: +{currentReinforcementLevel}");
         return true;
-    }
-
-    /// <summary>
-    /// 현재 레벨의 강화 비용 가져오기
-    /// </summary>
-    public int GetReinforcementCost()
-    {
-        if (!CanReinforce())
-            return 0;
-
-        if (currentReinforcementLevel < reinforcementCosts.Length)
-        {
-            return reinforcementCosts[currentReinforcementLevel];
-        }
-
-        // 배열 범위를 벗어나면 마지막 값의 2배씩 증가
-        int lastCost = reinforcementCosts[reinforcementCosts.Length - 1];
-        int extraLevels = currentReinforcementLevel - reinforcementCosts.Length + 1;
-        return lastCost * (int)Mathf.Pow(2, extraLevels);
     }
 
     /// <summary>
@@ -210,6 +197,106 @@ public class EquipableItem : Item
         
         return result;
     }
+
+     /// <summary>
+    /// 강화에 필요한 재료를 인벤토리에서 확인
+    /// </summary>
+    public bool CanReinforce(PlayerEntity player)
+    {
+        // 기본 강화 가능 조건 확인
+        if (currentReinforcementLevel >= maxReinforcementLevel)
+            return false;
+
+        var recipe = GetReinforcementRecipe();
+        if (recipe == null)
+        {
+            Debug.LogWarning($"{ItemName} - 강화 레시피를 찾을 수 없습니다.");
+            return false;
+        }
+
+        // 인벤토리에서 재료 확인
+        var playerInventory = player.GetInventoryItems();
+        for (int i = 0; i < recipe.requiredItemIDs.Count; i++)
+        {
+            int requiredItemId = recipe.requiredItemIDs[i];
+            int requiredCount = recipe.requiredItemCounts[i];
+
+            // 인벤토리에서 해당 아이템의 총 개수 계산
+            int currentCount = playerInventory
+                .Where(item => item is ConsumableItem consumable && consumable.ID == requiredItemId)
+                .Sum(item => (item as ConsumableItem).cunamount);
+
+            if (currentCount < requiredCount)
+                return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// 강화 실행 (재료 소모 포함)
+    /// </summary>
+    public bool Reinforce(PlayerEntity player)
+    {
+        // 강화 가능 여부 먼저 확인
+        if (!CanReinforce(player))
+        {
+            Debug.LogWarning($"{ItemName} 강화 불가");
+            return false;
+        }
+
+        var recipe = GetReinforcementRecipe();
+        var playerData = BattleFlowController.Instance?.playerData;
+        
+        if (playerData == null) return false;
+
+        // 재료 소모
+        for (int i = 0; i < recipe.requiredItemIDs.Count; i++)
+        {
+            int requiredItemId = recipe.requiredItemIDs[i];
+            int requiredCount = recipe.requiredItemCounts[i];
+
+            ConsumeItemsFromInventory(playerData.inventory, requiredItemId, requiredCount);
+        }
+        // 플레이어 옵저버들에게 알림
+        player.NotifyObservers();
+
+        return true;
+    }
+
+    /// <summary>
+    /// 인벤토리에서 특정 아이템 소모
+    /// </summary>
+    private void ConsumeItemsFromInventory(List<Item> inventory, int itemId, int requiredCount)
+    {
+        var consumableItems = inventory
+            .OfType<ConsumableItem>()
+            .Where(item => item.ID == itemId)
+            .OrderBy(item => item.cunamount)
+            .ToList();
+
+        foreach (var item in consumableItems)
+        {
+            if (requiredCount <= 0) break;
+
+            int consumeAmount = Mathf.Min(item.cunamount, requiredCount);
+            item.cunamount -= consumeAmount;
+            requiredCount -= consumeAmount;
+
+            // 아이템 개수가 0이 되면 인벤토리에서 제거
+            if (item.cunamount <= 0)
+            {
+                inventory.Remove(item);
+            }
+        }
+
+        // 필요한 개수를 모두 소모하지 못했다면 예외 처리
+        if (requiredCount > 0)
+        {
+            Debug.LogError($"아이템 ID {itemId}의 재료가 부족합니다.");
+        }
+    }
+
 
     /// <summary>
     /// 강화로 인한 추가 공격력만 계산
@@ -386,7 +473,6 @@ public class EquipableItem : Item
 
         if (CanReinforce())
         {
-            Debug.Log($"다음 강화 비용: {GetReinforcementCost()}");
             Debug.Log($"성공 확률: {GetReinforcementSuccessRate():F1}%");
         }
 

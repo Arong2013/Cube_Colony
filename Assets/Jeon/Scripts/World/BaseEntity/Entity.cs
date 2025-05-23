@@ -25,6 +25,11 @@ public abstract class Entity : SerializedMonoBehaviour
     public bool CanWalk => (Mathf.Abs(CurrentDir.x) > 0.1f || Mathf.Abs(CurrentDir.z) > 0.1f) && GetState().GetType() != typeof(MoveState);
     public bool CanAttack => GetState().GetType() != typeof(AttackState);
 
+    // 디버그용 데미지 설정
+    [TitleGroup("🛠️ 디버그 테스트")]
+    [LabelText("테스트 데미지 양"), Range(1, 100)]
+    [SerializeField] private float debugDamageAmount = 20f;
+
     public virtual void Init()
     {
         _animator = GetComponent<Animator>();
@@ -72,6 +77,21 @@ public abstract class Entity : SerializedMonoBehaviour
         if (Stats != null)
         {
             Stats.ChangeStat(statName, source, value);
+        }
+        else
+        {
+            Debug.LogWarning("엔티티 스탯이 초기화되지 않았습니다.");
+        }
+    }
+
+    /// <summary>
+    /// 엔티티 기본 스탯 설정 (절대값 설정)
+    /// </summary>
+    public void SetEntityBaseStat(EntityStatName statName, float value)
+    {
+        if (Stats != null)
+        {
+            Stats.SetBaseStat(statName, value);
         }
         else
         {
@@ -173,4 +193,115 @@ public abstract class Entity : SerializedMonoBehaviour
     }
 
     private void OnDestroy() => _components.ExitAll();
+
+    // ===== 디버그 테스트 버튼들 =====
+
+    [TitleGroup("🛠️ 디버그 테스트")]
+    [Button("💔 데미지 받기", ButtonSizes.Medium), GUIColor(0.9f, 0.3f, 0.3f)]
+    public void DebugTakeDamage()
+    {
+        float currentHP = GetEntityStat(EntityStatName.HP);
+        Debug.Log($"[디버그] {name}이(가) {debugDamageAmount} 데미지를 받습니다. (현재 HP: {currentHP})");
+        
+        TakeDamage(debugDamageAmount);
+        
+        float newHP = GetEntityStat(EntityStatName.HP);
+        Debug.Log($"[디버그] 데미지 후 HP: {newHP}");
+    }
+
+    [TitleGroup("🛠️ 디버그 테스트")]
+    [Button("💚 체력 회복", ButtonSizes.Medium), GUIColor(0.3f, 0.9f, 0.3f)]
+    public void DebugHeal()
+    {
+        float healAmount = 30f;
+        float currentHP = GetEntityStat(EntityStatName.HP);
+        Debug.Log($"[디버그] {name}이(가) {healAmount} 체력을 회복합니다. (현재 HP: {currentHP})");
+        
+        Heal(healAmount);
+        
+        float newHP = GetEntityStat(EntityStatName.HP);
+        Debug.Log($"[디버그] 회복 후 HP: {newHP}");
+    }
+
+    [TitleGroup("🛠️ 디버그 테스트")]
+    [Button("☠️ 즉사 데미지", ButtonSizes.Medium), GUIColor(0.7f, 0.1f, 0.1f)]
+    public void DebugInstantKill()
+    {
+        float maxHP = GetEntityStat(EntityStatName.MaxHP);
+        Debug.Log($"[디버그] {name}에게 즉사 데미지 ({maxHP * 2}) 를 줍니다!");
+        
+        TakeDamage(maxHP * 2); // 최대 체력의 2배 데미지
+    }
+
+    [TitleGroup("🛠️ 디버그 테스트")]
+    [Button("📊 현재 상태 출력", ButtonSizes.Medium), GUIColor(0.3f, 0.3f, 0.9f)]
+    public void DebugPrintStatus()
+    {
+        Debug.Log($"=== {name} 상태 정보 ===");
+        Debug.Log($"체력: {GetEntityStat(EntityStatName.HP)} / {GetEntityStat(EntityStatName.MaxHP)}");
+        Debug.Log($"공격력: {GetEntityStat(EntityStatName.ATK)}");
+        Debug.Log($"방어력: {GetEntityStat(EntityStatName.DEF)}");
+        Debug.Log($"속도: {GetEntityStat(EntityStatName.SPD)}");
+        Debug.Log($"산소: {GetEntityStat(EntityStatName.O2)} / {GetEntityStat(EntityStatName.MaxO2)}");
+        Debug.Log($"현재 상태: {GetState().GetType().Name}");
+        Debug.Log($"현재 방향: {CurrentDir}");
+        Debug.Log($"타겟: {(CurrentTarget != null ? CurrentTarget.name : "없음")}");
+    }
+
+    [TitleGroup("🛠️ 디버그 테스트")]
+    [Button("🎯 가장 가까운 적 공격", ButtonSizes.Medium), GUIColor(0.9f, 0.6f, 0.2f)]
+    public void DebugAttackNearestEnemy()
+    {
+        // 주변의 모든 엔티티 찾기
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 10f);
+        Entity nearestEnemy = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (var collider in colliders)
+        {
+            Entity entity = collider.GetComponent<Entity>();
+            if (entity != null && entity != this && entity.CompareTag("Enemy"))
+            {
+                float distance = Vector3.Distance(transform.position, entity.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    nearestEnemy = entity;
+                }
+            }
+        }
+
+        if (nearestEnemy != null)
+        {
+            Debug.Log($"[디버그] {name}이(가) {nearestEnemy.name}을(를) 공격합니다! (거리: {closestDistance:F1})");
+            OnAttackAnime();
+            nearestEnemy.TakeDamage(GetEntityStat(EntityStatName.ATK));
+        }
+        else
+        {
+            Debug.Log($"[디버그] {name} 주변에 공격할 적이 없습니다.");
+        }
+    }
+
+    [TitleGroup("🛠️ 디버그 테스트")]
+    [Button("🔄 완전 회복", ButtonSizes.Medium), GUIColor(0.2f, 0.8f, 0.2f)]
+    public void DebugFullRestore()
+    {
+        float maxHP = GetEntityStat(EntityStatName.MaxHP);
+        float maxO2 = GetEntityStat(EntityStatName.MaxO2);
+        
+        Debug.Log($"[디버그] {name}을(를) 완전히 회복합니다!");
+        
+        // 체력과 산소를 최대치로 설정
+        SetEntityStatModifier(EntityStatName.HP, this, maxHP);
+        SetEntityStatModifier(EntityStatName.O2, this, maxO2);
+        
+        // 플레이어라면 에너지도 회복
+        if (this is PlayerEntity && BattleFlowController.Instance?.playerData != null)
+        {
+            BattleFlowController.Instance.playerData.SetEnergy(BattleFlowController.Instance.playerData.maxEnergy);
+        }
+        
+        Debug.Log($"[디버그] 완전 회복 완료! HP: {GetEntityStat(EntityStatName.HP)}, O2: {GetEntityStat(EntityStatName.O2)}");
+    }
 }
