@@ -404,8 +404,8 @@ public static class ExcelScriptableObjectGenerator
                     case "grade":
                         so.grade = ParseItemGrade(rawValue);
                         break;
-                     case "reinforcementrecipeid":
-                    so.reinforcementRecipeId = ParseInt(rawValue);
+                    case "reinforcementrecipeid":
+                        so.reinforcementRecipeId = ParseInt(rawValue);
                         break;
                 }
             }
@@ -464,6 +464,10 @@ public static class ExcelScriptableObjectGenerator
                     case "grade":
                         so.grade = ParseItemGrade(rawValue);
                         break;
+                    case "acquirefields":
+                        so.acquirableFieldIds = ParseIntList(rawValue);
+                        break;
+
                 }
             }
             catch (Exception e)
@@ -520,6 +524,9 @@ public static class ExcelScriptableObjectGenerator
                         break;
                     case "description":
                         so.description = rawValue ?? "";
+                        break;
+                    case "iconName":
+                        so.IconName = rawValue ?? "";
                         break;
                 }
             }

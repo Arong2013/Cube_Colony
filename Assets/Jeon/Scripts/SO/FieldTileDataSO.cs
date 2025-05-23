@@ -9,6 +9,11 @@ public class FieldTileDataSO : ScriptableObject
     [LabelText("타일 ID"), ReadOnly]
     public int ID;
 
+    [TitleGroup("기본 정보")]
+    [LabelText("타일 이름")]
+    public string IconName;
+
+
     [TitleGroup("스테이지 정보")]
     [LabelText("스테이지 레벨"), MinValue(1)]
     public int StageLevel = 1;
@@ -34,6 +39,10 @@ public class FieldTileDataSO : ScriptableObject
     [TitleGroup("디스플레이")]
     [LabelText("타일 설명"), TextArea(2, 3)]
     public string description;
+
+    [TitleGroup("디스플레이")]
+    [LabelText("타일 아이콘"), PreviewField(80)]
+    public Sprite tileIcon => Resources.Load<Sprite>($"Sprites/FieldTiles/{IconName}");
 
     [TitleGroup("디버그 정보")]
     [ShowInInspector, ReadOnly]

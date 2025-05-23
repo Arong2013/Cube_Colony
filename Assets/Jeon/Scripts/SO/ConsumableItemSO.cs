@@ -22,6 +22,12 @@ public class ConsumableItemSO : ScriptableObject
     [InfoBox("해당 아이템을 사용할 때 실행될 액션들의 ID")]
     public List<int> ids = new List<int>();
 
+        [TitleGroup("획득 정보")]
+    [LabelText("획득 가능 필드 ID 목록")]
+    [InfoBox("이 아이템을 획득할 수 있는 필드 ID들")]
+    public List<int> acquirableFieldIds = new List<int>();
+
+
     [TitleGroup("디스플레이")]
     [LabelText("설명"), TextArea(2, 4)]
     public string description;
