@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Stage3_Tile30
   m_EditorClassIdentifier: 
   ID: 30
+  IconName: 
   StageLevel: 3
   minCount: 3
   maxCount: 5

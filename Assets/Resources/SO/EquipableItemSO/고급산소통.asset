@@ -19,6 +19,7 @@ MonoBehaviour:
   attackBonus: 0
   defenseBonus: 0
   healthBonus: 0
+  reinforcementRecipeId: 1
   maxReinforcementLevel: 3
   reinforcementCosts: 64000000c800000090010000
   specialEffect1: 0

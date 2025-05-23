@@ -9,15 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa7bce817e043b643b189d3f05342a74, type: 3}
-  m_Name: Stage5_Tile52
+  m_Script: {fileID: 11500000, guid: 7856d0d897e5cb64bb7f6f966b8b3c94, type: 3}
+  m_Name: ReinforcementRecipe_1
   m_EditorClassIdentifier: 
-  ID: 52
-  IconName: 
-  StageLevel: 5
-  minCount: 3
-  maxCount: 5
-  ObjectID: 04000000
-  ObjectValue:
-  - 1
-  description: "\uC2A4\uD14C\uC774\uC9C0 5 \uAD11\uBB3C \uC790\uC6D0 \uD0C0\uC77C"
+  ID: 1
+  recipeName: "\uC804\uD22C\uD5EC\uBA67 \uAC15\uD654"
+  requiredItemIDs: 01000000
+  requiredItemCounts: 01000000

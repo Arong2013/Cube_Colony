@@ -32,6 +32,11 @@ public class EquipableItemSO : ScriptableObject
     [LabelText("체력 증가")]
     public float healthBonus = 0f;
 
+
+    [TitleGroup("강화 정보")]
+    [LabelText("강화 레시피 ID")]
+    public int reinforcementRecipeId;
+
     [TitleGroup("강화 설정")]
     [LabelText("최대 강화 레벨"), Range(0, 5)]
     public int maxReinforcementLevel = 3;
