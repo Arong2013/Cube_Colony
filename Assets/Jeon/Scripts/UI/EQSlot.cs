@@ -23,7 +23,7 @@ public class EQSlot : MonoBehaviour, IPointerClickHandler
     [TitleGroup("디버그 정보")]
     [ReadOnly, ShowInInspector]
     private InventoryUI parentInventoryUI;
- [TitleGroup("디버그 정보")]
+   [TitleGroup("디버그 정보")]
     [ReadOnly, ShowInInspector]
     public EquipmentType SlotType => slotType;
      [TitleGroup("디버그 정보")]

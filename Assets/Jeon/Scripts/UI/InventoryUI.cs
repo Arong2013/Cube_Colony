@@ -164,31 +164,34 @@ public class InventoryUI : SerializedMonoBehaviour, IObserver
     /// <summary>
     /// 장비 슬롯 업데이트
     /// </summary>
-    private void UpdateEquipmentSlots()
+private void UpdateEquipmentSlots()
+{
+    // BattleFlowController의 playerData에서 바로 장착된 장비 가져오기
+    if (BattleFlowController.Instance?.playerData == null)
     {
-         var player = Utils.GetPlayer();
-    if (player == null) return;
+        Debug.LogError("PlayerData를 찾을 수 없습니다!");
+        return;
+    }
 
-    var equipmentComponent = player.GetEntityComponent<EquipmentComponent>();
-    if (equipmentComponent == null) return;
+    Debug.Log($"장비 슬롯 업데이트 시작. 장비 슬롯 수: {equipmentSlots.Count}");
 
     // 각 장비 슬롯 업데이트
     foreach (var kvp in equipmentSlots)
     {
+        Debug.Log($"슬롯 타입 처리 중: {kvp.Key}");
+
         if (kvp.Value != null)
         {
-            var equippedItem = equipmentComponent.GetEquippedItem(kvp.Key);
+            var equippedItem = BattleFlowController.Instance.playerData.GetEquippedItem(kvp.Key);
+            
             if (equippedItem != null)
             {
+                Debug.Log($"{kvp.Key} 슬롯에 장착된 아이템: {equippedItem.ItemName}");
                 kvp.Value.EquipItem(equippedItem);
-            }
-            else
-            {
-                kvp.Value.UnequipItem();
             }
         }
     }
-    }
+}
 
     /// <summary>
     /// 인벤토리 UI 열기
