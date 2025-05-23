@@ -68,6 +68,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ce158c999f0db1a48b768a0f9ef9f374, type: 3}
       insertIndex: -1
       addedObject: {fileID: -4084422808672439768}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ce158c999f0db1a48b768a0f9ef9f374, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -2277192473617959205}
   m_SourcePrefab: {fileID: 100100000, guid: ce158c999f0db1a48b768a0f9ef9f374, type: 3}
 --- !u!1 &2589142169046610521 stripped
 GameObject:
@@ -81,7 +84,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2589142169046610521}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3cfc8c6fd4e6b6a4f920c1cfd39c700b, type: 3}
   m_Name: 
@@ -115,6 +118,7 @@ MonoBehaviour:
     - Name: DropChances
       Entry: 6
       Data: 
+  debugDamageAmount: 20
   behaviorSequencesSO: []
   strategyAsset: {fileID: 0}
   interactionDistance: 0
@@ -168,3 +172,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
+--- !u!95 &-2277192473617959205
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2589142169046610521}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6355706d6cecf1a43a8badede465e7f7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -109,6 +109,7 @@ MonoBehaviour:
     - Name: DropChances
       Entry: 6
       Data: 
+  debugDamageAmount: 20
   behaviorSequencesSO: []
   strategyAsset: {fileID: 0}
   interactionDistance: 0

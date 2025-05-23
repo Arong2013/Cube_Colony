@@ -87,7 +87,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 66a68308ce34e0d4a877410bf614689a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -278,6 +278,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+  debugDamageAmount: 20
   behaviorSequencesSO:
   - {fileID: 11400000, guid: 3406730a3ba17df41b8b015967238255, type: 2}
   strategyAsset: {fileID: 11400000, guid: e99be3362f4f05e4ab6590b3e3ffe8f5, type: 2}
