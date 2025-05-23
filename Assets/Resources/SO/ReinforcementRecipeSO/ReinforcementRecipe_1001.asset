@@ -16,3 +16,4 @@ MonoBehaviour:
   recipeName: "\uCCA0\uAC80 \uAC15\uD654"
   requiredItemIDs: 01000000
   requiredItemCounts: 01000000
+  resultItemId: 1003

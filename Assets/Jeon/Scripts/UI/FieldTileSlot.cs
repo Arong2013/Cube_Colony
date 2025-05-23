@@ -10,6 +10,6 @@ public class FieldTileSlot : MonoBehaviour
     public void Initialize(FieldTileDataSO fieldTileSO)
     {
         tileIcon.sprite = fieldTileSO.tileIcon;
-        tileNameText.text = $"Stage {fieldTileSO.StageLevel} - 필드 {fieldTileSO.ID}";
+        tileNameText.text = fieldTileSO.IconName;
     }
 }

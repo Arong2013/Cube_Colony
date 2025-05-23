@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85f8fc003da09ad43b835fbf07ad91de, type: 3}
-  m_Name: "\uCCA0\uAC80"
+  m_Name: "A\uACE0\uAE09\uC0B0\uC18C\uD1B5"
   m_EditorClassIdentifier: 
-  ID: 1001
-  ItemName: "\uCCA0\uAC80"
-  equipmentType: 0
+  ID: 1003
+  ItemName: "\uACE0\uAE09\uC0B0\uC18C\uD1B5"
+  equipmentType: 2
   requiredLevel: 1
-  attackBonus: 15
+  attackBonus: 0
   defenseBonus: 0
   healthBonus: 0
   reinforcementRecipeId: 1
@@ -24,7 +24,7 @@ MonoBehaviour:
   reinforcementCosts: 64000000c800000090010000
   specialEffect1: 0
   specialEffect2: 0
-  description: "\uB0A0\uCE74\uB85C\uC6B4 \uCCA0\uAC80. \uAC15\uD654\uD560\uC218\uB85D
-    \uCD94\uAC00 \uD0C0\uACA9\uC774 \uAC00\uB2A5\uD569\uB2C8\uB2E4."
+  description: "\uB300\uC6A9\uB7C9 \uC0B0\uC18C\uD1B5. \uC0B0\uC18C \uC6A9\uB7C9\uACFC
+    \uD6A8\uC728\uC744 \uB192\uC5EC\uC90D\uB2C8\uB2E4."
   itemIcon: {fileID: 0}
-  grade: 0
+  grade: 1

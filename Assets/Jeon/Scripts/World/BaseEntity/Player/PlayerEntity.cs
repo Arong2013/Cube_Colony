@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using static UnityEngine.UI.ScrollRect;
-
 public class PlayerEntity : Entity, ISubject
 {
     private Action returnAction;
@@ -45,16 +46,13 @@ public class PlayerEntity : Entity, ISubject
         AddEntityComponent(new ReturnComponent());
         AddEntityComponent(new ChopComponent());
 
-        // 새로운 장비 컴포넌트 추가
-        AddEntityComponent(new EquipmentComponent());
-
         // PlayerData와 동기화
         if (BattleFlowController.Instance != null)
         {
             Stats = BattleFlowController.Instance.playerData.playerStat;
         }
 
-        Debug.Log("PlayerEntity 초기화 완료 - 장비 시스템 포함");
+        Debug.Log("PlayerEntity 초기화 완료");
     }
 
     protected override void Update()
@@ -106,18 +104,6 @@ public class PlayerEntity : Entity, ISubject
 
     public override void OnDeath()
     {
-        // 장비 시스템 초기화
-        var equipmentComponent = GetEntityComponent<EquipmentComponent>();
-        if (equipmentComponent != null)
-        {
-            // 모든 장착된 아이템을 인벤토리로 반환
-            var equippedItems = equipmentComponent.GetAllEquippedItems();
-            foreach (var item in equippedItems)
-            {
-                AddItem(item);
-            }
-        }
-
         if (BattleFlowController.Instance != null)
         {
             BattleFlowController.Instance.playerData.Reset();
@@ -158,88 +144,74 @@ public class PlayerEntity : Entity, ISubject
         return new List<Item>();
     }
 
-    /// <summary>
-    /// 장비 장착
-    /// </summary>
+    // 장비 관련 메서드
     public bool EquipItem(EquipableItem item)
     {
-        var equipmentComponent = GetEntityComponent<EquipmentComponent>();
-        if (equipmentComponent != null)
+        if (BattleFlowController.Instance?.playerData != null)
         {
-            return equipmentComponent.EquipItem(item);
+            bool result = BattleFlowController.Instance.playerData.EquipItem(item);
+            NotifyObservers();
+            return result;
         }
         return false;
     }
 
-    /// <summary>
-    /// 장비 해제
-    /// </summary>
     public EquipableItem UnequipItem(EquipmentType type)
     {
-        var equipmentComponent = GetEntityComponent<EquipmentComponent>();
-        if (equipmentComponent != null)
+        if (BattleFlowController.Instance?.playerData != null)
         {
-            return equipmentComponent.UnequipItem(type);
+            var unequippedItem = BattleFlowController.Instance.playerData.UnequipItem(type);
+            NotifyObservers();
+            return unequippedItem;
         }
         return null;
     }
 
-    /// <summary>
-    /// 특정 타입의 장착된 아이템 가져오기
-    /// </summary>
     public EquipableItem GetEquippedItem(EquipmentType type)
     {
-        var equipmentComponent = GetEntityComponent<EquipmentComponent>();
-        if (equipmentComponent != null)
-        {
-            return equipmentComponent.GetEquippedItem(type);
-        }
-        return null;
+        return BattleFlowController.Instance?.playerData?.GetEquippedItem(type);
     }
 
-    /// <summary>
-    /// 모든 장착된 아이템 가져오기
-    /// </summary>
     public List<EquipableItem> GetAllEquippedItems()
     {
-        var equipmentComponent = GetEntityComponent<EquipmentComponent>();
-        if (equipmentComponent != null)
-        {
-            return equipmentComponent.GetAllEquippedItems();
-        }
-        return new List<EquipableItem>();
+        var equippedItems = BattleFlowController.Instance?.playerData?.GetAllEquippedItems();
+        return equippedItems?.Values.ToList() ?? new List<EquipableItem>();
     }
 
-    /// <summary>
-    /// 장비로 인한 총 스탯 보너스 가져오기
-    /// </summary>
+    // 총 장비 보너스 가져오기
     public float GetTotalEquipmentBonus(EntityStatName stat)
     {
-        // EquipmentComponent에서 보너스 값 가져오기
-        var equipmentComponent = GetEntityComponent<EquipmentComponent>();
-        if (equipmentComponent != null)
-        {
-            return equipmentComponent.GetTotalEquipmentBonus(stat);
-        }
+        // 장비로 인한 총 보너스 계산 로직
+        float totalBonus = 0f;
+        var equippedItems = GetAllEquippedItems();
 
-        // PlayerEquipmentHandler도 확인
-        var playerEquipmentHandler = GetEntityComponent<PlayerEquipmentHandler>();
-        if (playerEquipmentHandler != null)
+        foreach (var item in equippedItems)
         {
-            // statBonuses 딕셔너리에서 값을 반환하는 메서드 호출
-            // PlayerEquipmentHandler에 GetStatBonus 메서드가 있다고 가정
-            if (playerEquipmentHandler.GetStatBonuses().TryGetValue(stat, out float bonus))
+            var effects = item.GetCurrentEffects();
+            switch (stat)
             {
-                return bonus;
+                case EntityStatName.ATK:
+                    totalBonus += effects.attackBonus;
+                    break;
+                case EntityStatName.DEF:
+                    totalBonus += effects.defenseBonus;
+                    break;
+                case EntityStatName.MaxHP:
+                    totalBonus += effects.healthBonus;
+                    break;
+                case EntityStatName.MaxO2:
+                    totalBonus += effects.maxOxygenBonus;
+                    break;
+                case EntityStatName.MaxEng:
+                    totalBonus += effects.maxEnergyBonus;
+                    break;
             }
         }
 
-        return 0f;
+        return totalBonus;
     }
 
-    /// <summary>
-    /// 장비 효과를 포함한 최종 스탯 가져오기 (오버라이드)
-    /// </summary>
+    // 장비 효과를 포함한 최종 스탯 가져오기 (오버라이드)
     public override float GetEntityStat(EntityStatName stat)
     {
         float baseStat = base.GetEntityStat(stat);
@@ -247,84 +219,13 @@ public class PlayerEntity : Entity, ISubject
         return baseStat + equipmentBonus;
     }
 
-    /// <summary>
-    /// 장비 상태 정보를 UI에 표시
-    /// </summary>
-    public void ShowEquipmentStatus()
+    [Button("장착된 장비 출력")]
+    public void PrintEquippedItems()
     {
-        var inventoryUI = Utils.GetUI<InventoryUI>();
-        if (inventoryUI != null)
+        var equippedItems = GetAllEquippedItems();
+        foreach (var item in equippedItems)
         {
-            inventoryUI.OpenInventoryUI();
+            Debug.Log($"장착된 장비: {item.ItemName} (타입: {item.equipmentType}, 강화 레벨: +{item.currentReinforcementLevel})");
         }
     }
-
-    /// <summary>
-    /// 장비 강화 완료 후 호출되는 콜백
-    /// </summary>
-    public void OnEquipmentReinforced(EquipableItem item)
-    {
-        // 장비 효과 재적용 - EquipmentComponent 또는 PlayerEquipmentHandler 모두 확인
-        var equipmentComponent = GetEntityComponent<EquipmentComponent>();
-        if (equipmentComponent != null)
-        {
-            equipmentComponent.RefreshAllEquipmentEffects();
-        }
-
-        var playerEquipmentHandler = GetEntityComponent<PlayerEquipmentHandler>();
-        if (playerEquipmentHandler != null)
-        {
-            playerEquipmentHandler.RefreshEquipmentEffects();
-        }
-
-        NotifyObservers();
-        Debug.Log($"{item.GetDisplayName()} 강화 완료! 효과가 재적용되었습니다.");
-    }
-
-    /// <summary>
-    /// 디버깅용: 현재 플레이어 상태 출력
-    /// </summary>
-    public void PrintPlayerStatus()
-    {
-        Debug.Log("=== 플레이어 상태 ===");
-        Debug.Log($"레벨: {Stats.Level}");
-        Debug.Log($"체력: {GetEntityStat(EntityStatName.HP)}/{GetEntityStat(EntityStatName.MaxHP)}");
-
-        // EntityStatName.ATK와 Attack은 동일하므로 어느 것을 사용해도 됩니다
-        Debug.Log($"공격력: {GetEntityStat(EntityStatName.ATK)} (기본: {Stats.GetStat(EntityStatName.ATK)}, 장비: +{GetTotalEquipmentBonus(EntityStatName.ATK)})");
-        Debug.Log($"방어력: {GetEntityStat(EntityStatName.DEF)} (기본: {Stats.GetStat(EntityStatName.DEF)}, 장비: +{GetTotalEquipmentBonus(EntityStatName.DEF)})");
-        Debug.Log($"속도: {GetEntityStat(EntityStatName.SPD)}");
-
-        // 산소 및 에너지 정보 추가
-        Debug.Log($"산소: {GetEntityStat(EntityStatName.O2)}/{GetEntityStat(EntityStatName.MaxO2)}");
-        Debug.Log($"에너지: {GetEntityStat(EntityStatName.Eng)}/{GetEntityStat(EntityStatName.MaxEng)}");
-
-        // 장비 정보 출력
-        var equipmentComponent = GetEntityComponent<EquipmentComponent>();
-        if (equipmentComponent != null)
-        {
-            equipmentComponent.PrintEquipmentStatus();
-        }
-
-        var playerEquipmentHandler = GetEntityComponent<PlayerEquipmentHandler>();
-        if (playerEquipmentHandler != null)
-        {
-            Debug.Log("=== 장비 효과 ===");
-            var effects = playerEquipmentHandler.GetTotalEffects();
-            if (effects.attackBonus > 0) Debug.Log($"공격력 보너스: +{effects.attackBonus}");
-            if (effects.defenseBonus > 0) Debug.Log($"방어력 보너스: +{effects.defenseBonus}");
-            if (effects.healthBonus > 0) Debug.Log($"체력 보너스: +{effects.healthBonus}");
-            if (effects.maxOxygenBonus > 0) Debug.Log($"최대 산소 보너스: +{effects.maxOxygenBonus}");
-            if (effects.maxEnergyBonus > 0) Debug.Log($"최대 에너지 보너스: +{effects.maxEnergyBonus}");
-
-            // 특수 효과 출력
-            if (effects.extraHitCount > 0) Debug.Log($"추가 타격: +{effects.extraHitCount}회");
-            if (effects.fireRateBonus > 0) Debug.Log($"연사 속도: +{effects.fireRateBonus * 100}%");
-            if (effects.oxygenConsumptionReduction > 0) Debug.Log($"산소 소모 감소: {effects.oxygenConsumptionReduction * 100}%");
-            if (effects.energyConsumptionReduction > 0) Debug.Log($"에너지 소모 감소: {effects.energyConsumptionReduction * 100}%");
-            if (effects.inventorySlotBonus > 0) Debug.Log($"인벤토리 슬롯: +{effects.inventorySlotBonus}칸");
-            if (effects.damageReduction > 0) Debug.Log($"피해 감소: {effects.damageReduction * 100}%");
-        }
-    }
-
 }

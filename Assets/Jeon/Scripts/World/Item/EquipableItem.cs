@@ -83,18 +83,65 @@ public class EquipableItem : Item
     /// <summary>
     /// 강화 실행
     /// </summary>
-    public bool Reinforce()
+public bool Reinforce(PlayerEntity player)
+{
+    // 강화 가능 여부 먼저 확인
+    if (!CanReinforce(player))
     {
-        if (!CanReinforce())
-        {
-            Debug.LogWarning($"{ItemName}은 더 이상 강화할 수 없습니다. (최대 레벨: {maxReinforcementLevel})");
-            return false;
-        }
-
-        currentReinforcementLevel++;
-        Debug.Log($"{ItemName} 강화 완료! 현재 레벨: +{currentReinforcementLevel}");
-        return true;
+        Debug.LogWarning($"{ItemName} 강화 불가");
+        return false;
     }
+
+    var recipe = DataCenter.Instance.GetReinforcementRecipeSO(reinforcementRecipeId);
+    var playerData = BattleFlowController.Instance?.playerData;
+    
+    if (playerData == null || recipe == null) return false;
+
+    // 재료 소모
+    for (int i = 0; i < recipe.requiredItemIDs.Count; i++)
+    {
+        int requiredItemId = recipe.requiredItemIDs[i];
+        int requiredCount = recipe.requiredItemCounts[i];
+
+        ConsumeItemsFromInventory(playerData.inventory, requiredItemId, requiredCount);
+    }
+
+    // 강화 성공률 계산 (임시로 100% 성공)
+    bool isSuccess = true; // 추후 랜덤 성공률 적용 가능
+
+    if (isSuccess)
+    {
+        // 새로운 아이템으로 교체
+        EquipableItem newItem = DataCenter.Instance.CreateEquipableItem(recipe.resultItemId);
+        
+        if (newItem != null)
+        {
+            // 강화 레벨 복사
+            newItem.currentReinforcementLevel = this.currentReinforcementLevel + 1;
+
+            // PlayerData를 통해 직접 아이템 교체
+            if (playerData != null)
+            {
+                // 현재 장착된 아이템 해제
+                var currentItem = playerData.GetEquippedItem(this.equipmentType);
+                if (currentItem != null)
+                {
+                    playerData.UnequipItem(this.equipmentType);
+                }
+
+                Debug.Log($"<color=green>🎉 강화 성공! {ItemName}이(가) {newItem.ItemName}(으)로 업그레이드되었습니다.</color>");
+                
+                // 새 아이템 장착
+                playerData.EquipItem(newItem);
+            }
+
+            // 플레이어 옵저버들에게 알림
+            player.NotifyObservers();
+        }
+    }
+
+    return isSuccess;
+}
 
     /// <summary>
     /// 강화 성공 확률 가져오기
@@ -232,38 +279,6 @@ public class EquipableItem : Item
 
         return true;
     }
-
-    /// <summary>
-    /// 강화 실행 (재료 소모 포함)
-    /// </summary>
-    public bool Reinforce(PlayerEntity player)
-    {
-        // 강화 가능 여부 먼저 확인
-        if (!CanReinforce(player))
-        {
-            Debug.LogWarning($"{ItemName} 강화 불가");
-            return false;
-        }
-
-        var recipe = GetReinforcementRecipe();
-        var playerData = BattleFlowController.Instance?.playerData;
-        
-        if (playerData == null) return false;
-
-        // 재료 소모
-        for (int i = 0; i < recipe.requiredItemIDs.Count; i++)
-        {
-            int requiredItemId = recipe.requiredItemIDs[i];
-            int requiredCount = recipe.requiredItemCounts[i];
-
-            ConsumeItemsFromInventory(playerData.inventory, requiredItemId, requiredCount);
-        }
-        // 플레이어 옵저버들에게 알림
-        player.NotifyObservers();
-
-        return true;
-    }
-
     /// <summary>
     /// 인벤토리에서 특정 아이템 소모
     /// </summary>
@@ -436,30 +451,25 @@ public class EquipableItem : Item
     /// <summary>
     /// 아이템 사용 (장착)
     /// </summary>
-    public override void Use(PlayerEntity player)
+public override void Use(PlayerEntity player)
+{
+    if (player == null) return;
+
+    // PlayerData를 통해 직접 장착
+    if (BattleFlowController.Instance?.playerData != null)
     {
-        if (player == null) return;
-
-        var equipmentComponent = player.GetEntityComponent<EquipmentComponent>();
-        if (equipmentComponent == null)
-        {
-            Debug.LogWarning("플레이어에게 EquipmentComponent가 없습니다.");
-            return;
-        }
-
         // 아이템 장착 시도
-        if (equipmentComponent.EquipItem(this))
+        if (BattleFlowController.Instance.playerData.EquipItem(this))
         {
             // 장착 성공 시 인벤토리에서 제거
-            if (BattleFlowController.Instance?.playerData != null)
-            {
-                BattleFlowController.Instance.playerData.RemoveItem(this);
-            }
+            BattleFlowController.Instance.playerData.RemoveItem(this);
 
             Debug.Log($"{GetDisplayName()} 장착 완료!");
             player.NotifyObservers();
         }
     }
+}
+
 
     /// <summary>
     /// 디버그용 강화 정보 출력
