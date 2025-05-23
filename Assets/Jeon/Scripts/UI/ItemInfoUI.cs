@@ -43,7 +43,7 @@ public class ItemInfoUI : SerializedMonoBehaviour
 
     [TitleGroup("재료 슬롯 프리팹")]
     [LabelText("재료 슬롯 프리팹"), Required]
-    [SerializeField] private GameObject materialSlotPrefab;
+    [SerializeField] private MaterialSlot materialSlotPrefab;
 
 
     [TitleGroup("디버그 정보")]
@@ -251,8 +251,8 @@ public class ItemInfoUI : SerializedMonoBehaviour
         // 현재 구현된 강화 시스템이 없으므로 메시지 표시
         Debug.Log("현재 강화 시스템이 구현되지 않았습니다.");
     }
-    
-        private void UpdateReinforcementMaterialUI(EquipableItem item)
+
+    private void UpdateReinforcementMaterialUI(EquipableItem item)
     {
         // 기존 강화 패널 초기화
         if (materialSlotContainer != null)
@@ -273,43 +273,24 @@ public class ItemInfoUI : SerializedMonoBehaviour
         }
 
         // 각 재료에 대해 슬롯 생성
-        for (int i = 0; i < recipe.requiredItemIDs.Count; i++)
+            for (int i = 0; i < recipe.requiredItemIDs.Count; i++)
+    {
+        int requiredItemId = recipe.requiredItemIDs[i];
+        int requiredCount = recipe.requiredItemCounts[i];
+
+        // 현재 보유 개수 계산
+        int currentCount = BattleFlowController.Instance.playerData.GetItemCount(requiredItemId);
+
+        // 재료 슬롯 생성
+        GameObject slotObj = Instantiate(materialSlotPrefab.gameObject, materialSlotContainer);
+        
+        // MaterialSlot 컴포넌트 가져오기
+        var materialSlot = slotObj.GetComponent<MaterialSlot>();
+        if (materialSlot != null)
         {
-            int requiredItemId = recipe.requiredItemIDs[i];
-            int requiredCount = recipe.requiredItemCounts[i];
-
-            // 현재 보유 개수 계산
-            int currentCount = BattleFlowController.Instance.playerData.GetItemCount(requiredItemId);
-
-            // 재료 슬롯 생성
-            GameObject slotObj = Instantiate(materialSlotPrefab, materialSlotContainer);
-
-            // 이미지 설정
-            Image itemIcon = slotObj.transform.Find("ItemIcon")?.GetComponent<Image>();
-            if (itemIcon != null)
-            {
-                // DataCenter에서 아이템 아이콘 가져오기
-                var itemSO = DataCenter.Instance.GetConsumableItemSO(requiredItemId);
-                if (itemSO != null)
-                {
-                    itemIcon.sprite = itemSO.itemIcon;
-                }
-            }
-            else
-            {
-                Debug.LogWarning("아이템 아이콘을 찾을 수 없습니다.");
-            }
-
-            // 텍스트 설정
-            TextMeshProUGUI countText = slotObj.transform.Find("CountText")?.GetComponent<TextMeshProUGUI>();
-            if (countText != null)
-            {
-                // 필요한 개수 / 현재 가진 개수
-                countText.text = $"{currentCount}/{requiredCount}";
-
-                // 개수에 따라 색상 변경
-                countText.color = currentCount >= requiredCount ? Color.white : Color.red;
-            }
+            materialSlot.Initialize(requiredItemId, requiredCount, currentCount);
         }
+    }
+
     }
 }

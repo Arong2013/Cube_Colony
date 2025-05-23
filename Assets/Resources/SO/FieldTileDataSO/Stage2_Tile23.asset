@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Stage2_Tile23
   m_EditorClassIdentifier: 
   ID: 23
+  IconName: 
   StageLevel: 2
   minCount: 2
   maxCount: 4

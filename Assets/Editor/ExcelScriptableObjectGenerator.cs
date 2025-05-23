@@ -464,7 +464,7 @@ public static class ExcelScriptableObjectGenerator
                     case "grade":
                         so.grade = ParseItemGrade(rawValue);
                         break;
-                    case "acquirefields":
+                    case "acquirableFieldIds":
                         so.acquirableFieldIds = ParseIntList(rawValue);
                         break;
 
