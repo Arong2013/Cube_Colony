@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7856d0d897e5cb64bb7f6f966b8b3c94, type: 3}
-  m_Name: ReinforcementRecipe_1005
+  m_Name: ReinforcementRecipe_1
   m_EditorClassIdentifier: 
-  ID: 1005
-  recipeName: "\uD655\uC7A5\uAC00\uBC29 \uAC15\uD654"
+  ID: 1
+  recipeName: "\uC804\uD22C\uD5EC\uBA67 \uAC15\uD654"
   requiredItemIDs: 01000000
   requiredItemCounts: 01000000

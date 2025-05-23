@@ -309,6 +309,7 @@ public class DataCenter : SerializedMonoBehaviour
         item.healthBonus = so.healthBonus;
         item.description = so.description;
         item.grade = so.grade;
+        item.reinforcementRecipeId = so.reinforcementRecipeId;  
 
         // 강화 시스템 데이터 복사
         item.currentReinforcementLevel = 0; // 항상 0으로 시작

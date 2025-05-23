@@ -37,6 +37,15 @@ public class ItemInfoUI : SerializedMonoBehaviour
     [LabelText("강화 재료 정보 텍스트")]
     [SerializeField] private TextMeshProUGUI reinforcementMaterialText;
 
+    [TitleGroup("강화 시스템 UI")]
+    [LabelText("재료 슬롯 컨테이너")]
+    [SerializeField] private Transform materialSlotContainer;
+
+    [TitleGroup("재료 슬롯 프리팹")]
+    [LabelText("재료 슬롯 프리팹"), Required]
+    [SerializeField] private GameObject materialSlotPrefab;
+
+
     [TitleGroup("디버그 정보")]
     [ReadOnly, ShowInInspector] private Item currentItem;
 
@@ -148,13 +157,16 @@ public class ItemInfoUI : SerializedMonoBehaviour
             {
                 reinforcementMaterialText.text = GetReinforcementMaterialInfo(equipableItem);
             }
-
+           UpdateReinforcementDetails(equipableItem);
+            UpdateReinforcementMaterialUI(equipableItem); 
             // 강화 버튼 활성화 설정
             if (reinforceButton != null)
             {
                 bool canReinforce = equipableItem.CanReinforce();
                 reinforceButton.interactable = canReinforce;
             }
+
+            
         }
         else
         {
@@ -200,7 +212,7 @@ public class ItemInfoUI : SerializedMonoBehaviour
         // 현재는 강화 레시피가 없으므로 기본 메시지
         materialInfo += "현재 강화 레시피가 없습니다.\n";
         materialInfo += "강화에 필요한 재료와 비용이 구현되지 않았습니다.\n";
-        
+
         return materialInfo;
     }
 
@@ -239,5 +251,65 @@ public class ItemInfoUI : SerializedMonoBehaviour
         // 현재 구현된 강화 시스템이 없으므로 메시지 표시
         Debug.Log("현재 강화 시스템이 구현되지 않았습니다.");
     }
+    
+        private void UpdateReinforcementMaterialUI(EquipableItem item)
+    {
+        // 기존 강화 패널 초기화
+        if (materialSlotContainer != null)
+        {
+            // 기존 슬롯 모두 제거
+            foreach (Transform child in materialSlotContainer)
+            {
+                Destroy(child.gameObject);
+            }
+        }
 
+        // 강화 레시피 가져오기
+        var recipe = DataCenter.Instance.GetReinforcementRecipeSO(item.reinforcementRecipeId);
+        if (recipe == null)
+        {
+            Debug.LogWarning($"{item.ItemName}의 강화 레시피를 찾을 수 없습니다.");
+            return;
+        }
+
+        // 각 재료에 대해 슬롯 생성
+        for (int i = 0; i < recipe.requiredItemIDs.Count; i++)
+        {
+            int requiredItemId = recipe.requiredItemIDs[i];
+            int requiredCount = recipe.requiredItemCounts[i];
+
+            // 현재 보유 개수 계산
+            int currentCount = BattleFlowController.Instance.playerData.GetItemCount(requiredItemId);
+
+            // 재료 슬롯 생성
+            GameObject slotObj = Instantiate(materialSlotPrefab, materialSlotContainer);
+
+            // 이미지 설정
+            Image itemIcon = slotObj.transform.Find("ItemIcon")?.GetComponent<Image>();
+            if (itemIcon != null)
+            {
+                // DataCenter에서 아이템 아이콘 가져오기
+                var itemSO = DataCenter.Instance.GetConsumableItemSO(requiredItemId);
+                if (itemSO != null)
+                {
+                    itemIcon.sprite = itemSO.itemIcon;
+                }
+            }
+            else
+            {
+                Debug.LogWarning("아이템 아이콘을 찾을 수 없습니다.");
+            }
+
+            // 텍스트 설정
+            TextMeshProUGUI countText = slotObj.transform.Find("CountText")?.GetComponent<TextMeshProUGUI>();
+            if (countText != null)
+            {
+                // 필요한 개수 / 현재 가진 개수
+                countText.text = $"{currentCount}/{requiredCount}";
+
+                // 개수에 따라 색상 변경
+                countText.color = currentCount >= requiredCount ? Color.white : Color.red;
+            }
+        }
+    }
 }

@@ -874,7 +874,7 @@ GameObject:
   - component: {fileID: 1217672084539720709}
   - component: {fileID: 3830165848209524486}
   m_Layer: 5
-  m_Name: Item_Tooltip
+  m_Name: Item_RainforceSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1269,7 +1269,7 @@ GameObject:
   - component: {fileID: 7915435870897499449}
   - component: {fileID: 6327802703477352237}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: CountText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1558,7 +1558,7 @@ GameObject:
   - component: {fileID: 7272032620920810566}
   - component: {fileID: 7963765727545071517}
   m_Layer: 5
-  m_Name: Item_Icon
+  m_Name: ItemIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

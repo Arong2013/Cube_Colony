@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 1002
   recipeName: "\uAC15\uCCA0\uCD1D \uAC15\uD654"
-  requiredItemIDs: 04aa3101
-  requiredItemCounts: 0100000002000000
+  requiredItemIDs: 01000000
+  requiredItemCounts: 01000000
