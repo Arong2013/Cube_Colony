@@ -76,6 +76,12 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 019fed1347249d04eb297573f8bc8d69, type: 2}
     - {fileID: 11400000, guid: 6db21b148d2053646a1a648568ebd126, type: 2}
     - {fileID: 11400000, guid: 980e6d5abb2768d4e98ce99a27eb24a6, type: 2}
+    - {fileID: 11400000, guid: 072a0da82808f414095593a268180b1e, type: 2}
+    - {fileID: 11400000, guid: 11f70df93e6fa497995ea460735c93ec, type: 2}
+    - {fileID: 11400000, guid: 5fd14706713284363a2fcb9688dce637, type: 2}
+    - {fileID: 11400000, guid: e5408ca98822d4009a542cba055bc231, type: 2}
+    - {fileID: 11400000, guid: 8b1bee786c34f4e7e96dda06f57d15f9, type: 2}
+    - {fileID: 11400000, guid: c90dd95a2a1d14c718087648c15427a2, type: 2}
     - {fileID: 6489030815539060485, guid: 80050dc25a163da44acd9b79b7879f96, type: 3}
     - {fileID: 2100000, guid: abe51abbf1c4cd14eb4401dc6209eb7d, type: 2}
     - {fileID: 2100000, guid: 3b5c4b679c9774648b5e0bc011eb5ec7, type: 2}
@@ -96,7 +102,7 @@ MonoBehaviour:
     - {fileID: 2100000, guid: 4da76bb8e169c17449af86cb80d4cf0e, type: 2}
     - {fileID: 2100000, guid: 7288d0cd3d3b1e347af63007be3f1655, type: 2}
     - {fileID: 2100000, guid: 5ac4f7ca51f779f4bb56da3ea6be3393, type: 2}
-    - {fileID: 8767409848285342345, guid: edf698632fd2e9f43926b6830e6889fd, type: 3}
+    - {fileID: 8767409848285342345, guid: 97f979f775fffde45b1b78a053e8ad20, type: 3}
     - {fileID: 5739290949802810391, guid: bd322cc586a1f814c99b6c7f48b127bc, type: 3}
     - {fileID: 685177270624214900, guid: a0d014278dcc82e408266e09c5ff142e, type: 3}
     - {fileID: 2589142169046610521, guid: 2462470b143bdee4bb32a7e5f226bcff, type: 3}
@@ -113,7 +119,6 @@ MonoBehaviour:
     - {fileID: 3227986969556045023, guid: eaaf76836379b1142931cd80088f585e, type: 3}
     - {fileID: 7877405565287156128, guid: f49534f181137fb4ca39fcf371112a40, type: 3}
     - {fileID: 212193426731815361, guid: f884af4db7914464582cbaf7f255e54f, type: 3}
-    - {fileID: 3038174122904419333, guid: 58d9d9f72ecb85d4698b3bb94b6da3a3, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -523,13 +528,105 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: cubieFaceDataMap
+    - Name: reinforcementRecipes
       Entry: 7
-      Data: 5|System.Collections.Generic.Dictionary`2[[CubieFaceSkillType, Assembly-CSharp],[CubieFaceVisualData,
+      Data: 5|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[ReinforcementRecipeSO,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 6|System.Collections.Generic.EnumEqualityComparer`1[[CubieFaceSkillType,
+      Data: 6|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 6
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1001
+    - Name: $v
+      Entry: 10
+      Data: 28
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1002
+    - Name: $v
+      Entry: 10
+      Data: 29
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1003
+    - Name: $v
+      Entry: 10
+      Data: 30
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1004
+    - Name: $v
+      Entry: 10
+      Data: 31
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1005
+    - Name: $v
+      Entry: 10
+      Data: 32
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1006
+    - Name: $v
+      Entry: 10
+      Data: 33
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: cubieFaceDataMap
+      Entry: 7
+      Data: 7|System.Collections.Generic.Dictionary`2[[CubieFaceSkillType, Assembly-CSharp],[CubieFaceVisualData,
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 8|System.Collections.Generic.EnumEqualityComparer`1[[CubieFaceSkillType,
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
@@ -551,17 +648,17 @@ MonoBehaviour:
       Data: 1
     - Name: $v
       Entry: 7
-      Data: 7|CubieFaceVisualData, Assembly-CSharp
+      Data: 9|CubieFaceVisualData, Assembly-CSharp
     - Name: FieldMesh
       Entry: 7
-      Data: 8|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],
+      Data: 10|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 10
-      Data: 28
+      Data: 34
     - Name: 
       Entry: 13
       Data: 
@@ -570,23 +667,23 @@ MonoBehaviour:
       Data: 
     - Name: CubieFaceMaterials
       Entry: 7
-      Data: 9|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
+      Data: 11|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 4
     - Name: 
       Entry: 10
-      Data: 29
+      Data: 35
     - Name: 
       Entry: 10
-      Data: 30
+      Data: 36
     - Name: 
       Entry: 10
-      Data: 31
+      Data: 37
     - Name: 
       Entry: 10
-      Data: 32
+      Data: 38
     - Name: 
       Entry: 13
       Data: 
@@ -607,17 +704,17 @@ MonoBehaviour:
       Data: 2
     - Name: $v
       Entry: 7
-      Data: 10|CubieFaceVisualData, Assembly-CSharp
+      Data: 12|CubieFaceVisualData, Assembly-CSharp
     - Name: FieldMesh
       Entry: 7
-      Data: 11|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],
+      Data: 13|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 10
-      Data: 33
+      Data: 39
     - Name: 
       Entry: 13
       Data: 
@@ -626,23 +723,23 @@ MonoBehaviour:
       Data: 
     - Name: CubieFaceMaterials
       Entry: 7
-      Data: 12|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
+      Data: 14|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 4
     - Name: 
       Entry: 10
-      Data: 34
+      Data: 40
     - Name: 
       Entry: 10
-      Data: 35
+      Data: 41
     - Name: 
       Entry: 10
-      Data: 36
+      Data: 42
     - Name: 
       Entry: 10
-      Data: 37
+      Data: 43
     - Name: 
       Entry: 13
       Data: 
@@ -663,17 +760,17 @@ MonoBehaviour:
       Data: 3
     - Name: $v
       Entry: 7
-      Data: 13|CubieFaceVisualData, Assembly-CSharp
+      Data: 15|CubieFaceVisualData, Assembly-CSharp
     - Name: FieldMesh
       Entry: 7
-      Data: 14|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],
+      Data: 16|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 10
-      Data: 38
+      Data: 44
     - Name: 
       Entry: 13
       Data: 
@@ -682,23 +779,23 @@ MonoBehaviour:
       Data: 
     - Name: CubieFaceMaterials
       Entry: 7
-      Data: 15|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
+      Data: 17|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 4
     - Name: 
       Entry: 10
-      Data: 39
+      Data: 45
     - Name: 
       Entry: 10
-      Data: 40
+      Data: 46
     - Name: 
       Entry: 10
-      Data: 41
+      Data: 47
     - Name: 
       Entry: 10
-      Data: 42
+      Data: 48
     - Name: 
       Entry: 13
       Data: 
@@ -719,17 +816,17 @@ MonoBehaviour:
       Data: 0
     - Name: $v
       Entry: 7
-      Data: 16|CubieFaceVisualData, Assembly-CSharp
+      Data: 18|CubieFaceVisualData, Assembly-CSharp
     - Name: FieldMesh
       Entry: 7
-      Data: 17|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],
+      Data: 19|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 10
-      Data: 43
+      Data: 49
     - Name: 
       Entry: 13
       Data: 
@@ -738,23 +835,23 @@ MonoBehaviour:
       Data: 
     - Name: CubieFaceMaterials
       Entry: 7
-      Data: 18|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
+      Data: 20|System.Collections.Generic.List`1[[UnityEngine.Material, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 4
     - Name: 
       Entry: 10
-      Data: 44
+      Data: 50
     - Name: 
       Entry: 10
-      Data: 45
+      Data: 51
     - Name: 
       Entry: 10
-      Data: 46
+      Data: 52
     - Name: 
       Entry: 10
-      Data: 47
+      Data: 53
     - Name: 
       Entry: 13
       Data: 
@@ -775,230 +872,6 @@ MonoBehaviour:
       Data: 
     - Name: EntityData
       Entry: 7
-      Data: 19|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
-        UnityEngine.CoreModule]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 20|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 17
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1
-    - Name: $v
-      Entry: 10
-      Data: 48
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 2
-    - Name: $v
-      Entry: 10
-      Data: 49
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 3
-    - Name: $v
-      Entry: 10
-      Data: 50
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 4
-    - Name: $v
-      Entry: 10
-      Data: 51
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 5
-    - Name: $v
-      Entry: 10
-      Data: 52
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 6
-    - Name: $v
-      Entry: 10
-      Data: 53
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 7
-    - Name: $v
-      Entry: 10
-      Data: 54
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 8
-    - Name: $v
-      Entry: 10
-      Data: 55
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 9
-    - Name: $v
-      Entry: 10
-      Data: 56
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 10
-    - Name: $v
-      Entry: 10
-      Data: 57
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 11
-    - Name: $v
-      Entry: 10
-      Data: 58
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 12
-    - Name: $v
-      Entry: 10
-      Data: 59
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 13
-    - Name: $v
-      Entry: 10
-      Data: 60
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 14
-    - Name: $v
-      Entry: 10
-      Data: 61
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 15
-    - Name: $v
-      Entry: 10
-      Data: 62
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 16
-    - Name: $v
-      Entry: 10
-      Data: 63
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 17
-    - Name: $v
-      Entry: 10
-      Data: 64
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: ExitGateData
-      Entry: 7
       Data: 21|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
@@ -1010,16 +883,208 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 17
     - Name: 
       Entry: 7
       Data: 
     - Name: $k
       Entry: 3
-      Data: 0
+      Data: 1
+    - Name: $v
+      Entry: 10
+      Data: 54
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 10
+      Data: 55
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3
+    - Name: $v
+      Entry: 10
+      Data: 56
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 10
+      Data: 57
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 5
+    - Name: $v
+      Entry: 10
+      Data: 58
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 6
+    - Name: $v
+      Entry: 10
+      Data: 59
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 7
+    - Name: $v
+      Entry: 10
+      Data: 60
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 8
+    - Name: $v
+      Entry: 10
+      Data: 61
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 9
+    - Name: $v
+      Entry: 10
+      Data: 62
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 10
+    - Name: $v
+      Entry: 10
+      Data: 63
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 11
+    - Name: $v
+      Entry: 10
+      Data: 64
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 12
     - Name: $v
       Entry: 10
       Data: 65
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 13
+    - Name: $v
+      Entry: 10
+      Data: 66
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 14
+    - Name: $v
+      Entry: 10
+      Data: 67
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 15
+    - Name: $v
+      Entry: 10
+      Data: 68
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 16
+    - Name: $v
+      Entry: 10
+      Data: 69
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 17
+    - Name: $v
+      Entry: 10
+      Data: 70
     - Name: 
       Entry: 8
       Data: 
@@ -1029,6 +1094,26 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  playerEntityPreFabs: {fileID: 8767409848285342345, guid: a8f93b0610e536e48aee89bfc787d37b, type: 3}
-  itemSlotPrefab: {fileID: 7793460751419641395, guid: 14f3e2c2c7c014171a67660e1bad87cb, type: 3}
+    - Name: ExitGateData
+      Entry: 7
+      Data: 23|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 24|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  playerEntityPreFabs: {fileID: 7793460751419641395, guid: 14f3e2c2c7c014171a67660e1bad87cb, type: 3}
+  itemSlotPrefab: {fileID: 2039979778653042102, guid: b444e9084907c45419664925db3967df, type: 3}
   dropItemPrefab: {fileID: 471980115231275519, guid: dcbb17a53c082de45ab0656a6a27d618, type: 3}

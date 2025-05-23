@@ -16,7 +16,7 @@ MonoBehaviour:
   StageLevel: 4
   minCount: 3
   maxCount: 5
-  ObjectID: 01000000
+  ObjectID: 06000000
   ObjectValue:
   - 1
   description: "\uC2A4\uD14C\uC774\uC9C0 4 \uC2DD\uBB3C \uC790\uC6D0 \uD0C0\uC77C"

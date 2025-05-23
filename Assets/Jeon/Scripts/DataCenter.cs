@@ -67,8 +67,8 @@ public class DataCenter : SerializedMonoBehaviour
     [SerializeField] private Dictionary<int, FieldTileDataSO> fieldTileDatas = new();
 
     [FoldoutGroup("🛠️ 강화 레시피", expanded: false)]
-[DictionaryDrawerSettings(KeyLabel = "ID", ValueLabel = "SO")]
-[SerializeField] private Dictionary<int, ReinforcementRecipeSO> reinforcementRecipes = new();
+    [DictionaryDrawerSettings(KeyLabel = "ID", ValueLabel = "SO")]
+    [SerializeField] private Dictionary<int, ReinforcementRecipeSO> reinforcementRecipes = new();
 
     // ===== 기존 수동 등록 데이터들 =====
     [FoldoutGroup("🎲 큐브 데이터", expanded: true)]
@@ -109,6 +109,10 @@ public class DataCenter : SerializedMonoBehaviour
     [FoldoutGroup("🔍 동적 정보")]
     [ShowInInspector, ReadOnly]
     public int 총_데이터_개수 => GetAllDataCounts().Values.Sum();
+
+    public void RegisterReinforcementRecipe(int id, ReinforcementRecipeSO recipe) => reinforcementRecipes[id] = recipe;
+    public ReinforcementRecipeSO GetReinforcementRecipeSO(int id) => reinforcementRecipes.TryGetValue(id, out var recipe) ? recipe : null;
+
 
     private void Awake()
     {
@@ -282,7 +286,7 @@ public class DataCenter : SerializedMonoBehaviour
 
         // SO에서 추가 정보도 복사
         item.description = so.description;
-        item.grade = so.grade;;
+        item.grade = so.grade; ;
 
         return item;
     }
@@ -311,7 +315,7 @@ public class DataCenter : SerializedMonoBehaviour
         item.maxReinforcementLevel = so.maxReinforcementLevel;
         item.specialEffect1 = so.specialEffect1;
         item.specialEffect2 = so.specialEffect2;
-        
+
         // 특수 효과 설정 (장비 타입에 따라)
         switch (item.equipmentType)
         {
@@ -454,13 +458,6 @@ public class DataCenter : SerializedMonoBehaviour
         Debug.LogWarning($"[DataCenter] {typeof(T).Name}을 위한 Create 메서드를 찾을 수 없습니다. ID: {id}");
         return default;
     }
-
-    public ReinforcementRecipeSO GetReinforcementRecipeSO(int id) 
-{
-    // ReinforcementRecipeSO를 저장할 Dictionary 추가 필요
-    return reinforcementRecipes.TryGetValue(id, out var recipe) ? recipe : null;
-}
-
     /// <summary>
     /// Item 타입으로 요청시 모든 아이템 타입 시도
     /// </summary>
@@ -604,6 +601,7 @@ public class DataCenter : SerializedMonoBehaviour
 
     /// <summary>
     /// Dictionary 데이터 검증
+    /// 
     /// </summary>
     private int ValidateDictionary(string dictionaryName, System.Collections.IDictionary dict)
     {
@@ -682,11 +680,11 @@ public class DataCenter : SerializedMonoBehaviour
             return itemActions.Keys.ToList();
         if (typeof(T) == typeof(FieldTileData))
             return fieldTileDatas.Keys.ToList();
+        if (typeof(T) == typeof(ReinforcementRecipeSO))
+            return reinforcementRecipes.Keys.ToList();  // 추가된 부분
 
         return new List<int>();
     }
-
-    // ===== 디버그 메서드들 =====
     [Button("📊 데이터 통계 출력")]
     public void PrintDataStatistics()
     {
@@ -695,11 +693,11 @@ public class DataCenter : SerializedMonoBehaviour
         Debug.Log($"⚔️ EquipableItem: {GetAllIds<EquipableItem>().Count}개");
         Debug.Log($"🎯 ItemAction: {GetAllIds<itemAction>().Count}개");
         Debug.Log($"🗺️ FieldTileData: {GetAllIds<FieldTileData>().Count}개");
+        Debug.Log($"🛠️ ReinforcementRecipe: {reinforcementRecipes.Count}개");  // 추가된 부분
         Debug.Log($"🎲 CubeVisualData: {cubieFaceDataMap.Count}개");
         Debug.Log($"🎭 EntityData: {EntityData.Count}개");
         Debug.Log($"🔢 총 데이터: {총_데이터_개수}개");
     }
-
     [Button("🧪 데이터 생성 테스트")]
     public void TestDataCreation()
     {

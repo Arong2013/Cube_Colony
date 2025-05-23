@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using System.Linq;
 
 /// <summary>
 /// 플레이어 데이터 클래스 (장비 시스템 및 에너지 시스템 포함)
@@ -57,8 +58,37 @@ public class PlayerData
         maxEnergy = 100f;
         gold = 1000;
         equippedItems = new Dictionary<EquipmentType, EquipableItem>();
+
+        // 기본 장비 장착
+        EquipDefaultItems();
     }
 
+
+    private void EquipDefaultItems()
+    {
+        // 각 장비 타입별로 첫 번째 아이템 찾아 장착
+        foreach (EquipmentType type in System.Enum.GetValues(typeof(EquipmentType)))
+        {
+            if (type == EquipmentType.None) continue;
+
+            // DataCenter에서 해당 타입의 첫 번째 아이템 찾기
+            var equipableItemIds = DataCenter.Instance.GetAllIds<EquipableItem>();
+
+            if (equipableItemIds.Count > 0)
+            {
+                var firstItemId = equipableItemIds
+                    .Select(id => DataCenter.Instance.CreateEquipableItem(id))
+                    .FirstOrDefault(item => item.equipmentType == type);
+
+                if (firstItemId != null)
+                {
+                    // 아이템 장착 및 인벤토리에 추가
+                    equippedItems[type] = firstItemId;
+                    Debug.Log($"기본 장비 장착: {type} - {firstItemId.ItemName}");
+                }
+            }
+        }
+    }
     // === 에너지 관련 메서드 ===
 
     /// <summary>
