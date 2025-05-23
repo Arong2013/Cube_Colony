@@ -14,10 +14,6 @@ public class ItemInfoUI : SerializedMonoBehaviour
     [SerializeField] private TextMeshProUGUI descriptionText;
 
     [TitleGroup("정보창 UI 요소")]
-    [LabelText("획득 타일"), Required]
-    [SerializeField] private TextMeshProUGUI acquisitionText;
-
-    [TitleGroup("정보창 UI 요소")]
     [LabelText("아이템 이미지"), Required]
     [SerializeField] private Image itemImage;
 
@@ -68,7 +64,7 @@ public class ItemInfoUI : SerializedMonoBehaviour
 
         // 초기 상태는 비활성화
         gameObject.SetActive(false);
-        
+
         // 강화 패널 초기 비활성화
         if (reinforcementPanel != null)
         {
@@ -104,7 +100,7 @@ public class ItemInfoUI : SerializedMonoBehaviour
         gameObject.SetActive(false);
         currentItem = null;
         onUseItem = null;
-        
+
         if (reinforcementPanel != null)
         {
             reinforcementPanel.SetActive(false);
@@ -123,9 +119,6 @@ public class ItemInfoUI : SerializedMonoBehaviour
         if (descriptionText != null)
             descriptionText.text = currentItem.Description;
 
-        // 획득 타일 설정
-        if (acquisitionText != null)
-            acquisitionText.text = $"획득: {currentItem.AcquisitionTile}";
 
         // 이미지 설정
         if (itemImage != null)
@@ -141,7 +134,6 @@ public class ItemInfoUI : SerializedMonoBehaviour
         // 강화 시스템 UI 업데이트 (장비 아이템인 경우만)
         UpdateReinforcementUI();
     }
-
     private void UpdateReinforcementUI()
     {
         if (reinforcementPanel == null) return;
@@ -150,25 +142,42 @@ public class ItemInfoUI : SerializedMonoBehaviour
         if (currentItem is EquipableItem equipableItem)
         {
             reinforcementPanel.SetActive(true);
-            UpdateReinforcementDetails(equipableItem);
+
+            // 강화 재료 정보 표시
+            if (reinforcementMaterialText != null)
+            {
+                reinforcementMaterialText.text = GetReinforcementMaterialInfo(equipableItem);
+            }
+
+            // 강화 버튼 활성화 설정
+            if (reinforceButton != null)
+            {
+                bool canReinforce = equipableItem.CanReinforce();
+                reinforceButton.interactable = canReinforce;
+            }
         }
         else
         {
             reinforcementPanel.SetActive(false);
         }
     }
-
     private void UpdateReinforcementDetails(EquipableItem equipableItem)
     {
         bool canReinforce = equipableItem.CanReinforce();
 
-        // 강화 재료 정보 표시 (모든 강화 정보를 하나의 텍스트에 통합)
+        // 강화 패널 활성화 (장비 아이템인 경우만)
+        if (reinforcementPanel != null)
+        {
+            reinforcementPanel.SetActive(canReinforce);
+        }
+
+        // 강화 재료 정보 표시
         if (reinforcementMaterialText != null)
         {
             if (canReinforce)
             {
-                string materialInfo = GetReinforcementMaterialInfo(equipableItem);
-                reinforcementMaterialText.text = materialInfo;
+                // 장비 아이템에 강화 레시피가 없으므로, 기본 메시지 표시
+                reinforcementMaterialText.text = "현재 강화 레시피가 없습니다.";
             }
             else
             {
@@ -176,15 +185,10 @@ public class ItemInfoUI : SerializedMonoBehaviour
             }
         }
 
-        // 강화 버튼 활성화 설정
+        // 강화 버튼 비활성화
         if (reinforceButton != null)
         {
-            // 플레이어 골드와 강화 가능 여부 확인
-            int playerGold = BattleFlowController.Instance?.playerData?.gold ?? 0;
-            int reinforcementCost = canReinforce ? equipableItem.GetReinforcementCost() : 0;
-            bool hasEnoughGold = playerGold >= reinforcementCost;
-
-            reinforceButton.interactable = canReinforce && hasEnoughGold;
+            reinforceButton.interactable = false;
         }
     }
 
@@ -192,54 +196,11 @@ public class ItemInfoUI : SerializedMonoBehaviour
     {
         // 강화 레벨 정보
         string materialInfo = $"강화 레벨: +{equipableItem.currentReinforcementLevel}/{equipableItem.maxReinforcementLevel}\n\n";
-        
-        int cost = equipableItem.GetReinforcementCost();
-        int playerGold = BattleFlowController.Instance?.playerData?.gold ?? 0;
-        
-        // 강화 비용 정보
-        materialInfo += $"강화 비용: {cost} 골드 ";
-        if (playerGold >= cost)
-        {
-            materialInfo += "<color=green>(보유)</color>";
-        }
-        else
-        {
-            materialInfo += $"<color=red>(부족: {cost - playerGold}개)</color>";
-        }
-        
-        // 성공 확률 정보
-        float successRate = equipableItem.GetReinforcementSuccessRate();
-        materialInfo += $"\n성공 확률: {successRate:F1}%\n\n";
 
-        // 강화 시 얻는 효과 미리보기
-        if (equipableItem.currentReinforcementLevel < equipableItem.maxReinforcementLevel)
-        {
-            materialInfo += "강화 시 효과:\n";
-            
-            var currentEffects = equipableItem.GetCurrentEffects();
-            var nextLevelEffects = equipableItem.GetTotalAttackBonusAtLevel(equipableItem.currentReinforcementLevel + 1);
-            
-            if (equipableItem.attackBonus > 0)
-            {
-                float increase = nextLevelEffects - currentEffects.attackBonus;
-                materialInfo += $"• 공격력: +{increase:F1}\n";
-            }
-            
-            if (equipableItem.defenseBonus > 0)
-            {
-                float nextDefense = equipableItem.GetTotalDefenseBonusAtLevel(equipableItem.currentReinforcementLevel + 1);
-                float increase = nextDefense - currentEffects.defenseBonus;
-                materialInfo += $"• 방어력: +{increase:F1}\n";
-            }
-            
-            if (equipableItem.healthBonus > 0)
-            {
-                float nextHealth = equipableItem.GetTotalHealthBonusAtLevel(equipableItem.currentReinforcementLevel + 1);
-                float increase = nextHealth - currentEffects.healthBonus;
-                materialInfo += $"• 체력: +{increase:F1}\n";
-            }
-        }
-
+        // 현재는 강화 레시피가 없으므로 기본 메시지
+        materialInfo += "현재 강화 레시피가 없습니다.\n";
+        materialInfo += "강화에 필요한 재료와 비용이 구현되지 않았습니다.\n";
+        
         return materialInfo;
     }
 
@@ -260,6 +221,7 @@ public class ItemInfoUI : SerializedMonoBehaviour
         }
     }
 
+
     private void ReinforceItem()
     {
         if (currentItem == null || !(currentItem is EquipableItem equipableItem))
@@ -274,45 +236,8 @@ public class ItemInfoUI : SerializedMonoBehaviour
             return;
         }
 
-        // 골드 확인
-        int cost = equipableItem.GetReinforcementCost();
-        if (!BattleFlowController.Instance.TrySpendGold(cost))
-        {
-            Debug.LogWarning("골드가 부족합니다!");
-            return;
-        }
-
-        // 강화 시도
-        float successRate = equipableItem.GetReinforcementSuccessRate();
-        bool success = Random.Range(0f, 100f) <= successRate;
-
-        if (success)
-        {
-            equipableItem.Reinforce();
-            Debug.Log($"{equipableItem.GetDisplayName()} 강화 성공! 현재 레벨: +{equipableItem.currentReinforcementLevel}");
-            
-            // 플레이어가 장착하고 있는 아이템이면 효과 재적용
-            var player = Utils.GetPlayer();
-            if (player != null)
-            {
-                var equipmentComponent = player.GetEntityComponent<EquipmentComponent>();
-                if (equipmentComponent != null && 
-                    equipmentComponent.GetEquippedItem(equipableItem.equipmentType) == equipableItem)
-                {
-                    equipmentComponent.RefreshAllEquipmentEffects();
-                    player.NotifyObservers();
-                }
-            }
-        }
-        else
-        {
-            Debug.Log($"{equipableItem.GetDisplayName()} 강화 실패! 골드만 소모되었습니다.");
-        }
-
-        // UI 업데이트
-        UpdateUI();
-
-        // 게임 상태 알림
-        BattleFlowController.Instance?.NotifyObservers();
+        // 현재 구현된 강화 시스템이 없으므로 메시지 표시
+        Debug.Log("현재 강화 시스템이 구현되지 않았습니다.");
     }
+
 }

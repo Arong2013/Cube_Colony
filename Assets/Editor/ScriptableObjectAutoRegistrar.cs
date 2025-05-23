@@ -276,7 +276,11 @@ public static class ScriptableObjectAutoRegistrar
                 }
             }
         }
-
+        if (soType == typeof(ReinforcementRecipeSO))
+        {
+            return typeof(DataCenter)
+                .GetMethod("RegisterReinforcementRecipe", BindingFlags.Public | BindingFlags.Instance);
+        }
         // Register 메서드가 없다면 자동으로 생성하려고 시도
         return CreateRegisterMethodForType(dataCenter, soType);
     }
@@ -319,10 +323,8 @@ public static class ScriptableObjectAutoRegistrar
                 }
             }
         }
-
         return null;
     }
-
     /// <summary>
     /// 동적으로 Register 메서드 생성
     /// </summary>

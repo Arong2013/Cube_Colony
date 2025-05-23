@@ -19,7 +19,7 @@ public enum EquipmentType
 public class EquipableItem : Item
 {
     // SO에서 가져온 기본 정보들
-  [ShowInInspector] public EquipmentType equipmentType;
+    [ShowInInspector] public EquipmentType equipmentType;
     [ShowInInspector] public int requiredLevel;
     [ShowInInspector] public float attackBonus;
     [ShowInInspector] public float defenseBonus;

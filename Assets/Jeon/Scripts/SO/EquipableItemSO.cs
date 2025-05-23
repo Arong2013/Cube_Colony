@@ -104,7 +104,6 @@ public class EquipableItemSO : ScriptableObject
         item.defenseBonus = this.defenseBonus;
         item.healthBonus = this.healthBonus;
         item.maxReinforcementLevel = this.maxReinforcementLevel;
-        item.reinforcementCosts = (int[])this.reinforcementCosts.Clone();
         item.specialEffect1 = this.specialEffect1;
         item.specialEffect2 = this.specialEffect2;
         item.description = this.description;
