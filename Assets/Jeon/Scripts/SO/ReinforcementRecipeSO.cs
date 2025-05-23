@@ -23,16 +23,6 @@ public class ReinforcementRecipeSO : ScriptableObject
     [LabelText("필요 아이템 개수 목록")]
     [InfoBox("각 아이템별 필요 개수 (위 ID 목록과 1:1 대응)")]
     public List<int> requiredItemCounts = new List<int>();
-    
-    [TitleGroup("강화 설정")]
-    [LabelText("추가 골드 비용"), MinValue(0)]
-    [Tooltip("강화에 필요한 추가 골드 비용 (옵션)")]
-    public int additionalGoldCost = 0;
-    
-    [TitleGroup("강화 설정")]
-    [LabelText("기본 성공률 (%)"), Range(0, 100)]
-    [Tooltip("강화 성공 확률 (%)")]
-    public float baseSuccessRate = 70f;
 
     [TitleGroup("디버그 정보")]
     [ShowInInspector, ReadOnly]
@@ -78,13 +68,6 @@ public class ReinforcementRecipeSO : ScriptableObject
         {
             Debug.Log($"  재료 {i + 1}: 아이템 ID {requiredItemIDs[i]} x {requiredItemCounts[i]}개");
         }
-
-        if (additionalGoldCost > 0)
-        {
-            Debug.Log($"  추가 골드: {additionalGoldCost}");
-        }
-
-        Debug.Log($"  성공률: {baseSuccessRate}%");
     }
 
     [TitleGroup("유틸리티")]
@@ -133,13 +116,6 @@ public class ReinforcementRecipeSO : ScriptableObject
                     isValid = false;
                 }
             }
-        }
-
-        // 성공률 유효성 검증
-        if (baseSuccessRate < 0f || baseSuccessRate > 100f)
-        {
-            Debug.LogError($"❌ 성공률이 유효하지 않습니다: {baseSuccessRate}% (0-100 범위여야 함)");
-            isValid = false;
         }
 
         // 중복 아이템 ID 검증
@@ -197,13 +173,6 @@ public class ReinforcementRecipeSO : ScriptableObject
     /// </summary>
     private void OnValidate()
     {
-        // 음수 방지
-        if (additionalGoldCost < 0)
-            additionalGoldCost = 0;
-
-        // 성공률 범위 제한
-        baseSuccessRate = Mathf.Clamp(baseSuccessRate, 0f, 100f);
-
         // 개수 목록의 음수 방지
         if (requiredItemCounts != null)
         {
