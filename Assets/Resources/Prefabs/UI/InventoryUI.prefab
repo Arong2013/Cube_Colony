@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6796799947659149802
 RectTransform:
   m_ObjectHideFlags: 0
@@ -111,9 +111,6 @@ MonoBehaviour:
   itemImage: {fileID: 2096750044311501005}
   useButton: {fileID: 6008284050539933137}
   closeButton: {fileID: 8220520025622785112}
-  reinforcementPanel: {fileID: 0}
-  reinforceButton: {fileID: 0}
-  reinforcementMaterialText: {fileID: 0}
 --- !u!1 &269742722569438918
 GameObject:
   m_ObjectHideFlags: 0
@@ -2607,7 +2604,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6133704369737678872
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3250,121 +3247,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f916084e00005064ba4131f714f51c67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 2076308132172516654}
-    - {fileID: 4576243298149379527}
-    - {fileID: 548222718946994734}
-    - {fileID: 7936297166952202828}
-    - {fileID: 3128980244350265793}
-    - {fileID: 1401186776646031588}
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: equipmentSlots
-      Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[EquipmentType, Assembly-CSharp],[EQSlot,
-        Assembly-CSharp]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[EquipmentType, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 6
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 0
-    - Name: $v
-      Entry: 10
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1
-    - Name: $v
-      Entry: 10
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 2
-    - Name: $v
-      Entry: 10
-      Data: 2
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 3
-    - Name: $v
-      Entry: 10
-      Data: 3
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 4
-    - Name: $v
-      Entry: 10
-      Data: 4
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 5
-    - Name: $v
-      Entry: 10
-      Data: 5
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
   _slotContainer: {fileID: 8284263490676541845}
+  equipmentSlots: []
+  equipmentStatusUI: {fileID: 0}
   _itemInfoUI: {fileID: 1247775455960642597}
+  equipmentSelectionPanel: {fileID: 0}
+  equipmentSelectionContainer: {fileID: 0}
 --- !u!1 &4393846230142097610
 GameObject:
   m_ObjectHideFlags: 0
