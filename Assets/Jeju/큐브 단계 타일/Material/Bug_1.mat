@@ -8,25 +8,40 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Bug_1
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: 4800000, guid: 7633a2fd8a3bed44791c9e952ff86e5d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _MK_ALBEDO_MAP
+  - _MK_ARTISTIC_ANIMATION_STUTTER
+  - _MK_DETAIL_BLEND_MIX
+  - _MK_ENVIRONMENT_REFLECTIONS_ADVANCED
+  - _MK_FRESNEL_HIGHLIGHTS
+  - _MK_LIGHT_CEL
+  - _MK_OUTLINE_HULL_CLIP
+  - _MK_RECEIVE_SHADOWS
+  - _MK_SPECULAR_ISOTROPIC
+  - _MK_VERTEX_ANIMATION_STUTTER
+  - _MK_WORKFLOW_SPECULAR
+  - _MK_WRAPPED_DIFFUSE
+  m_InvalidKeywords:
   - _ALPHAPREMULTIPLY_ON
+  - _FRESNELHIGHLIGHTS_ON
+  - _RECEIVESHADOWS_ON
   - _SPECULAR_SETUP
   - _SURFACE_TYPE_TRANSPARENT
-  m_InvalidKeywords: []
+  - _VERTEXANIMATIONSTUTTER_ON
+  - _WRAPPEDLIGHTING_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 2000
   stringTagMap:
     IGNOREPROJECTOR: False
-    RenderType: Transparent
+    RenderType: Opaque
   disabledShaderPasses:
   - MOTIONVECTORS
   - DepthOnly
-  - SHADOWCASTER
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -235,8 +250,8 @@ Material:
     - _DrawnMapScale: 1
     - _DstBlend: 10
     - _DstBlendAlpha: 10
-    - _EnvironmentReflections: 1
-    - _FresnelHighlights: 0
+    - _EnvironmentReflections: 2
+    - _FresnelHighlights: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -301,17 +316,17 @@ Material:
     - _StencilWriteMask: 255
     - _StencilZFail: 0
     - _StylizeTab: 1
-    - _Surface: 1
+    - _Surface: 0
     - _ThresholdMapScale: 1
     - _UVSec: 0
     - _VertexAnimation: 0
     - _VertexAnimationIntensity: 0
     - _VertexAnimationStutter: 1
-    - _Workflow: 0
+    - _Workflow: 1
     - _WorkflowMode: 0
     - _WrappedLighting: 1
     - _ZTest: 4
-    - _ZWrite: 0
+    - _ZWrite: 1
     m_Colors:
     - _AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
@@ -328,7 +343,7 @@ Material:
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimDarkColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SpecularColor: {r: 0.20312497, g: 0.20312497, b: 0.20312497, a: 1}
+    - _SpecularColor: {r: 0, g: 0, b: 0, a: 1}
     - _VertexAnimationFrequency: {r: 2.5, g: 2.5, b: 2.5, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -62,6 +62,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 10fd26b667751ea4d902541535ae6edc, type: 3}
       insertIndex: -1
       addedObject: {fileID: -1537452515871309711}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 10fd26b667751ea4d902541535ae6edc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1103852676363503114}
   m_SourcePrefab: {fileID: 100100000, guid: 10fd26b667751ea4d902541535ae6edc, type: 3}
 --- !u!1 &2389471999164894700 stripped
 GameObject:
@@ -109,8 +112,31 @@ MonoBehaviour:
     - Name: DropChances
       Entry: 6
       Data: 
+  debugDamageAmount: 20
   behaviorSequencesSO: []
   strategyAsset: {fileID: 0}
   interactionDistance: 0
   MinDropItem: 0
   MaxDropItem: 0
+--- !u!95 &1103852676363503114
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2389471999164894700}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

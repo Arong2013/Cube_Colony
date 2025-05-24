@@ -1,5 +1,6 @@
 using UnityEngine;
 using RayFire;
+using Unity.VisualScripting;
 
 public class ObjectExploder : MonoBehaviour
 {
@@ -98,7 +99,7 @@ public class ObjectExploder : MonoBehaviour
                 rigid.simulationType = SimType.Dynamic;
                 rigid.objectType = ObjectType.Mesh;
                 rigid.demolitionType = DemolitionType.Runtime; // 런타임 파괴 허용
-                
+
                 // Rigidbody가 없으면 추가 (RayfireRigid가 보통 추가하지만, 확실히 하기 위함)
                 Rigidbody rb = fragment.GetComponent<Rigidbody>();
                 if (rb == null)
@@ -107,6 +108,9 @@ public class ObjectExploder : MonoBehaviour
                 }
                 // 원본 오브젝트 위치 기준으로 폭발력 적용
                 rb.AddExplosionForce(explosionForce, objectToExplode.transform.position, explosionRadius);
+
+                // 지연 후 또는 원본 오브젝트를 완전히 제거해야 하는 경우:
+                Destroy(fragment, 3f); // 예시: 5초 후 파괴
             }
         }
 
@@ -129,8 +133,6 @@ public class ObjectExploder : MonoBehaviour
             originalRigid.enabled = false;
         }
         
-        // 지연 후 또는 원본 오브젝트를 완전히 제거해야 하는 경우:
-        // Destroy(objectToExplode, 5f); // 예시: 5초 후 파괴
 
         Debug.Log(objectToExplode.name + " 조각화 및 폭발력 적용됨.");
     }

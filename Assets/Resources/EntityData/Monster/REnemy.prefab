@@ -60,10 +60,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CategoryHash: 9.365925e-16
-  m_labelHash: 1.4183162e-25
+  m_CategoryHash: 0.009161512
+  m_labelHash: 5.442875e-14
   m_SpriteKey: 0
-  m_SpriteHash: 32008109
+  m_SpriteHash: 44278870
 --- !u!212 &3391024037803944180
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -108,7 +108,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -897109330, guid: 430aaef88bc774b41bb19a63e224935d, type: 3}
+  m_Sprite: {fileID: 445749530, guid: 47bcba77843c03c4db3a24c3540664a0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -278,6 +278,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+  debugDamageAmount: 20
   behaviorSequencesSO:
   - {fileID: 11400000, guid: 3406730a3ba17df41b8b015967238255, type: 2}
   strategyAsset: {fileID: 11400000, guid: e99be3362f4f05e4ab6590b3e3ffe8f5, type: 2}
