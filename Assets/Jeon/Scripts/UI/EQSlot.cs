@@ -61,20 +61,19 @@ public class EQSlot : MonoBehaviour, IPointerClickHandler
     /// <summary>
     /// 아이템 장착
     /// </summary>
-    public void EquipItem(EquipableItem item)
+public void EquipItem(EquipableItem item)
+{
+    if (item.equipmentType != slotType)
     {
-        if (item.equipmentType != slotType)
-        {
-            Debug.LogWarning($"타입이 맞지 않습니다. 슬롯: {slotType}, 아이템: {item.equipmentType}");
-            return;
-        }
-
-        equippedItem = item;
-        UpdateSlotDisplay();
-
-        Debug.Log($"{slotType} 슬롯에 {item.ItemName} 장착됨");
+        Debug.LogWarning($"타입이 맞지 않습니다. 슬롯: {slotType}, 아이템: {item.equipmentType}");
+        return;
     }
 
+    equippedItem = item;
+    UpdateSlotDisplay();
+
+    Debug.Log($"{slotType} 슬롯에 {item.GetDisplayName()} 장착됨");
+}
     /// <summary>
     /// 아이템 해제
     /// </summary>

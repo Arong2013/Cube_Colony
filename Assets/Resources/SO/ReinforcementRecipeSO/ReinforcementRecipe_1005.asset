@@ -16,3 +16,4 @@ MonoBehaviour:
   recipeName: "\uD655\uC7A5\uAC00\uBC29 \uAC15\uD654"
   requiredItemIDs: 01000000
   requiredItemCounts: 01000000
+  resultItemId: 1003

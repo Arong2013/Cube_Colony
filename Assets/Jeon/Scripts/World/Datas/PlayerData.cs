@@ -3,9 +3,6 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Linq;
 
-/// <summary>
-/// 플레이어 데이터 클래스 (장비 시스템 및 에너지 시스템 포함)
-/// </summary>
 public class PlayerData
 {
     [TitleGroup("플레이어 데이터", "인벤토리 및 스탯 정보")]
@@ -63,7 +60,61 @@ public class PlayerData
         EquipDefaultItems();
     }
 
+    // 장비 관련 메서드들
+    public void SetEquippedItem(EquipmentType slot, EquipableItem item)
+    {
+        if (item != null)
+        {
+            equippedItems[slot] = item;
+        }
+        else
+        {
+            equippedItems.Remove(slot);
+        }
+    }
 
+    public EquipableItem GetEquippedItem(EquipmentType slot)
+    {
+        return equippedItems.TryGetValue(slot, out EquipableItem item) ? item : null;
+    }
+
+    public Dictionary<EquipmentType, EquipableItem> GetAllEquippedItems()
+    {
+        return new Dictionary<EquipmentType, EquipableItem>(equippedItems);
+    }
+
+    // 장비 장착
+    public bool EquipItem(EquipableItem item)
+    {
+        if (item == null) return false;
+
+        // 같은 타입의 기존 아이템 해제
+        if (equippedItems.ContainsKey(item.equipmentType))
+        {
+            UnequipItem(item.equipmentType);
+        }
+
+        // 새 아이템 장착
+        equippedItems[item.equipmentType] = item;
+        return true;
+    }
+
+    // 장비 해제
+    public EquipableItem UnequipItem(EquipmentType type)
+    {
+        if (!equippedItems.ContainsKey(type) || equippedItems[type] == null)
+        {
+            Debug.Log($"해제할 장비가 없습니다. 타입: {type}");
+            return null;
+        }
+
+        EquipableItem unequippedItem = equippedItems[type];
+        equippedItems[type] = null;
+
+        return unequippedItem;
+    }
+
+    // 기본 장비 장착
     private void EquipDefaultItems()
     {
         // 각 장비 타입별로 첫 번째 아이템 찾아 장착
@@ -82,51 +133,37 @@ public class PlayerData
 
                 if (firstItemId != null)
                 {
-                    // 아이템 장착 및 인벤토리에 추가
+                    // 아이템 장착
                     equippedItems[type] = firstItemId;
                     Debug.Log($"기본 장비 장착: {type} - {firstItemId.ItemName}");
                 }
             }
         }
     }
+
     // === 에너지 관련 메서드 ===
 
-    /// <summary>
-    /// 에너지 업데이트 (회복/소모)
-    /// </summary>
     public void UpdateEnergy(float amount)
     {
         energy = Mathf.Clamp(energy + amount, 0f, maxEnergy);
     }
 
-    /// <summary>
-    /// 에너지 직접 설정
-    /// </summary>
     public void SetEnergy(float value)
     {
         energy = Mathf.Clamp(value, 0f, maxEnergy);
     }
 
-    /// <summary>
-    /// 최대 에너지 설정
-    /// </summary>
     public void SetMaxEnergy(float value)
     {
         maxEnergy = Mathf.Max(value, 50f); // 최소 50
         energy = Mathf.Min(energy, maxEnergy); // 현재 에너지가 최대를 초과하지 않도록
     }
 
-    /// <summary>
-    /// 에너지가 충분한지 확인
-    /// </summary>
     public bool HasEnoughEnergy(float required)
     {
         return energy >= required;
     }
 
-    /// <summary>
-    /// 에너지 소모 (실패 시 false 반환)
-    /// </summary>
     public bool TryConsumeEnergy(float amount)
     {
         if (HasEnoughEnergy(amount))
@@ -137,9 +174,6 @@ public class PlayerData
         return false;
     }
 
-    /// <summary>
-    /// 에너지 회복 (시간 경과)
-    /// </summary>
     public void RegenerateEnergy(float deltaTime)
     {
         if (energy < maxEnergy)
@@ -165,9 +199,6 @@ public class PlayerData
         inventory.Clear();
     }
 
-    /// <summary>
-    /// 특정 아이템 개수 확인
-    /// </summary>
     public int GetItemCount(int itemID)
     {
         int count = 0;
@@ -188,52 +219,13 @@ public class PlayerData
         return count;
     }
 
-    // === 장비 관련 메서드 ===
-
-    /// <summary>
-    /// 장비 장착 정보 업데이트
-    /// </summary>
-    public void SetEquippedItem(EquipmentType slot, EquipableItem item)
-    {
-        if (item != null)
-        {
-            equippedItems[slot] = item;
-        }
-        else
-        {
-            equippedItems.Remove(slot);
-        }
-    }
-
-    /// <summary>
-    /// 장착된 장비 반환
-    /// </summary>
-    public EquipableItem GetEquippedItem(EquipmentType slot)
-    {
-        return equippedItems.TryGetValue(slot, out EquipableItem item) ? item : null;
-    }
-
-    /// <summary>
-    /// 모든 장착된 장비 반환
-    /// </summary>
-    public Dictionary<EquipmentType, EquipableItem> GetAllEquippedItems()
-    {
-        return new Dictionary<EquipmentType, EquipableItem>(equippedItems);
-    }
-
     // === 화폐 관련 메서드 ===
 
-    /// <summary>
-    /// 골드 추가
-    /// </summary>
     public void AddGold(int amount)
     {
         gold = Mathf.Max(0, gold + amount);
     }
 
-    /// <summary>
-    /// 골드 소모 (실패 시 false 반환)
-    /// </summary>
     public bool TrySpendGold(int amount)
     {
         if (gold >= amount)
@@ -244,9 +236,6 @@ public class PlayerData
         return false;
     }
 
-    /// <summary>
-    /// 골드가 충분한지 확인
-    /// </summary>
     public bool HasEnoughGold(int required)
     {
         return gold >= required;
@@ -254,9 +243,6 @@ public class PlayerData
 
     // === 게임 리셋 메서드 ===
 
-    /// <summary>
-    /// 플레이어 사망 시 초기화
-    /// </summary>
     public void Reset()
     {
         playerStat = EntityStat.CreatePlayerData();
@@ -267,42 +253,10 @@ public class PlayerData
         // 골드는 유지 (선택사항)
     }
 
-    /// <summary>
-    /// 게임 완전 리셋
-    /// </summary>
     public void FullReset()
     {
         Reset();
         gold = 1000; // 초기 골드
-    }
-
-    // === 디버그 메서드 ===
-
-    [Button("에너지 회복"), GUIColor(0.3f, 0.8f, 0.3f)]
-    public void DebugRestoreEnergy()
-    {
-        SetEnergy(maxEnergy);
-        Debug.Log("에너지 완전 회복!");
-    }
-
-    [Button("골드 추가 (+500)"), GUIColor(0.8f, 0.8f, 0.3f)]
-    public void DebugAddGold()
-    {
-        AddGold(500);
-        Debug.Log($"골드 500 추가! 현재: {gold}");
-    }
-
-    [Button("장비 정보 출력"), GUIColor(0.3f, 0.3f, 0.8f)]
-    public void DebugPrintEquipment()
-    {
-        Debug.Log("=== 장착된 장비 ===");
-        foreach (var kvp in equippedItems)
-        {
-            Debug.Log($"{kvp.Key}: {kvp.Value.GetDisplayName()}");
-        }
-        if (equippedItems.Count == 0)
-        {
-            Debug.Log("장착된 장비 없음");
-        }
+        EquipDefaultItems(); // 기본 장비 다시 장착
     }
 }

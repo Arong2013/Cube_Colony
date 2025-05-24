@@ -82,11 +82,11 @@ public class InventoryUI : SerializedMonoBehaviour, IObserver
             if (kvp.Value != null)
             {
                 kvp.Value.Initialize(this);
-                
+
                 // 장비 슬롯 클릭 이벤트 추가
                 var slotType = kvp.Key;
                 var slot = kvp.Value;
-                
+
                 // 기존 이벤트 제거 후 새로 추가
                 var button = slot.GetComponent<Button>();
                 if (button != null)
@@ -104,7 +104,7 @@ public class InventoryUI : SerializedMonoBehaviour, IObserver
     private void OnEquipmentSlotClicked(EquipmentType slotType)
     {
         var equippedItem = GetEquippedItem(slotType);
-        
+
         if (equippedItem != null)
         {
             // 장착된 아이템이 있으면 아이템 정보 UI 표시
@@ -126,7 +126,7 @@ public class InventoryUI : SerializedMonoBehaviour, IObserver
         foreach (var slot in _slots)
         {
             var item = slot.GetComponent<ItemSlot>(); // 실제 ItemSlot 컴포넌트에서 아이템 가져오기
-            
+
             // 이 부분은 ItemSlot에 public 프로퍼티나 메서드가 필요할 수 있습니다.
             // 예시로 코메ント 처리
             /*
@@ -157,42 +157,41 @@ public class InventoryUI : SerializedMonoBehaviour, IObserver
         {
             canvasGroup = slot.gameObject.AddComponent<CanvasGroup>();
         }
-        
+
         canvasGroup.alpha = highlight ? 1f : 0.5f;
     }
 
     /// <summary>
     /// 장비 슬롯 업데이트
     /// </summary>
-private void UpdateEquipmentSlots()
-{
-    // BattleFlowController의 playerData에서 바로 장착된 장비 가져오기
-    if (BattleFlowController.Instance?.playerData == null)
+    public void UpdateEquipmentSlots()
     {
-        Debug.LogError("PlayerData를 찾을 수 없습니다!");
-        return;
-    }
+        if (BattleFlowController.Instance?.playerData == null)
+            return;
 
-    Debug.Log($"장비 슬롯 업데이트 시작. 장비 슬롯 수: {equipmentSlots.Count}");
+        Debug.Log($"장비 슬롯 업데이트 시작. 장비 슬롯 수: {equipmentSlots.Count}");
 
-    // 각 장비 슬롯 업데이트
-    foreach (var kvp in equipmentSlots)
-    {
-        Debug.Log($"슬롯 타입 처리 중: {kvp.Key}");
-
-        if (kvp.Value != null)
+        foreach (var kvp in equipmentSlots)
         {
-            var equippedItem = BattleFlowController.Instance.playerData.GetEquippedItem(kvp.Key);
-            
-            if (equippedItem != null)
+            Debug.Log($"슬롯 타입 처리 중: {kvp.Key}");
+
+            if (kvp.Value != null)
             {
-                Debug.Log($"{kvp.Key} 슬롯에 장착된 아이템: {equippedItem.ItemName}");
-                kvp.Value.EquipItem(equippedItem);
+                var equippedItem = BattleFlowController.Instance.playerData.GetEquippedItem(kvp.Key);
+
+                if (equippedItem != null)
+                {
+                    Debug.Log($"{kvp.Key} 슬롯에 장착된 아이템: {equippedItem.ItemName}");
+                    kvp.Value.EquipItem(equippedItem);
+                }
+                else
+                {
+                    Debug.Log($"{kvp.Key} 슬롯에 장착된 아이템 없음");
+                    kvp.Value.UnequipItem();
+                }
             }
         }
     }
-}
-
     /// <summary>
     /// 인벤토리 UI 열기
     /// </summary>
@@ -276,7 +275,7 @@ private void UpdateEquipmentSlots()
         UpdateSlots();
         UpdateEquipmentSlots();
 
-        
+
         // 옵저버 알림
         BattleFlowController.Instance.NotifyObservers();
     }
@@ -299,27 +298,26 @@ private void UpdateEquipmentSlots()
 
         _slots.Clear();
 
-        // 일반 아이템들만 슬롯 생성 (장착되지 않은 아이템들)
-          foreach (var item in BattleFlowController.Instance.playerData.inventory)
-    {
-        if (item is EquipableItem equipable)
+        foreach (var item in BattleFlowController.Instance.playerData.inventory)
         {
-            var player = Utils.GetPlayer();
-            var equipmentComponent = player?.GetEntityComponent<EquipmentComponent>();
-
-            if (equipmentComponent != null &&
-                equipmentComponent.GetEquippedItem(equipable.equipmentType) == equipable)
+            if (item is EquipableItem equipable)
             {
-                continue; // 이미 장착된 아이템은 일반 슬롯에 표시하지 않음
+                // PlayerData의 장착된 아이템 확인으로 변경
+                var equippedItem = BattleFlowController.Instance.playerData.GetEquippedItem(equipable.equipmentType);
+
+                if (equippedItem == equipable)
+                {
+                    continue; // 이미 장착된 아이템은 일반 슬롯에 표시하지 않음
+                }
             }
+
+            // 나머지 아이템들은 슬롯에 추가
+            var curSlot = Instantiate(DataCenter.Instance.GetItemSlotPrefab().gameObject, _slotContainer);
+            var slot = curSlot.GetComponent<ItemSlot>();
+            slot.SetItem(item);
+            _slots.Add(slot);
         }
-        
-        // 나머지 아이템들은 슬롯에 추가
-        var curSlot = Instantiate(DataCenter.Instance.GetItemSlotPrefab().gameObject, _slotContainer);
-        var slot = curSlot.GetComponent<ItemSlot>();
-        slot.SetItem(item);
-        _slots.Add(slot);
-    }
+
     }
 
     /// <summary>
@@ -331,15 +329,14 @@ private void UpdateEquipmentSlots()
             return 0;
 
         int count = 0;
-        var player = Utils.GetPlayer();
-        var equipmentComponent = player?.GetEntityComponent<EquipmentComponent>();
 
         foreach (var item in BattleFlowController.Instance.playerData.inventory)
         {
             // 장착된 장비 아이템은 제외
-            if (item is EquipableItem equipable && equipmentComponent != null)
+            if (item is EquipableItem equipable)
             {
-                if (equipmentComponent.GetEquippedItem(equipable.equipmentType) == equipable)
+                var equippedItem = BattleFlowController.Instance.playerData.GetEquippedItem(equipable.equipmentType);
+                if (equippedItem == equipable)
                 {
                     continue;
                 }
@@ -349,35 +346,36 @@ private void UpdateEquipmentSlots()
 
         return count;
     }
-
     /// <summary>
     /// 총 인벤토리 슬롯 수 계산 (장비 효과 포함)
     /// </summary>
     private int GetTotalInventorySlots()
     {
         int baseSlots = 10; // 기본 슬롯 수
-        var player = Utils.GetPlayer();
-        
-        if (player != null)
+        var playerData = BattleFlowController.Instance?.playerData;
+
+        if (playerData != null)
         {
-            var equipmentComponent = player.GetEntityComponent<EquipmentComponent>();
-            if (equipmentComponent != null)
+            // 장착된 장비 중 인벤토리 슬롯 보너스 계산
+            foreach (var item in playerData.GetAllEquippedItems().Values)
             {
-                var totalEffects = equipmentComponent.GetTotalEffects();
-                baseSlots += totalEffects.inventorySlotBonus;
+                var effects = item.GetCurrentEffects();
+                baseSlots += effects.inventorySlotBonus;
             }
         }
 
         return baseSlots;
     }
-
     /// <summary>
     /// 옵저버 업데이트
     /// </summary>
     public void UpdateObserver()
     {
-        UpdateSlots();
-        UpdateEquipmentSlots();
+        if (!gameObject.activeInHierarchy)
+        {
+            UpdateSlots();
+            UpdateEquipmentSlots();
+        }
     }
 
     /// <summary>
@@ -402,12 +400,10 @@ private void UpdateEquipmentSlots()
     /// </summary>
     public EquipableItem GetEquippedItem(EquipmentType type)
     {
-        var player = Utils.GetPlayer();
-        if (player == null) return null;
-
-        var equipmentComponent = player.GetEntityComponent<EquipmentComponent>();
-        return equipmentComponent?.GetEquippedItem(type);
+        return BattleFlowController.Instance?.playerData?.GetEquippedItem(type);
     }
+
+
 
     /// <summary>
     /// 특정 장비 슬롯에 아이템 장착 (드래그앤드롭 등에서 사용)
@@ -425,11 +421,11 @@ private void UpdateEquipmentSlots()
 
         // 아이템 사용 (장착)
         item.Use(player);
-        
+
         // UI 업데이트
         UpdateSlots();
         UpdateEquipmentSlots();
-        
+
         return true;
     }
 
@@ -438,15 +434,15 @@ private void UpdateEquipmentSlots()
     /// </summary>
     public bool UnequipItemFromSlot(EquipmentType slotType)
     {
-        var player = Utils.GetPlayer();
-        if (player == null) return false;
+        var playerData = BattleFlowController.Instance?.playerData;
+        if (playerData == null) return false;
 
-        var equipmentComponent = player.GetEntityComponent<EquipmentComponent>();
-        if (equipmentComponent == null) return false;
-
-        var unequippedItem = equipmentComponent.UnequipItem(slotType);
+        var unequippedItem = playerData.UnequipItem(slotType);
         if (unequippedItem != null)
         {
+            // 인벤토리에 아이템 추가
+            playerData.AddItem(unequippedItem);
+
             // UI 업데이트
             UpdateSlots();
             UpdateEquipmentSlots();
@@ -463,17 +459,10 @@ private void UpdateEquipmentSlots()
     [Button("현재 장착 상태 출력")]
     public void PrintEquipmentStatus()
     {
-        var player = Utils.GetPlayer();
-        if (player == null)
+        var playerData = BattleFlowController.Instance?.playerData;
+        if (playerData == null)
         {
-            Debug.LogWarning("플레이어를 찾을 수 없습니다.");
-            return;
-        }
-
-        var equipmentComponent = player.GetEntityComponent<EquipmentComponent>();
-        if (equipmentComponent == null)
-        {
-            Debug.LogWarning("장비 컴포넌트를 찾을 수 없습니다.");
+            Debug.LogWarning("플레이어 데이터를 찾을 수 없습니다.");
             return;
         }
 
@@ -483,7 +472,7 @@ private void UpdateEquipmentSlots()
         {
             if (type == EquipmentType.None) continue;
 
-            var item = equipmentComponent.GetEquippedItem(type);
+            var item = playerData.GetEquippedItem(type);
             if (item != null)
             {
                 string reinforcementInfo = item.currentReinforcementLevel > 0 ? $" <color=cyan>(+{item.currentReinforcementLevel})</color>" : "";
@@ -494,28 +483,7 @@ private void UpdateEquipmentSlots()
                 Debug.Log($"{type}: <color=red>비어있음</color>");
             }
         }
-        
-        // 총 효과 출력
-        var totalEffects = equipmentComponent.GetTotalEffects();
-        Debug.Log("<color=yellow>=== 총 장비 효과 ===</color>");
-        
-        if (totalEffects.attackBonus > 0) Debug.Log($"공격력: <color=green>+{totalEffects.attackBonus}</color>");
-        if (totalEffects.defenseBonus > 0) Debug.Log($"방어력: <color=green>+{totalEffects.defenseBonus}</color>");
-        if (totalEffects.healthBonus > 0) Debug.Log($"체력: <color=green>+{totalEffects.healthBonus}</color>");
-        if (totalEffects.maxOxygenBonus > 0) Debug.Log($"최대 산소: <color=green>+{totalEffects.maxOxygenBonus}</color>");
-        if (totalEffects.maxEnergyBonus > 0) Debug.Log($"최대 에너지: <color=green>+{totalEffects.maxEnergyBonus}</color>");
-        if (totalEffects.extraHitCount > 0) Debug.Log($"추가 타격: <color=green>+{totalEffects.extraHitCount}회</color>");
-        if (totalEffects.fireRateBonus > 0) Debug.Log($"연사 속도: <color=green>+{totalEffects.fireRateBonus}</color>");
-        if (totalEffects.oxygenConsumptionReduction > 0) Debug.Log($"산소 소모 감소: <color=green>{totalEffects.oxygenConsumptionReduction * 100}%</color>");
-        if (totalEffects.energyConsumptionReduction > 0) Debug.Log($"에너지 소모 감소: <color=green>{totalEffects.energyConsumptionReduction * 100}%</color>");
-        if (totalEffects.inventorySlotBonus > 0) Debug.Log($"인벤토리 슬롯: <color=green>+{totalEffects.inventorySlotBonus}</color>");
-        if (totalEffects.damageReduction > 0) Debug.Log($"피해 감소: <color=green>{totalEffects.damageReduction * 100}%</color>");
-        
-        // 인벤토리 정보 출력
-        Debug.Log("<color=yellow>=== 인벤토리 정보 ===</color>");
-        Debug.Log($"사용 중인 슬롯: {GetUsedInventorySlots()}/{GetTotalInventorySlots()}");
     }
-
     /// <summary>
     /// 장비 슬롯 딕셔너리 정보 출력 (디버그용)
     /// </summary>

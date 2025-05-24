@@ -233,24 +233,47 @@ public class ItemInfoUI : SerializedMonoBehaviour
         }
     }
 
-
-    private void ReinforceItem()
+private void ReinforceItem()
+{
+    if (currentItem == null || !(currentItem is EquipableItem equipableItem))
     {
-        if (currentItem == null || !(currentItem is EquipableItem equipableItem))
-        {
-            Debug.LogWarning("강화할 수 없는 아이템입니다.");
-            return;
-        }
-
-        if (!equipableItem.CanReinforce())
-        {
-            Debug.LogWarning("더 이상 강화할 수 없습니다.");
-            return;
-        }
-
-        // 현재 구현된 강화 시스템이 없으므로 메시지 표시
-        Debug.Log("현재 강화 시스템이 구현되지 않았습니다.");
+        Debug.LogWarning("강화할 수 없는 아이템입니다.");
+        return;
     }
+
+    var player = Utils.GetPlayer();
+    if (player == null)
+    {
+        Debug.LogWarning("플레이어를 찾을 수 없습니다.");
+        return;
+    }
+
+    bool reinforceResult = equipableItem.Reinforce(player);
+
+    if (reinforceResult)
+    {
+        Debug.Log($"{equipableItem.ItemName} 강화 성공!");
+        
+        // UI 업데이트
+        UpdateUI();
+        
+        // 인벤토리 UI 업데이트
+        var inventoryUI = Utils.GetUI<InventoryUI>();
+        if (inventoryUI != null)
+        {
+            inventoryUI.UpdateSlots();
+            inventoryUI.UpdateEquipmentSlots();
+        }
+
+        // InfoUI 닫기
+        Hide();
+    }
+    else
+    {
+        Debug.Log($"{equipableItem.ItemName} 강화 실패!");
+    }
+}
+
 
     private void UpdateReinforcementMaterialUI(EquipableItem item)
     {
