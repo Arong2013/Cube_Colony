@@ -92,7 +92,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DissolveMap:
-        m_Texture: {fileID: 2800000, guid: 429ec31e89227a843b7b0e6e5047b82d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 37cf15dc6ef6774449d209f8d6f44050, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DrawnMap:
@@ -196,7 +196,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ThresholdMap:
-        m_Texture: {fileID: 2800000, guid: 37cf15dc6ef6774449d209f8d6f44050, type: 3}
+        m_Texture: {fileID: 2800000, guid: 42b2a15773865f847ad2ae0a8b3297f6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _VertexAnimationMap:
@@ -253,7 +253,7 @@ Material:
     - _Dissolve: 2
     - _DissolveAmount: 0
     - _DissolveBorderSize: 0.1
-    - _DissolveMapScale: 10
+    - _DissolveMapScale: 1
     - _DrawnClampMax: 1
     - _DrawnClampMin: 0
     - _DrawnMapScale: 1
