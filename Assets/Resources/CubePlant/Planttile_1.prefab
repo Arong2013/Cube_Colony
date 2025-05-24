@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -424,6 +424,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: cfee085ab31001241aaf33cb57949932, type: 3}
       propertyPath: m_Name
       value: Plant_Floor_Light
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: cfee085ab31001241aaf33cb57949932, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
