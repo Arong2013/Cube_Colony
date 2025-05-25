@@ -10,8 +10,6 @@ public class AttackActionSO : BehaviorActionSO
 }
 public class AttackAction : BehaviorAction
 {
-
-
     public override BehaviorState Execute()
     {
         if (entity.GetState().GetType() == typeof(AttackState))

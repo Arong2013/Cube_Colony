@@ -34,28 +34,43 @@ public class InteractableEntity : Entity, IInteractable
     public bool CanInteract(Entity interactor) => _strategy?.CanInteract(this, interactor) ?? false;
     public void Interact(Entity interactor) => _strategy?.Interact(this, interactor);
     public string GetInteractionLabel() => _strategy?.GetLabel() ?? "상호작용";
-    public void DropItems()
+public void DropItems()
+{
+    // 현재 필드를 찾기
+    Field currentField = FindAnyObjectByType<Field>();
+    
+    if (currentField == null)
     {
-        int dropCount = Random.Range(MinDropItem, MaxDropItem + 1);
+        Debug.LogWarning("현재 필드를 찾을 수 없습니다.");
+        return;
+    }
 
-        for (int i = 0; i < dropCount; i++)
+    int dropCount = Random.Range(MinDropItem, MaxDropItem + 1);
+
+    for (int i = 0; i < dropCount; i++)
+    {
+        float roll = Random.value;
+        float cumulative = 0f;
+
+        foreach (var pair in DropChances.OrderByDescending(p => p.Key))
         {
-            float roll = Random.value;
-            float cumulative = 0f;
-
-            foreach (var pair in DropChances.OrderByDescending(p => p.Key))
+            cumulative += pair.Key;
+            if (roll <= cumulative)
             {
-                cumulative += pair.Key;
-                if (roll <= cumulative)
-                {
-                    int itemId = DropChances[pair.Key];
-                    var itemPre =  Instantiate(DataCenter.Instance.GetDropItemPrefab().gameObject, transform.position, Quaternion.identity);     
-                    itemPre.GetComponent<ItemEntity>().SetItem(itemId); 
-                    break;
-                }
+                int itemId = DropChances[pair.Key];
+                var itemPre = Instantiate(
+                    DataCenter.Instance.GetDropItemPrefab().gameObject, 
+                    transform.position, 
+                    Quaternion.identity, 
+                    currentField.transform.Find("DisableField") // 이 부분이 중요
+                );     
+                itemPre.GetComponent<ItemEntity>().SetItem(itemId); 
+                break;
             }
         }
     }
+}
+
     public float GetInteractionDistance() => interactionDistance;
 
     public override void OnHit(int dmg)

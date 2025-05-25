@@ -21,6 +21,10 @@ public class ItemInfoUI : SerializedMonoBehaviour
     [LabelText("사용 버튼"), Required]
     [SerializeField] private Button useButton;
 
+        [TitleGroup("정보창 UI 요소")]
+    [LabelText("버리기 버튼"), Required]
+    [SerializeField] private Button discardButton;
+
     [TitleGroup("정보창 UI 요소")]
     [LabelText("닫기 버튼"), Required]
     [SerializeField] private Button closeButton;
@@ -45,11 +49,25 @@ public class ItemInfoUI : SerializedMonoBehaviour
     [LabelText("재료 슬롯 프리팹"), Required]
     [SerializeField] private MaterialSlot materialSlotPrefab;
 
+    [TitleGroup("필드 타일 정보")]
+    [LabelText("필드 타일 정보 패널")]
+    [SerializeField] private GameObject fieldTileInfoPanel;
+
+    [TitleGroup("필드 타일 정보")]
+    [LabelText("필드 타일 슬롯 컨테이너")]
+    [SerializeField] private Transform fieldTileSlotContainer;
+
+    [TitleGroup("필드 타일 정보")]
+    [LabelText("필드 타일 슬롯 프리팹"), Required]
+    [SerializeField] private FieldTileSlot fieldTileSlotPrefab;
+
 
     [TitleGroup("디버그 정보")]
     [ReadOnly, ShowInInspector] private Item currentItem;
 
-    private System.Action<Item> onUseItem;
+private System.Action<Item> onUseItem;
+    private System.Action<Item> onDiscardItem;
+
 
     private void Awake()
     {
@@ -71,6 +89,11 @@ public class ItemInfoUI : SerializedMonoBehaviour
             reinforceButton.onClick.AddListener(ReinforceItem);
         }
 
+        // 버리기 버튼에 이벤트 연결
+        if (discardButton != null)
+        {
+            discardButton.onClick.AddListener(DiscardItem);
+        }
         // 초기 상태는 비활성화
         gameObject.SetActive(false);
 
@@ -86,7 +109,7 @@ public class ItemInfoUI : SerializedMonoBehaviour
         Hide();
     }
 
-    public void Show(Item item, System.Action<Item> useCallback = null)
+    public void Show(Item item, System.Action<Item> useCallback = null, System.Action<Item> discardCallback = null)
     {
         if (item == null)
         {
@@ -96,6 +119,7 @@ public class ItemInfoUI : SerializedMonoBehaviour
 
         currentItem = item;
         onUseItem = useCallback;
+        onDiscardItem = discardCallback;
 
         // UI 업데이트
         UpdateUI();
@@ -103,6 +127,7 @@ public class ItemInfoUI : SerializedMonoBehaviour
         // 정보창 활성화
         gameObject.SetActive(true);
     }
+
 
     public void Hide()
     {
@@ -142,6 +167,7 @@ public class ItemInfoUI : SerializedMonoBehaviour
 
         // 강화 시스템 UI 업데이트 (장비 아이템인 경우만)
         UpdateReinforcementUI();
+        UpdateFieldTileInfoForConsumableItem();
     }
     private void UpdateReinforcementUI()
     {
@@ -157,8 +183,8 @@ public class ItemInfoUI : SerializedMonoBehaviour
             {
                 reinforcementMaterialText.text = GetReinforcementMaterialInfo(equipableItem);
             }
-           UpdateReinforcementDetails(equipableItem);
-            UpdateReinforcementMaterialUI(equipableItem); 
+            UpdateReinforcementDetails(equipableItem);
+            UpdateReinforcementMaterialUI(equipableItem);
             // 강화 버튼 활성화 설정
             if (reinforceButton != null)
             {
@@ -166,13 +192,63 @@ public class ItemInfoUI : SerializedMonoBehaviour
                 reinforceButton.interactable = canReinforce;
             }
 
-            
+
         }
         else
         {
             reinforcementPanel.SetActive(false);
         }
     }
+    private void UpdateFieldTileInfoForConsumableItem()
+    {
+        // 필드 타일 정보 패널 초기화
+        if (fieldTileInfoPanel != null)
+        {
+            fieldTileInfoPanel.SetActive(false);
+        }
+
+        // 소비 아이템인 경우에만 필드 타일 정보 표시
+        if (currentItem is ConsumableItem consumableItem)
+        {
+            // 필드 타일 정보 패널 활성화
+            if (fieldTileInfoPanel != null)
+            {
+                fieldTileInfoPanel.SetActive(true);
+            }
+
+            // 기존 슬롯 제거
+            if (fieldTileSlotContainer != null)
+            {
+                foreach (Transform child in fieldTileSlotContainer)
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+            var itemSO = DataCenter.Instance.GetConsumableItemSO(currentItem.ID);
+            var fieldTiles = itemSO.acquirableFieldIds;
+            // 이 아이템을 얻을 수 있는 필드 ID들 가져오기
+
+            if (fieldTiles != null)
+            {
+                foreach (int fieldId in fieldTiles)
+                {
+                    var fieldTileSO = DataCenter.Instance.GetFieldTileDataSO(fieldId);
+                    if (fieldTileSO != null)
+                    {
+                        // 필드 타일 슬롯 생성
+                        GameObject slotObj = Instantiate(fieldTileSlotPrefab.gameObject, fieldTileSlotContainer);
+                        var fieldTileSlot = slotObj.GetComponent<FieldTileSlot>();
+
+                        if (fieldTileSlot != null)
+                        {
+                            fieldTileSlot.Initialize(fieldTileSO);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private void UpdateReinforcementDetails(EquipableItem equipableItem)
     {
         bool canReinforce = equipableItem.CanReinforce();
@@ -232,47 +308,56 @@ public class ItemInfoUI : SerializedMonoBehaviour
             Hide(); // 수량이 0이 되면 정보창 닫기
         }
     }
-
-private void ReinforceItem()
-{
-    if (currentItem == null || !(currentItem is EquipableItem equipableItem))
+        private void DiscardItem()
     {
-        Debug.LogWarning("강화할 수 없는 아이템입니다.");
-        return;
-    }
+        if (currentItem == null) return;
 
-    var player = Utils.GetPlayer();
-    if (player == null)
-    {
-        Debug.LogWarning("플레이어를 찾을 수 없습니다.");
-        return;
-    }
+        // 버리기 콜백 호출
+        onDiscardItem?.Invoke(currentItem);
 
-    bool reinforceResult = equipableItem.Reinforce(player);
-
-    if (reinforceResult)
-    {
-        Debug.Log($"{equipableItem.ItemName} 강화 성공!");
-        
-        // UI 업데이트
-        UpdateUI();
-        
-        // 인벤토리 UI 업데이트
-        var inventoryUI = Utils.GetUI<InventoryUI>();
-        if (inventoryUI != null)
-        {
-            inventoryUI.UpdateSlots();
-            inventoryUI.UpdateEquipmentSlots();
-        }
-
-        // InfoUI 닫기
+        // UI 닫기
         Hide();
     }
-    else
+    private void ReinforceItem()
     {
-        Debug.Log($"{equipableItem.ItemName} 강화 실패!");
+        if (currentItem == null || !(currentItem is EquipableItem equipableItem))
+        {
+            Debug.LogWarning("강화할 수 없는 아이템입니다.");
+            return;
+        }
+
+        var player = Utils.GetPlayer();
+        if (player == null)
+        {
+            Debug.LogWarning("플레이어를 찾을 수 없습니다.");
+            return;
+        }
+
+        bool reinforceResult = equipableItem.Reinforce(player);
+
+        if (reinforceResult)
+        {
+            Debug.Log($"{equipableItem.ItemName} 강화 성공!");
+
+            // UI 업데이트
+            UpdateUI();
+
+            // 인벤토리 UI 업데이트
+            var inventoryUI = Utils.GetUI<InventoryUI>();
+            if (inventoryUI != null)
+            {
+                inventoryUI.UpdateSlots();
+                inventoryUI.UpdateEquipmentSlots();
+            }
+
+            // InfoUI 닫기
+            Hide();
+        }
+        else
+        {
+            Debug.Log($"{equipableItem.ItemName} 강화 실패!");
+        }
     }
-}
 
 
     private void UpdateReinforcementMaterialUI(EquipableItem item)
@@ -296,24 +381,24 @@ private void ReinforceItem()
         }
 
         // 각 재료에 대해 슬롯 생성
-            for (int i = 0; i < recipe.requiredItemIDs.Count; i++)
-    {
-        int requiredItemId = recipe.requiredItemIDs[i];
-        int requiredCount = recipe.requiredItemCounts[i];
-
-        // 현재 보유 개수 계산
-        int currentCount = BattleFlowController.Instance.playerData.GetItemCount(requiredItemId);
-
-        // 재료 슬롯 생성
-        GameObject slotObj = Instantiate(materialSlotPrefab.gameObject, materialSlotContainer);
-        
-        // MaterialSlot 컴포넌트 가져오기
-        var materialSlot = slotObj.GetComponent<MaterialSlot>();
-        if (materialSlot != null)
+        for (int i = 0; i < recipe.requiredItemIDs.Count; i++)
         {
-            materialSlot.Initialize(requiredItemId, requiredCount, currentCount);
+            int requiredItemId = recipe.requiredItemIDs[i];
+            int requiredCount = recipe.requiredItemCounts[i];
+
+            // 현재 보유 개수 계산
+            int currentCount = BattleFlowController.Instance.playerData.GetItemCount(requiredItemId);
+
+            // 재료 슬롯 생성
+            GameObject slotObj = Instantiate(materialSlotPrefab.gameObject, materialSlotContainer);
+
+            // MaterialSlot 컴포넌트 가져오기
+            var materialSlot = slotObj.GetComponent<MaterialSlot>();
+            if (materialSlot != null)
+            {
+                materialSlot.Initialize(requiredItemId, requiredCount, currentCount);
+            }
         }
-    }
 
     }
 }

@@ -304,6 +304,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+  debugDamageAmount: 20
 --- !u!65 &2446873559737819303
 BoxCollider:
   m_ObjectHideFlags: 0

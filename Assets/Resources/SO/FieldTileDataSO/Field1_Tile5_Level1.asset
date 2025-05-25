@@ -13,16 +13,14 @@ MonoBehaviour:
   m_Name: Field1_Tile5_Level1
   m_EditorClassIdentifier: 
   ID: 5
-  IconName: AMonsterTile1_1_Enhanced
+  IconName: MonsterTile1_2_Enhanced
   FieldLevel: 1
   TileLevel: 1
-  StageType: AMonster
-  minCount: 2
-  maxCount: 4
+  StageType: RMonster
+  minCount: 3
+  maxCount: 5
   ObjectID: 01000000
   ObjectValue:
-  - 40
-  - 30
-  - 30
-  description: "\uC2A4\uD14C\uC774\uC9C01 \uAC15\uD654\uB41C \uACF5\uACA9\uD615 \uBAAC\uC2A4\uD130
-    \uD0C0\uC77C 1"
+  - 10
+  description: "\uC2A4\uD14C\uC774\uC9C01 \uAC15\uD654\uB41C \uC77C\uBC18 \uBAAC\uC2A4\uD130
+    \uD0C0\uC77C 2"

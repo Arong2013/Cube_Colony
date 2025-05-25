@@ -29,12 +29,16 @@ public class BattleFlowController : SerializedMonoBehaviour
     public PlayerData playerData;
 
     [TitleGroup("큐브 상태 관리", "큐브 지속성 관리")]
-    [LabelText("큐브 사용 횟수"), ReadOnly]
+    [LabelText("현재 스테이지 큐브 사용 횟수"), ReadOnly]
     [SerializeField] private int cubeUsageCount = 0;
 
     [TitleGroup("큐브 상태 관리")]
-    [LabelText("최대 사용 횟수")]
+    [LabelText("최대 큐브 사용 횟수")]
     [SerializeField] private int maxCubeUsage = 3;
+
+    [TitleGroup("큐브 상태 관리")]
+    [LabelText("총 탐험 횟수"), ReadOnly]
+    [SerializeField] private int totalExplorationCount = 0;
 
     [TitleGroup("큐브 상태 관리")]
     [LabelText("현재 큐브 데이터"), ReadOnly]
@@ -146,6 +150,23 @@ public class BattleFlowController : SerializedMonoBehaviour
     }
 
     /// <summary>
+    /// 총 탐험 횟수를 반환합니다.
+    /// </summary>
+    public int GetTotalExplorationCount()
+    {
+        return totalExplorationCount;
+    }
+
+    /// <summary>
+    /// 총 탐험 횟수를 증가시킵니다.
+    /// </summary>
+    private void IncrementTotalExplorationCount()
+    {
+        totalExplorationCount++;
+        NotifyObservers();
+    }
+
+    /// <summary>
     /// 생존 상태로 설정하고 사용된 페이스를 기록합니다.
     /// </summary>
     public void SetInSurvivalState()
@@ -162,7 +183,8 @@ public class BattleFlowController : SerializedMonoBehaviour
         }
 
         cubeUsageCount++;
-        Debug.Log($"큐브 사용 횟수: {cubeUsageCount}/{maxCubeUsage}");
+        IncrementTotalExplorationCount(); // 총 탐험 횟수 증가
+        Debug.Log($"큐브 사용 횟수: {cubeUsageCount}/{maxCubeUsage}, 총 탐험 횟수: {totalExplorationCount}");
 
         ChangeState(new InSurvivalState(this, currentCubeData, topFaces));
     }

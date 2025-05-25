@@ -21,7 +21,6 @@ MonoBehaviour:
   maxCount: 4
   ObjectID: 01000000
   ObjectValue:
-  - 60
-  - 40
+  - 10
   description: "\uC2A4\uD14C\uC774\uC9C01 \uC77C\uBC18 \uBAAC\uC2A4\uD130 \uD0C0\uC77C
     1"

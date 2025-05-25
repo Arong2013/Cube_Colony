@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class AttackComponent : IEntityComponent
 {
@@ -21,7 +22,23 @@ public class AttackComponent : IEntityComponent
         _entity.SetTarget(target);
         FaceTarget(target.transform.position);
         _entity.SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Attack);
+        DoHit();
     }
+    public void Attack(List<Entity> entities)
+    {
+        if (entities == null || entities.Count == 0) return;
+        _entity.SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Attack);
+
+        foreach (var target in entities)
+        {
+            if (target == null) continue;
+            _entity.SetTarget(target);
+            DoHit();
+        }
+        _entity.ClearTarget();
+    }
+
+
 
     public void DoHit()
     {
@@ -31,9 +48,8 @@ public class AttackComponent : IEntityComponent
         float atk = _entity.GetEntityStat(EntityStatName.ATK);
         target.TakeDamage(atk);
 
-       Debug.Log($"[{_entity.name}] hit {target.name} for {atk} damage");
+        Debug.Log($"[{_entity.name}] hit {target.name} for {atk} damage");
 
-        // 플레이어이고 검을 장착했다면 추가 타격 적용
         if (_entity is PlayerEntity player)
         {
             var equipmentHandler = player.GetEntityComponent<PlayerEquipmentHandler>();
