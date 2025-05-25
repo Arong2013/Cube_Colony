@@ -393,22 +393,51 @@ public class DataCenter : SerializedMonoBehaviour
     /// <summary>
     /// 새로운 FieldTileData 인스턴스를 생성해서 반환
     /// </summary>
-    public FieldTileData CreateFieldTileData(int id)
+// 수정된 DataCenter.CreateFieldTileData 메서드
+public FieldTileData CreateFieldTileData(int id)
+{
+    var so = GetFieldTileDataSO(id);
+    if (so == null) return null;
+
+    var data = new FieldTileData();
+    data.ID = so.ID;
+    data.FieldLevel = so.FieldLevel;
+    data.TileLevel = so.TileLevel;
+    
+    // 문자열과 같은 이름의 enum으로 바로 변환
+    data.StageType = (CubieFaceSkillType)System.Enum.Parse(typeof(CubieFaceSkillType), so.StageType);
+    
+    data.minCount = so.minCount;
+    data.maxCount = so.maxCount;
+    data.ObjectID = new List<int>(so.ObjectID); // 리스트 복사
+    data.ObjectValue = new List<float>(so.ObjectValue); // 리스트 복사
+    data.description = so.description;
+
+    return data;
+}
+public List<FieldTileData> GetFieldTileDatasByFieldLevel(int fieldLevel)
+{
+    List<FieldTileData> result = new List<FieldTileData>();
+    
+    // Get all field tile data IDs
+    var allIds = GetAllIds<FieldTileData>();
+    
+    // Filter and create field tile data for the specified field level
+    foreach (int id in allIds)
     {
-        var so = GetFieldTileDataSO(id);
-        if (so == null) return null;
-
-        var data = new FieldTileData();
-        data.ID = so.ID;
-        data.StageLevel = so.StageLevel;
-        data.minCount = so.minCount;
-        data.maxCount = so.maxCount;
-        data.ObjectID = new List<int>(so.ObjectID); // 리스트 복사
-        data.ObjectValue = new List<float>(so.ObjectValue); // 리스트 복사
-        data.description = so.description;
-
-        return data;
+        var fieldTileDataSO = GetFieldTileDataSO(id);
+        if (fieldTileDataSO != null && fieldTileDataSO.FieldLevel == fieldLevel)
+        {
+            var fieldTileData = CreateFieldTileData(id);
+            if (fieldTileData != null)
+            {
+                result.Add(fieldTileData);
+            }
+        }
     }
+    
+    return result;
+}
 
     /// <summary>
     /// 리플렉션으로 모든 타입의 새 인스턴스를 생성 (범용)
@@ -474,6 +503,8 @@ public class DataCenter : SerializedMonoBehaviour
 
         return null;
     }
+
+    
 
     /// <summary>
     /// 액션 데이터를 파싱하여 object[] 반환
@@ -550,7 +581,6 @@ public class DataCenter : SerializedMonoBehaviour
 
         return counts;
     }
-
     /// <summary>
     /// 등록된 모든 데이터 정보 출력
     /// </summary>

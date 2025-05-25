@@ -489,58 +489,65 @@ public static class ExcelScriptableObjectGenerator
     /// <summary>
     /// FieldTileDataSO 행 데이터 처리
     /// </summary>
-    private static string ProcessFieldTileDataRow(FieldTileDataSO so, string[] headers, object[] values, int rowIndex)
+private static string ProcessFieldTileDataRow(FieldTileDataSO so, string[] headers, object[] values, int rowIndex)
+{
+    string nameValue = null;
+
+    for (int j = 0; j < headers.Length && j < values.Length; j++)
     {
-        string nameValue = null;
+        string header = headers[j].Trim();
+        string rawValue = values[j]?.ToString()?.Trim();
 
-        for (int j = 0; j < headers.Length && j < values.Length; j++)
+        if (string.IsNullOrEmpty(header)) continue;
+
+        try
         {
-            string header = headers[j].Trim();
-            string rawValue = values[j]?.ToString()?.Trim();
-
-            if (string.IsNullOrEmpty(header)) continue;
-
-            try
+            switch (header.ToLower().Replace(" ", "").Replace("_", ""))
             {
-                switch (header.ToLower().Replace(" ", "").Replace("_", ""))
-                {
-                    case "id":
-                        so.ID = ParseInt(rawValue);
-                        break;
-                    case "stagelevel":
-                        so.StageLevel = ParseInt(rawValue);
-                        break;
-                    case "mincount":
-                        so.minCount = ParseInt(rawValue);
-                        break;
-                    case "maxcount":
-                        so.maxCount = ParseInt(rawValue);
-                        break;
-                    case "objectid":
-                        so.ObjectID = ParseIntList(rawValue);
-                        break;
-                    case "objectvalue":
-                        so.ObjectValue = ParseFloatList(rawValue);
-                        break;
-                    case "description":
-                        so.description = rawValue ?? "";
-                        break;
-                    case "iconName":
-                        so.IconName = rawValue ?? "";
-                        break;
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogWarning($"[ExcelParser] 필드 {header} 파싱 실패 (행 {rowIndex + 1}): {e.Message}");
+                case "id":
+                    so.ID = ParseInt(rawValue);
+                    break;
+                case "fieldlevel":
+                    so.FieldLevel = ParseInt(rawValue);
+                    break;
+                case "tilelevel":
+                    so.TileLevel = ParseInt(rawValue);
+                    break;
+                case "stagetype":
+                    // StageType 필드 추가 - 문자열로 저장
+                    so.StageType = rawValue ?? "RMonster";
+                    break;
+                case "mincount":
+                    so.minCount = ParseInt(rawValue);
+                    break;
+                case "maxcount":
+                    so.maxCount = ParseInt(rawValue);
+                    break;
+                case "objectid":
+                    so.ObjectID = ParseIntList(rawValue);
+                    break;
+                case "objectvalue":
+                    so.ObjectValue = ParseFloatList(rawValue);
+                    break;
+                case "description":
+                    so.description = rawValue ?? "";
+                    break;
+                case "iconname":
+                    so.IconName = rawValue ?? "";
+                    break;
             }
         }
-
-        // name 생성
-        nameValue = $"Stage{so.StageLevel}_Tile{so.ID}";
-
-        return nameValue;
+        catch (Exception e)
+        {
+            Debug.LogWarning($"[ExcelParser] 필드 {header} 파싱 실패 (행 {rowIndex + 1}): {e.Message}");
+        }
     }
+
+    // name 생성
+    nameValue = $"Field{so.FieldLevel}_Tile{so.ID}_Level{so.TileLevel}";
+
+    return nameValue;
+}
 
     /// <summary>
     /// ItemActionSO 행 데이터 처리

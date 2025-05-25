@@ -39,20 +39,28 @@ public class FieldTile : SerializedMonoBehaviour
     public int MaxLevel => faceInfo.MaxLevel;
     public int CombinedTypeCode => currentStageLevel * 10 + (int)Type;
 
-    public void Initialize(int currentStageLevel, CubieFaceInfo info)
+public void Initialize(int currentStageLevel, CubieFaceInfo info)
+{
+    this.currentStageLevel = currentStageLevel;
+    faceInfo = info;
+    
+    // Use the new method to find the matching field tile data
+    tileData = FindFieldTileData(faceInfo, currentStageLevel);
+    
+    if (tileData == null)
     {
-        this.currentStageLevel = currentStageLevel;
-        faceInfo = info;
-        tileData = DataCenter.Instance.GetCloneData<FieldTileData>(CombinedTypeCode);
-
-        // 이전에 스폰된 오브젝트 모두 제거
-        ClearSpawnedObjects();
-
-        // 새로운 오브젝트 스폰
-        SpawnObjects();
-
-        AnimeMeshRender.material = AnimeMaterial;   
+        Debug.LogError($"적합한 필드 타일 데이터를 찾을 수 없습니다. 스테이지: {currentStageLevel}, 타입: {faceInfo.Type}, 레벨: {faceInfo.Level}");
+        return;
     }
+
+    // 이전에 스폰된 오브젝트 모두 제거
+    ClearSpawnedObjects();
+
+    // 새로운 오브젝트 스폰
+    SpawnObjects();
+
+    AnimeMeshRender.material = AnimeMaterial;   
+}
 
     [Button("오브젝트 스폰"), GUIColor(0.3f, 0.8f, 0.3f)]
     public void SpawnObjects()
@@ -146,6 +154,44 @@ public class FieldTile : SerializedMonoBehaviour
         }
         return tileData.ObjectID[0];
     }
+
+  public FieldTileData FindFieldTileData(CubieFaceInfo faceInfo, int currentFieldLevel) 
+{
+    // 1. First try to find by field level
+    var fieldTileDatasByLevel = DataCenter.Instance.GetFieldTileDatasByFieldLevel(currentFieldLevel);
+    
+    if (fieldTileDatasByLevel.Count == 0)
+    {
+        Debug.LogWarning($"필드 레벨 {currentFieldLevel}에 해당하는 필드 타일 데이터가 없습니다.");
+        return null;
+    }
+    
+    // 2. Filter by cube face level (TileLevel)
+    var matchingLevelDatas = fieldTileDatasByLevel.FindAll(data => 
+        data.FieldLevel == currentFieldLevel && 
+        data.TileLevel == faceInfo.Level);
+    
+    if (matchingLevelDatas.Count == 0)
+    {
+        Debug.LogWarning($"필드 레벨 {currentFieldLevel}, 타일 레벨 {faceInfo.Level}에 해당하는 필드 타일 데이터가 없습니다.");
+        return null;
+    }
+    
+    // 3. Filter by type
+    CubieFaceSkillType faceType = faceInfo.Type;
+    var matchingTypeDatas = matchingLevelDatas.FindAll(data => 
+        data.StageType == faceType);
+    
+    if (matchingTypeDatas.Count == 0)
+    {
+        Debug.LogWarning($"필드 레벨 {currentFieldLevel}, 타일 레벨 {faceInfo.Level}, 타입 {faceType}에 해당하는 필드 타일 데이터가 없습니다.");
+        return null;
+    }
+    
+    // Return the first matching data
+    return matchingTypeDatas[0];
+}
+
 
     [Button("스폰된 오브젝트 제거"), GUIColor(0.9f, 0.3f, 0.3f)]
     private void ClearSpawnedObjects()

@@ -13,10 +13,17 @@ public class FieldTileDataSO : ScriptableObject
     [LabelText("타일 이름")]
     public string IconName;
 
+    [TitleGroup("스테이지 정보")]
+    [LabelText("필드 레벨"), MinValue(1), Tooltip("현재 스테이지 레벨")]
+    public int FieldLevel = 1;
+    
+    [TitleGroup("스테이지 정보")]
+    [LabelText("타일 레벨"), MinValue(0), Tooltip("타일의 강화 레벨 (0=기본, 1=강화, 2=고급)")]
+    public int TileLevel = 0;
 
     [TitleGroup("스테이지 정보")]
-    [LabelText("스테이지 레벨"), MinValue(1)]
-    public int StageLevel = 1;
+    [LabelText("스테이지 타입"), Tooltip("타일의 타입 (RMonster, AMonster, Mine, Plant 등)")]
+    public string StageType;
 
     [TitleGroup("스폰 설정")]
     [LabelText("최소 몬스터 수"), MinValue(0)]
@@ -43,11 +50,6 @@ public class FieldTileDataSO : ScriptableObject
     [TitleGroup("디스플레이")]
     [LabelText("타일 아이콘"), PreviewField(80)]
     public Sprite tileIcon => Resources.Load<Sprite>($"Sprites/FieldTiles/{IconName}");
-
-    [TitleGroup("디버그 정보")]
-    [ShowInInspector, ReadOnly]
-    [LabelText("조합 ID")]
-    public int CombinedTypeCode => StageLevel * 10 + ID;
 
     [TitleGroup("디버그 정보")]
     [ShowInInspector, ReadOnly]
