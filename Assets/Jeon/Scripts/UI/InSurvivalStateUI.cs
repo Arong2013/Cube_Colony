@@ -147,6 +147,7 @@ public class InSurvivalStateUI : MonoBehaviour, IObserver
     {
         if (returnBarContainer != null)
         {
+            returnProgressBar.gameObject.SetActive(true);  
             returnBarContainer.SetActive(true);
         }
         isReturning = true;
@@ -163,9 +164,10 @@ public class InSurvivalStateUI : MonoBehaviour, IObserver
     [Button("귀환 종료")]
 public void ExitReturn()
 {
-    if (returnBarContainer != null)
-    {
-        returnBarContainer.SetActive(false);
+        if (returnBarContainer != null)
+        {
+            returnBarContainer.SetActive(false);
+        returnProgressBar.gameObject.SetActive(false);  
     }
     isReturning = false;
 

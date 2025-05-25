@@ -55,7 +55,6 @@ public class ReturnState : EntityState
     {
         base.Exit();
         Utils.GetUI<InSurvivalStateUI>().ExitReturn();
-        
     }
 
     private void InterruptReturn()
@@ -67,6 +66,6 @@ public class ReturnState : EntityState
     private void CompleteReturn()
     {
         _entity.SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Idle);
-BattleFlowController.Instance?.CheckStageCompletionOnReturn();
+        BattleFlowController.Instance?.CheckStageCompletionOnReturn();
     }
 }
