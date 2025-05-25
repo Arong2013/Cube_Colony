@@ -139,13 +139,18 @@ public void ChangeState(IGameSequenceState newState)
     // 새로운 상태 설정
     currentState = newState;
     
-    // 오브젝트 활성화/비활성화 로직 추가
+    // 오브젝트 및 UI 활성화/비활성화 로직 추가
     if (newState is CountdownState)
     {
         // 카운트다운 상태
         cube.gameObject.SetActive(true);
         field.gameObject.SetActive(false);
         baseCampPrefab.SetActive(false);
+
+        // UI 활성화/비활성화
+        Utils.GetUI<InCountDownStateUI>()?.gameObject.SetActive(true);
+        Utils.GetUI<InSurvivalStateUI>()?.gameObject.SetActive(false);
+        Utils.GetUI<InventoryUI>()?.SetActiveFalse();
     }
     else if (newState is InSurvivalState)
     {
@@ -153,6 +158,11 @@ public void ChangeState(IGameSequenceState newState)
         cube.gameObject.SetActive(false);
         field.gameObject.SetActive(true);
         baseCampPrefab.SetActive(false);
+
+        // UI 활성화/비활성화
+        Utils.GetUI<InCountDownStateUI>()?.gameObject.SetActive(false);
+        Utils.GetUI<InSurvivalStateUI>()?.gameObject.SetActive(true);
+        Utils.GetUI<InventoryUI>()?.SetActiveFalse();
     }
     else if (newState is CompleteState)
     {
@@ -160,12 +170,16 @@ public void ChangeState(IGameSequenceState newState)
         cube.gameObject.SetActive(false);
         field.gameObject.SetActive(false);
         baseCampPrefab.SetActive(true);
+
+        // UI 활성화/비활성화
+        Utils.GetUI<InCountDownStateUI>()?.gameObject.SetActive(false);
+        Utils.GetUI<InSurvivalStateUI>()?.gameObject.SetActive(false);
+        Utils.GetUI<InventoryUI>()?.SetActiveFalse();
     }
 
     // 새로운 상태 Enter
     currentState.Enter();
 }
-
     /// <summary>
     /// 필드 인스턴스를 반환합니다.
     /// </summary>
