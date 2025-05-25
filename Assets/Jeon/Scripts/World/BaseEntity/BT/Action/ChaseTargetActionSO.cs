@@ -20,7 +20,7 @@ public class ChaseTargetActionSO : BehaviorActionSO
 public class ChaseTargetAction : BehaviorAction
 {
     [SerializeField] private float waitDuration = 0.5f;
-    [SerializeField] private float arriveDistance = 0.3f;
+    [SerializeField] private float arriveDistance = 1f;
     [SerializeField] private float maxChaseTime = 5f;
 
     private NavMeshPath path;
@@ -41,11 +41,11 @@ public class ChaseTargetAction : BehaviorAction
         chaseTimer += Time.deltaTime;
 
         // ⏰ 추적 시간 초과 시 중단
-        if (chaseTimer >= maxChaseTime)
-        {
-            StopChase();
-            return BehaviorState.FAILURE;
-        }
+        // if (chaseTimer >= maxChaseTime)
+        // {
+        //     StopChase();
+        //     return BehaviorState.FAILURE;
+        // }
 
         // 📍 경로 계산 실패 시 중단
         if (!NavMesh.CalculatePath(entity.transform.position, target.transform.position, NavMesh.AllAreas, path) ||
@@ -59,7 +59,7 @@ public class ChaseTargetAction : BehaviorAction
         targetPos = path.corners[1];
         currentDirection = (targetPos - entity.transform.position).normalized;
         
-        float dist = Vector3.Distance(entity.transform.position, targetPos);
+        float dist = Vector3.Distance(entity.transform.position, target.transform.position);
         if (dist <= arriveDistance)
         {
             StopChase();
