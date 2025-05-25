@@ -148,14 +148,50 @@ public class ExpandedInventoryComponent : IEntityComponent
         consumable.cunamount = Mathf.Clamp(amount, 0, consumable.maxamount);
     }
 
-    public int SeparateItem(ConsumableItem consumable, int amount)
+    /// <summary>
+    /// 아이템을 분리하여 새로운 아이템 인스턴스를 생성하고 인벤토리에 추가
+    /// </summary>
+    /// <param name="consumable">분리할 아이템</param>
+    /// <param name="amount">분리할 수량</param>
+    /// <returns>성공 여부</returns>
+    public bool SeparateItem(ConsumableItem consumable, int amount)
     {
-        if (consumable.cunamount <= 1) return 0;
+        // 1개 이하면 분리 불가
+        if (consumable.cunamount <= 1)
+            return false;
 
+        // 남겨야 할 최소 1개를 고려해서 분리 가능한 최대 수량 계산
         int splitAmount = Mathf.Min(amount, consumable.cunamount - 1);
+        
+        if (splitAmount <= 0)
+            return false;
+
+        // 새 아이템 인스턴스 생성 (Clone을 통해)
+        var newItem = consumable.Clone() as ConsumableItem;
+        if (newItem == null)
+            return false;
+
+        // 새 아이템의 수량 설정
+        newItem.cunamount = splitAmount;
+        
+        // 원래 아이템의 수량 감소
         consumable.cunamount -= splitAmount;
 
-        return splitAmount;
+        // 인벤토리에 충분한 공간이 있는지 확인
+        if (_Items.Count >= MaxSlots)
+        {
+            Debug.LogWarning($"인벤토리 공간 부족으로 아이템 분리 실패!");
+            // 원래 아이템의 수량 복구
+            consumable.cunamount += splitAmount;
+            return false;
+        }
+
+        // 새 아이템을 인벤토리에 추가
+        _Items.Add(newItem);
+        _OnItemAdded?.Invoke(this);
+        
+        Debug.Log($"아이템 분리 성공: {consumable.ItemName} x{splitAmount}");
+        return true;
     }
 
     /// <summary>
@@ -208,168 +244,5 @@ public class ExpandedInventoryComponent : IEntityComponent
         _OnItemAdded += onItemAdded;
         _OnItemUsed += onItemUsed;
         _OnItemRemoved += onItemRemoved;
-    }
-}
-
-/// <summary>
-/// 인벤토리 슬롯 UI 확장
-/// </summary>
-public class ExpandedInventoryUI : MonoBehaviour, IObserver
-{
-    [Header("UI 설정")]
-    [SerializeField] private Transform _slotContainer;
-    [SerializeField] private ItemInfoUI _itemInfoUI;
-    [SerializeField] private TMPro.TextMeshProUGUI _inventoryStatusText;
-
-    [Header("슬롯 프리팹")]
-    [SerializeField] private GameObject _slotPrefab;
-
-    private List<ItemSlot> _slots = new();
-    private int _lastMaxSlots = -1;
-
-    private void Start()
-    {
-        if (BattleFlowController.Instance != null)
-        {
-            BattleFlowController.Instance.RegisterObserver(this);
-            Initialize();
-        }
-
-        // 아이템 정보 UI 찾기
-        if (_itemInfoUI == null)
-        {
-            _itemInfoUI = GetComponentInChildren<ItemInfoUI>(true);
-            if (_itemInfoUI == null)
-            {
-                _itemInfoUI = Utils.GetUI<ItemInfoUI>();
-            }
-        }
-
-        // 아이템 정보 UI 초기화
-        if (_itemInfoUI != null)
-        {
-            _itemInfoUI.Initialize();
-        }
-    }
-
-    private void OnDestroy()
-    {
-        if (BattleFlowController.Instance != null)
-        {
-            BattleFlowController.Instance.UnregisterObserver(this);
-        }
-    }
-
-    public void Initialize()
-    {
-        UpdateSlots();
-    }
-
-    public void UpdateSlots()
-    {
-        if (BattleFlowController.Instance?.playerData?.inventory == null)
-            return;
-
-        // 플레이어 장비 핸들러에서 인벤토리 보너스 가져오기
-        var player = Utils.GetPlayer();
-        int totalSlots = 10; // 기본 슬롯
-
-        if (player != null)
-        {
-            var equipmentHandler = player.GetEntityComponent<PlayerEquipmentHandler>();
-            if (equipmentHandler != null)
-            {
-                totalSlots += equipmentHandler.GetInventorySlotBonus();
-            }
-        }
-
-        // 슬롯 개수가 변경되었을 때만 재생성
-        if (_lastMaxSlots != totalSlots)
-        {
-            CreateSlots(totalSlots);
-            _lastMaxSlots = totalSlots;
-        }
-
-        // 아이템을 슬롯에 배치
-        var items = BattleFlowController.Instance.playerData.inventory;
-        for (int i = 0; i < _slots.Count; i++)
-        {
-            if (i < items.Count)
-            {
-                _slots[i].SetItem(items[i]);
-            }
-            else
-            {
-                _slots[i].ClearSlot();
-            }
-        }
-
-        // 상태 텍스트 업데이트
-        UpdateStatusText(items.Count, totalSlots);
-    }
-
-    private void CreateSlots(int slotCount)
-    {
-        // 기존 슬롯 제거
-        foreach (Transform child in _slotContainer)
-        {
-            Destroy(child.gameObject);
-        }
-        _slots.Clear();
-
-        // 새 슬롯 생성
-        for (int i = 0; i < slotCount; i++)
-        {
-            var slotObj = Instantiate(_slotPrefab, _slotContainer);
-            var slot = slotObj.GetComponent<ItemSlot>();
-            if (slot != null)
-            {
-                _slots.Add(slot);
-            }
-        }
-    }
-
-    private void UpdateStatusText(int usedSlots, int maxSlots)
-    {
-        if (_inventoryStatusText != null)
-        {
-            _inventoryStatusText.text = $"인벤토리: {usedSlots}/{maxSlots}";
-
-            // 용량에 따라 색상 변경
-            if (usedSlots >= maxSlots)
-            {
-                _inventoryStatusText.color = Color.red;
-            }
-            else if (usedSlots >= maxSlots * 0.8f)
-            {
-                _inventoryStatusText.color = Color.yellow;
-            }
-            else
-            {
-                _inventoryStatusText.color = Color.white;
-            }
-        }
-    }
-
-    public void UpdateObserver()
-    {
-        UpdateSlots();
-    }
-
-    public void ToggleInventoryUI()
-    {
-        if (gameObject.activeSelf)
-        {
-            gameObject.SetActive(false);
-            if (_itemInfoUI != null)
-            {
-                _itemInfoUI.Hide();
-            }
-        }
-        else
-        {
-            gameObject.SetActive(true);
-            UpdateSlots();
-        }
     }
 }

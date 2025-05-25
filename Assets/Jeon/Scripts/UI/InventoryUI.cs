@@ -243,41 +243,8 @@ public class InventoryUI : SerializedMonoBehaviour, IObserver
     {
         if (_itemInfoUI != null && item != null)
         {
-            _itemInfoUI.Show(item, UseItemCallback);
+            _itemInfoUI.Show(item, UseItemCallback, DiscardItemCallback);
         }
-    }
-
-    /// <summary>
-    /// 아이템 사용 콜백
-    /// </summary>
-    private void UseItemCallback(Item item)
-    {
-        if (item == null) return;
-
-        if (BattleFlowController.Instance == null ||
-            BattleFlowController.Instance.GetPlayerEntity() == null)
-        {
-            Debug.LogWarning("플레이어 엔티티를 찾을 수 없습니다.");
-            return;
-        }
-
-        Debug.Log($"아이템 사용: {item.ItemName}");
-        item.Use(BattleFlowController.Instance.GetPlayerEntity());
-
-        // 소모품이 모두 소진되었는지 확인
-        if (item is ConsumableItem consumable && consumable.cunamount <= 0)
-        {
-            // 인벤토리에서 제거
-            BattleFlowController.Instance.playerData.RemoveItem(item);
-        }
-
-        // UI 업데이트
-        UpdateSlots();
-        UpdateEquipmentSlots();
-
-
-        // 옵저버 알림
-        BattleFlowController.Instance.NotifyObservers();
     }
 
     /// <summary>
@@ -452,7 +419,65 @@ public class InventoryUI : SerializedMonoBehaviour, IObserver
 
         return false;
     }
+    
+    /// <summary>
+    /// 아이템 사용 콜백
+    /// </summary>
+    private void UseItemCallback(Item item)
+    {
+        if (item == null) return;
 
+        if (BattleFlowController.Instance == null ||
+            BattleFlowController.Instance.GetPlayerEntity() == null)
+        {
+            Debug.LogWarning("플레이어 엔티티를 찾을 수 없습니다.");
+            return;
+        }
+
+        Debug.Log($"아이템 사용: {item.ItemName}");
+        item.Use(BattleFlowController.Instance.GetPlayerEntity());
+
+        // 소모품이 모두 소진되었는지 확인
+        if (item is ConsumableItem consumable && consumable.cunamount <= 0)
+        {
+            // 인벤토리에서 제거
+            BattleFlowController.Instance.playerData.RemoveItem(item);
+        }
+
+        // UI 업데이트
+        UpdateSlots();
+        UpdateEquipmentSlots();
+
+        // 옵저버 알림
+        BattleFlowController.Instance.NotifyObservers();
+    }
+
+    /// <summary>
+    /// 아이템 버리기 콜백
+    /// </summary>
+    private void DiscardItemCallback(Item item)
+    {
+        if (item == null) return;
+
+        if (BattleFlowController.Instance == null ||
+            BattleFlowController.Instance.playerData == null)
+        {
+            Debug.LogWarning("플레이어 데이터를 찾을 수 없습니다.");
+            return;
+        }
+
+        Debug.Log($"아이템 버리기: {item.ItemName}");
+
+        // 인벤토리에서 제거
+        BattleFlowController.Instance.playerData.RemoveItem(item);
+
+        // UI 업데이트
+        UpdateSlots();
+        UpdateEquipmentSlots();
+
+        // 옵저버 알림
+        BattleFlowController.Instance.NotifyObservers();
+    }
     /// <summary>
     /// 디버깅용: 현재 장착 상태 출력
     /// </summary>

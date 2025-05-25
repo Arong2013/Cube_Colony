@@ -272,7 +272,8 @@ public class DataCenter : SerializedMonoBehaviour
     /// <summary>
     /// 새로운 ConsumableItem 인스턴스를 생성해서 반환
     /// </summary>
-    public ConsumableItem CreateConsumableItem(int id)
+
+public ConsumableItem CreateConsumableItem(int id)
     {
         var so = GetConsumableItemSO(id);
         if (so == null) return null;
@@ -286,7 +287,7 @@ public class DataCenter : SerializedMonoBehaviour
 
         // SO에서 추가 정보도 복사
         item.description = so.description;
-        item.grade = so.grade; ;
+        item.grade = so.grade;
 
         return item;
     }

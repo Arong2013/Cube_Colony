@@ -694,9 +694,6 @@ AnimatorStateMachine:
     m_State: {fileID: -6501195392050456985}
     m_Position: {x: 220, y: 500, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -189755026469821083}
-    m_Position: {x: 710, y: 260, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: 7908629413531559254}
     m_Position: {x: 710, y: 320, z: 0}
   - serializedVersion: 1
@@ -722,13 +719,13 @@ AnimatorStateMachine:
     m_Position: {x: 490, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5795631833483981793}
-    m_Position: {x: 490, y: 120, z: 0}
+    m_Position: {x: 430, y: 110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3635545799757147629}
-    m_Position: {x: 130, y: 100, z: 0}
+    m_Position: {x: 1180, y: 130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2061436120326248632}
-    m_Position: {x: 720, y: 110, z: 0}
+    m_Position: {x: 640, y: 110, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -5223485116986950789}
@@ -741,32 +738,18 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 1080, y: 20, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: -3755069379215535203}
---- !u!1102 &-189755026469821083
-AnimatorState:
-  serializedVersion: 6
+--- !u!114 &-514463477983783776
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: walk/Walk_E
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 1074874409336247366, guid: 4d77aa377f49b49e9bd2e7c1b7beff41, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6052fbd9d2f32b429d209da29ff2f07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -907,12 +890,13 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: walk/Walk_N 0
+  m_Name: Attack 0
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 2179303307598050211}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: -514463477983783776}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -934,10 +918,7 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 7
-    m_ConditionEvent: ActionType
-    m_EventTreshold: 2
+  m_Conditions: []
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3755069379215535203}
   m_Solo: 0
