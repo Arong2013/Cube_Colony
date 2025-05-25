@@ -27,13 +27,20 @@ public class ReturnState : EntityState
         _playerEntity = _entity.GetComponent<PlayerEntity>();
     }
 
-    public override void Enter()
+public override void Enter()
+{
+    base.Enter();
+
+    Utils.GetUI<InSurvivalStateUI>().EnterReturn();
+    _currentTime = _returnTime;
+    _wasInterrupted = false;
+
+    // 귀환 바를 항상 100%에서 시작
+    if (Utils.GetUI<InSurvivalStateUI>() is InSurvivalStateUI survivalStateUI)
     {
-        base.Enter();
-        Utils.GetUI<InSurvivalStateUI>().EnterReturn();
-        _currentTime = _returnTime;
-        _wasInterrupted = false;
+        survivalStateUI.ResetReturnProgress(); // 이미 100% 상태로 초기화하는 메서드
     }
+}
 
     public override void Execute()
     {
@@ -59,9 +66,13 @@ public class ReturnState : EntityState
     {
         base.Exit();
 
-        // 귀환 UI를 종료하고 바를 꺼줌 (항상 귀환바 끄기)
-        Utils.GetUI<InSurvivalStateUI>().ExitReturn();
+        // 귀환 UI를 완전히 종료하고 바를 꺼줌
+        Utils.GetUI<InSurvivalStateUI>()?.ExitReturn();
+
+        // 스테이지 완료 여부 확인 및 상태 전환
+        BattleFlowController.Instance?.CheckStageCompletionOnReturn();
     }
+
 
     private void InterruptReturn()
     {

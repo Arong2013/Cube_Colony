@@ -161,22 +161,28 @@ public class InSurvivalStateUI : MonoBehaviour, IObserver
     }
 
     [Button("귀환 종료")]
-    public void ExitReturn()
+public void ExitReturn()
+{
+    if (returnBarContainer != null)
     {
-        if (returnBarContainer != null)
-        {
-            returnBarContainer.SetActive(false);
-        }
-        isReturning = false;
-
-        // 귀환 완료 효과음 재생 (귀환 진행 중이었을 경우에만)
-        if (isReturning && returnCompleteSound != null && audioSource != null)
-        {
-            audioSource.PlayOneShot(returnCompleteSound);
-        }
-
-        Debug.Log("<color=cyan>귀환 종료: 진행 바 비활성화</color>");
+        returnBarContainer.SetActive(false);
     }
+    isReturning = false;
+
+    // 귀환 완료 효과음 재생 (귀환 진행 중이었을 경우에만)
+    if (isReturning && returnCompleteSound != null && audioSource != null)
+    {
+        audioSource.PlayOneShot(returnCompleteSound);
+    }
+
+    // 귀환 진행 바 초기화
+    if (returnProgressBar != null)
+    {
+        returnProgressBar.SetValue(0, 100); // 바를 완전히 초기화
+    }
+
+    Debug.Log("<color=cyan>귀환 종료: 진행 바 비활성화 및 초기화</color>");
+}
 
     public void UpdateReturn(float maxTime, float currentTime)
     {

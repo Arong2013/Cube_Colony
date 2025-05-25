@@ -38,9 +38,11 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
     [LabelText("큐브 컨트롤러"), Required]
     [SerializeField] private CubeControllerUI cubeControllerUI;
 
-    [TitleGroup("탐험 진행 설정")]
-    [LabelText("목표 총 탐험 횟수"), MinValue(1)]
-    [SerializeField] private int targetTotalExplorations = 10;
+    [TitleGroup("게임 진행 UI")]
+    [LabelText("베이스캠프 이동 버튼"), Required]
+    [SerializeField] private Button baseCampButton;
+
+
 
     [TitleGroup("디버그 정보")]
     [ReadOnly, ShowInInspector]
@@ -53,6 +55,8 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
     [TitleGroup("디버그 정보")]
     [ReadOnly, ShowInInspector]
     private Func<bool> canRotate;
+
+
 
     private void Start()
     {
@@ -87,6 +91,12 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
         {
             survivalStartBtn.onClick.AddListener(SurvivalStartAction);
         }
+
+        if (baseCampButton != null)
+        {
+            baseCampButton.onClick.AddListener(MoveToBaseCamp);
+        }
+
     }
 
     private void OnDestroy()
@@ -119,10 +129,10 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
         UpdateExplorationCount();
         UpdateExplorationProgress();
 
-            if (cubeUsageCountText != null && BattleFlowController.Instance != null)
-    {
-        cubeUsageCountText.text = $"1/{BattleFlowController.Instance.GetMaxCubeUsage()}";
-    }
+        if (cubeUsageCountText != null && BattleFlowController.Instance != null)
+        {
+            cubeUsageCountText.text = $"1/{BattleFlowController.Instance.GetMaxCubeUsage()}";
+        }
     }
 
     public void Disable()
@@ -209,15 +219,17 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
         if (BattleFlowController.Instance == null) return;
 
         int totalExplorations = BattleFlowController.Instance.GetTotalExplorationCount();
+        int totalStages = BattleFlowController.Instance.GetTotalStageCount();
 
         // 탐험 진행 바 업데이트
         if (explorationProgressBar != null && explorationProgressBar.gameObject.activeInHierarchy)
         {
-            // 목표 탐험 횟수 대비 현재 탐험 횟수의 비율 계산
-            float progressRatio = Mathf.Clamp01((float)totalExplorations / targetTotalExplorations);
-            explorationProgressBar.SetValue(totalExplorations, targetTotalExplorations);
+            // 전체 스테이지 수 대비 현재 탐험 횟수의 비율 계산
+            float progressRatio = Mathf.Clamp01((float)totalExplorations / totalStages);
+            explorationProgressBar.SetValue(totalExplorations, totalStages);
         }
     }
+
 
     public void UpdateExplorationProgress(float progress)
     {
@@ -255,4 +267,15 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
             survivalStartAction.Invoke();
         }
     }
+    
+
+        private void MoveToBaseCamp()
+    {
+        // 베이스캠프로 이동
+        if (BattleFlowController.Instance != null)
+        {
+            BattleFlowController.Instance.SetCompleteState();
+        }
+    }
+
 }

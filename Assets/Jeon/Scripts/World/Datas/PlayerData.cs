@@ -174,13 +174,6 @@ public class PlayerData
         return false;
     }
 
-    public void RegenerateEnergy(float deltaTime)
-    {
-        if (energy < maxEnergy)
-        {
-            UpdateEnergy(energyRegenRate * deltaTime);
-        }
-    }
 
     // === 인벤토리 관련 메서드 ===
 
@@ -243,20 +236,23 @@ public class PlayerData
 
     // === 게임 리셋 메서드 ===
 
-    public void Reset()
-    {
-        playerStat = EntityStat.CreatePlayerData();
-        ClearInventory();
-        SetEnergy(100f);
-        SetMaxEnergy(100f);
-        equippedItems.Clear();
-        // 골드는 유지 (선택사항)
-    }
+public void Reset()
+{
+    playerStat = EntityStat.CreatePlayerData();
+    SetEnergy(100f);
+    SetMaxEnergy(100f);
+}
 
-    public void FullReset()
-    {
-        Reset();
-        gold = 1000; // 초기 골드
-        EquipDefaultItems(); // 기본 장비 다시 장착
-    }
+public void FullReset()
+{
+    playerStat = EntityStat.CreatePlayerData();
+    ClearInventory();
+    SetEnergy(100f);
+    SetMaxEnergy(100f);
+    equippedItems.Clear();
+    gold = 1000; // 초기 골드로 리셋
+    EquipDefaultItems(); // 기본 장비 다시 장착
+}
+
+    
 }
