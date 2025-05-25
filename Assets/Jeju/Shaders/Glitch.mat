@@ -24,15 +24,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: cecdbf60b0c9d47c9a26b99a41425de0, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _ShakeBlockSize: 30.5
-    - _ShakeColorRate: 0.05
+    - _ShakeColorRate: 0.086
     - _ShakePower: 0.98
-    - _ShakeRate: 0.48
+    - _ShakeRate: 0.389
     - _ShakeSpeed: 5
     m_Colors: []
   m_BuildTextureStacks: []
