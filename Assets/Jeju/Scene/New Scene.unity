@@ -3780,6 +3780,7 @@ GameObject:
   - component: {fileID: 1120676370}
   - component: {fileID: 1120676369}
   - component: {fileID: 1120676368}
+  - component: {fileID: 1120676373}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3937,6 +3938,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 35, y: 0, z: 0}
+--- !u!114 &1120676373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120676367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 767467af9ef4552479459d62ea53f9a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  glitchShader: {fileID: 4800000, guid: d20a63fee6b5f5641825bf00d2fbcae3, type: 3}
+  shakePower: 0.03
+  shakeBlockSize: 30.5
+  fade: 0
+  directionR: {x: 1, y: 0}
+  directionG: {x: 0.4, y: 1}
+  directionB: {x: -0.7, y: -0.3}
 --- !u!1 &1146053054
 GameObject:
   m_ObjectHideFlags: 0
@@ -7847,6 +7867,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: f1351be407ad4d7428a028a0a44e17ab, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: f1351be407ad4d7428a028a0a44e17ab, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 757c41afe36e85d4995b1c768a172640, type: 2}
     - target: {fileID: 919132149155446097, guid: f1351be407ad4d7428a028a0a44e17ab, type: 3}
       propertyPath: m_Name
       value: Metal_Int_Obj_B2
