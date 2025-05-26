@@ -3,40 +3,41 @@
 public class CompleteState : IGameSequenceState
 {
     private readonly BattleFlowController context;
+    private bool isGameOver;
 
-    public CompleteState(BattleFlowController context)
+    public CompleteState(BattleFlowController context, bool gameOver)
     {
         this.context = context;
+        this.isGameOver = gameOver;
     }
 
     public void Enter()
     {
-        Debug.Log("[Battle] All waves completed! 🎉");
-    
+        Debug.Log("[Battle] Stage completed! 🎉");
+
         // 베이스캠프 UI 활성화
         ShowBaseCampUI();
 
-        // 플레이어 데이터 부분 초기화 (아이템, 골드 유지)
-        ResetPlayerData();
+        // 게임 오버 상태에 따라 다른 리셋 로직 적용
+        if (isGameOver)
+        {
+            FullResetPlayerData();
+        }
     }
-
     private void ShowBaseCampUI()
     {
-        // 베이스캠프 UI 활성화 로직
         Debug.Log("베이스캠프 UI 표시");
-        
-        // 여기에 실제 베이스캠프 UI 활성화 코드 추가
-        // 예: GameObject.Find("BaseCampUI")?.SetActive(true);
+        // 실제 베이스캠프 UI 활성화 코드 추가
     }
 
-    private void ResetPlayerData()
+    private void FullResetPlayerData()
     {
         var playerData = BattleFlowController.Instance?.playerData;
         if (playerData != null)
         {
-            // 체력, 산소 등만 초기화
-            playerData.Reset(); 
-            Debug.Log("스테이지 완료로 인한 부분 초기화");
+            // 모든 데이터 완전 초기화 (인벤토리, 장비 포함)
+            playerData.FullReset();
+            Debug.Log("게임 오버로 인한 완전 초기화");
         }
     }
 

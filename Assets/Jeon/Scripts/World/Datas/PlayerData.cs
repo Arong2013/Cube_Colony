@@ -337,14 +337,6 @@ public class PlayerData
         return gold >= required;
     }
 
-    // === 게임 리셋 메서드 ===
-    public void Reset()
-    {
-        playerStat = EntityStat.CreatePlayerData();
-        SetEnergy(100f);
-        SetMaxEnergy(100f);
-    }
-
     public void FullReset()
     {
         playerStat = EntityStat.CreatePlayerData();

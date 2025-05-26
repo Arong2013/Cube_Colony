@@ -57,5 +57,5 @@ public class InSurvivalState : IGameSequenceState
 
     public void SetCountDownState() => BattleFlowController.Instance.SetCountDownState();
 
-    public void SetGameOverState() => BattleFlowController.Instance.SetGameOverState();
+    public void SetGameOverState() => BattleFlowController.Instance.SetCompleteState(true);
 }

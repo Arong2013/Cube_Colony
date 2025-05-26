@@ -20,9 +20,6 @@ public class InBaseCampUI : MonoBehaviour, IObserver
     [LabelText("다음 스테이지 시작 버튼"), Required]
     [SerializeField] private Button startNextStageButton;
 
-    [TitleGroup("인벤토리 및 장비")]
-    [LabelText("인벤토리 버튼"), Required]
-    [SerializeField] private Button inventoryButton;
 
     private void Start()
     {
@@ -30,11 +27,6 @@ public class InBaseCampUI : MonoBehaviour, IObserver
         if (startNextStageButton != null)
         {
             startNextStageButton.onClick.AddListener(StartNextStage);
-        }
-
-        if (inventoryButton != null)
-        {
-            inventoryButton.onClick.AddListener(OpenInventory);
         }
 
         // 옵저버 등록

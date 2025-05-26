@@ -101,7 +101,7 @@ public void DamageO2()
             // 게임 오버 상태로 전환
             if (BattleFlowController.Instance != null)
             {
-                BattleFlowController.Instance.SetGameOverState();
+                BattleFlowController.Instance.SetCompleteState(true);
             }
         }
 
@@ -116,11 +116,6 @@ public void DamageO2()
 
     public override void OnDeath()
     {
-        if (BattleFlowController.Instance != null)
-        {
-            BattleFlowController.Instance.playerData.Reset();
-        }
-
         gameOverAction?.Invoke();
     }
 

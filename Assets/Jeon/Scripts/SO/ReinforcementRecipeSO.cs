@@ -29,7 +29,7 @@ public class ReinforcementRecipeSO : ScriptableObject
     [LabelText("재료 개수")]
     public int MaterialCount => requiredItemIDs?.Count ?? 0;
 
-        [TitleGroup("강화 결과")]
+    [TitleGroup("강화 결과")]
     [LabelText("강화 후 결과 아이템 ID")]
     public int resultItemId; // 새로 추가된 부분
 

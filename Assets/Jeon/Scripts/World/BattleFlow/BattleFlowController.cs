@@ -21,7 +21,7 @@ public class BattleFlowController : SerializedMonoBehaviour
 
 
     [TitleGroup("베이스캠프프 설정", "베이스캠프프 모드")]
-    [LabelText("캠프프"), Required]
+    [LabelText("캠프"), Required]
     [SerializeField] private GameObject baseCampPrefab;
 
 
@@ -36,7 +36,7 @@ public class BattleFlowController : SerializedMonoBehaviour
 
     [TitleGroup("큐브 상태 관리", "큐브 지속성 관리")]
     [LabelText("현재 스테이지 큐브 사용 횟수"), ReadOnly]
-  [SerializeField] private int cubeUsageCount = 1; // 0에서 1로 변경
+    [SerializeField] private int cubeUsageCount = 0;// 0에서 1로 변경
 
 
     [TitleGroup("큐브 상태 관리")]
@@ -45,7 +45,7 @@ public class BattleFlowController : SerializedMonoBehaviour
 
     [TitleGroup("큐브 상태 관리")]
     [LabelText("총 탐험 횟수"), ReadOnly]
-    [SerializeField] private int totalExplorationCount = 0;
+    [SerializeField] private int currentTotalStage = 0;
 
     [TitleGroup("큐브 상태 관리")]
     [LabelText("현재 큐브 데이터"), ReadOnly]
@@ -64,11 +64,6 @@ public class BattleFlowController : SerializedMonoBehaviour
     [SerializeField] private bool useEnergyRegen = true;
 
 
-
-    [TitleGroup("디버그 정보")]
-    [ReadOnly, ShowInInspector]
-    private int currentStage = 1;
-
     [TitleGroup("디버그 정보")]
     [ReadOnly, ShowInInspector]
     private IGameSequenceState currentState;
@@ -77,7 +72,7 @@ public class BattleFlowController : SerializedMonoBehaviour
     [ReadOnly, ShowInInspector]
     private List<IObserver> observers = new List<IObserver>();
 
-    public int CurrentStage => currentStage;
+    public int CurrentStage => currentTotalStage;
 
     private void Awake()
     {
@@ -106,6 +101,10 @@ public class BattleFlowController : SerializedMonoBehaviour
     private void Update()
     {
         currentState?.Update();
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            Utils.GetUI<InventoryUI>()?.ToggleInventoryUI();
+        }
     }
 
     /// <summary>
@@ -113,10 +112,11 @@ public class BattleFlowController : SerializedMonoBehaviour
     /// </summary>
     private void InitializeFirstStage()
     {
-        if (stageCubeDataMap.ContainsKey(currentStage))
+        currentTotalStage = 1;
+        if (stageCubeDataMap.ContainsKey(currentTotalStage))
         {
             // 첫 번째 스테이지에서는 새로운 큐브 생성
-            currentCubeData = stageCubeDataMap[currentStage];
+            currentCubeData = stageCubeDataMap[currentTotalStage];
             cubeUsageCount = 0;
             usedFacePositions.Clear();
 
@@ -124,7 +124,7 @@ public class BattleFlowController : SerializedMonoBehaviour
         }
         else
         {
-            Debug.LogError($"스테이지 {currentStage}에 대한 큐브 데이터가 없습니다.");
+            Debug.LogError($"스테이지 {currentTotalStage}에 대한 큐브 데이터가 없습니다.");
         }
     }
 
@@ -198,23 +198,6 @@ public class BattleFlowController : SerializedMonoBehaviour
     }
 
     /// <summary>
-    /// 총 탐험 횟수를 반환합니다.
-    /// </summary>
-    public int GetTotalExplorationCount()
-    {
-        return totalExplorationCount;
-    }
-
-    /// <summary>
-    /// 총 탐험 횟수를 증가시킵니다.
-    /// </summary>
-    private void IncrementTotalExplorationCount()
-    {
-        totalExplorationCount++;
-        NotifyObservers();
-    }
-
-    /// <summary>
     /// 생존 상태로 설정하고 사용된 페이스를 기록합니다.
     /// </summary>
     public void SetInSurvivalState()
@@ -230,49 +213,47 @@ public class BattleFlowController : SerializedMonoBehaviour
             }
         }
 
-        cubeUsageCount++;
-        IncrementTotalExplorationCount(); // 총 탐험 횟수 증가
-        Debug.Log($"큐브 사용 횟수: {cubeUsageCount}/{maxCubeUsage}, 총 탐험 횟수: {totalExplorationCount}");
-
         ChangeState(new InSurvivalState(this, currentCubeData, topFaces));
     }
 
     /// <summary>
     /// 다음 스테이지의 카운트다운 상태로 설정합니다.
     /// </summary>
-public void SetCountDownState()
-{
-    // 귀환할 때마다 스테이지와 큐브 사용 횟수 모두 증가
-    currentStage++;
-    cubeUsageCount++;
-    
-    // 큐브 사용 횟수가 최대값에 도달하면 새 큐브 데이터로 변경
-    if (cubeUsageCount >= maxCubeUsage)
+    public void SetCountDownState()
     {
-        if (stageCubeDataMap.ContainsKey(currentStage))
+        // 귀환할 때마다 스테이지와 큐브 사용 횟수 모두 증가
+
+        cubeUsageCount++;
+
+        // 큐브 사용 횟수가 최대값에 도달하면 새 큐브 데이터로 변경
+        if (cubeUsageCount > maxCubeUsage)
         {
-            // 새로운 큐브 데이터로 초기화
-            currentCubeData = stageCubeDataMap[currentStage];
-            cubeUsageCount = 0; // 큐브 사용 횟수 초기화
-            usedFacePositions.Clear(); // 사용된 페이스 목록 초기화
-            
-            Debug.Log($"<color=green>스테이지 {currentStage}, 새 큐브 데이터 적용! 플레이어 데이터 유지</color>");
-            ChangeState(new CountdownState(cube, currentCubeData));
+            currentTotalStage++;
+            if (stageCubeDataMap.ContainsKey(currentTotalStage))
+            {
+                // 새로운 큐브 데이터로 초기화
+                currentCubeData = stageCubeDataMap[currentTotalStage];
+                cubeUsageCount = 0; // 큐브 사용 횟수 초기화
+                usedFacePositions.Clear(); // 사용된 페이스 목록 초기화
+
+                Debug.Log($"<color=green>스테이지 {currentTotalStage}, 새 큐브 데이터 적용! 플레이어 데이터 유지</color>");
+                ChangeState(new CountdownState(cube, currentCubeData));
+            }
+            else
+            {
+                // 모든 스테이지 클리어 시 완료 상태로
+                Debug.Log($"<color=gold>모든 스테이지 클리어! 게임 완료</color>");
+                ChangeState(new CompleteState(this, false)); // 게임 오버 상태로 변경
+                return;
+            }
         }
         else
         {
-            // 모든 스테이지 클리어 시 완료 상태로
-            Debug.Log($"<color=gold>모든 스테이지 클리어! 게임 완료</color>");
-            ChangeState(new CompleteState(this));
+            // 같은 큐브 데이터를 계속 사용, 이미 사용된 페이스는 몬스터 타일로 변경
+            Debug.Log($"<color=cyan>스테이지 {currentTotalStage}, 큐브 사용 횟수: {cubeUsageCount}/{maxCubeUsage}</color>");
+            ChangeState(new CountdownState(cube, currentCubeData, usedFacePositions));
         }
     }
-    else
-    {
-        // 같은 큐브 데이터를 계속 사용, 이미 사용된 페이스는 몬스터 타일로 변경
-        Debug.Log($"<color=cyan>스테이지 {currentStage}, 큐브 사용 횟수: {cubeUsageCount}/{maxCubeUsage}</color>");
-        ChangeState(new CountdownState(cube, currentCubeData, usedFacePositions));
-    }
-}
 
     public int GetTotalStageCount()
     {
@@ -281,35 +262,29 @@ public void SetCountDownState()
     /// <summary>
     /// 게임오버 상태로 설정합니다. (플레이어가 죽었을 때만 호출)
     /// </summary>
-    public void SetGameOverState()
-    {
-        // 베이스캠프로 이동 (게임오버로)
-        ChangeState(new CompleteState(this));
-
-    }
 
     /// <summary>
     /// 게임을 완전히 초기화합니다. (게임 재시작 시 사용)
     /// </summary>
-    [Button("게임 완전 초기화")]
-    public void ResetGame()
-    {
-        Debug.Log($"<color=yellow>게임 완전 초기화</color>");
+    // [Button("게임 완전 초기화")]
+    // public void ResetGame()
+    // {
+    //     Debug.Log($"<color=yellow>게임 완전 초기화</color>");
 
-        currentStage = 1;
-        playerData.FullReset(); // 초기화 (골드, 장비 등 모두 초기화완전 )
+    //     currentStage = 1;
+    //     playerData.FullReset(); // 초기화 (골드, 장비 등 모두 초기화완전 )
 
-        // 큐브 상태 초기화
-        cubeUsageCount = 0;
-        usedFacePositions.Clear();
-        totalExplorationCount = 0;
+    //     // 큐브 상태 초기화
+    //     cubeUsageCount = 0;
+    //     usedFacePositions.Clear();
+    //     totalExplorationCount = 0;
 
-        if (stageCubeDataMap.ContainsKey(currentStage))
-        {
-            currentCubeData = stageCubeDataMap[currentStage];
-            ChangeState(new CountdownState(cube, currentCubeData));
-        }
-    }
+    //     if (stageCubeDataMap.ContainsKey(currentStage))
+    //     {
+    //         currentCubeData = stageCubeDataMap[currentStage];
+    //         ChangeState(new CountdownState(cube, currentCubeData));
+    //     }
+    // }
 
     /// <summary>
     /// 사용된 페이스 위치 목록을 반환합니다.
@@ -409,7 +384,7 @@ public void SetCountDownState()
     public bool IsAllStagesCompleted()
     {
         // 현재 스테이지가 최대 스테이지 수와 같거나 큰지 확인
-        return currentStage >= stageCubeDataMap.Count;
+        return currentTotalStage > stageCubeDataMap.Count;
     }
 
     // InSurvivalState에서 귀환 시 호출될 메서드
@@ -417,7 +392,7 @@ public void SetCountDownState()
     {
         if (IsAllStagesCompleted())
         {
-            SetCompleteState();
+            SetCompleteState(false);
         }
         else
         {
@@ -425,13 +400,13 @@ public void SetCountDownState()
             SetCountDownState();
         }
     }
-    public void SetCompleteState()
+    public void SetCompleteState(bool isGameOver)
     {
-        cubeUsageCount = 1;
+        cubeUsageCount = 0;
         usedFacePositions.Clear();
 
         // 컴플리트 상태로 변경
-        ChangeState(new CompleteState(this));
+        ChangeState(new CompleteState(this, isGameOver));
 
         // 옵저버들에게 상태 변경 알림
         NotifyObservers();
@@ -439,31 +414,20 @@ public void SetCountDownState()
 
     public void StartNewGame()
     {
-        // 현재 스테이지를 첫 번째 스테이지로 초기화
-        currentStage = 1;
-
-        // 큐브 사용 횟수 초기화
         cubeUsageCount = 0;
         usedFacePositions.Clear();
 
         // 첫 번째 스테이지의 큐브 데이터 설정
-        if (stageCubeDataMap.ContainsKey(currentStage))
+        if (stageCubeDataMap.ContainsKey(currentTotalStage))
         {
-            currentCubeData = stageCubeDataMap[currentStage];
+            currentCubeData = stageCubeDataMap[currentTotalStage];
         }
         else
         {
-            Debug.LogError($"스테이지 {currentStage}에 대한 큐브 데이터가 없습니다.");
+            Debug.LogError($"스테이지 {currentTotalStage}에 대한 큐브 데이터가 없습니다.");
             return;
         }
-
-        // 카운트다운 상태로 변경
         ChangeState(new CountdownState(cube, currentCubeData));
-
-        // 총 탐험 횟수 초기화 (필요한 경우)
-        totalExplorationCount = 0;
-
-        // 옵저버들에게 상태 변경 알림
         NotifyObservers();
     }
 }

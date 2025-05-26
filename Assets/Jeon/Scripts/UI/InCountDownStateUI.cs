@@ -206,7 +206,7 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
         // 총 탐험 횟수 표시
         if (explorationCountText != null)
         {
-            int totalExplorations = BattleFlowController.Instance.GetTotalExplorationCount();
+            int totalExplorations = BattleFlowController.Instance.CurrentStage;
             explorationCountText.text = $"총 탐험 횟수: {totalExplorations}";
         }
     }
@@ -218,7 +218,7 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
     {
         if (BattleFlowController.Instance == null) return;
 
-        int totalExplorations = BattleFlowController.Instance.GetTotalExplorationCount();
+        int totalExplorations = BattleFlowController.Instance.CurrentStage;
         int totalStages = BattleFlowController.Instance.GetTotalStageCount();
 
         // 탐험 진행 바 업데이트
@@ -274,7 +274,7 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
         // 베이스캠프로 이동
         if (BattleFlowController.Instance != null)
         {
-            BattleFlowController.Instance.SetCompleteState();
+            BattleFlowController.Instance.SetCompleteState(false);
         }
     }
 

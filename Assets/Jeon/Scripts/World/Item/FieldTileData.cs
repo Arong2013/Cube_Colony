@@ -40,43 +40,40 @@ public class FieldTileData
 
         return ObjectID[0]; // 폴백
     }
-
     public FieldTileData FindFieldTileData(CubieFaceInfo faceInfo, int currentFieldLevel)
-{
-    // 1. First try to find by field level
-    var fieldTileDatasByLevel = DataCenter.Instance.GetFieldTileDatasByFieldLevel(currentFieldLevel);
-    
-    if (fieldTileDatasByLevel.Count == 0)
     {
-        Debug.LogWarning($"필드 레벨 {currentFieldLevel}에 해당하는 필드 타일 데이터가 없습니다.");
-        return null;
-    }
-    
-    // 2. Filter by cube face level (TileLevel)
-    var matchingLevelDatas = fieldTileDatasByLevel.FindAll(data => 
-        data.FieldLevel == currentFieldLevel && 
-        data.TileLevel == faceInfo.Level);
-    
-    if (matchingLevelDatas.Count == 0)
-    {
-        Debug.LogWarning($"필드 레벨 {currentFieldLevel}, 타일 레벨 {faceInfo.Level}에 해당하는 필드 타일 데이터가 없습니다.");
-        return null;
-    }
-    
-    // 3. Filter by type
-    CubieFaceSkillType faceType = faceInfo.Type;
-    var matchingTypeDatas = matchingLevelDatas.FindAll(data => 
-        data.StageType == faceType);
-    
-    if (matchingTypeDatas.Count == 0)
-    {
-        Debug.LogWarning($"필드 레벨 {currentFieldLevel}, 타일 레벨 {faceInfo.Level}, 타입 {faceType}에 해당하는 필드 타일 데이터가 없습니다.");
-        return null;
-    }
-    
-    // Return the first matching data
-    return matchingTypeDatas[0];
-}
+        // 1. First try to find by field level
+        var fieldTileDatasByLevel = DataCenter.Instance.GetFieldTileDatasByFieldLevel(currentFieldLevel);
 
+        if (fieldTileDatasByLevel.Count == 0)
+        {
+            Debug.LogWarning($"필드 레벨 {currentFieldLevel}에 해당하는 필드 타일 데이터가 없습니다.");
+            return null;
+        }
+
+        var matchingLevelDatas = fieldTileDatasByLevel.FindAll(data =>
+            data.FieldLevel == currentFieldLevel &&
+            data.TileLevel == faceInfo.Level);
+
+        if (matchingLevelDatas.Count == 0)
+        {
+            Debug.LogWarning($"필드 레벨 {currentFieldLevel}, 타일 레벨 {faceInfo.Level}에 해당하는 필드 타일 데이터가 없습니다.");
+            return null;
+        }
+
+        // 3. Filter by type
+        CubieFaceSkillType faceType = faceInfo.Type;
+        var matchingTypeDatas = matchingLevelDatas.FindAll(data =>
+            data.StageType == faceType);
+
+        if (matchingTypeDatas.Count == 0)
+        {
+            Debug.LogWarning($"필드 레벨 {currentFieldLevel}, 타일 레벨 {faceInfo.Level}, 타입 {faceType}에 해당하는 필드 타일 데이터가 없습니다.");
+            return null;
+        }
+
+        // Return the first matching data
+        return matchingTypeDatas[0];
+    }
 }
 

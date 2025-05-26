@@ -11,6 +11,5 @@ public class ChopComponent : IEntityComponent
     {     
         _entity.SetTarget(target);
         _entity.SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Attack);
-
     }
 }

@@ -116,14 +116,31 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes:
     - Name: DropChances
-      Entry: 6
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.Single, mscorlib],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.Single,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
       Data: 
   debugDamageAmount: 20
   behaviorSequencesSO: []
-  strategyAsset: {fileID: 0}
+  strategyAsset: {fileID: 11400000, guid: 36c4e7908fdc3144b8e633ff73a2eb76, type: 2}
   interactionDistance: 0
-  MinDropItem: 0
-  MaxDropItem: 0
+  MinDropItem: 1
+  MaxDropItem: 5
 --- !u!65 &-3383617035780556221
 BoxCollider:
   m_ObjectHideFlags: 0

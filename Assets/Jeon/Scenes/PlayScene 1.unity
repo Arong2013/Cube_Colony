@@ -1934,7 +1934,7 @@ MonoBehaviour:
   stageTime: 10
   cubeUsageCount: 0
   maxCubeUsage: 3
-  totalExplorationCount: 0
+  currentTotalStage: 0
   currentCubeData:
     size: 0
     requiredMatches: 0
@@ -2110,8 +2110,7 @@ PrefabInstance:
     - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: 'serializationData.PrefabModifications.Array.data[0]'
       value: '"path":"ExitGateData","add_keys":{"$id":0,"$type":"System.Object[],
-        mscorlib","$rlength":2,"$rcontent":[{"$id":1,"$type":"System.Int32, mscorlib",0},{"$id":2,"$type":"System.Int32,
-        mscorlib",0}]},"remove_keys":null'
+        mscorlib","$rlength":1,"$rcontent":[{"$id":1,"$type":"System.Int32, mscorlib",0}]},"remove_keys":null'
       objectReference: {fileID: 0}
     - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: 'serializationData.PrefabModifications.Array.data[1]'

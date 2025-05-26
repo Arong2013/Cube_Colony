@@ -32,7 +32,7 @@ public void TakeDamage(float amount)
         // 플레이어인 경우 게임 오버 상태로 전환
         if (_entity is PlayerEntity)
         {
-            BattleFlowController.Instance?.SetGameOverState();
+            BattleFlowController.Instance?.SetCompleteState(true);
         }
         
         onDeath?.Invoke();

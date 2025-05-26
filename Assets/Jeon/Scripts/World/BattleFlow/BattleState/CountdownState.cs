@@ -45,6 +45,8 @@ public class CountdownState : IGameSequenceState
         // 진행률 표시 (현재 사용 횟수에 따라)
         float progressRatio = (float)usageCount / BattleFlowController.Instance.GetMaxCubeUsage();
         inCountDownStateUI.UpdateExplorationProgress(progressRatio);
+
+        Utils.GetUI<InCountDownStateUI>()?.UpdateObserver();
     }
 
     public void Exit()
