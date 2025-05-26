@@ -30,22 +30,18 @@ public class ReturnState : EntityState
     public override void Enter()
     {
         base.Enter();
+
         Utils.GetUI<InSurvivalStateUI>().EnterReturn();
         _currentTime = _returnTime;
         _wasInterrupted = false;
+
+        // 귀환 바를 항상 100%에서 시작
+        if (Utils.GetUI<InSurvivalStateUI>() is InSurvivalStateUI survivalStateUI)
+            survivalStateUI.ResetReturnProgress();
     }
 
     public override void Execute()
     {
-        // 귀환 중 다른 입력이나 이동이 있으면 귀환 취소
-        if (_entity.CurrentDir != Vector3.zero ||
-            Input.GetMouseButtonDown(0) ||
-            Input.GetMouseButtonDown(1))
-        {
-            InterruptReturn();
-            return;
-        }
-
         _currentTime -= Time.deltaTime;
         Utils.GetUI<InSurvivalStateUI>().UpdateReturn(_returnTime, _currentTime);
 
@@ -58,22 +54,18 @@ public class ReturnState : EntityState
     public override void Exit()
     {
         base.Exit();
-
-        // 귀환 UI를 종료하고 바를 꺼줌 (항상 귀환바 끄기)
         Utils.GetUI<InSurvivalStateUI>().ExitReturn();
     }
 
     private void InterruptReturn()
     {
         _wasInterrupted = true;
-
-        // 상태 변경
         _entity.SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Idle);
     }
 
     private void CompleteReturn()
     {
         _entity.SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Idle);
-        _playerEntity.SeReturnStageState();
+        BattleFlowController.Instance?.CheckStageCompletionOnReturn();
     }
 }

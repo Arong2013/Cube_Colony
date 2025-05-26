@@ -27,17 +27,19 @@ public class EntityMovementHandler
         UpdateAnimatorParameters(direction);
     }
 
-    private void UpdateAnimatorParameters(Vector3 direction)
-    {
-        // MoveX 파라미터 설정 (-1: 왼쪽, 1: 오른쪽)
-        _entity.SetAnimatorValue(EntityAnimFloat.MoveX, direction.x);
-        
-        // MoveY 파라미터 설정 (-1: 아래쪽, 1: 위쪽)
-        // 3D 공간에서는 z축이 앞/뒤 방향이므로 z값을 MoveY에 매핑
-        _entity.SetAnimatorValue(EntityAnimFloat.MoveY, direction.z);
-        
-        // 이동 속도 파라미터 설정 (선택적)
-        float moveSpeed = direction.magnitude;
-        _entity.SetAnimatorValue(EntityAnimFloat.Speed, moveSpeed);
-    }
+private void UpdateAnimatorParameters(Vector3 direction)
+{
+    // 대각선 방향일 때 x, z 값을 1 또는 -1로 정규화
+    float moveX = direction.x == 0 ? 0 : Mathf.Sign(direction.x);
+    float moveY = direction.z == 0 ? 0 : Mathf.Sign(direction.z);
+
+    // MoveX 파라미터 설정 (-1: 왼쪽, 0: 정지, 1: 오른쪽)
+    _entity.SetAnimatorValue(EntityAnimFloat.MoveX, moveX);
+    
+    // MoveY 파라미터 설정 (-1: 아래쪽, 0: 정지, 1: 위쪽)
+    _entity.SetAnimatorValue(EntityAnimFloat.MoveY, moveY);
+
+}
+
+
 }

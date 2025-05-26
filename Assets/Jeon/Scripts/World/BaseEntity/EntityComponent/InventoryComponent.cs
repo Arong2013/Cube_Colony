@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -69,27 +70,54 @@ public class ExpandedInventoryComponent : IEntityComponent
         return null;
     }
 
-    public bool AddItem(Item item)
+public bool AddItem(Item item)
+{
+    if (item == null) return false;
+
+    // 소모품인 경우 병합 시도
+    if (item is ConsumableItem newConsumable)
     {
-        bool isAdd = true;
-        if (item is ConsumableItem consumable)
+        // 같은 ID의 기존 아이템들을 찾음
+        var existingItems = items
+            .Where(existing => existing is ConsumableItem)  
+            .OfType<ConsumableItem>()
+            .Where(existing => existing.ID == newConsumable.ID)
+            .ToList();
+
+        int remainingAmount = newConsumable.cunamount;
+
+        // 기존 아이템들에 차례로 병합
+        foreach (var existingItem in existingItems)
         {
-            isAdd = AddConsumableItem(consumable);
+            if (remainingAmount <= 0) break;
+
+            int canAdd = existingItem.maxamount - existingItem.cunamount;
+            int toAdd = Mathf.Min(canAdd, remainingAmount);
+
+            if (toAdd > 0)
+            {
+                existingItem.cunamount += toAdd;
+                remainingAmount -= toAdd;
+            }
         }
 
-        if (_Items.Count >= MaxSlots)
+        // 남은 수량이 있으면 새 슬롯 생성
+        if (remainingAmount > 0)
         {
-            Debug.Log($"인벤토리가 가득 참! (현재: {_Items.Count}/{MaxSlots})");
-            return false;
+            var newItem = newConsumable.Clone() as ConsumableItem;
+            newItem.cunamount = remainingAmount;
+            items.Add(newItem);
         }
 
-        if (isAdd)
-        {
-            _Items.Add(item);
-            _OnItemAdded?.Invoke(this);
-        }
         return true;
     }
+    else
+    {
+        // 장비 아이템은 그대로 추가
+        items.Add(item);
+        return true;
+    }
+}
 
     /// <summary>
     /// 아이템 제거
@@ -119,21 +147,38 @@ public class ExpandedInventoryComponent : IEntityComponent
         return null;
     }
 
-    private bool AddConsumableItem(ConsumableItem consumable)
-    {
-        var matchingItems = _Items.FindAll(x => x.ID == consumable.ID);
+    private bool AddConsumableItem(ConsumableItem newConsumable)
+{
+    var existingItems = _Items
+        .OfType<ConsumableItem>()
+        .Where(x => x.ID == newConsumable.ID)
+        .ToList();
 
-        foreach (var matchingItem in matchingItems)
+    int remainingAmount = newConsumable.cunamount;
+
+    foreach (var existingItem in existingItems)
+    {
+        if (remainingAmount <= 0) break;
+
+        int canAdd = existingItem.maxamount - existingItem.cunamount;
+        int toAdd = Mathf.Min(canAdd, remainingAmount);
+
+        if (toAdd > 0)
         {
-            int excess = AddAmountAndGetExcess(matchingItem as ConsumableItem, consumable.cunamount);
-            SetAmount(consumable, -excess);
-            if (consumable.cunamount <= 0)
-            {
-                return true;
-            }
+            existingItem.cunamount += toAdd;
+            remainingAmount -= toAdd;
         }
-        return consumable.cunamount > 0;
     }
+
+    // 남은 수량이 있으면 새 슬롯에 추가해야 함
+    if (remainingAmount > 0)
+    {
+        newConsumable.cunamount = remainingAmount;
+        return false; // 새 슬롯이 필요함을 알림
+    }
+
+    return true; // 모든 아이템이 기존 슬롯에 병합됨
+}
 
     public int AddAmountAndGetExcess(ConsumableItem consumable, int amount)
     {

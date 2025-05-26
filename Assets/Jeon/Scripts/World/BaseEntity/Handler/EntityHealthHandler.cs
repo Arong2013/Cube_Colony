@@ -14,29 +14,30 @@ public class EntityHealthHandler
         this.onDeath = onDeath;
     }
 
-    public void TakeDamage(float amount)
+public void TakeDamage(float amount)
+{
+    float currentHp = _entity.GetEntityStat(EntityStatName.HP);
+    float newHp = Mathf.Max(0, currentHp - amount);
+    
+    _entity.SetEntityBaseStat(EntityStatName.HP, newHp);
+    
+    _entity.SetAnimatorValue(EntityAnimTrigger.HitTrigger, null);
+    onDamaged?.Invoke((int)amount);
+    
+    // HP가 0이 되면 게임 오버
+    if (newHp <= 0)
     {
-        float currentHp = _entity.GetEntityStat(EntityStatName.HP);
-        float newHp = Mathf.Max(0, currentHp - amount);
+        Debug.Log($"[EntityHealthHandler] {_entity.name} is DEAD! Calling GameOver...");
         
-        Debug.Log($"[EntityHealthHandler] {_entity.name} TakeDamage: {amount}, CurrentHP: {currentHp} -> NewHP: {newHp}");
-        
-        // ⚠️ 수정: SetEntityBaseStat으로 절대값 설정
-        _entity.SetEntityBaseStat(EntityStatName.HP, newHp);
-        
-        _entity.SetAnimatorValue(EntityAnimTrigger.HitTrigger, null);
-        onDamaged?.Invoke((int)amount);
-        
-        // 죽음 체크 강화
-        Debug.Log($"[EntityHealthHandler] IsDead Check: {IsDead}, HP after damage: {_entity.GetEntityStat(EntityStatName.HP)}");
-        
-        if (IsDead)
+        // 플레이어인 경우 게임 오버 상태로 전환
+        if (_entity is PlayerEntity)
         {
-            Debug.Log($"[EntityHealthHandler] {_entity.name} is DEAD! Calling onDeath...");
-            onDeath?.Invoke();
+            BattleFlowController.Instance?.SetGameOverState();
         }
+        
+        onDeath?.Invoke();
     }
-
+}
     public void Heal(float amount)
     {
         float currentHp = _entity.GetEntityStat(EntityStatName.HP);

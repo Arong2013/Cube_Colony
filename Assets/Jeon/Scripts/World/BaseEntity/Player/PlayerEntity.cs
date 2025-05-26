@@ -87,15 +87,27 @@ public class PlayerEntity : Entity, ISubject
         NotifyObservers();
     }
 
-    public void DamageO2()
+public void DamageO2()
+{
+    if (BattleFlowController.Instance != null &&
+        BattleFlowController.Instance.playerData != null)
     {
-        if (BattleFlowController.Instance != null &&
-            BattleFlowController.Instance.playerData != null)
+        float currentO2 = GetEntityStat(EntityStatName.O2);
+        BattleFlowController.Instance.playerData.playerStat.UpdateStat(EntityStatName.O2, this, -Time.deltaTime);
+        
+        // O2가 0이 되면 게임 오버
+        if (currentO2 <= 0)
         {
-            BattleFlowController.Instance.playerData.playerStat.UpdateStat(EntityStatName.O2, this, -Time.deltaTime);
-            NotifyObservers();
+            // 게임 오버 상태로 전환
+            if (BattleFlowController.Instance != null)
+            {
+                BattleFlowController.Instance.SetGameOverState();
+            }
         }
+
+        NotifyObservers();
     }
+}
 
     public override void OnHit(int dmg)
     {

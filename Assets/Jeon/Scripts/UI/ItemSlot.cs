@@ -79,8 +79,9 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
             return;
         }
 
-        // 아이템 정보 UI 표시
-        infoUI.Show(_item, UseItemCallback);
+        // 아이템 정보 UI 표시 (사용 콜백과 버리기 콜백 모두 전달)
+        infoUI.Show(_item, UseItemCallback, DiscardItemCallback);
+
     }
 
     private void UseItemCallback(Item item)
@@ -102,12 +103,38 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         {
             // 인벤토리에서 제거
             BattleFlowController.Instance.playerData.RemoveItem(item);
+        }
+
+        // UI 업데이트
+        if (BattleFlowController.Instance != null)
+        {
             BattleFlowController.Instance.NotifyObservers();
         }
-        else
+        Utils.GetUI<InventoryUI>()?.UpdateSlots();
+    }
+
+    private void DiscardItemCallback(Item item)
+    {
+        if (item == null) return;
+
+        if (BattleFlowController.Instance == null ||
+            BattleFlowController.Instance.playerData == null)
         {
-            // 아이템 수량만 변경된 경우 UI 업데이트
-            UpdateUI();
+            Debug.LogWarning("플레이어 데이터를 찾을 수 없습니다.");
+            return;
         }
+
+        Debug.Log($"아이템 버리기: {item.ItemName}");
+
+        // 인벤토리에서 제거
+        BattleFlowController.Instance.playerData.RemoveItem(item);
+
+        // UI 업데이트
+        if (BattleFlowController.Instance != null)
+        {
+            BattleFlowController.Instance.NotifyObservers();
+        }
+
+        Utils.GetUI<InventoryUI>()?.UpdateSlots();
     }
 }

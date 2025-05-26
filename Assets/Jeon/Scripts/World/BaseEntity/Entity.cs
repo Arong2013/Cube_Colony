@@ -146,7 +146,7 @@ public abstract class Entity : SerializedMonoBehaviour
 
     public void ChangePlayerState(EntityState newState)
     {
-        newState?.Exit();
+        _entityState?.Exit();
         _entityState = newState;
         newState.Enter();
     }
