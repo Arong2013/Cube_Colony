@@ -274,7 +274,7 @@ MonoBehaviour:
       Data: 0
     - Name: $v
       Entry: 4
-      Data: 89.46517
+      Data: 200
     - Name: 
       Entry: 8
       Data: 
@@ -286,7 +286,7 @@ MonoBehaviour:
       Data: 1
     - Name: $v
       Entry: 4
-      Data: 109.46209
+      Data: 200
     - Name: 
       Entry: 8
       Data: 
@@ -298,7 +298,7 @@ MonoBehaviour:
       Data: 2
     - Name: $v
       Entry: 4
-      Data: 154.734528
+      Data: 116
     - Name: 
       Entry: 8
       Data: 
@@ -310,7 +310,7 @@ MonoBehaviour:
       Data: 3
     - Name: $v
       Entry: 4
-      Data: 222.869034
+      Data: 153
     - Name: 
       Entry: 8
       Data: 
@@ -322,7 +322,7 @@ MonoBehaviour:
       Data: 6
     - Name: $v
       Entry: 4
-      Data: 28.6399574
+      Data: 27
     - Name: 
       Entry: 8
       Data: 
@@ -334,7 +334,7 @@ MonoBehaviour:
       Data: 7
     - Name: $v
       Entry: 4
-      Data: 43.1500626
+      Data: 31
     - Name: 
       Entry: 8
       Data: 
@@ -346,7 +346,7 @@ MonoBehaviour:
       Data: 8
     - Name: $v
       Entry: 4
-      Data: 2.66582775
+      Data: 3
     - Name: 
       Entry: 8
       Data: 
@@ -388,6 +388,8 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+  isFixedDamage: 0
+  fixedDamage: 10
   debugDamageAmount: 20
   behaviorSequencesSO:
   - {fileID: 11400000, guid: 3406730a3ba17df41b8b015967238255, type: 2}

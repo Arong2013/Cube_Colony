@@ -11,7 +11,11 @@ public class ChopStrategy : IInteractionStrategy
     public bool CanInteract(Entity self, Entity interactor)
         => interactor.HasEntityComponent<ChopComponent>();
     public void Interact(Entity self, Entity interactor)
-        => interactor.GetEntityComponent<ChopComponent>()?.Chop(self);
+    {
+        var chopComponent = interactor.GetEntityComponent<ChopComponent>();
+        Debug.Log($"[ChopStrategy] Interacting with {self.name} using {nameof(chopComponent)}");  
+        chopComponent?.Chop(self);
+    }
     public string GetLabel() => "나무 베기";
 
     public void Initialize(Entity self)

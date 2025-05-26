@@ -5,6 +5,19 @@ using UnityEngine;
 
 public abstract class Entity : SerializedMonoBehaviour
 {
+    [TitleGroup("엔티티 기본 정보", "기본 속성 및 데미지 설정")]
+    [BoxGroup("엔티티 기본 정보/데미지 설정")]
+    [LabelText("고정 데미지 사용"), ToggleLeft]
+    [Tooltip("체크하면 고정된 데미지 값을 사용합니다")]
+    [SerializeField] private bool isFixedDamage;
+
+    [BoxGroup("엔티티 기본 정보/데미지 설정")]
+    [LabelText("고정 데미지 값"), Min(1)]
+    [Tooltip("적용할 고정 데미지 값")]
+    [ShowIf("isFixedDamage")]
+    [GUIColor(0.8f, 0.3f, 0.3f)]
+    [SerializeField] private int fixedDamage = 1;
+
     private EntityComponentHandler _components;
     private EntityAnimatorHandler _animatorHandler;
     private EntityHealthHandler _healthHandler;
@@ -19,7 +32,7 @@ public abstract class Entity : SerializedMonoBehaviour
 
     private Dictionary<string, object> decisionContext = new();
 
-    public EntityStat Stats { get; protected set; }
+    [ShowInInspector] public EntityStat Stats { get; protected set; }
     public Vector3 CurrentDir { get; protected set; }
     public Entity CurrentTarget { get; private set; }
     public bool CanWalk => (Mathf.Abs(CurrentDir.x) > 0.1f || Mathf.Abs(CurrentDir.z) > 0.1f) && GetState().GetType() != typeof(MoveState);
@@ -43,7 +56,6 @@ public abstract class Entity : SerializedMonoBehaviour
        { EntityStatName.SPD, 3 }
    };
 
-
     public virtual void Init()
     {
         _animator = GetComponent<Animator>();
@@ -53,6 +65,8 @@ public abstract class Entity : SerializedMonoBehaviour
         _combatHandler = new EntityCombatHandler(this);
         _movementHandler = new EntityMovementHandler(this);
         _entityState = new IdleState(this, _animator);
+
+        Stats = new EntityStat();
 
         foreach (var stat in initialStats)
         {
@@ -144,6 +158,11 @@ public abstract class Entity : SerializedMonoBehaviour
 
     public virtual void TakeDamage(float dmg)
     {
+        if (isFixedDamage)
+        {
+            dmg = fixedDamage;
+        }
+
         _healthHandler?.TakeDamage(dmg);
         SetAnimatorValue(EntityAnimTrigger.HitTrigger, null);
     }
@@ -320,23 +339,23 @@ public abstract class Entity : SerializedMonoBehaviour
 
         Debug.Log($"[디버그] 완전 회복 완료! HP: {GetEntityStat(EntityStatName.HP)}, O2: {GetEntityStat(EntityStatName.O2)}");
     }
-    
-   [Button("랜덤 스탯 생성", ButtonSizes.Large), GUIColor(0.4f, 0.8f, 1f)]
-   private void GenerateRandomStats()
-   {
-       initialStats.Clear();
 
-       // HP 관련 스탯
-       initialStats[EntityStatName.HP] = UnityEngine.Random.Range(50, 200);
-       initialStats[EntityStatName.MaxHP] = (int)(initialStats[EntityStatName.HP] * UnityEngine.Random.Range(1f, 1.5f));
+    [Button("랜덤 스탯 생성", ButtonSizes.Large), GUIColor(0.4f, 0.8f, 1f)]
+    private void GenerateRandomStats()
+    {
+        initialStats.Clear();
 
-       // O2 관련 스탯
-       initialStats[EntityStatName.O2] = UnityEngine.Random.Range(50, 200);
-       initialStats[EntityStatName.MaxO2] = (int)(initialStats[EntityStatName.O2] * UnityEngine.Random.Range(1f, 1.5f));
+        // HP 관련 스탯
+        initialStats[EntityStatName.HP] = UnityEngine.Random.Range(50, 200);
+        initialStats[EntityStatName.MaxHP] = (int)(initialStats[EntityStatName.HP] * UnityEngine.Random.Range(1f, 1.5f));
 
-       // 전투 스탯
-       initialStats[EntityStatName.ATK] = UnityEngine.Random.Range(10, 50);
-       initialStats[EntityStatName.DEF] = UnityEngine.Random.Range(10, 50);
-       initialStats[EntityStatName.SPD] = UnityEngine.Random.Range(1, 10);
-   }
+        // O2 관련 스탯
+        initialStats[EntityStatName.O2] = UnityEngine.Random.Range(50, 200);
+        initialStats[EntityStatName.MaxO2] = (int)(initialStats[EntityStatName.O2] * UnityEngine.Random.Range(1f, 1.5f));
+
+        // 전투 스탯
+        initialStats[EntityStatName.ATK] = UnityEngine.Random.Range(10, 50);
+        initialStats[EntityStatName.DEF] = UnityEngine.Random.Range(10, 50);
+        initialStats[EntityStatName.SPD] = UnityEngine.Random.Range(1, 10);
+    }
 }

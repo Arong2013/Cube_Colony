@@ -17,8 +17,11 @@ public class EntityHealthHandler
 public void TakeDamage(float amount)
 {
     float currentHp = _entity.GetEntityStat(EntityStatName.HP);
+    
     float newHp = Mathf.Max(0, currentHp - amount);
     
+    Debug.Log($" damage: {amount}. Current HP: {currentHp} new HP: {newHp}");
+
     _entity.SetEntityBaseStat(EntityStatName.HP, newHp);
     
     _entity.SetAnimatorValue(EntityAnimTrigger.HitTrigger, null);

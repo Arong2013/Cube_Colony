@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 [Serializable]
 public class EntityStat
@@ -23,14 +24,12 @@ public class EntityStat
 
     [SerializeField]
     [Header("기본 스탯")]
-    private Dictionary<EntityStatName, float> baseStats = new();
+    [ShowInInspector] public Dictionary<EntityStatName, float> baseStats = new();
     [NonSerialized]
     private Dictionary<EntityStatName, Dictionary<object, float>> updatedStats = new();
 
-    public EntityStat(string name, int level)
+    public EntityStat()
     {
-        Name = name;
-        Level = level;
         foreach (EntityStatName stat in Enum.GetValues(typeof(EntityStatName)))
         {
             // Eng와 MaxEng는 PlayerData로 이동했으므로 여기서는 초기화하지 않음
@@ -43,7 +42,7 @@ public class EntityStat
 
     public static EntityStat CreatePlayerData()
     {
-        var data = new EntityStat("Player", 1);
+        var data = new EntityStat();
         data.SetBaseStat(EntityStatName.HP, 100);
         data.SetBaseStat(EntityStatName.MaxHP, 100);
         data.SetBaseStat(EntityStatName.O2, 100);

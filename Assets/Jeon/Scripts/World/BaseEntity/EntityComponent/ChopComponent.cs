@@ -1,4 +1,6 @@
-﻿public class ChopComponent : IEntityComponent 
+﻿using UnityEngine;
+
+public class ChopComponent : IEntityComponent 
 {
    private Entity _entity;
    private int maxChopCount = 3; // 고정된 최대 타격 횟수
@@ -8,9 +10,10 @@
    public void Update(Entity entity) { }
    public void Exit(Entity entity) { }
 
-   public void Chop(Entity target)
-   {
-       if (target == null) return;
-       target.TakeDamage(1);
+    public void Chop(Entity target)
+    {
+        if (target == null) return;
+        target.TakeDamage(1);
+        Debug.Log($"[ChopComponent] {target.name} has been chopped by {_entity.name}. Damage: {fixedDamage}, Max Chops: {maxChopCount}");    
    }
 }

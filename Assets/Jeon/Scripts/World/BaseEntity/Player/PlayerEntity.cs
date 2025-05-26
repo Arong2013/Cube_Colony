@@ -42,7 +42,7 @@ public class PlayerEntity : Entity, ISubject
     public void Initialize()
     {
         // 기존 컴포넌트들
-        AddEntityComponent(new AttackComponent(1f));
+        AddEntityComponent(new AttackComponent(2f));
         AddEntityComponent(new ReturnComponent());
         AddEntityComponent(new ChopComponent());
 

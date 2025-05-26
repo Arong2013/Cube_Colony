@@ -19,6 +19,14 @@ MonoBehaviour:
   attackBonus: 0
   defenseBonus: 0
   healthBonus: 0
+  maxOxygenBonus: 0
+  maxEnergyBonus: 0
+  extraHitCount: 0
+  fireRateBonus: 0
+  oxygenConsumptionReduction: 0
+  energyConsumptionReduction: 0
+  inventorySlotBonus: 0
+  damageReduction: 0
   reinforcementRecipeId: 0
   maxReinforcementLevel: 3
   reinforcementCosts: 64000000c800000090010000

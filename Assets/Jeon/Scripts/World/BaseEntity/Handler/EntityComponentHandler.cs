@@ -22,16 +22,38 @@ public class EntityComponentHandler
         component.Start(_owner);
     }
 
-    public bool Has<T>() where T : class, IEntityComponent
+public bool Has<T>() where T : class, IEntityComponent
+{
+    // 정확한 타입 매치
+    if (_components.ContainsKey(typeof(T)))
+        return true;
+        
+    // 상속 관계도 확인 (필요한 경우)
+    foreach (var type in _components.Keys)
     {
-        return _components.ContainsKey(typeof(T));
+        if (typeof(T).IsAssignableFrom(type))
+            return true;
     }
+    
+    return false;
+}
 
-    public T Get<T>() where T : class, IEntityComponent
-    {
-        _components.TryGetValue(typeof(T), out var comp);
+public T Get<T>() where T : class, IEntityComponent
+{
+    // 정확한 타입 매치
+    if (_components.TryGetValue(typeof(T), out var comp))
         return comp as T;
+        
+    // 상속 관계도 확인 (필요한 경우)
+    foreach (var kvp in _components)
+    {
+        if (typeof(T).IsAssignableFrom(kvp.Key))
+            return kvp.Value as T;
     }
+    
+    return null;
+}
+
 
     public void Remove<T>() where T : class, IEntityComponent
     {
