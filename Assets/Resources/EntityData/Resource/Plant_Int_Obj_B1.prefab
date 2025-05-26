@@ -128,7 +128,43 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 0
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 4
+      Data: 70
+    - Name: $v
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 4
+      Data: 20
+    - Name: $v
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 4
+      Data: 10
+    - Name: $v
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -138,8 +174,8 @@ MonoBehaviour:
   debugDamageAmount: 20
   behaviorSequencesSO: []
   strategyAsset: {fileID: 11400000, guid: 36c4e7908fdc3144b8e633ff73a2eb76, type: 2}
-  interactionDistance: 0
-  MinDropItem: 1
+  interactionDistance: 0.5
+  MinDropItem: 3
   MaxDropItem: 5
 --- !u!65 &-3641656462518278745
 BoxCollider:

@@ -17,8 +17,8 @@ MonoBehaviour:
   FieldLevel: 5
   TileLevel: 1
   StageType: Plant
-  minCount: 7
-  maxCount: 8
+  minCount: 2
+  maxCount: 3
   ObjectID: 01000000
   ObjectValue:
   - 10

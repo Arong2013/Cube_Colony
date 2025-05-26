@@ -32,7 +32,7 @@ Material:
     - _ShakeBlockSize: 30.5
     - _ShakeColorRate: 0.086
     - _ShakePower: 0.98
-    - _ShakeRate: 0.389
+    - _ShakeRate: 0.706
     - _ShakeSpeed: 5
     m_Colors: []
   m_BuildTextureStacks: []

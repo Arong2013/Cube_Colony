@@ -399,7 +399,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 28.6
+  field of view: 27
   orthographic: 0
   orthographic size: 3
   m_Depth: -1
@@ -425,8 +425,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.29830623, y: 0.000000028445431, z: -0.000000008890219, w: 0.9544702}
-  m_LocalPosition: {x: 0, y: 12.4, z: -17.9}
+  m_LocalRotation: {x: 0.2768011, y: 0.37264684, z: -0.117495075, w: 0.87790114}
+  m_LocalPosition: {x: -65, y: 53, z: -62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -855,7 +855,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &487153197
 Transform:
   m_ObjectHideFlags: 0
@@ -2430,26 +2430,88 @@ PrefabInstance:
       objectReference: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
     - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
-      value: 2
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: 'serializationData.PrefabModifications.Array.data[0]'
-      value: '"path":"ExitGateData","add_keys":{"$id":0,"$type":"System.Object[],
-        mscorlib","$rlength":2,"$rcontent":[{"$id":1,"$type":"System.Int32, mscorlib",0},{"$id":2,"$type":"System.Int32,
-        mscorlib",0}]},"remove_keys":null'
+      value: '"path":"cubieFaceDataMap","add_keys":{"$id":0,"$type":"System.Object[],
+        mscorlib","$rlength":4,"$rcontent":[{"$id":1,"$type":"CubieFaceSkillType,
+        Assembly-CSharp",1},{"$id":2,"$type":"CubieFaceSkillType, Assembly-CSharp",2},{"$id":3,"$type":"CubieFaceSkillType,
+        Assembly-CSharp",3},{"$id":4,"$type":"CubieFaceSkillType, Assembly-CSharp",0}]},"remove_keys":null'
       objectReference: {fileID: 0}
     - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: 'serializationData.PrefabModifications.Array.data[1]'
-      value: '"path":"ExitGateData.{0si}","value":$eref:0'
+      value: '"path":"cubieFaceDataMap.{0es}","value":{"$id":0,"$type":"CubieFaceVisualData,
+        Assembly-CSharp","FieldMesh":{"$id":1,"$type":"System.Collections.Generic.List`1[[UnityEngine.GameObject,
+        UnityEngine.CoreModule]], mscorlib","$rlength":1,"$rcontent":[$eref:0]},"CubieFaceMaterials":{"$id":2,"$type":"System.Collections.Generic.List`1[[UnityEngine.Material,
+        UnityEngine.CoreModule]], mscorlib","$rlength":4,"$rcontent":[$eref:1,$eref:2,$eref:3,$eref:4]}}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[2]'
+      value: '"path":"cubieFaceDataMap.{0es}.CubieFaceMaterials","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[UnityEngine.Material,
+        UnityEngine.CoreModule]], mscorlib","$rlength":4,"$rcontent":[$eref:1,$eref:2,$eref:3,$eref:4]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[3]'
+      value: '"path":"cubieFaceDataMap.{0es}.CubieFaceMaterials.[0]","value":$eref:1'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[4]'
+      value: '"path":"cubieFaceDataMap.{0es}.CubieFaceMaterials.[1]","value":$eref:2'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[5]'
+      value: '"path":"cubieFaceDataMap.{0es}.CubieFaceMaterials.[2]","value":$eref:3'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[6]'
+      value: '"path":"cubieFaceDataMap.{0es}.CubieFaceMaterials.[3]","value":$eref:4'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[7]'
+      value: '"path":"cubieFaceDataMap.{0es}.FieldMesh","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[UnityEngine.GameObject,
+        UnityEngine.CoreModule]], mscorlib","$rlength":1,"$rcontent":[$eref:0]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[8]'
+      value: '"path":"cubieFaceDataMap.{0es}.FieldMesh.[0]","value":$eref:0'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[9]'
+      value: '"path":"cubieFaceDataMap.{1es}","value":null'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[10]'
+      value: '"path":"cubieFaceDataMap.{2es}","value":null'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[11]'
+      value: '"path":"cubieFaceDataMap.{3es}","value":null'
       objectReference: {fileID: 0}
     - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: 'serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]'
       value: 
-      objectReference: {fileID: 3038174122904419333, guid: 58d9d9f72ecb85d4698b3bb94b6da3a3, type: 3}
+      objectReference: {fileID: 6489030815539060485, guid: ae673a253c7017e4ca34761cc096c421, type: 3}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModificationsReferencedUnityObjects.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c4a32951ce7a64744bb9a7a2bb079c9c, type: 2}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModificationsReferencedUnityObjects.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b339673dc68e98643aace57f06c22c58, type: 2}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModificationsReferencedUnityObjects.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2100000, guid: cbec8bbc06b0ca24385e4acab995808f, type: 2}
+    - target: {fileID: 3929358053123170232, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
+      propertyPath: 'serializationData.PrefabModificationsReferencedUnityObjects.Array.data[4]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 4789d3e6bb4001d448cf9b14246118fd, type: 2}
     - target: {fileID: 5571489857094754299, guid: ae091e06a7baab04aaf1393ff022d738, type: 3}
       propertyPath: m_Name
       value: DataCenter
@@ -3356,7 +3418,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7557538914750742267, guid: e777a60101f46034d9aa030a5a8efc65, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6848,7 +6910,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &9017300494824843501
 MonoBehaviour:
   m_ObjectHideFlags: 0

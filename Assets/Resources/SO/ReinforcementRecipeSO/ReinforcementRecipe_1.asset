@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ReinforcementRecipe_1
   m_EditorClassIdentifier: 
   ID: 1
-  recipeName: "\uC804\uD22C\uD5EC\uBA67 \uAC15\uD654"
-  requiredItemIDs: 01000000
-  requiredItemCounts: 01000000
-  resultItemId: 0
+  recipeName: "\uB2E4\uC6A9\uB3C4 \uCE7C"
+  requiredItemIDs: 0b0000000c0000001f00000020000000
+  requiredItemCounts: 08000000040000000400000002000000
+  resultItemId: 1002
