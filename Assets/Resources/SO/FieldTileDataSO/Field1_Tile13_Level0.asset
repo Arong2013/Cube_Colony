@@ -16,10 +16,11 @@ MonoBehaviour:
   IconName: MineTile1_1
   FieldLevel: 1
   TileLevel: 0
-  StageType: Mine
-  minCount: 1
-  maxCount: 2
-  ObjectID: 01000000
+  StageType: Plant
+  minCount: 2
+  maxCount: 3
+  ObjectID: 0a0000000b000000
   ObjectValue:
-  - 10
+  - 0.5
+  - 0.5
   description: "\uC2A4\uD14C\uC774\uC9C01 \uAD11\uC11D \uD0C0\uC77C 1"

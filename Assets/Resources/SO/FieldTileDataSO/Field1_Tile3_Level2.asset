@@ -16,10 +16,12 @@ MonoBehaviour:
   IconName: MonsterTile1_1_Advanced
   FieldLevel: 1
   TileLevel: 2
-  StageType: RMonster
-  minCount: 4
-  maxCount: 6
-  ObjectID: 
-  ObjectValue: []
+  StageType: AMonster
+  minCount: 2
+  maxCount: 3
+  ObjectID: 0100000004000000
+  ObjectValue:
+  - 0.8
+  - 0.2
   description: "\uC2A4\uD14C\uC774\uC9C01 \uACE0\uAE09 \uC77C\uBC18 \uBAAC\uC2A4\uD130
     \uD0C0\uC77C 1"

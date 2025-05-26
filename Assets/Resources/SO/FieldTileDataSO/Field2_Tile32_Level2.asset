@@ -17,8 +17,8 @@ MonoBehaviour:
   FieldLevel: 2
   TileLevel: 2
   StageType: AMonster
-  minCount: 4
-  maxCount: 6
+  minCount: 2
+  maxCount: 3
   ObjectID: 01000000
   ObjectValue:
   - 10
