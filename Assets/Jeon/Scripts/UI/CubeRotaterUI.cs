@@ -21,9 +21,11 @@ public class CubeRotaterUI
         initialMousePosition = _initialMousePosition;
         cubieFace = _cubieFace;
         cantAxis = _cubieFace.GetNotRotationAxis();
+        Utils.GetUI<TileInfoUI>()?.ShowTileInfo(cubieFace);
     }
     public void OndDrag(PointerEventData eventData)
     {
+        Utils.GetUI<TileInfoUI>()?.OnCloseButtonClicked();
         Vector2 dragVector = eventData.position - initialMousePosition;
         float dragMagnitude = Mathf.Abs(dragVector.x) + Mathf.Abs(dragVector.y);
         if(dragMagnitude > threshold)

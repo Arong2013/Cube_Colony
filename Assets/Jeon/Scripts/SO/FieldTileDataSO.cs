@@ -43,13 +43,23 @@ public class FieldTileDataSO : ScriptableObject
     [InfoBox("각 오브젝트의 스폰 확률 (ObjectID와 1:1 대응)")]
     public List<float> ObjectValue = new List<float>();
 
+    [TitleGroup("스폰 오브젝트")]
+    [LabelText("오브젝트 ID 목록")]
+    [InfoBox("스폰될 아이템/오브젝트들의 ID")]
+    public List<int> ItemObjID = new List<int>();
+
     [TitleGroup("디스플레이")]
     [LabelText("타일 설명"), TextArea(2, 3)]
     public string description;
 
+
     [TitleGroup("디스플레이")]
     [LabelText("타일 아이콘"), PreviewField(80)]
-    public Sprite tileIcon => Resources.Load<Sprite>($"Sprites/FieldTiles/{IconName}");
+    public string tileIconName;
+
+    [TitleGroup("디스플레이")]
+    [LabelText("타일 아이콘"), PreviewField(80)]
+    public Sprite tileIcon => Resources.Load<Sprite>($"Sprites/FieldTiles/{tileIconName}");
 
     [TitleGroup("디버그 정보")]
     [ShowInInspector, ReadOnly]

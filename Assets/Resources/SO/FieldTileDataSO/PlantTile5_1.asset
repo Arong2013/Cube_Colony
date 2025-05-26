@@ -22,4 +22,6 @@ MonoBehaviour:
   ObjectID: 01000000
   ObjectValue:
   - 10
+  ItemObjID: 01000000
   description: "\uC2A4\uD14C\uC774\uC9C05 \uC2DD\uBB3C \uD0C0\uC77C 1"
+  tileIconName: "\uAE08\uC18DLv1"

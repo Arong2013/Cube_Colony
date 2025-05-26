@@ -25,5 +25,7 @@ MonoBehaviour:
   - 0.3
   - 0.7
   - 0.7
+  ItemObjID: 01000000
   description: "\uC2A4\uD14C\uC774\uC9C01 \uAC15\uD654\uB41C \uAD11\uC11D \uD0C0\uC77C
     1"
+  tileIconName: "\uAE08\uC18DLv1"

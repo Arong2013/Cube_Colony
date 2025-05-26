@@ -529,46 +529,52 @@ private static string ProcessFieldTileDataRow(FieldTileDataSO so, string[] heade
 
         try
         {
-            switch (header.ToLower().Replace(" ", "").Replace("_", ""))
-            {
-                case "id":
-                    so.ID = ParseInt(rawValue);
-                    break;
-                case "fieldlevel":
-                    so.FieldLevel = ParseInt(rawValue);
-                    break;
-                case "tilelevel":
-                    so.TileLevel = ParseInt(rawValue);
-                    break;
-                case "stagetype":
-                case "type":
-                    // StageType 필드 - 문자열로 저장 (CubieFaceSkillType으로 변환 가능)
-                    so.StageType = rawValue ?? "RMonster";
-                    break;
-                case "mincount":
-                case "minspawncount":
-                    so.minCount = ParseInt(rawValue);
-                    break;
-                case "maxcount":
-                case "maxspawncount":
-                    so.maxCount = ParseInt(rawValue);
-                    break;
-                case "objectid":
-                case "spawnobjectid":
-                    so.ObjectID = ParseIntList(rawValue);
-                    break;
-                case "objectvalue":
-                case "spawnobjectvalue":
-                case "spawnweight":
-                    so.ObjectValue = ParseFloatList(rawValue);
-                    break;
-                case "description":
-                    so.description = rawValue ?? "";
-                    break;
-                case "iconname":
-                case "tilename":
-                    so.IconName = rawValue ?? "";
-                    break;
+                switch (header.ToLower().Replace(" ", "").Replace("_", ""))
+                {
+                    case "id":
+                        so.ID = ParseInt(rawValue);
+                        break;
+                    case "fieldlevel":
+                        so.FieldLevel = ParseInt(rawValue);
+                        break;
+                    case "tilelevel":
+                        so.TileLevel = ParseInt(rawValue);
+                        break;
+                    case "stagetype":
+                    case "type":
+                        // StageType 필드 - 문자열로 저장 (CubieFaceSkillType으로 변환 가능)
+                        so.StageType = rawValue ?? "RMonster";
+                        break;
+                    case "mincount":
+                    case "minspawncount":
+                        so.minCount = ParseInt(rawValue);
+                        break;
+                    case "maxcount":
+                    case "maxspawncount":
+                        so.maxCount = ParseInt(rawValue);
+                        break;
+                    case "objectid":
+                    case "spawnobjectid":
+                        so.ObjectID = ParseIntList(rawValue);
+                        break;
+                    case "objectvalue":
+                    case "spawnobjectvalue":
+                    case "spawnweight":
+                        so.ObjectValue = ParseFloatList(rawValue);
+                        break;
+                    case "description":
+                        so.description = rawValue ?? "";
+                        break;
+                    case "iconname":
+                    case "tilename":
+                        so.IconName = rawValue ?? "";
+                        break;
+                    case "itemobjid":
+                        so.ItemObjID = ParseIntList(rawValue);
+                        break;
+                    case "tileiconname":
+                        so.tileIconName = rawValue ?? "";
+                        break;
             }
         }
         catch (Exception e)

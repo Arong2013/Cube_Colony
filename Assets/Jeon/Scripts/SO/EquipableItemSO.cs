@@ -99,7 +99,7 @@ public class EquipableItemSO : ScriptableObject
 
     [TitleGroup("디스플레이")]
     [LabelText("아이템 아이콘"), PreviewField(80)]
-    public Sprite itemIcon;
+    public Sprite itemIcon => Resources.Load<Sprite>($"Sprites/Items/{ItemName}");
 
     [TitleGroup("디스플레이")]
     [LabelText("등급"), EnumToggleButtons]
