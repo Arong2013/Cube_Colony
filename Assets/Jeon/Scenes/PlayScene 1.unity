@@ -1011,13 +1011,42 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 58d4c689ed5bc2141b9d9cf95db8cd11, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 730434025}
   m_SourcePrefab: {fileID: 100100000, guid: 58d4c689ed5bc2141b9d9cf95db8cd11, type: 3}
 --- !u!4 &695706241 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 58d4c689ed5bc2141b9d9cf95db8cd11, type: 3}
   m_PrefabInstance: {fileID: 695706240}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &730434022 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 58d4c689ed5bc2141b9d9cf95db8cd11, type: 3}
+  m_PrefabInstance: {fileID: 695706240}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &730434025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730434022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e311166ab03106448fcbd7320e08507, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
 --- !u!1 &777880540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,6 +1242,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62a57e4df0e3dac4eb0f8b99e2da1d48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   interactionType: 0
   recoveryAmount: 50
   interactionSound: {fileID: 0}

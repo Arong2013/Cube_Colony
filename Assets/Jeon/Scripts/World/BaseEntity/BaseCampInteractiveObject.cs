@@ -1,7 +1,7 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class BaseCampInteractiveObject : MonoBehaviour
+public class BaseCampInteractiveObject : SerializedMonoBehaviour
 {
     public enum InteractionType
     {
@@ -37,9 +37,9 @@ public class BaseCampInteractiveObject : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
         }
     }
-    public void OnMouseEnter()
+    public void OnMouseDown()
     {
-         PlayerEntity player = Utils.GetPlayer();
+        PlayerEntity player = Utils.GetPlayer();
         if (player != null)
         {
             bool interactionSuccessful = false;
@@ -142,7 +142,7 @@ public class BaseCampInteractiveObject : MonoBehaviour
         PlayerEntity player = Utils.GetPlayer();
         if (player != null)
         {
-            OnMouseEnter();
+            OnMouseDown();
         }
         else
         {

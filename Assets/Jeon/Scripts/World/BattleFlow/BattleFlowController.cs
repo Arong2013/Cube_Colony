@@ -66,7 +66,7 @@ public class BattleFlowController : SerializedMonoBehaviour
 
     [TitleGroup("디버그 정보")]
     [ReadOnly, ShowInInspector]
-    private IGameSequenceState currentState;
+    public IGameSequenceState currentState { get; private set; } // 현재 게임 상태  ;
 
     [TitleGroup("디버그 정보")]
     [ReadOnly, ShowInInspector]

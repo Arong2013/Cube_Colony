@@ -165,7 +165,8 @@ private System.Action<Item> onUseItem;
             useButton.interactable = canUse;
         }
 
-        // 강화 시스템 UI 업데이트 (장비 아이템인 경우만)
+        reinforceButton.gameObject.SetActive(BattleFlowController.Instance.currentState is CompleteState completeState);
+
         UpdateReinforcementUI();
         UpdateFieldTileInfoForConsumableItem();
     }
