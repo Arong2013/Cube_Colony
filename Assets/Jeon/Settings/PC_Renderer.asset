@@ -134,3 +134,26 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 3302065f671a8450b82c9ddf07426f3a, type: 3}
   - {fileID: 2800000, guid: 56a77a3e8d64f47b6afe9e3c95cb57d5, type: 3}
   m_Shader: {fileID: 4800000, guid: 0849e84e3d62649e8882e9d6f056a017, type: 3}
+--- !u!114 &8840711116322665643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dd07bd03080cfd4b8c98849cf0549ba, type: 3}
+  m_Name: GlitchRenderPassFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    renderPassEvent: 550
+    glitchShader: {fileID: 4800000, guid: d20a63fee6b5f5641825bf00d2fbcae3, type: 3}
+    shakePower: 0.03
+    shakeBlockSize: 30.5
+    fade: 0.815
+    directionR: {x: 1, y: 0}
+    directionG: {x: 0.4, y: 1}
+    directionB: {x: -0.7, y: -0.3}
+    glitchMaterial: {fileID: 0}
