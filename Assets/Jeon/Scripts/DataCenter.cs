@@ -273,7 +273,7 @@ public class DataCenter : SerializedMonoBehaviour
     /// 새로운 ConsumableItem 인스턴스를 생성해서 반환
     /// </summary>
 
-public ConsumableItem CreateConsumableItem(int id)
+    public ConsumableItem CreateConsumableItem(int id)
     {
         var so = GetConsumableItemSO(id);
         if (so == null) return null;
@@ -310,39 +310,21 @@ public ConsumableItem CreateConsumableItem(int id)
         item.healthBonus = so.healthBonus;
         item.description = so.description;
         item.grade = so.grade;
-        item.reinforcementRecipeId = so.reinforcementRecipeId;  
+        item.reinforcementRecipeId = so.reinforcementRecipeId;
 
         // 강화 시스템 데이터 복사
         item.currentReinforcementLevel = 0; // 항상 0으로 시작
         item.maxReinforcementLevel = so.maxReinforcementLevel;
-        item.specialEffect1 = so.specialEffect1;
-        item.specialEffect2 = so.specialEffect2;
 
-        // 특수 효과 설정 (장비 타입에 따라)
-        switch (item.equipmentType)
-        {
-            case EquipmentType.Sword:
-                item.extraHitCount = (int)so.specialEffect1;
-                break;
-            case EquipmentType.Gun:
-                item.fireRateBonus = so.specialEffect1;
-                break;
-            case EquipmentType.OxygenTank:
-                item.maxOxygenBonus = so.specialEffect1;
-                item.oxygenConsumptionReduction = so.specialEffect2;
-                break;
-            case EquipmentType.Battery:
-                item.maxEnergyBonus = so.specialEffect1;
-                item.energyConsumptionReduction = so.specialEffect2;
-                break;
-            case EquipmentType.Backpack:
-                item.inventorySlotBonus = (int)so.specialEffect1;
-                break;
-            case EquipmentType.Helmet:
-                item.healthBonus += so.specialEffect1; // 추가 체력
-                item.damageReduction = so.specialEffect2;
-                break;
-        }
+        // 특수 효과 설정
+        item.maxOxygenBonus = so.maxOxygenBonus;
+        item.maxEnergyBonus = so.maxEnergyBonus;
+        item.extraHitCount = so.extraHitCount;
+        item.fireRateBonus = so.fireRateBonus;
+        item.oxygenConsumptionReduction = so.oxygenConsumptionReduction;
+        item.energyConsumptionReduction = so.energyConsumptionReduction;
+        item.inventorySlotBonus = so.inventorySlotBonus;
+        item.damageReduction = so.damageReduction;
 
         return item;
     }
@@ -394,51 +376,51 @@ public ConsumableItem CreateConsumableItem(int id)
     /// <summary>
     /// 새로운 FieldTileData 인스턴스를 생성해서 반환
     /// </summary>
-// 수정된 DataCenter.CreateFieldTileData 메서드
-public FieldTileData CreateFieldTileData(int id)
-{
-    var so = GetFieldTileDataSO(id);
-    if (so == null) return null;
-
-    var data = new FieldTileData();
-    data.ID = so.ID;
-    data.FieldLevel = so.FieldLevel;
-    data.TileLevel = so.TileLevel;
-    
-    // 문자열과 같은 이름의 enum으로 바로 변환
-    data.StageType = (CubieFaceSkillType)System.Enum.Parse(typeof(CubieFaceSkillType), so.StageType);
-    
-    data.minCount = so.minCount;
-    data.maxCount = so.maxCount;
-    data.ObjectID = new List<int>(so.ObjectID); // 리스트 복사
-    data.ObjectValue = new List<float>(so.ObjectValue); // 리스트 복사
-    data.description = so.description;
-
-    return data;
-}
-public List<FieldTileData> GetFieldTileDatasByFieldLevel(int fieldLevel)
-{
-    List<FieldTileData> result = new List<FieldTileData>();
-    
-    // Get all field tile data IDs
-    var allIds = GetAllIds<FieldTileData>();
-    
-    // Filter and create field tile data for the specified field level
-    foreach (int id in allIds)
+    // 수정된 DataCenter.CreateFieldTileData 메서드
+    public FieldTileData CreateFieldTileData(int id)
     {
-        var fieldTileDataSO = GetFieldTileDataSO(id);
-        if (fieldTileDataSO != null && fieldTileDataSO.FieldLevel == fieldLevel)
+        var so = GetFieldTileDataSO(id);
+        if (so == null) return null;
+
+        var data = new FieldTileData();
+        data.ID = so.ID;
+        data.FieldLevel = so.FieldLevel;
+        data.TileLevel = so.TileLevel;
+
+        // 문자열과 같은 이름의 enum으로 바로 변환
+        data.StageType = (CubieFaceSkillType)System.Enum.Parse(typeof(CubieFaceSkillType), so.StageType);
+
+        data.minCount = so.minCount;
+        data.maxCount = so.maxCount;
+        data.ObjectID = new List<int>(so.ObjectID); // 리스트 복사
+        data.ObjectValue = new List<float>(so.ObjectValue); // 리스트 복사
+        data.description = so.description;
+
+        return data;
+    }
+    public List<FieldTileData> GetFieldTileDatasByFieldLevel(int fieldLevel)
+    {
+        List<FieldTileData> result = new List<FieldTileData>();
+
+        // Get all field tile data IDs
+        var allIds = GetAllIds<FieldTileData>();
+
+        // Filter and create field tile data for the specified field level
+        foreach (int id in allIds)
         {
-            var fieldTileData = CreateFieldTileData(id);
-            if (fieldTileData != null)
+            var fieldTileDataSO = GetFieldTileDataSO(id);
+            if (fieldTileDataSO != null && fieldTileDataSO.FieldLevel == fieldLevel)
             {
-                result.Add(fieldTileData);
+                var fieldTileData = CreateFieldTileData(id);
+                if (fieldTileData != null)
+                {
+                    result.Add(fieldTileData);
+                }
             }
         }
+
+        return result;
     }
-    
-    return result;
-}
 
     /// <summary>
     /// 리플렉션으로 모든 타입의 새 인스턴스를 생성 (범용)
@@ -505,7 +487,7 @@ public List<FieldTileData> GetFieldTileDatasByFieldLevel(int fieldLevel)
         return null;
     }
 
-    
+
 
     /// <summary>
     /// 액션 데이터를 파싱하여 object[] 반환

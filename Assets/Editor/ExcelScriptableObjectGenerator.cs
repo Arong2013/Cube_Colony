@@ -360,131 +360,158 @@ public static class ExcelScriptableObjectGenerator
     /// <summary>
     /// EquipableItemSO 행 데이터 처리
     /// </summary>
-    private static string ProcessEquipableItemRow(EquipableItemSO so, string[] headers, object[] values, int rowIndex)
+private static string ProcessEquipableItemRow(EquipableItemSO so, string[] headers, object[] values, int rowIndex)
+{
+    string nameValue = null;
+     
+    for (int j = 0; j < headers.Length && j < values.Length; j++)
     {
-        string nameValue = null;
-
-        for (int j = 0; j < headers.Length && j < values.Length; j++)
+        string header = headers[j].Trim();
+        string rawValue = values[j]?.ToString()?.Trim();
+         
+        if (string.IsNullOrEmpty(header)) continue;
+         
+        try
         {
-            string header = headers[j].Trim();
-            string rawValue = values[j]?.ToString()?.Trim();
-
-            if (string.IsNullOrEmpty(header)) continue;
-
-            try
+            switch (header.ToLower().Replace(" ", "").Replace("_", ""))
             {
-                switch (header.ToLower().Replace(" ", "").Replace("_", ""))
-                {
-                    case "id":
-                        so.ID = ParseInt(rawValue);
-                        break;
-                    case "itemname":
-                    case "name":
-                        so.ItemName = rawValue ?? "";
-                        nameValue = so.ItemName;
-                        break;
-                    case "equipmenttype":
-                        so.equipmentType = ParseEquipmentType(rawValue);
-                        break;
-                    case "requiredlevel":
-                        so.requiredLevel = ParseInt(rawValue);
-                        break;
-                    case "attackbonus":
-                        so.attackBonus = ParseFloat(rawValue);
-                        break;
-                    case "defensebonus":
-                        so.defenseBonus = ParseFloat(rawValue);
-                        break;
-                    case "healthbonus":
-                        so.healthBonus = ParseFloat(rawValue);
-                        break;
-                    case "description":
-                        so.description = rawValue ?? "";
-                        break;
-                    case "grade":
-                        so.grade = ParseItemGrade(rawValue);
-                        break;
-                    case "reinforcementrecipeid":
-                        so.reinforcementRecipeId = ParseInt(rawValue);
-                        break;
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogWarning($"[ExcelParser] 필드 {header} 파싱 실패 (행 {rowIndex + 1}): {e.Message}");
+                case "id":
+                    so.ID = ParseInt(rawValue);
+                    break;
+                case "itemname":
+                case "name":
+                    so.ItemName = rawValue ?? "";
+                    nameValue = so.ItemName;
+                    break;
+                case "equipmenttype":
+                    so.equipmentType = ParseEquipmentType(rawValue);
+                    break;
+                case "requiredlevel":
+                    so.requiredLevel = ParseInt(rawValue);
+                    break;
+                case "attackbonus":
+                    so.attackBonus = ParseFloat(rawValue);
+                    break;
+                case "defensebonus":
+                    so.defenseBonus = ParseFloat(rawValue);
+                    break;
+                case "healthbonus":
+                    so.healthBonus = ParseFloat(rawValue);
+                    break;
+                case "maxoxygenbonus":
+                    so.maxOxygenBonus = ParseFloat(rawValue);
+                    break;
+                case "maxenergybonus":
+                    so.maxEnergyBonus = ParseFloat(rawValue);
+                    break;
+                case "extrahitcount":
+                    so.extraHitCount = ParseInt(rawValue);
+                    break;
+                case "firerateBonus":
+                case "firerate":
+                    so.fireRateBonus = ParseFloat(rawValue);
+                    break;
+                case "oxygenconsumptionreduction":
+                    so.oxygenConsumptionReduction = ParseFloat(rawValue);
+                    break;
+                case "energyconsumptionreduction":
+                    so.energyConsumptionReduction = ParseFloat(rawValue);
+                    break;
+                case "inventoryslotbonus":
+                    so.inventorySlotBonus = ParseInt(rawValue);
+                    break;
+                case "damagereduction":
+                    so.damageReduction = ParseFloat(rawValue);
+                    break;
+                case "description":
+                    so.description = rawValue ?? "";
+                    break;
+                case "grade":
+                    so.grade = ParseItemGrade(rawValue);
+                    break;
+                case "reinforcementrecipeid":
+                    so.reinforcementRecipeId = ParseInt(rawValue);
+                    break;
+                case "maxreinforcementlevel":
+                    so.maxReinforcementLevel = ParseInt(rawValue);
+                    break;
             }
         }
-
-        // name이 없다면 ID로 생성
-        if (string.IsNullOrEmpty(nameValue))
+        catch (Exception e)
         {
-            nameValue = $"Equipment_{so.ID}";
-            so.ItemName = nameValue;
+            Debug.LogWarning($"[ExcelParser] 필드 {header} 파싱 실패 (행 {rowIndex + 1}): {e.Message}");
         }
-
-        return nameValue;
     }
-
+     
+    // name이 없다면 ID로 생성
+    if (string.IsNullOrEmpty(nameValue))
+    {
+        nameValue = $"Equipment_{so.ID}";
+        so.ItemName = nameValue;
+    }
+     
+    return nameValue;
+}
     /// <summary>
     /// ConsumableItemSO 행 데이터 처리
     /// </summary>
     private static string ProcessConsumableItemRow(ConsumableItemSO so, string[] headers, object[] values, int rowIndex)
+{
+    string nameValue = null;
+
+    for (int j = 0; j < headers.Length && j < values.Length; j++)
     {
-        string nameValue = null;
+        string header = headers[j].Trim();
+        string rawValue = values[j]?.ToString()?.Trim();
 
-        for (int j = 0; j < headers.Length && j < values.Length; j++)
+        if (string.IsNullOrEmpty(header)) continue;
+
+        try
         {
-            string header = headers[j].Trim();
-            string rawValue = values[j]?.ToString()?.Trim();
-
-            if (string.IsNullOrEmpty(header)) continue;
-
-            try
+            switch (header.ToLower().Replace(" ", "").Replace("_", ""))
             {
-                switch (header.ToLower().Replace(" ", "").Replace("_", ""))
-                {
-                    case "id":
-                        so.ID = ParseInt(rawValue);
-                        break;
-                    case "itemname":
-                    case "name":
-                        so.ItemName = rawValue ?? "";
-                        nameValue = so.ItemName;
-                        break;
-                    case "maxamount":
-                        so.maxamount = ParseInt(rawValue);
-                        break;
-                    case "ids":
-                    case "actionids":
-                        so.ids = ParseIntList(rawValue);
-                        break;
-                    case "description":
-                        so.description = rawValue ?? "";
-                        break;
-                    case "grade":
-                        so.grade = ParseItemGrade(rawValue);
-                        break;
-                    case "acquirableFieldIds":
-                        so.acquirableFieldIds = ParseIntList(rawValue);
-                        break;
-
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogWarning($"[ExcelParser] 필드 {header} 파싱 실패 (행 {rowIndex + 1}): {e.Message}");
+                case "id":
+                    so.ID = ParseInt(rawValue);
+                    break;
+                case "itemname":
+                case "name":
+                    so.ItemName = rawValue ?? "";
+                    nameValue = so.ItemName;
+                    break;
+                case "maxamount":
+                    so.maxamount = ParseInt(rawValue);
+                    break;
+                case "ids":
+                case "actionids":
+                    so.ids = ParseIntList(rawValue);
+                    break;
+                case "description":
+                    so.description = rawValue ?? "";
+                    break;
+                case "grade":
+                    so.grade = ParseItemGrade(rawValue);
+                    break;
+                case "acquirablefieldids":
+                case "fieldids":
+                    so.acquirableFieldIds = ParseIntList(rawValue);
+                    break;
             }
         }
-
-        // name이 없다면 ID로 생성
-        if (string.IsNullOrEmpty(nameValue))
+        catch (Exception e)
         {
-            nameValue = $"Consumable_{so.ID}";
-            so.ItemName = nameValue;
+            Debug.LogWarning($"[ExcelParser] 필드 {header} 파싱 실패 (행 {rowIndex + 1}): {e.Message}");
         }
-
-        return nameValue;
     }
+
+    // name이 없다면 ID로 생성
+    if (string.IsNullOrEmpty(nameValue))
+    {
+        nameValue = $"Consumable_{so.ID}";
+        so.ItemName = nameValue;
+    }
+
+    return nameValue;
+}
 
     /// <summary>
     /// FieldTileDataSO 행 데이터 처리
@@ -514,25 +541,32 @@ private static string ProcessFieldTileDataRow(FieldTileDataSO so, string[] heade
                     so.TileLevel = ParseInt(rawValue);
                     break;
                 case "stagetype":
-                    // StageType 필드 추가 - 문자열로 저장
+                case "type":
+                    // StageType 필드 - 문자열로 저장 (CubieFaceSkillType으로 변환 가능)
                     so.StageType = rawValue ?? "RMonster";
                     break;
                 case "mincount":
+                case "minspawncount":
                     so.minCount = ParseInt(rawValue);
                     break;
                 case "maxcount":
+                case "maxspawncount":
                     so.maxCount = ParseInt(rawValue);
                     break;
                 case "objectid":
+                case "spawnobjectid":
                     so.ObjectID = ParseIntList(rawValue);
                     break;
                 case "objectvalue":
+                case "spawnobjectvalue":
+                case "spawnweight":
                     so.ObjectValue = ParseFloatList(rawValue);
                     break;
                 case "description":
                     so.description = rawValue ?? "";
                     break;
                 case "iconname":
+                case "tilename":
                     so.IconName = rawValue ?? "";
                     break;
             }
@@ -543,11 +577,14 @@ private static string ProcessFieldTileDataRow(FieldTileDataSO so, string[] heade
         }
     }
 
-    // name 생성
-    nameValue = $"Field{so.FieldLevel}_Tile{so.ID}_Level{so.TileLevel}";
+    // name 생성 (다양한 포맷 지원)
+    nameValue = string.IsNullOrEmpty(so.IconName) 
+        ? $"Field{so.FieldLevel}_Tile{so.ID}_Level{so.TileLevel}" 
+        : so.IconName;
 
     return nameValue;
 }
+
 
     /// <summary>
     /// ItemActionSO 행 데이터 처리

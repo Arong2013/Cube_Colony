@@ -34,11 +34,6 @@ public class PCController : IEntityController
                 InteractWithClosestEntity(entity);
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            ToggleInventory(entity);
-        }
     }
 
     private void HandleMovementInput(Entity entity)
@@ -91,10 +86,5 @@ public class PCController : IEntityController
         {
             closest.Interact(entity);
         }
-    }
-
-    private void ToggleInventory(Entity entity)
-    {
-        Utils.GetUI<InventoryUI>().ToggleInventoryUI();
     }
 }

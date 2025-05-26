@@ -27,11 +27,49 @@ public class EquipableItemSO : ScriptableObject
     [TitleGroup("기본 스탯 보너스")]
     [LabelText("방어력 증가")]
     public float defenseBonus = 0f;
-
     [TitleGroup("기본 스탯 보너스")]
     [LabelText("체력 증가")]
     public float healthBonus = 0f;
 
+    [TitleGroup("특수 보너스")]
+    [LabelText("최대 산소 보너스")]
+    [ShowInInspector]
+    public float maxOxygenBonus = 0f;
+
+    [TitleGroup("특수 보너스")]
+    [LabelText("최대 에너지 보너스")]
+    [ShowInInspector]
+    public float maxEnergyBonus = 0f;
+
+    [TitleGroup("특수 보너스")]
+    [LabelText("추가 타격 횟수")]
+    [ShowInInspector]
+    public int extraHitCount = 0;
+
+    [TitleGroup("특수 보너스")]
+    [LabelText("연사 속도 보너스")]
+    [ShowInInspector]
+    public float fireRateBonus = 0f;
+
+    [TitleGroup("특수 보너스")]
+    [LabelText("산소 소모 감소")]
+    [ShowInInspector]
+    public float oxygenConsumptionReduction = 0f;
+
+    [TitleGroup("특수 보너스")]
+    [LabelText("에너지 소모 감소")]
+    [ShowInInspector]
+    public float energyConsumptionReduction = 0f;
+
+    [TitleGroup("특수 보너스")]
+    [LabelText("인벤토리 슬롯 보너스")]
+    [ShowInInspector]
+    public int inventorySlotBonus = 0;
+
+    [TitleGroup("특수 보너스")]
+    [LabelText("피해 감소")]
+    [ShowInInspector]
+    public float damageReduction = 0f;
 
     [TitleGroup("강화 정보")]
     [LabelText("강화 레시피 ID")]
