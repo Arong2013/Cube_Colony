@@ -99,22 +99,32 @@ private static T FindInCanvasChildren<T>() where T : Component
         return list;
     }
 
-    public static PlayerEntity GetPlayer()
+public static PlayerEntity GetPlayer()
+{
+    // GameObject.FindWithTag를 사용하여 플레이어 찾기 (비활성화된 오브젝트 포함)
+    GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+    if (playerObj != null)
     {
-        // GameObject.FindWithTag를 사용하여 플레이어 찾기
-        GameObject playerObj = GameObject.FindWithTag("Player");
-        if (playerObj != null)
-        {
-            return playerObj.GetComponent<PlayerEntity>();
-        }
-
-        // 태그로 못 찾으면 컴포넌트로 찾기
-        PlayerEntity players = GameObject.FindAnyObjectByType<PlayerEntity>();
-        if (players != null)
-        {
-            return players;
-        }
-
-        return null;
+        return playerObj.GetComponent<PlayerEntity>();
     }
+
+    // 태그로 못 찾으면 컴포넌트로 찾기 (비활성화된 오브젝트 포함)
+    PlayerEntity[] players = GameObject.FindObjectsByType<PlayerEntity>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+    if (players.Length > 0)
+    {
+        return players[0];
+    }
+
+    // BattleFlowController의 PlayerEntity 확인
+    if (BattleFlowController.Instance != null)
+    {
+        PlayerEntity controllerPlayer = BattleFlowController.Instance.GetPlayerEntity();
+        if (controllerPlayer != null)
+        {
+            return controllerPlayer;
+        }
+    }
+
+    return null;
+}
 }

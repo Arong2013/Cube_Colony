@@ -112,6 +112,14 @@ public class BattleFlowController : SerializedMonoBehaviour
     /// </summary>
     private void InitializeFirstStage()
     {
+
+    GameObject playerPrefab = DataCenter.Instance.GetPlayerEntity();
+    GameObject playerObj = Instantiate(playerPrefab);
+    PlayerEntity playerEntity = playerObj.GetComponent<PlayerEntity>();
+    playerEntity.gameObject.SetActive(false);
+        playerEntity.Init();
+
+
         currentTotalStage = 1;
         if (stageCubeDataMap.ContainsKey(currentTotalStage))
         {

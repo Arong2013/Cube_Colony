@@ -15,7 +15,8 @@ public struct FieldData
 public class Field : MonoBehaviour
 {
     [SerializeField] private Transform disableField;
-    private PlayerEntity spawnedPlayer;
+    private PlayerEntity spawnedPlayer => Utils.GetPlayer();
+    [SerializeField] private NavMeshSurface navMeshSurfacePrefab;
     private NavMeshSurface navMeshSurface;
     private FieldData fieldData;
     public void Initialize(FieldData fieldData, Action returnAction,Action gameOverAction)
@@ -76,14 +77,13 @@ public class Field : MonoBehaviour
         var spawnPos = transform.position + Vector3.up;
         if (spawnedPlayer == null)
         {
-            GameObject playerObj = Instantiate(DataCenter.Instance.GetPlayerEntity(), spawnPos, Quaternion.identity);
-            spawnedPlayer = playerObj.GetComponent<PlayerEntity>();
-            playerObj.transform.SetParent(transform);
-            spawnedPlayer.SetScurivalAction(returnAction, gameOverAction);
-            spawnedPlayer.Init();
+          
+            
         }
         else
         {
+            spawnedPlayer.SetScurivalAction(returnAction, gameOverAction);
+            spawnedPlayer.transform.SetParent(transform);
             spawnedPlayer.gameObject.SetActive(true);   
             spawnedPlayer.transform.position = spawnPos;
             

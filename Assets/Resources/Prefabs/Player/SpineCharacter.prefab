@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4663202282550753500}
   - component: {fileID: 8147027543358373472}
   - component: {fileID: 3590314103128926681}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: PlayerCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 3287471636124501017}
   - component: {fileID: 2446873559737819303}
   - component: {fileID: 877866415106157578}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SpineCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}

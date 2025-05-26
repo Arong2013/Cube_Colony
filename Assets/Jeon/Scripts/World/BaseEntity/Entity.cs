@@ -192,8 +192,6 @@ public abstract class Entity : SerializedMonoBehaviour
             SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Move);
     }
 
-    private void OnDestroy() => _components.ExitAll();
-
     // ===== 디버그 테스트 버튼들 =====
 
     [TitleGroup("🛠️ 디버그 테스트")]

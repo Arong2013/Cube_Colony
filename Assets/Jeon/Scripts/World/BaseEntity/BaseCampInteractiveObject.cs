@@ -37,10 +37,9 @@ public class BaseCampInteractiveObject : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
         }
     }
-
     public void OnMouseEnter()
     {
-         PlayerEntity player = Utils.GetPlayerEntity();
+         PlayerEntity player = Utils.GetPlayer();
         if (player != null)
         {
             bool interactionSuccessful = false;
@@ -140,7 +139,7 @@ public class BaseCampInteractiveObject : MonoBehaviour
     [Button("상호작용 테스트")]
     private void TestInteraction()
     {
-        PlayerEntity player = Utils.GetPlayerEntity();
+        PlayerEntity player = Utils.GetPlayer();
         if (player != null)
         {
             OnMouseEnter();
