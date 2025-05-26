@@ -30,6 +30,20 @@ public abstract class Entity : SerializedMonoBehaviour
     [LabelText("테스트 데미지 양"), Range(1, 100)]
     [SerializeField] private float debugDamageAmount = 20f;
 
+    [SerializeField]
+    [DictionaryDrawerSettings(KeyLabel = "스탯 이름", ValueLabel = "값")]
+    private Dictionary<EntityStatName, float> initialStats = new Dictionary<EntityStatName, float>
+   {
+       { EntityStatName.HP, 100 },
+       { EntityStatName.MaxHP, 100 },
+       { EntityStatName.O2, 100 },
+       { EntityStatName.MaxO2, 100 },
+       { EntityStatName.ATK, 20 },
+       { EntityStatName.DEF, 20 },
+       { EntityStatName.SPD, 3 }
+   };
+
+
     public virtual void Init()
     {
         _animator = GetComponent<Animator>();
@@ -39,7 +53,11 @@ public abstract class Entity : SerializedMonoBehaviour
         _combatHandler = new EntityCombatHandler(this);
         _movementHandler = new EntityMovementHandler(this);
         _entityState = new IdleState(this, _animator);
-        Stats = EntityStat.CreatePlayerData();
+
+        foreach (var stat in initialStats)
+        {
+            Stats.SetBaseStat(stat.Key, stat.Value);
+        }
     }
 
     public void SetController(IEntityController controller) => _controller = controller;
@@ -200,9 +218,9 @@ public abstract class Entity : SerializedMonoBehaviour
     {
         float currentHP = GetEntityStat(EntityStatName.HP);
         Debug.Log($"[디버그] {name}이(가) {debugDamageAmount} 데미지를 받습니다. (현재 HP: {currentHP})");
-        
+
         TakeDamage(debugDamageAmount);
-        
+
         float newHP = GetEntityStat(EntityStatName.HP);
         Debug.Log($"[디버그] 데미지 후 HP: {newHP}");
     }
@@ -214,9 +232,9 @@ public abstract class Entity : SerializedMonoBehaviour
         float healAmount = 30f;
         float currentHP = GetEntityStat(EntityStatName.HP);
         Debug.Log($"[디버그] {name}이(가) {healAmount} 체력을 회복합니다. (현재 HP: {currentHP})");
-        
+
         Heal(healAmount);
-        
+
         float newHP = GetEntityStat(EntityStatName.HP);
         Debug.Log($"[디버그] 회복 후 HP: {newHP}");
     }
@@ -227,7 +245,7 @@ public abstract class Entity : SerializedMonoBehaviour
     {
         float maxHP = GetEntityStat(EntityStatName.MaxHP);
         Debug.Log($"[디버그] {name}에게 즉사 데미지 ({maxHP * 2}) 를 줍니다!");
-        
+
         TakeDamage(maxHP * 2); // 최대 체력의 2배 데미지
     }
 
@@ -287,19 +305,38 @@ public abstract class Entity : SerializedMonoBehaviour
     {
         float maxHP = GetEntityStat(EntityStatName.MaxHP);
         float maxO2 = GetEntityStat(EntityStatName.MaxO2);
-        
+
         Debug.Log($"[디버그] {name}을(를) 완전히 회복합니다!");
-        
+
         // 체력과 산소를 최대치로 설정
         SetEntityStatModifier(EntityStatName.HP, this, maxHP);
         SetEntityStatModifier(EntityStatName.O2, this, maxO2);
-        
+
         // 플레이어라면 에너지도 회복
         if (this is PlayerEntity && BattleFlowController.Instance?.playerData != null)
         {
             BattleFlowController.Instance.playerData.SetEnergy(BattleFlowController.Instance.playerData.maxEnergy);
         }
-        
+
         Debug.Log($"[디버그] 완전 회복 완료! HP: {GetEntityStat(EntityStatName.HP)}, O2: {GetEntityStat(EntityStatName.O2)}");
     }
+    
+   [Button("랜덤 스탯 생성", ButtonSizes.Large), GUIColor(0.4f, 0.8f, 1f)]
+   private void GenerateRandomStats()
+   {
+       initialStats.Clear();
+
+       // HP 관련 스탯
+       initialStats[EntityStatName.HP] = UnityEngine.Random.Range(50, 200);
+       initialStats[EntityStatName.MaxHP] = (int)(initialStats[EntityStatName.HP] * UnityEngine.Random.Range(1f, 1.5f));
+
+       // O2 관련 스탯
+       initialStats[EntityStatName.O2] = UnityEngine.Random.Range(50, 200);
+       initialStats[EntityStatName.MaxO2] = (int)(initialStats[EntityStatName.O2] * UnityEngine.Random.Range(1f, 1.5f));
+
+       // 전투 스탯
+       initialStats[EntityStatName.ATK] = UnityEngine.Random.Range(10, 50);
+       initialStats[EntityStatName.DEF] = UnityEngine.Random.Range(10, 50);
+       initialStats[EntityStatName.SPD] = UnityEngine.Random.Range(1, 10);
+   }
 }

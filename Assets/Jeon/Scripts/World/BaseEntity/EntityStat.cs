@@ -5,14 +5,25 @@ using UnityEngine;
 [Serializable]
 public class EntityStat
 {
+    [SerializeField]
+    [Header("기본 정보")]
     public readonly int ID;
-    public readonly string Name;
+
+    [SerializeField]
+    [Header("기본 정보")]
+    public string Name;
+
+    [SerializeField]
+    [Header("기본 정보")]
     public int Level;
+
+    [SerializeField]
+    [Header("위치 정보")]
     public Vector3 position;
 
     [SerializeField]
+    [Header("기본 스탯")]
     private Dictionary<EntityStatName, float> baseStats = new();
-
     [NonSerialized]
     private Dictionary<EntityStatName, Dictionary<object, float>> updatedStats = new();
 
@@ -143,4 +154,6 @@ public class EntityStat
         //    }
         //}
     }
+    
+    
 }

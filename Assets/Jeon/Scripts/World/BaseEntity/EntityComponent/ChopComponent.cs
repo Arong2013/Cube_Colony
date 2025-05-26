@@ -1,15 +1,16 @@
-﻿using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
-
-public class ChopComponent : IEntityComponent
+﻿public class ChopComponent : IEntityComponent 
 {
-    private Entity _entity;
-    public void Start(Entity entity) => _entity = entity;
-    public void Update(Entity entity) { }
-    public void Exit(Entity entity) { }
-    public void Chop(Entity target)
-    {     
-        _entity.SetTarget(target);
-        _entity.SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Attack);
-    }
+   private Entity _entity;
+   private int maxChopCount = 3; // 고정된 최대 타격 횟수
+   private float fixedDamage = 100f; // 고정 데미지
+
+   public void Start(Entity entity) => _entity = entity;
+   public void Update(Entity entity) { }
+   public void Exit(Entity entity) { }
+
+   public void Chop(Entity target)
+   {
+       if (target == null) return;
+       target.TakeDamage(1);
+   }
 }
