@@ -88,11 +88,7 @@ public class StorageSlot : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         if (item == null) return;
-        // 우클릭: 아이템 이동
-        else if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            TransferItem();
-        }
+TransferItem();
     }
 
     // 아이템 이동
