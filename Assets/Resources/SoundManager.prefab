@@ -52,10 +52,30 @@ MonoBehaviour:
   reuseAudioSources: 1
   sourceNameFormat: AudioSource_{0}_{1}
   soundEffects:
-  - name: Attack
-    clip: {fileID: 8300000, guid: ede539f0b73c9cf42a79a1f204295ad4, type: 3}
-  - name: 
-    clip: {fileID: 0}
+  - name: PlayerAttack
+    clip: {fileID: 8300000, guid: 32400789e23c71e40a4f94fc80eb3437, type: 3}
+  - name: PlayerHit
+    clip: {fileID: 8300000, guid: 0cb1c5b5c6e7e5e429eb69ccdb02b94f, type: 3}
+  - name: PlayerFootstep
+    clip: {fileID: 8300000, guid: fcb971a4c8ae8414c8d2814ca95851a2, type: 3}
+  - name: AMonsterAttack
+    clip: {fileID: 8300000, guid: ef8361532b2bd61448570375dd384464, type: 3}
+  - name: AMonsterHit
+    clip: {fileID: 8300000, guid: 73d7f92a9cb7c31478bd4c31d6367447, type: 3}
+  - name: AMonsterFootstep
+    clip: {fileID: 8300000, guid: 46bcde3ff11c28f4aaf7e06f049f5d82, type: 3}
+  - name: RMonsterAttack
+    clip: {fileID: 8300000, guid: 750c20e98bd87394e9ca1cc9924968d9, type: 3}
+  - name: RMonsterHit
+    clip: {fileID: 8300000, guid: 93394a664c61601458b9d96bfb9b82c3, type: 3}
+  - name: RMonsterFootstep
+    clip: {fileID: 8300000, guid: 889676f2d8d9e004b9319626182bb068, type: 3}
   backgroundMusics:
-  - name: dwdwd
-    clip: {fileID: 8300000, guid: e7ac2ebfba950974fb9557b0af17f6c6, type: 3}
+  - name: MainMenu
+    clip: {fileID: 8300000, guid: 7beaa049725bb804d8c89f0c26d3ccff, type: 3}
+  - name: CubeLevel
+    clip: {fileID: 8300000, guid: 796b1b1d5476782499c7a9fb7b0eb389, type: 3}
+  - name: FindLevel
+    clip: {fileID: 8300000, guid: dbbaac8d510d0b14e90b407633d44130, type: 3}
+  - name: BaseCamp
+    clip: {fileID: 8300000, guid: 683e7b82cc0b5a7459a27fa4d41c2c3c, type: 3}
