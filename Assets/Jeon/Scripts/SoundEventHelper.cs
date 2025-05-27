@@ -1,13 +1,19 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
+using System.Collections.Generic;
 
-/// <summary>
-/// 애니메이션 이벤트에서 사운드를 재생하기 위한 헬퍼 클래스
-/// </summary>
-public class SoundEventHelper : MonoBehaviour
+public enum SFXType 
 {
-    /// <summary>
-    /// 애니메이션 이벤트에서 호출할 메서드
-    /// </summary>
+    Footstep,
+    Attack,
+    Hit
+}
+
+public class SoundEventHelper : SerializedMonoBehaviour 
+{
+    [SerializeField]
+    private Dictionary<SFXType, string> sfxNameMap = new Dictionary<SFXType, string>();
+
     public void PlaySound(string soundName)
     {
         if (SoundManager.Instance != null)
@@ -15,38 +21,33 @@ public class SoundEventHelper : MonoBehaviour
             SoundManager.Instance.PlaySFX(soundName);
         }
     }
-    
-    /// <summary>
-    /// 발소리 재생 메서드 (특수 케이스)
-    /// </summary>
     public void PlayFootstep()
     {
-        if (SoundManager.Instance != null)
-        {
-            // 랜덤 발소리 선택 (footstep1, footstep2, footstep3)
-            SoundManager.Instance.PlaySFX("footstep");
-        }
+        PlaySFXByType(SFXType.Footstep);
     }
-    
-    /// <summary>
-    /// 공격 소리 재생 메서드
-    /// </summary>
+
     public void PlayAttackSound()
     {
-        if (SoundManager.Instance != null)
-        {
-            SoundManager.Instance.PlaySFX("attack");
-        }
+        PlaySFXByType(SFXType.Attack);
     }
-    
-    /// <summary>
-    /// 피격 소리 재생 메서드
-    /// </summary>
+
     public void PlayHitSound()
     {
-        if (SoundManager.Instance != null)
+        PlaySFXByType(SFXType.Hit);
+    }
+
+    private void PlaySFXByType(SFXType type)
+    {
+        if (sfxNameMap.TryGetValue(type, out string soundName))
         {
-            SoundManager.Instance.PlaySFX("hit");
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySFX(soundName);
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"No sound name found for SFX type: {type}");
         }
     }
 }
