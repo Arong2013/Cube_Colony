@@ -11,6 +11,8 @@ public class CubieFace : MonoBehaviour
     [SerializeField] private Renderer targetRenderer, outLineRenderer;
     [SerializeField] private CubieFaceInfo cubieFaceInfo = new();
 
+    [SerializeField] Animator animator;
+
     public void Init(CubeFaceType face, Cubie cubie)
     {
         this.face = face;
@@ -20,6 +22,8 @@ public class CubieFace : MonoBehaviour
     public void SetFace(CubeFaceType face)
     {
         this.face = face;
+
+       
     }
 
     public void SetVisual()
@@ -27,6 +31,7 @@ public class CubieFace : MonoBehaviour
         var count = CubeGridHandler.Instance.GetSameTypeAdjacentCount(this);
         cubieFaceInfo.SetLevel(count);
         ApplyVisual(DataCenter.Instance.GetFaceData(cubieFaceInfo.Type));
+        animator.SetTrigger(count);
     }
 
     public void SetSkillType(CubieFaceSkillType type)

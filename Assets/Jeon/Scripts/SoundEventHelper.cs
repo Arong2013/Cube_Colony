@@ -8,7 +8,6 @@ public enum SFXType
     Attack,
     Hit
 }
-
 public class SoundEventHelper : SerializedMonoBehaviour 
 {
     [SerializeField]
