@@ -215,7 +215,7 @@ Animator:
   m_GameObject: {fileID: 6489030815539060485}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f779117b0464f66418e0819c27b8ab29, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5298475c6ec980c4197cabe1b5da7acf, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -412,7 +412,7 @@ PrefabInstance:
     - target: {fileID: -2335373634013057982, guid: afcc9d36d36de8b41a23bbfb06bec0e8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 02e41d55add268d4398216ef9a9ff489, type: 2}
+      objectReference: {fileID: 2100000, guid: 7ca4b2abc86cf5f489654e07d248fdbd, type: 2}
     - target: {fileID: 919132149155446097, guid: afcc9d36d36de8b41a23bbfb06bec0e8, type: 3}
       propertyPath: m_Name
       value: Robot_Floor_Light
@@ -440,7 +440,7 @@ Animator:
   m_GameObject: {fileID: 498068752869054539}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 03e29cd0edf22144abc801dcb2d27179, type: 2}
+  m_Controller: {fileID: 9100000, guid: 86cfae84fe6dca2429cb334c5077ff07, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

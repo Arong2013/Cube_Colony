@@ -134,6 +134,7 @@ MonoBehaviour:
     maxLevel: 3
     position: {x: 0, y: 0, z: 0}
   currentStageLevel: 0
+  AnimeMeshRender: {fileID: 0}
   spawnPoints: []
 --- !u!95 &9217461354105463842
 Animator:
