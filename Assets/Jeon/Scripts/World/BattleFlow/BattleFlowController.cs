@@ -1,5 +1,6 @@
 ﻿using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BattleFlowController : SerializedMonoBehaviour
@@ -62,6 +63,10 @@ public class BattleFlowController : SerializedMonoBehaviour
     [TitleGroup("에너지 설정")]
     [LabelText("에너지 자동 회복 사용")]
     [SerializeField] private bool useEnergyRegen = true;
+
+    [TitleGroup("플레이어 데이터", "플레이어 관련 정보")]
+    [ShowInInspector]
+    public List<Item> storageItems = new List<Item>();
 
 
     [TitleGroup("디버그 정보")]
@@ -226,6 +231,77 @@ public class BattleFlowController : SerializedMonoBehaviour
 
         ChangeState(new InSurvivalState(this, currentCubeData, topFaces));
     }
+
+    /// <summary>
+    /// 창고에 아이템 추가
+    /// </summary>
+    public bool AddItemToStorage(Item item)
+    {
+        if (item == null) return false;
+
+        // 소모품인 경우 병합 시도
+        if (item is ConsumableItem newConsumable)
+        {
+            return MergeConsumableItemInStorage(newConsumable);
+        }
+
+        storageItems.Add(item);
+        NotifyObservers();
+        return true;
+    }
+
+    /// <summary>
+    /// 창고에서 아이템 제거
+    /// </summary>
+    public void RemoveItemFromStorage(Item item)
+    {
+        if (item == null) return;
+
+        storageItems.Remove(item);
+        NotifyObservers();
+    }
+
+    /// <summary>
+    /// 창고에 소모품 병합
+    /// </summary>
+    private bool MergeConsumableItemInStorage(ConsumableItem newConsumable)
+    {
+        // 같은 ID의 기존 아이템들을 찾음
+        var existingItems = storageItems
+            .OfType<ConsumableItem>()
+            .Where(x => x.ID == newConsumable.ID)
+            .ToList();
+
+        int remainingAmount = newConsumable.cunamount;
+
+        foreach (var existingItem in existingItems)
+        {
+            if (remainingAmount <= 0) break;
+
+            int canAdd = existingItem.maxamount - existingItem.cunamount;
+            int toAdd = Mathf.Min(canAdd, remainingAmount);
+
+            if (toAdd > 0)
+            {
+                existingItem.cunamount += toAdd;
+                remainingAmount -= toAdd;
+            }
+        }
+
+        if (remainingAmount > 0)
+        {
+            var newItem = newConsumable.Clone() as ConsumableItem;
+            if (newItem != null)
+            {
+                newItem.cunamount = remainingAmount;
+                storageItems.Add(newItem);
+            }
+        }
+
+        NotifyObservers();
+        return true;
+    }
+
 
     /// <summary>
     /// 다음 스테이지의 카운트다운 상태로 설정합니다.

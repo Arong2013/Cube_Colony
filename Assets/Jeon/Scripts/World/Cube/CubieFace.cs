@@ -31,7 +31,7 @@ public class CubieFace : MonoBehaviour
         var count = CubeGridHandler.Instance.GetSameTypeAdjacentCount(this);
         cubieFaceInfo.SetLevel(count);
         ApplyVisual(DataCenter.Instance.GetFaceData(cubieFaceInfo.Type));
-        animator.SetTrigger(count);
+        //animator.SetTrigger(count);
     }
 
     public void SetSkillType(CubieFaceSkillType type)
