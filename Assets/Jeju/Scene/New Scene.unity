@@ -1856,7 +1856,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8801919154504347949, guid: c785da83a8830eb42bd55ce182e37664, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1320231313}
   m_SourcePrefab: {fileID: 100100000, guid: c785da83a8830eb42bd55ce182e37664, type: 3}
 --- !u!1 &468764089
 GameObject:
@@ -2093,6 +2096,7 @@ GameObject:
   - component: {fileID: 490134422}
   - component: {fileID: 490134421}
   - component: {fileID: 490134425}
+  - component: {fileID: 490134426}
   m_Layer: 0
   m_Name: Plane (2)
   m_TagString: Untagged
@@ -2212,6 +2216,65 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &490134426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490134420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93aa291b25f80844880221d43948d275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: sfxNameMap
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[SFXType, Assembly-CSharp],[System.String,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[SFXType, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 1
+      Data: TileEnhace1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
 --- !u!1 &543465911
 GameObject:
   m_ObjectHideFlags: 0
@@ -3236,6 +3299,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 895464808}
   m_CullTransparentMesh: 1
+--- !u!1001 &897059098
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 114504257223380888, guid: 498978f5f000a408f81784e6dedc2349, type: 3}
+      propertyPath: m_Name
+      value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7821036370029364278, guid: 498978f5f000a408f81784e6dedc2349, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.1611326
+      objectReference: {fileID: 0}
+    - target: {fileID: 7821036370029364278, guid: 498978f5f000a408f81784e6dedc2349, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.39489987
+      objectReference: {fileID: 0}
+    - target: {fileID: 7821036370029364278, guid: 498978f5f000a408f81784e6dedc2349, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.52995086
+      objectReference: {fileID: 0}
+    - target: {fileID: 7821036370029364278, guid: 498978f5f000a408f81784e6dedc2349, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7821036370029364278, guid: 498978f5f000a408f81784e6dedc2349, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7821036370029364278, guid: 498978f5f000a408f81784e6dedc2349, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7821036370029364278, guid: 498978f5f000a408f81784e6dedc2349, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7821036370029364278, guid: 498978f5f000a408f81784e6dedc2349, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7821036370029364278, guid: 498978f5f000a408f81784e6dedc2349, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7821036370029364278, guid: 498978f5f000a408f81784e6dedc2349, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 498978f5f000a408f81784e6dedc2349, type: 3}
 --- !u!1 &954732088
 GameObject:
   m_ObjectHideFlags: 0
@@ -3986,13 +4106,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 767467af9ef4552479459d62ea53f9a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glitchShader: {fileID: 4800000, guid: d20a63fee6b5f5641825bf00d2fbcae3, type: 3}
-  shakePower: 0.03
-  shakeBlockSize: 30.5
-  fade: 0
-  directionR: {x: 1, y: 0}
-  directionG: {x: 0.4, y: 1}
-  directionB: {x: -0.7, y: -0.3}
 --- !u!1 &1146053054
 GameObject:
   m_ObjectHideFlags: 0
@@ -4407,6 +4520,70 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2687090996866741494, guid: 02d71ecc58b24b74c8eb63295ff1c0bf, type: 3}
   m_PrefabInstance: {fileID: 1305195084}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1320231306 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8801919154504347949, guid: c785da83a8830eb42bd55ce182e37664, type: 3}
+  m_PrefabInstance: {fileID: 466569256}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1320231313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320231306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93aa291b25f80844880221d43948d275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: sfxNameMap
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[SFXType, Assembly-CSharp],[System.String,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[SFXType, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 5
+    - Name: $v
+      Entry: 1
+      Data: PortalIn
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
 --- !u!1 &1348804633
 GameObject:
   m_ObjectHideFlags: 0
@@ -8020,3 +8197,4 @@ SceneRoots:
   - {fileID: 466569256}
   - {fileID: 432652089}
   - {fileID: 1956538563}
+  - {fileID: 897059098}

@@ -70,6 +70,18 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 93394a664c61601458b9d96bfb9b82c3, type: 3}
   - name: RMonsterFootstep
     clip: {fileID: 8300000, guid: 889676f2d8d9e004b9319626182bb068, type: 3}
+  - name: CubeTurn
+    clip: {fileID: 8300000, guid: 292fe039474912e48893a24ead6780ff, type: 3}
+  - name: TileEnhace1
+    clip: {fileID: 8300000, guid: baf0ea517f142764e95af75fb159d342, type: 3}
+  - name: TileEnhace2
+    clip: {fileID: 8300000, guid: 4183f29d9d5f6f544aef28c1617c84a6, type: 3}
+  - name: TileEnhace3
+    clip: {fileID: 8300000, guid: 6ab99abf35561c147b46c8f34d29a712, type: 3}
+  - name: PortalIn
+    clip: {fileID: 8300000, guid: ddcec25d77d5b4647a2d9ac9ba8ed29b, type: 3}
+  - name: PortalOut
+    clip: {fileID: 8300000, guid: 29e14d79745dc4f43869c423e2ada906, type: 3}
   backgroundMusics:
   - name: MainMenu
     clip: {fileID: 8300000, guid: 7beaa049725bb804d8c89f0c26d3ccff, type: 3}
