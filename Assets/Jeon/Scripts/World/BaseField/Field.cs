@@ -35,7 +35,7 @@ public class Field : MonoBehaviour
     }
     public void SpawnNextStage()
     {
-        var spawnPos = transform.position + Vector3.up;
+        var spawnPos = transform.position + new Vector3(0, 0.5f, 0);    
         var spawnOBj = Instantiate(DataCenter.Instance.GetExitGate(0).gameObject, spawnPos, Quaternion.identity);
         spawnOBj.transform.SetParent(disableField);
         spawnOBj.GetComponent<InteractableEntity>().Init();

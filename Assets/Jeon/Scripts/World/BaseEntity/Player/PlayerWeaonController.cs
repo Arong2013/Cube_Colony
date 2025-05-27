@@ -43,33 +43,32 @@ public class PlayerWeaonController : SerializedMonoBehaviour
     [ReadOnly, ShowInInspector]
     private string lastHitEntity = "없음";
 
-    private void OnTriggerEnter(Collider other)
+  private void OnTriggerEnter(Collider other)
+{
+    // 부모 엔티티의 콜라이더는 제외
+    if (other.transform.IsChildOf(transform.parent))
+        return;
+
+    // Entity 컴포넌트가 있는지 확인
+    if (other.TryGetComponent<Entity>(out Entity targetEntity))
     {
-        // Entity 컴포넌트가 있는지 확인
-        if (other.TryGetComponent<Entity>(out Entity targetEntity))
+        // 자기 자신은 제외
+        if (targetEntity == playerEntity)
+            return;
+
+        var attackComponent = targetEntity.GetEntityComponent<AttackComponent>();
+        var chopComponent = targetEntity.GetEntityComponent<ChopComponent>();
+
+        if (attackComponent != null)
         {
-            // 자기 자신은 제외
-            if (targetEntity == playerEntity)
-                return;
-
-            // 플레이어의 공격력 계산
-            float playerAttack = CalculateDamage();
-
-            // 데미지 적용
-            targetEntity.TakeDamage(playerAttack);
-
-            // 디버그 정보 업데이트
-            hitCount++;
-            lastDamage = playerAttack;
-            lastHitEntity = targetEntity.name;
-
-            // 디버그 로그
-            if (debugMode)
-            {
-                Debug.Log($"<color=#{ColorUtility.ToHtmlStringRGB(debugColor)}>[무기 충돌] {playerEntity.name}가 {targetEntity.name}에게 {playerAttack} 데미지를 입혔습니다.</color>");
-            }
+            attackComponent.Attack(targetEntity);
+        }
+        if (chopComponent != null)
+        {
+            chopComponent.Chop(targetEntity);
         }
     }
+}
 
     [Button("데미지 계산 테스트", ButtonSizes.Medium), GUIColor(0.3f, 0.7f, 0.9f)]
     private float CalculateDamage()

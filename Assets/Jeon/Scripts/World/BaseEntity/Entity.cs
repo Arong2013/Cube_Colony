@@ -173,7 +173,7 @@ public abstract class Entity : SerializedMonoBehaviour
 
     public void OnAttackHit() => GetEntityComponent<AttackComponent>()?.DoHit();
 
-    public void OnAttackAnime() => SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Attack);
+    public virtual void OnAttackAnime() => SetAnimatorValue(EntityAnimInt.ActionType, (int)EntityActionType.Attack);
 
     public void SetOnHitAction(Action action) => onHitAction += action;
 

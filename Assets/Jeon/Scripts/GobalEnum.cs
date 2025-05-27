@@ -74,14 +74,14 @@ public enum EntityAnimTrigger
 }
 public enum EntityAnimBool
 {
+    AttackRight
 }
 public enum EntityAnimFloat
 {
     Speed,
     MoveX,
-    MoveY
+    MoveY,
 }
-
 
 public enum EntityStatName
 {
@@ -94,13 +94,14 @@ public enum EntityStatName
     Attack,         // 공격력 (ATK를 Attack으로 변경)
     Defense,        // 방어력 (DEF를 Defense로 변경)
     SPD,            // 이동 속도
-    
+
     // 새로 추가된 필드들
     MaxO2 = MaxOxygen,       // 이전 코드와의 호환성을 위해 별칭 제공
     MaxEng = MaxEnergy,      // 이전 코드와의 호환성을 위해 별칭 제공
     ATK = Attack,            // 이전 코드와의 호환성을 위해 별칭 제공
     DEF = Defense            // 이전 코드와의 호환성을 위해 별칭 제공
-}public enum InteractionType
+}
+public enum InteractionType
 {
     Attack,
     Chop,

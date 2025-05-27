@@ -61,6 +61,19 @@ public class PlayerEntity : Entity, ISubject
         DamageO2();
     }
 
+    public override void OnAttackAnime()
+    {if (Camera.main == null) return;
+
+    Vector3 playerScreenPos = Camera.main.WorldToScreenPoint(transform.position);
+    bool isRightSide = Input.mousePosition.x > playerScreenPos.x;
+
+    // 공격 방향 애니메이터 파라미터 설정
+    SetAnimatorValue(EntityAnimBool.AttackRight, isRightSide);
+
+        base.OnAttackAnime();
+            // 마우스 위치에 따른 공격 방향 결정
+    
+    }
     void LinkUi() => Utils.SetPlayerMarcineOnUI().ForEach(x => x.Initialize(this));
 
     public void RegisterObserver(IObserver observer) => observers.Add(observer);
