@@ -35,7 +35,6 @@ public class SoundEventHelper : SerializedMonoBehaviour
     {
         PlaySFXByType(SFXType.Hit);
     }
-
     private void PlaySFXByType(SFXType type)
     {
         if (sfxNameMap.TryGetValue(type, out string soundName))

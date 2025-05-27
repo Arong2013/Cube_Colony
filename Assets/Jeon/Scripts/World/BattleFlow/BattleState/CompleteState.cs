@@ -39,6 +39,7 @@ public class CompleteState : IGameSequenceState
             playerData.FullReset();
             Debug.Log("게임 오버로 인한 완전 초기화");
         }
+        Utils.GetPlayer().Init();
     }
 
     public void Exit() { }
