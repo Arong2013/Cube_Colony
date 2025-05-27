@@ -30,7 +30,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Resolution: 50
-    - _TransitionTime: 0
+    - _TransitionTime: 1
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

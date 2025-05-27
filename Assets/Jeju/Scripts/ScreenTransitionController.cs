@@ -203,8 +203,7 @@ public class ScreenTransitionController : MonoBehaviour
             // 로딩바 업데이트
             if (loadingBar != null)
                 loadingBar.value = progress;
-                
-            // 로딩이 90% 이상 진행되면 (씬 준비 완료)
+                  // 로딩이 90% 이상 진행되면 (씬 준비 완료)
             if (operation.progress >= 0.9f)
             {
                 // 짧은 대기 시간 (사용자가 로딩 상태를 확인할 시간)
@@ -216,15 +215,22 @@ public class ScreenTransitionController : MonoBehaviour
                     
                 // 씬 활성화 허용
                 operation.allowSceneActivation = true;
+                
+                // 씬이 완전히 활성화될 때까지 대기
+                yield return new WaitForSeconds(0.5f);
+                
+                // 페이드 아웃
+                yield return StartCoroutine(FadeOutRoutine());
+                
+                // 작업 완료
+                yield break;
             }
             
             yield return null;
         }
         
-        // 다음 프레임 대기 (새 씬이 완전히 로드되도록)
-        yield return null;
-        
-        // 페이드 아웃
+        // 이 코드는 일반적으로 실행되지 않지만, 안전을 위해 유지
+        yield return new WaitForSeconds(0.5f);
         yield return StartCoroutine(FadeOutRoutine());
     }
 }
