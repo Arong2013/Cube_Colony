@@ -30,7 +30,6 @@ public class SoundEventHelper : SerializedMonoBehaviour
     {
         PlaySFXByType(SFXType.Attack);
     }
-
     public void PlayHitSound()
     {
         PlaySFXByType(SFXType.Hit);
