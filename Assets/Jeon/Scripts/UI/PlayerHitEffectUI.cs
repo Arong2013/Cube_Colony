@@ -78,21 +78,17 @@ public class PlayerHitEffectUI : SerializedMonoBehaviour
     {
         // 플레이어 카메라 찾기
         playerCamera = FindActiveCinemachineCamera();
-
         // 나머지 기존 로직 유지
         if (playerCamera == null)
         {
             // 메인 카메라 사용
             playerCamera = Camera.main?.transform;
         }
-
-
         // 이미 효과가 재생 중이면 중단
         if (hitEffectCoroutine != null)
         {
             StopCoroutine(hitEffectCoroutine);
         }
-
         // 효과 재생
         hitEffectCoroutine = StartCoroutine(HitEffectCoroutine(damage));
     }

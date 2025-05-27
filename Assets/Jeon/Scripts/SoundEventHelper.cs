@@ -13,7 +13,6 @@ public enum SFXType
     TileEnhance3,
     Portal
 }
-
 public class SoundEventHelper : SerializedMonoBehaviour 
 {
     [SerializeField]

@@ -17,10 +17,13 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
     [LabelText("에너지 바"), Required]
     [SerializeField] private BarUI engBar;
 
-
     [TitleGroup("게임 진행 UI")]
     [LabelText("큐브 사용 횟수 텍스트"), Required]
     [SerializeField] private TMPro.TextMeshProUGUI cubeUsageCountText;
+
+      [TitleGroup("게임 진행 UI")]
+    [LabelText("큐브 사용 애니메이션 "), Required]
+    [SerializeField] private Animator cubeUsageAnimator;
 
     [TitleGroup("게임 진행 UI")]
     [LabelText("총 탐험 횟수 텍스트"), Required]
@@ -194,6 +197,7 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
                 cubeUsageCountText.color = Color.white; // 초기 상태
             }
         }
+        cubeUsageAnimator.SetInteger("currentUsage", currentUsage); 
     }
 
     /// <summary>
