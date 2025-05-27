@@ -24,14 +24,6 @@ public class StorageSlot : MonoBehaviour, IPointerClickHandler
     private bool isStorageSlot; // true: 창고 슬롯, false: 인벤토리 슬롯
 
     private Action<Item> transferAction; // 아이템 이동 액션
-
-    private void Awake()
-    {
-        // 아이콘과 텍스트 컴포넌트 찾기
-        icon = GetComponentInChildren<Image>();
-        amountText = GetComponentInChildren<TextMeshProUGUI>();
-    }
-
     // 슬롯 초기화
     public void Initialize(Item item, bool isStorageSlot, Action<Item> transferAction)
     {
@@ -88,7 +80,7 @@ public class StorageSlot : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         if (item == null) return;
-TransferItem();
+        TransferItem();
     }
 
     // 아이템 이동
