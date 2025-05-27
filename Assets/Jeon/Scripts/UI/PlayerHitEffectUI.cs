@@ -2,7 +2,8 @@
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
 using System.Collections;
-
+using System.Linq;
+using Unity.Cinemachine;
 public class PlayerHitEffectUI : SerializedMonoBehaviour
 {
     public static PlayerHitEffectUI Instance { get; private set; }
@@ -76,20 +77,32 @@ public class PlayerHitEffectUI : SerializedMonoBehaviour
     public void PlayHitEffect(float damage)
     {
         // 플레이어 카메라 찾기
+        playerCamera = FindActiveCinemachineCamera();
+        // 나머지 기존 로직 유지
         if (playerCamera == null)
         {
-            // Utils로 플레이어 찾기
-            PlayerEntity player = Utils.GetPlayer();
-            if (player != null)
-            {
-                // 플레이어 하위의 카메라 찾기
-                playerCamera = player.GetComponentInChildren<Camera>()?.transform;
-                if (playerCamera == null)
-                {
-                    // 못 찾으면 메인 카메라 사용
-                    playerCamera = Camera.main?.transform;
-                }
-            }
+            // 메인 카메라 사용
+            playerCamera = Camera.main?.transform;
+        }
+        // 이미 효과가 재생 중이면 중단
+        if (hitEffectCoroutine != null)
+        {
+            StopCoroutine(hitEffectCoroutine);
+        }
+        // 효과 재생
+        hitEffectCoroutine = StartCoroutine(HitEffectCoroutine(damage));
+    }
+
+    public void PlayHitFixedEffect()
+    {
+        // 플레이어 카메라 찾기
+        playerCamera = FindActiveCinemachineCamera();
+
+        // 나머지 기존 로직 유지
+        if (playerCamera == null)
+        {
+            // 메인 카메라 사용
+            playerCamera = Camera.main?.transform;
         }
 
         // 이미 효과가 재생 중이면 중단
@@ -98,8 +111,8 @@ public class PlayerHitEffectUI : SerializedMonoBehaviour
             StopCoroutine(hitEffectCoroutine);
         }
 
-        // 효과 재생
-        hitEffectCoroutine = StartCoroutine(HitEffectCoroutine(damage));
+        // 고정된 효과 재생
+        hitEffectCoroutine = StartCoroutine(HitFixedEffectCoroutine());
     }
 
     private IEnumerator HitEffectCoroutine(float damage)
@@ -170,6 +183,58 @@ public class PlayerHitEffectUI : SerializedMonoBehaviour
         hitEffectCoroutine = null;
     }
 
+    private IEnumerator HitFixedEffectCoroutine()
+{
+    // 데미지 크기와 상관없이 고정된 값 사용
+    float intensity = 1f; // 고정 강도
+
+    // 1. 히트 효과 즉시 적용
+    ApplyHitEffect(intensity);
+
+    // 2. 일시적인 시간 슬로우
+    float targetTimeScale = 0.7f; // 고정된 시간 슬로우 값
+    Time.timeScale = targetTimeScale;
+
+    // 3. 효과 지속
+    yield return new WaitForSecondsRealtime(effectDuration);
+
+    // 4. 페이드아웃
+    float elapsed = 0f;
+
+    Color startColor = damageOverlay.color;
+    Color endColor = new Color(damageColor.r, damageColor.g, damageColor.b, 0f);
+    float startTimeScale = Time.timeScale;
+
+    while (elapsed < fadeOutDuration)
+    {
+        float t = elapsed / fadeOutDuration;
+
+        // 이미지 페이드아웃
+        damageOverlay.color = Color.Lerp(startColor, endColor, t);
+
+        // 시간 정상화
+        Time.timeScale = Mathf.Lerp(startTimeScale, 1f, t);
+
+        // 카메라 위치 복원
+        if (useCameraShake && playerCamera != null)
+        {
+            playerCamera.localPosition = Vector3.Lerp(
+                playerCamera.localPosition,
+                originalCameraPosition,
+                t * 2f // 카메라는 좀 더 빠르게 원위치
+            );
+        }
+
+        elapsed += Time.unscaledDeltaTime;
+        yield return null;
+    }
+
+    // 5. 완전히 원래 상태로 복원
+    ResetEffects();
+
+    hitEffectCoroutine = null;
+}
+
     private void ApplyHitEffect(float intensity)
     {
         // 데미지 이미지 표시
@@ -226,5 +291,18 @@ public class PlayerHitEffectUI : SerializedMonoBehaviour
         {
             playerCamera.localPosition = originalCameraPosition;
         }
+    }
+
+
+    private Transform FindActiveCinemachineCamera()
+    {
+        // Cinemachine Virtual Camera를 찾는 메서드
+        var virtualCameras = FindObjectsByType<CinemachineCamera>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+
+        // 활성화되어 있고 Priority가 가장 높은 카메라 찾기
+        return virtualCameras
+            .Where(cam => cam.gameObject.activeInHierarchy)
+            .OrderByDescending(cam => cam.Priority)
+            .FirstOrDefault()?.transform;
     }
 }

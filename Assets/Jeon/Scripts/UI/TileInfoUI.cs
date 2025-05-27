@@ -38,13 +38,6 @@ public class TileInfoUI : SerializedMonoBehaviour
     [TitleGroup("세부 설정")]
     [LabelText("이미지 크기"), Range(50, 200)]
     [SerializeField] private float imageSize = 100f;
-
-    private void Awake()
-    {
-        // 초기에는 UI 비활성화
-        gameObject.SetActive(false);
-    }
-
     /// <summary>
     /// 큐브 정보를 표시하는 메서드
     /// </summary>
@@ -57,9 +50,6 @@ public class TileInfoUI : SerializedMonoBehaviour
 
         // 출현 정보 표시
         ShowSpawnInformation(selectedFace);
-
-        // UI 활성화
-        gameObject.SetActive(true);
     }
 
     private void SetCubeInfo(CubieFace selectedFace)
@@ -174,6 +164,6 @@ public class TileInfoUI : SerializedMonoBehaviour
     // 닫기 버튼 핸들러
     public void OnCloseButtonClicked()
     {
-        gameObject.SetActive(false);
+        
     }
 }

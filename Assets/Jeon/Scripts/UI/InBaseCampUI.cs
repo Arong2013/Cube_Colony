@@ -21,6 +21,9 @@ public class InBaseCampUI : MonoBehaviour, IObserver
     [SerializeField] private Button startNextStageButton;
 
 
+    [TitleGroup("베이스캠프 UI")]
+    [LabelText("힐 임펙트 UI"), Required]
+    [SerializeField] public PlayerHitEffectUI playerHealEffectUI;
     private void Start()
     {
         // 버튼 이벤트 연결

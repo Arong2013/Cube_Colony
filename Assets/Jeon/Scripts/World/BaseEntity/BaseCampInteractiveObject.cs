@@ -48,6 +48,7 @@ public class BaseCampInteractiveObject : SerializedMonoBehaviour
             {
                 case InteractionType.HealthRecovery:
                     interactionSuccessful = RecoverHealth(player);
+                    Utils.GetUI<InBaseCampUI>().playerHealEffectUI.PlayHitFixedEffect();
                     break;
                 case InteractionType.EnergyRecovery:
                     interactionSuccessful = RecoverEnergy(player);

@@ -113,27 +113,30 @@ public class BattleFlowController : SerializedMonoBehaviour
     private void InitializeFirstStage()
     {
 
-    GameObject playerPrefab = DataCenter.Instance.GetPlayerEntity();
-    GameObject playerObj = Instantiate(playerPrefab);
-    PlayerEntity playerEntity = playerObj.GetComponent<PlayerEntity>();
-    playerEntity.gameObject.SetActive(false);
+        GameObject playerPrefab = DataCenter.Instance.GetPlayerEntity();
+        GameObject playerObj = Instantiate(playerPrefab);
+        PlayerEntity playerEntity = playerObj.GetComponent<PlayerEntity>();
+        playerEntity.gameObject.SetActive(false);
         playerEntity.Init();
 
 
         currentTotalStage = 1;
-        if (stageCubeDataMap.ContainsKey(currentTotalStage))
-        {
-            // 첫 번째 스테이지에서는 새로운 큐브 생성
-            currentCubeData = stageCubeDataMap[currentTotalStage];
-            cubeUsageCount = 0;
-            usedFacePositions.Clear();
 
-            ChangeState(new CountdownState(cube, currentCubeData));
-        }
-        else
-        {
-            Debug.LogError($"스테이지 {currentTotalStage}에 대한 큐브 데이터가 없습니다.");
-        }
+        SetCompleteState(true); // 게임 시작 시 컴플리트 상태로 설정
+
+        // if (stageCubeDataMap.ContainsKey(currentTotalStage))
+        // {
+        //     // 첫 번째 스테이지에서는 새로운 큐브 생성
+        //     currentCubeData = stageCubeDataMap[currentTotalStage];
+        //     cubeUsageCount = 0;
+        //     usedFacePositions.Clear();
+
+        //     ChangeState(new CountdownState(cube, currentCubeData));
+        // }
+        // else
+        // {
+        //     Debug.LogError($"스테이지 {currentTotalStage}에 대한 큐브 데이터가 없습니다.");
+        // }
     }
 
     /// <summary>
