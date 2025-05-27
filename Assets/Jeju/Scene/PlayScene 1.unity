@@ -1565,6 +1565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   disableField: {fileID: 1458031734}
+  navMeshSurfacePrefab: {fileID: 0}
 --- !u!1 &1443394697
 GameObject:
   m_ObjectHideFlags: 0
@@ -2048,9 +2049,11 @@ MonoBehaviour:
       Data: 
   cube: {fileID: 1815109174}
   field: {fileID: 1326101566}
+  baseCampPrefab: {fileID: 0}
   stageTime: 10
   cubeUsageCount: 0
   maxCubeUsage: 3
+  currentTotalStage: 0
   currentCubeData:
     size: 0
     requiredMatches: 0
@@ -2941,6 +2944,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4483138990444221258, guid: e777a60101f46034d9aa030a5a8efc65, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4856638886996293355, guid: e777a60101f46034d9aa030a5a8efc65, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5544434837907653403, guid: e777a60101f46034d9aa030a5a8efc65, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5857136328085061217, guid: e777a60101f46034d9aa030a5a8efc65, type: 3}
