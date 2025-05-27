@@ -184,56 +184,57 @@ public class PlayerHitEffectUI : SerializedMonoBehaviour
     }
 
     private IEnumerator HitFixedEffectCoroutine()
-{
-    // 데미지 크기와 상관없이 고정된 값 사용
-    float intensity = 1f; // 고정 강도
-
-    // 1. 히트 효과 즉시 적용
-    ApplyHitEffect(intensity);
-
-    // 2. 일시적인 시간 슬로우
-    float targetTimeScale = 0.7f; // 고정된 시간 슬로우 값
-    Time.timeScale = targetTimeScale;
-
-    // 3. 효과 지속
-    yield return new WaitForSecondsRealtime(effectDuration);
-
-    // 4. 페이드아웃
-    float elapsed = 0f;
-
-    Color startColor = damageOverlay.color;
-    Color endColor = new Color(damageColor.r, damageColor.g, damageColor.b, 0f);
-    float startTimeScale = Time.timeScale;
-
-    while (elapsed < fadeOutDuration)
     {
-        float t = elapsed / fadeOutDuration;
+        gameObject.SetActive(true);
 
-        // 이미지 페이드아웃
-        damageOverlay.color = Color.Lerp(startColor, endColor, t);
+        float intensity = Mathf.Clamp01(30 / 100);
+        // 1. 히트 효과 즉시 적용
+        ApplyHitEffect(intensity);
 
-        // 시간 정상화
-        Time.timeScale = Mathf.Lerp(startTimeScale, 1f, t);
+        // 2. 일시적인 시간 슬로우
+        float targetTimeScale = 0.7f; // 고정된 시간 슬로우 값
+        Time.timeScale = targetTimeScale;
 
-        // 카메라 위치 복원
-        if (useCameraShake && playerCamera != null)
+        // 3. 효과 지속
+        yield return new WaitForSecondsRealtime(effectDuration);
+
+        // 4. 페이드아웃
+        float elapsed = 0f;
+
+        Color startColor = damageOverlay.color;
+        Color endColor = new Color(damageColor.r, damageColor.g, damageColor.b, 0f);
+        float startTimeScale = Time.timeScale;
+
+        while (elapsed < fadeOutDuration)
         {
-            playerCamera.localPosition = Vector3.Lerp(
-                playerCamera.localPosition,
-                originalCameraPosition,
-                t * 2f // 카메라는 좀 더 빠르게 원위치
-            );
+            float t = elapsed / fadeOutDuration;
+
+            // 이미지 페이드아웃
+            damageOverlay.color = Color.Lerp(startColor, endColor, t);
+
+            // 시간 정상화
+            Time.timeScale = Mathf.Lerp(startTimeScale, 1f, t);
+
+            // 카메라 위치 복원
+            if (useCameraShake && playerCamera != null)
+            {
+                playerCamera.localPosition = Vector3.Lerp(
+                    playerCamera.localPosition,
+                    originalCameraPosition,
+                    t * 2f // 카메라는 좀 더 빠르게 원위치
+                );
+            }
+
+            elapsed += Time.unscaledDeltaTime;
+            yield return null;
         }
 
-        elapsed += Time.unscaledDeltaTime;
-        yield return null;
+        // 5. 완전히 원래 상태로 복원
+        ResetEffects();
+
+        hitEffectCoroutine = null;
+        gameObject.SetActive(false);
     }
-
-    // 5. 완전히 원래 상태로 복원
-    ResetEffects();
-
-    hitEffectCoroutine = null;
-}
 
     private void ApplyHitEffect(float intensity)
     {
