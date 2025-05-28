@@ -45,7 +45,20 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
     [LabelText("베이스캠프 이동 버튼"), Required]
     [SerializeField] private Button baseCampButton;
 
+    [TitleGroup("큐브 사용 횟수 텍스트 색상")]
+[LabelText("초기 상태 색상")]
+[ColorPalette("Custom")]
+[SerializeField] private Color initialColor = Color.white;
 
+[TitleGroup("큐브 사용 횟수 텍스트 색상")]
+[LabelText("사용 중 색상")]
+[ColorPalette("Custom")]
+[SerializeField] private Color usingColor = Color.yellow;
+
+[TitleGroup("큐브 사용 횟수 텍스트 색상")]
+[LabelText("최대 사용 횟수 도달 색상")]
+[ColorPalette("Custom")]
+[SerializeField] private Color maxUsageColor = Color.red;
 
     [TitleGroup("디버그 정보")]
     [ReadOnly, ShowInInspector]
@@ -171,34 +184,35 @@ public class InCountDownStateUI : MonoBehaviour, IObserver
     /// <summary>
     /// 큐브 사용 진행률 업데이트
     /// </summary>
-    private void UpdateCubeUsageProgress()
+private void UpdateCubeUsageProgress()
+{
+    if (BattleFlowController.Instance == null) return;
+
+    int currentUsage = BattleFlowController.Instance.GetCubeUsageCount();
+    int maxUsage = BattleFlowController.Instance.GetMaxCubeUsage();
+
+    // 큐브 사용 횟수 텍스트 업데이트
+    if (cubeUsageCountText != null)
     {
-        if (BattleFlowController.Instance == null) return;
+        cubeUsageCountText.text = $"{currentUsage}/{maxUsage}";
 
-        int currentUsage = BattleFlowController.Instance.GetCubeUsageCount();
-        int maxUsage = BattleFlowController.Instance.GetMaxCubeUsage();
-
-        // 큐브 사용 횟수 텍스트 업데이트
-        if (cubeUsageCountText != null)
+        // 사용 횟수에 따라 텍스트 색상 변경
+        if (currentUsage >= maxUsage)
         {
-            cubeUsageCountText.text = $"{currentUsage}/{maxUsage}";
-
-            // 사용 횟수에 따라 텍스트 색상 변경
-            if (currentUsage >= maxUsage)
-            {
-                cubeUsageCountText.color = Color.red; // 최대 사용 횟수 도달
-            }
-            else if (currentUsage > 0)
-            {
-                cubeUsageCountText.color = Color.yellow; // 사용 중
-            }
-            else
-            {
-                cubeUsageCountText.color = Color.white; // 초기 상태
-            }
+            cubeUsageCountText.color = maxUsageColor; // 최대 사용 횟수 도달
         }
-        cubeUsageAnimator.SetInteger("currentUsage", currentUsage); 
+        else if (currentUsage > 0)
+        {
+            cubeUsageCountText.color = usingColor; // 사용 중
+        }
+        else
+        {
+            cubeUsageCountText.color = initialColor; // 초기 상태
+        }
     }
+    cubeUsageAnimator.SetInteger("currentUsage", currentUsage);
+}
+
 
     /// <summary>
     /// 총 탐험 횟수 업데이트
