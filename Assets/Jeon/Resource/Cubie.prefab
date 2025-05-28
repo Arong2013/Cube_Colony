@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 8098230308217086016}
   - component: {fileID: 2522535167129463454}
   - component: {fileID: 1991626101785818878}
+  - component: {fileID: 4625627945298884348}
   m_Layer: 0
   m_Name: Left
   m_TagString: Untagged
@@ -194,6 +195,7 @@ MonoBehaviour:
     level: 0
     maxLevel: 3
     position: {x: 0, y: 0, z: 0}
+  animator: {fileID: 4625627945298884348}
 --- !u!64 &1991626101785818878
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -216,6 +218,28 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &4625627945298884348
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1066487299224064777}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b49d8529e65f2554f9e68c6eb17aa73e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1606437371780849358
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,6 +511,7 @@ GameObject:
   - component: {fileID: 2775283134220596102}
   - component: {fileID: 4622965367556331352}
   - component: {fileID: 1516366083919929943}
+  - component: {fileID: 5511605385827323077}
   m_Layer: 0
   m_Name: Right
   m_TagString: Untagged
@@ -582,6 +607,7 @@ MonoBehaviour:
     level: 0
     maxLevel: 3
     position: {x: 0, y: 0, z: 0}
+  animator: {fileID: 5511605385827323077}
 --- !u!64 &1516366083919929943
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -604,6 +630,28 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &5511605385827323077
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4098991580698989337}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b49d8529e65f2554f9e68c6eb17aa73e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4627587372967711015
 GameObject:
   m_ObjectHideFlags: 0
@@ -923,6 +971,7 @@ GameObject:
   - component: {fileID: 3095687788630946403}
   - component: {fileID: 65698545002581422}
   - component: {fileID: 7580208024012353864}
+  - component: {fileID: 4117446149276475902}
   m_Layer: 0
   m_Name: Front
   m_TagString: Untagged
@@ -1018,6 +1067,7 @@ MonoBehaviour:
     level: 0
     maxLevel: 3
     position: {x: 0, y: 0, z: 0}
+  animator: {fileID: 4117446149276475902}
 --- !u!64 &7580208024012353864
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1040,6 +1090,28 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &4117446149276475902
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6527070863356091866}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b49d8529e65f2554f9e68c6eb17aa73e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7268831793021726084
 GameObject:
   m_ObjectHideFlags: 0
@@ -1053,6 +1125,7 @@ GameObject:
   - component: {fileID: 4579129101004706278}
   - component: {fileID: 7196366575631141369}
   - component: {fileID: 2033260323682482377}
+  - component: {fileID: 5607032540240765312}
   m_Layer: 0
   m_Name: Back
   m_TagString: Untagged
@@ -1148,6 +1221,7 @@ MonoBehaviour:
     level: 0
     maxLevel: 3
     position: {x: 0, y: 0, z: 0}
+  animator: {fileID: 5607032540240765312}
 --- !u!64 &2033260323682482377
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1170,6 +1244,28 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &5607032540240765312
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7268831793021726084}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b49d8529e65f2554f9e68c6eb17aa73e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8347583270827263711
 GameObject:
   m_ObjectHideFlags: 0
@@ -1183,6 +1279,7 @@ GameObject:
   - component: {fileID: 4443555218546497461}
   - component: {fileID: 7521102326549189041}
   - component: {fileID: 6245364250631405727}
+  - component: {fileID: 6572600005769597549}
   m_Layer: 0
   m_Name: Botton
   m_TagString: Untagged
@@ -1278,6 +1375,7 @@ MonoBehaviour:
     level: 0
     maxLevel: 3
     position: {x: 0, y: 0, z: 0}
+  animator: {fileID: 6572600005769597549}
 --- !u!64 &6245364250631405727
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1300,6 +1398,28 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &6572600005769597549
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8347583270827263711}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b49d8529e65f2554f9e68c6eb17aa73e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8548381374575968842
 GameObject:
   m_ObjectHideFlags: 0
@@ -1313,6 +1433,7 @@ GameObject:
   - component: {fileID: 6985378542794655534}
   - component: {fileID: 1670645987493652048}
   - component: {fileID: 9089990493099887224}
+  - component: {fileID: 7768606843182228315}
   m_Layer: 0
   m_Name: Top
   m_TagString: Untagged
@@ -1408,6 +1529,7 @@ MonoBehaviour:
     level: 0
     maxLevel: 3
     position: {x: 0, y: 0, z: 0}
+  animator: {fileID: 7768606843182228315}
 --- !u!64 &9089990493099887224
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1430,3 +1552,25 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &7768606843182228315
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8548381374575968842}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b49d8529e65f2554f9e68c6eb17aa73e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -9,7 +9,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 6
-    m_ConditionEvent: Stage
+    m_ConditionEvent: currentUsage
     m_EventTreshold: 2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -576305175069226576}
@@ -34,7 +34,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 6
-    m_ConditionEvent: Stage
+    m_ConditionEvent: currentUsage
     m_EventTreshold: 3
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6708912812297268525}
@@ -59,7 +59,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 6
-    m_ConditionEvent: Stage
+    m_ConditionEvent: currentUsage
     m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 393037150325435786}
@@ -111,7 +111,7 @@ AnimatorController:
   m_Name: CubeStage
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: Stage
+  - m_Name: currentUsage
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 1
