@@ -1704,9 +1704,9 @@ RectTransform:
   - {fileID: 2138578536781283450}
   m_Father: {fileID: 7155649282761628858}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 210, y: -50}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1402866466670846827
@@ -2508,7 +2508,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5857136328085061217
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2552,11 +2552,15 @@ MonoBehaviour:
   o2Bar: {fileID: 1359598364252609700}
   engBar: {fileID: 4040543707283724068}
   cubeUsageCountText: {fileID: 7687867354629456606}
+  cubeUsageAnimator: {fileID: 1189374035177229207}
   explorationCountText: {fileID: 6572795154348927611}
   explorationProgressBar: {fileID: 7220767842601093895}
   survivalStartBtn: {fileID: 6353753434211616272}
   cubeControllerUI: {fileID: 3016884064143992519}
   baseCampButton: {fileID: 57019435928120196}
+  initialColor: {r: 1, g: 1, b: 1, a: 1}
+  usingColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  maxUsageColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &7703452838842236263
 GameObject:
   m_ObjectHideFlags: 0
@@ -3027,9 +3031,9 @@ RectTransform:
   - {fileID: 8357655580503640463}
   m_Father: {fileID: 7155649282761628858}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 80, y: -50}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7271719024914272215
@@ -3337,6 +3341,8 @@ MonoBehaviour:
   clickHoldTime: 0.1
   cubeRotaterUI:
     threshold: 0.5
+    soundDelay: 0.3
+  soundDelay: 0.3
 --- !u!1 &9190101066252925717
 GameObject:
   m_ObjectHideFlags: 0
@@ -3767,6 +3773,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 027dc3f27262f7e4ea029fc2944574d7, type: 3}
+--- !u!95 &1189374035177229207 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8625664219688048745, guid: 027dc3f27262f7e4ea029fc2944574d7, type: 3}
+  m_PrefabInstance: {fileID: 7436853151694738430}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4937939162261611915 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2572143674948695669, guid: 027dc3f27262f7e4ea029fc2944574d7, type: 3}
