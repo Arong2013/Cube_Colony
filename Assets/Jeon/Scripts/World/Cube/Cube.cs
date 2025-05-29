@@ -67,9 +67,7 @@ public class Cube : MonoBehaviour
                 }
             }
         }
-
-        // 변경 후 큐브 시각 업데이트
-        cubeGridHandler.UpDateCubieVisual();
+        cubeGridHandler.UpDateCubieVisual(false);
     }
 
     /// <summary>

@@ -310,8 +310,7 @@ public class BattleFlowController : SerializedMonoBehaviour
     {
         // 귀환할 때마다 스테이지와 큐브 사용 횟수 모두 증가
 
-        cubeUsageCount++;
-
+        cubeUsageCount++;        
         // 큐브 사용 횟수가 최대값에 도달하면 새 큐브 데이터로 변경
         if (cubeUsageCount > maxCubeUsage)
         {

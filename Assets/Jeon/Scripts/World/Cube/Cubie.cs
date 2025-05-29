@@ -30,11 +30,11 @@ public class Cubie : MonoBehaviour
         }
     }
 
-    public void UpdateCubieVisual()
+    public void UpdateCubieVisual(bool isAllCubie)
     {
         foreach (var face in faces)
         {
-            face.SetVisual();
+            face.SetVisual(isAllCubie);
         }
     }
         public CubieFace GetFace(CubeFaceType type)

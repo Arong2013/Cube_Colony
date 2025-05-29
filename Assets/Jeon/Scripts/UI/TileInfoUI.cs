@@ -112,15 +112,16 @@ public class TileInfoUI : SerializedMonoBehaviour
             // 몬스터 ID와 확률 확인
             int itemId = tileData.ItemObjID[i];
 
-            var itemSO = DataCenter.Instance.GetEquipableItemSO(itemId);
+            var itemSO = DataCenter.Instance.GetConsumableItemSO(itemId);
             if (itemSO != null)
             {
                 // 몬스터 이미지 생성
-                GameObject monsterImageObj = Instantiate(monsterImagePrefab, monsterImageContainer);
+                GameObject monsterImageObj = Instantiate(itemImagePrefab, itemImageContainer);
                 Image monsterImage = monsterImageObj.GetComponent<Image>();
                 monsterImage.sprite = itemSO.itemIcon;
             }
         }
+        print("아이템 개수: " + tileData.ItemObjID.Count);
     }
 
     private void ClearContainers()

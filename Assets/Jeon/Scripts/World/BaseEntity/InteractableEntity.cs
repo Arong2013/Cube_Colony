@@ -36,7 +36,6 @@ public class InteractableEntity : Entity, IInteractable
     public string GetInteractionLabel() => _strategy?.GetLabel() ?? "상호작용";
 public void DropItems()
 {
-    // 현재 필드를 찾기
     Field currentField = FindAnyObjectByType<Field>();
     
     if (currentField == null)
@@ -47,29 +46,29 @@ public void DropItems()
 
     int dropCount = Random.Range(MinDropItem, MaxDropItem + 1);
 
-    for (int i = 0; i < dropCount; i++)
+    foreach (var pair in DropChances)
     {
-        float roll = Random.value;
-        float cumulative = 0f;
+        // 각 아이템에 대해 개별적으로 드롭 여부 결정
+        float dropChance = pair.Key;
+        int itemId = pair.Value;
 
-        foreach (var pair in DropChances.OrderByDescending(p => p.Key))
+        for (int i = 0; i < dropCount; i++)
         {
-            cumulative += pair.Key;
-            if (roll <= cumulative)
+            if (Random.value <= dropChance)
             {
-                int itemId = DropChances[pair.Key];
                 var itemPre = Instantiate(
                     DataCenter.Instance.GetDropItemPrefab().gameObject, 
                     transform.position, 
                     Quaternion.identity, 
-                    currentField.transform.Find("DisableField") // 이 부분이 중요
+                    currentField.transform.Find("DisableField")
                 );     
                 itemPre.GetComponent<ItemEntity>().SetItem(itemId); 
-                break;
             }
         }
     }
 }
+
+
 
     public float GetInteractionDistance() => interactionDistance;
 

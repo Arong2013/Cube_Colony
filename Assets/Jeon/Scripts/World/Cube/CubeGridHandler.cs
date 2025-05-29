@@ -43,7 +43,7 @@ public class CubeGridHandler
     public void RotateWholeCube(CubeAxisType axis,bool clockwise)
     {
         for (int layer = 0; layer < Size; layer++)
-            ApplyLayerRotation(layer, clockwise, axis);
+            ApplyLayerRotation(layer, clockwise, axis,true);
     }
     public List<Cubie> GetAllCubies() => GridSearchHelper.GetAllCubies(GetGridCopy());
 
@@ -88,7 +88,17 @@ public class CubeGridHandler
         Cubie[,] rotated = CubieMatrixHelper.RotateMatrix(layerSlice, isClockwise, axis);
         InsertRotatedLayer(layer, rotated, axis);
         RenameCubies();
-        UpDateCubieVisual();
+        UpDateCubieVisual(false);
+    }
+
+        private void ApplyLayerRotation(int layer, bool isClockwise, CubeAxisType axis,bool isAllcube)
+    {
+        Cubie[,] layerSlice = CubieMatrixHelper.ExtractLayer(GetGridCopy(), layer, axis);
+        RotateCubies(layerSlice, isClockwise, axis);
+        Cubie[,] rotated = CubieMatrixHelper.RotateMatrix(layerSlice, isClockwise, axis);
+        InsertRotatedLayer(layer, rotated, axis);
+        RenameCubies();
+        UpDateCubieVisual(isAllcube);
     }
     private void AssignCubieFaceSkills(Dictionary<CubieFaceSkillType, float> skillProbabilities)
     {
@@ -105,7 +115,7 @@ public class CubeGridHandler
         }
         foreach (var cubie in cubieGrid)
         {
-            cubie.UpdateCubieVisual();
+            cubie.UpdateCubieVisual(false);
         }
     }
     public void RotateCubies(Cubie[,] cubies, bool isClockwise, CubeAxisType axis)
@@ -115,11 +125,11 @@ public class CubeGridHandler
             cubie.RotateCubie(axis, isClockwise);
         }
     }
-    public void UpDateCubieVisual()
+    public void UpDateCubieVisual(bool isAllCubie)
     {
         foreach (var cubie in cubieGrid)
         {
-            cubie.UpdateCubieVisual();
+            cubie.UpdateCubieVisual(isAllCubie);
         }
     }       
     // ✅ 내부 구현 - 레이어 데이터 적용

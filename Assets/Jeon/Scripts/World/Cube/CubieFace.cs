@@ -22,16 +22,15 @@ public class CubieFace : MonoBehaviour
     public void SetFace(CubeFaceType face)
     {
         this.face = face;
-
-       
     }
 
-    public void SetVisual()
+    public void SetVisual(bool isAllcube)
     {
         var count = CubeGridHandler.Instance.GetSameTypeAdjacentCount(this);
         cubieFaceInfo.SetLevel(count);
         ApplyVisual(DataCenter.Instance.GetFaceData(cubieFaceInfo.Type));
-        animator.SetTrigger("Enhace"+count);
+        if (!isAllcube)
+            animator.SetTrigger("Enhace" + count);
     }
 
     public void SetSkillType(CubieFaceSkillType type)
