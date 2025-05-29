@@ -44,7 +44,7 @@ public class FieldTileDataSO : ScriptableObject
     public List<float> ObjectValue = new List<float>();
 
     [TitleGroup("스폰 오브젝트")]
-    [LabelText("오브젝트 ID 목록")]
+    [LabelText("아이템 ID 목록")]
     [InfoBox("스폰될 아이템/오브젝트들의 ID")]
     public List<int> ItemObjID = new List<int>();
 

@@ -259,30 +259,29 @@ public class PlayerData
     }
 
     // 기본 장비 장착
-    private void EquipDefaultItems()
+private void EquipDefaultItems()
+{
+    var equipableItemIds = DataCenter.Instance.GetAllIds<EquipableItem>();
+    
+    // 아이디 낮은 순서로 정렬하고, 각 장비 타입별로 첫 번째 아이템 선택
+    var defaultItems = equipableItemIds
+        .OrderBy(id => id)
+        .Select(id => DataCenter.Instance.CreateEquipableItem(id))
+        .GroupBy(item => item.equipmentType)
+        .Select(g => g.First())
+        .ToList();
+
+    foreach (var item in defaultItems)
     {
-        foreach (EquipmentType type in System.Enum.GetValues(typeof(EquipmentType)))
+        if (item != null)
         {
-            if (type == EquipmentType.None) continue;
-
-            var equipableItemIds = DataCenter.Instance.GetAllIds<EquipableItem>();
-
-            if (equipableItemIds.Count > 0)
-            {
-                var firstItemId = equipableItemIds
-                    .Select(id => DataCenter.Instance.CreateEquipableItem(id))
-                    .FirstOrDefault(item => item.equipmentType == type);
-
-                if (firstItemId != null)
-                {
-                    equippedItems[type] = firstItemId;
-                    Debug.Log($"기본 장비 장착: {type} - {firstItemId.ItemName}");
-                }
-            }
+            equippedItems[item.equipmentType] = item;
+            Debug.Log($"기본 장비 장착: {item.equipmentType} - {item.ItemName}");
         }
-
-        UpdateInventorySlotBonus();
     }
+
+    UpdateInventorySlotBonus();
+}
 
     // === 에너지 관련 메서드 ===
     public void UpdateEnergy(float amount)

@@ -27,7 +27,7 @@ MonoBehaviour:
   energyConsumptionReduction: 0
   inventorySlotBonus: 0
   damageReduction: 0
-  reinforcementRecipeId: 0
+  reinforcementRecipeId: 3
   maxReinforcementLevel: 3
   reinforcementCosts: 64000000c800000090010000
   specialEffect1: 0

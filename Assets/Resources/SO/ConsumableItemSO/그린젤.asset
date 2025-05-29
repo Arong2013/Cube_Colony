@@ -16,7 +16,7 @@ MonoBehaviour:
   ItemName: "\uADF8\uB9B0\uC824"
   maxamount: 4
   ids: 
-  acquirableFieldIds: 
+  acquirableFieldIds: 0d0000000e0000000f00000010000000
   description: "\uC2DD\uBB3C\uC5D0\uC11C \uCD94\uCD9C\uD55C \uB179\uC0C9\uC561. \uACBD\uBBF8\uD55C
     \uC678\uC0C1 \uD68C\uBCF5\uC5D0 \uD6A8\uACFC\uC801\uC785\uB2C8\uB2E4."
   grade: 0

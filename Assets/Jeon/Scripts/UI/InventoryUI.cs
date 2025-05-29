@@ -19,6 +19,10 @@ public class InventoryUI : SerializedMonoBehaviour, IObserver
     [LabelText("아이템 정보 UI"), Required]
     [SerializeField] private ItemInfoUI _itemInfoUI;
 
+        [TitleGroup("닫기 버튼튼")]
+    [LabelText("닫기 버튼 UI"), Required]
+    [SerializeField] private Button _CloseButton;
+
     [TitleGroup("디버그 정보")]
     [ReadOnly, ShowInInspector]
     private List<ItemSlot> _slots = new();
@@ -54,6 +58,8 @@ public class InventoryUI : SerializedMonoBehaviour, IObserver
         {
             _itemInfoUI.Initialize();
         }
+
+        _CloseButton.onClick.AddListener(() => ToggleInventoryUI());
     }
 
     private void OnDestroy()
