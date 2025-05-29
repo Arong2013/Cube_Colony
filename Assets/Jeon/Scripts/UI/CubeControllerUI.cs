@@ -9,6 +9,10 @@ public class CubeControllerUI : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 
     [Header("Dependencies")]
     [SerializeField] private CubeRotaterUI cubeRotaterUI = new CubeRotaterUI();
+    [Header("사운드 지연 시간")]
+    [SerializeField] float soundDelay = 0.3f; // 소리 지연 시간 추가
+
+
 
     private Action<Cubie, CubeAxisType, bool> rotateAction;
 
@@ -18,6 +22,7 @@ public class CubeControllerUI : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     private float clickHoldTimer;
     private bool isClickHold;
     private bool isHoldMode;
+    private bool hasSoundPlayed = false; // 소리 재생 여부를 추적하는 플래그 추가
 
     private void Update()
     {
@@ -58,19 +63,29 @@ public class CubeControllerUI : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     {
         if (isHoldMode)
         {
+            // 첫 드래그 시에만 소리 재생
+            if (!hasSoundPlayed)
+            {
+                PlaySound();
+                hasSoundPlayed = true;
+            }
             cubeRotaterUI.OndDrag(eventData);
         }
+
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        isClickHold = false;
+         isClickHold = false;
 
         if (isHoldMode)
         {
             cubeRotaterUI.OnPointerUP();
             isHoldMode = false;
         }
+
+        // 포인터 업 시 소리 재생 플래그 초기화
+        hasSoundPlayed = false;
     }
 
     private void ResetClickState()
@@ -79,10 +94,18 @@ public class CubeControllerUI : MonoBehaviour, IPointerDownHandler, IPointerUpHa
         isClickHold = true;
         isHoldMode = false;
         currentSelectedCubieFace = null;
+        hasSoundPlayed = false; // 클릭 상태 초기화 시 소리 재생 플래그도 초기화
+
     }
 
     private void DetectSelectedCubieFace(PointerEventData eventData)
     {
         currentSelectedCubieFace = Utils.DetectSelectedObject<CubieFace>(eventData);
+    }
+
+
+    public void PlaySound()
+    {
+        SoundManager.Instance.PlaySFX("CubeTurn");
     }
 }

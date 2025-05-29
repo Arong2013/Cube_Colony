@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 [System.Serializable]
-public class CubeRotaterUI 
+public class CubeRotaterUI
 {
     [SerializeField] float threshold = 2f;
     //[SerializeField] RotaterSelectUI rotaterSelectUI = new RotaterSelectUI();
+    [SerializeField] float soundDelay = 0.3f; // 소리 지연 시간 추가
 
     private CubieFace cubieFace;
     private Action<CubeAxisType, bool> rotateAction;
     private Vector2 initialMousePosition;
-    private CubeAxisType cantAxis,compomAxis;
+    private CubeAxisType cantAxis, compomAxis;
     private bool isClockwise;
     private bool canAction;
 
@@ -28,12 +29,12 @@ public class CubeRotaterUI
         Utils.GetUI<TileInfoUI>()?.OnCloseButtonClicked();
         Vector2 dragVector = eventData.position - initialMousePosition;
         float dragMagnitude = Mathf.Abs(dragVector.x) + Mathf.Abs(dragVector.y);
-        if(dragMagnitude > threshold)
+        if (dragMagnitude > threshold)
         {
             TestAxis(dragVector);
             DetectRotation(dragVector);
             //rotaterSelectUI.EnableUI(cubieFace,compomAxis,isClockwise);    
-            canAction = true;   
+            canAction = true;
         }
         else
         {
@@ -42,7 +43,7 @@ public class CubeRotaterUI
     }
     public void OnPointerUP()
     {
-        if(canAction)
+        if (canAction)
         {
             rotateAction?.Invoke(compomAxis, isClockwise);
             canAction = false;
@@ -67,7 +68,7 @@ public class CubeRotaterUI
 
     private void DetectRotation(Vector2 dragVector)
     {
-       switch(compomAxis)
+        switch (compomAxis)
         {
             case CubeAxisType.Z:
                 isClockwise = dragVector.y < 0;
@@ -82,4 +83,6 @@ public class CubeRotaterUI
         }
 
     }
+    
+    
 }
