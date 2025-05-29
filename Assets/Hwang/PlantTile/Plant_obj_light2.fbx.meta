@@ -1,9 +1,18 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Hwang/MetalTile/Metal_obj_2.fbx.meta
+guid: 5993436ffc2d686448cab97b6a0917b4
+========
 guid: 285db293a282b334e8b3828074515f60
+>>>>>>>> main_jin:Assets/Hwang/PlantTile/Plant_obj_light2.fbx.meta
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal_obj_2
+    second: {fileID: 2100000, guid: 21bb9d9fb0add28499b4026806476277, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

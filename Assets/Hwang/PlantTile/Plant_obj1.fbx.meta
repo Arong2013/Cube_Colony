@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Hwang/PlantTile/Plant_obj1.fbx.meta
 guid: 0a71be65c9ef3ef44b1e74d538fb721f
+========
+guid: 281037748359e924fbfb3796bb39143d
+>>>>>>>> main_jin:Assets/Hwang/MetalTile/Alientile_obj_B.fbx.meta
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +11,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+<<<<<<<< HEAD:Assets/Hwang/PlantTile/Plant_obj1.fbx.meta
       name: Plant_obj12
     second: {fileID: 2100000, guid: e81f5e8b26155264686d92f08e64f33a, type: 2}
+========
+      name: Alien_obj_B
+    second: {fileID: 2100000, guid: d0fb2c5e95d39ea46aff1d5450893c4c, type: 2}
+>>>>>>>> main_jin:Assets/Hwang/MetalTile/Alientile_obj_B.fbx.meta
   materials:
     materialImportMode: 2
     materialName: 0

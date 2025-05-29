@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 281037748359e924fbfb3796bb39143d
+guid: 1a8be26d24883eb48ad61558ea8f7ff4
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Alien_obj_B
-    second: {fileID: 2100000, guid: d0fb2c5e95d39ea46aff1d5450893c4c, type: 2}
+      name: Alien_obj_S1
+    second: {fileID: 2100000, guid: 93a8dfaee8d3bc94b8d7bba2a2f922b1, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
