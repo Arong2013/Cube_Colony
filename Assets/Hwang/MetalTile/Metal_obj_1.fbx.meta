@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Hwang/MetalTile/Metal_obj_1.fbx.meta
 guid: 41b14118766486a418cc5b7a45d5f384
-========
-guid: cf62d98e3339d6e4594a8385f3ddc308
->>>>>>>> main_jin:Assets/Hwang/PlantTile/Plant_obj_light1.fbx.meta
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -39,7 +35,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1

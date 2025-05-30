@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Hwang/MetalTile/Metal_obj_3.fbx.meta
 guid: 2a162ceb03aff8845a5fecc7e72a92fe
-========
-guid: 0e8a1a73bbbd2ba4ab86f797d8af92a0
->>>>>>>> main_jin:Assets/Hwang/MetalTile/Alientile_Floor.fbx.meta
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -11,13 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-<<<<<<<< HEAD:Assets/Hwang/MetalTile/Metal_obj_3.fbx.meta
       name: Metal_obj_3
     second: {fileID: 2100000, guid: 60f367b613122f44ebf7fe2821b6a236, type: 2}
-========
-      name: Floor
-    second: {fileID: 2100000, guid: c1f03b63d41156543a05f8fd4d3317b5, type: 2}
->>>>>>>> main_jin:Assets/Hwang/MetalTile/Alientile_Floor.fbx.meta
   materials:
     materialImportMode: 2
     materialName: 0
@@ -44,7 +35,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1
