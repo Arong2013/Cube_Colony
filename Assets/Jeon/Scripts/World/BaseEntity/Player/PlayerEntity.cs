@@ -6,6 +6,7 @@ using UnityEngine;
 using static UnityEngine.UI.ScrollRect;
 public class PlayerEntity : Entity, ISubject
 {
+    [SerializeField] float baseDamageAmount;
     private Action returnAction;
     private Action gameOverAction;
 
@@ -106,8 +107,22 @@ public void DamageO2()
         BattleFlowController.Instance.playerData != null)
     {
         float currentO2 = GetEntityStat(EntityStatName.O2);
-        BattleFlowController.Instance.playerData.playerStat.UpdateStat(EntityStatName.O2, this, -Time.deltaTime);
         
+
+        // 장착된 장비의 산소 소모 감소 효과 계산
+        float reductionMultiplier = 1f;
+        var equippedItems = GetAllEquippedItems();
+        foreach (var item in equippedItems)
+        {
+            var effects = item.GetCurrentEffects();
+            reductionMultiplier -= effects.oxygenConsumptionReduction;
+        }
+        Debug.Log($"장착된 장비로 인한 산소 소모 감소: {Time.deltaTime}");
+        // 최소 감소량 0.1f로 제한
+        float finalDamageAmount = Mathf.Max(baseDamageAmount - reductionMultiplier, 0.1f);
+
+        BattleFlowController.Instance.playerData.playerStat.UpdateStat(EntityStatName.O2, this, -baseDamageAmount);
+
         // O2가 0이 되면 게임 오버
         if (currentO2 <= 0)
         {

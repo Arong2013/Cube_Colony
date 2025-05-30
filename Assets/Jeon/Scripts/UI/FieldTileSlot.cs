@@ -10,6 +10,6 @@ public class FieldTileSlot : MonoBehaviour
     public void Initialize(FieldTileDataSO fieldTileSO)
     {
         tileIcon.sprite = fieldTileSO.tileIcon;
-        tileNameText.text = fieldTileSO.IconName;
+        tileNameText.text = fieldTileSO.tileIconName;
     }
 }

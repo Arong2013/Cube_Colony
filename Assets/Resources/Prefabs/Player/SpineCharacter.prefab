@@ -418,6 +418,7 @@ MonoBehaviour:
   isFixedDamage: 0
   fixedDamage: 10
   debugDamageAmount: 20
+  baseDamageAmount: 0.0045
 --- !u!65 &2446873559737819303
 BoxCollider:
   m_ObjectHideFlags: 0
