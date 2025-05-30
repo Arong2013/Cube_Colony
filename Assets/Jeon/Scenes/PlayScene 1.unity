@@ -4441,6 +4441,22 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 3959258624998995196, guid: e777a60101f46034d9aa030a5a8efc65, type: 3}
+    - target: {fileID: 4483138990444221258, guid: e777a60101f46034d9aa030a5a8efc65, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483138990444221258, guid: e777a60101f46034d9aa030a5a8efc65, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483138990444221258, guid: e777a60101f46034d9aa030a5a8efc65, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483138990444221258, guid: e777a60101f46034d9aa030a5a8efc65, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5857136328085061217, guid: e777a60101f46034d9aa030a5a8efc65, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4519,6 +4535,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5857136328085061217, guid: e777a60101f46034d9aa030a5a8efc65, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012639813528372041, guid: e777a60101f46034d9aa030a5a8efc65, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012639813528372041, guid: e777a60101f46034d9aa030a5a8efc65, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012639813528372041, guid: e777a60101f46034d9aa030a5a8efc65, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012639813528372041, guid: e777a60101f46034d9aa030a5a8efc65, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7557538914750742267, guid: e777a60101f46034d9aa030a5a8efc65, type: 3}
@@ -5698,7 +5730,7 @@ MonoBehaviour:
   colorThresholds:
   - label: "\uB192\uC74C"
     threshold: 0.66
-    color: {r: 1, g: 0.06212789, b: 0, a: 1}
+    color: {r: 1, g: 1, b: 1, a: 1}
   - label: "\uC911\uAC04"
     threshold: 0.33
     color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -8042,8 +8074,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b6868b6bbedfc549a999fe484634eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpBar: {fileID: 4581155986684413164}
-  o2Bar: {fileID: 5890665249195521807}
+  hpBar: {fileID: 5890665249195521807}
+  o2Bar: {fileID: 4581155986684413164}
   engBar: {fileID: 1540001838757449580}
   returnProgressBar: {fileID: 689862538}
   returnBarContainer: {fileID: 689862536}
